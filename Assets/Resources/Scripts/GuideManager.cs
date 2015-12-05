@@ -11,7 +11,8 @@ public class GuideManager : MonoBehaviour {
 	public GameObject panel_guide;
 
 	// Use this for initialization
-	void Start () {
+	// warning!!! this update just for test!!!  you should use Start()
+	void Update () {
 
 		Vector2 btn_size = btn_target.GetComponent<RectTransform> ().rect.size;
 		Vector2 btn_pos = btn_target.transform.position;
@@ -31,8 +32,5 @@ public class GuideManager : MonoBehaviour {
 		panel_guide_sub4.GetComponent<RectTransform> ().sizeDelta = new Vector2 (btn_pos.x - btn_size.x / 2, btn_size.y);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }
