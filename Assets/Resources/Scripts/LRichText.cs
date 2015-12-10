@@ -32,17 +32,15 @@ class LRichElement : Object {
 /// </summary>
 class LRichElementText : LRichElement
 {
-    public Font font { get; protected set; }
     public string txt { get; protected set; }
     public bool isUnderLine { get; protected set; }
     public bool isOutLine { get; protected set; }
 
-    public LRichElementText( Color color,string txt,Font font,bool isUnderLine,bool isOutLine,string data )
+    public LRichElementText( Color color,string txt,bool isUnderLine,bool isOutLine,string data )
     {
         this.type = Type.TEXT;
         this.color = color;
         this.txt = txt;
-        this.font = font;
         this.isUnderLine = isUnderLine;
         this.isOutLine = isOutLine;
         this.data = data;
@@ -146,9 +144,11 @@ struct LRenderElement
 
 public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 {
-    public AlignType alignType { get; protected set; }
-    public int verticalSpace { get; protected set; }
-    public int maxLineWidth { get; protected set; }
+	
+	public AlignType alignType;
+	public int verticalSpace;
+	public int maxLineWidth;
+	public Font font;
     public int realLineHeight { get; protected set; }
     public int realLineWidth { get; protected set; }
 
@@ -171,9 +171,9 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         }
     }
 
-    public void insertElement(string txt, Font font, Color color, bool isUnderLine, bool isOutLine, Color outLineColor, string data)
+    public void insertElement(string txt, Color color, bool isUnderLine, bool isOutLine, Color outLineColor, string data)
     {
-        richElements.Add(new LRichElementText(color, txt, font, isUnderLine, isOutLine, data));
+        richElements.Add(new LRichElementText(color, txt, isUnderLine, isOutLine, data));
     }
 
     public void insertElement(string path, float fp, string data)
@@ -201,6 +201,8 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         elemRenderArr = new List<LRenderElement>();
         cacheLabElements = new List<LRichCacheElement>();
         cacheImgElements = new List<LRichCacheElement>();
+
+		
     }
 
     public void reloadData()
@@ -222,12 +224,12 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
                     rendElem.strChar = strChar.ToString();
                     rendElem.isOutLine = elemText.isOutLine;
                     rendElem.isUnderLine = elemText.isUnderLine;
-                    rendElem.font = elemText.font;
+                    rendElem.font = this.font;
                     rendElem.data = elemText.data;
                     rendElem.color = elemText.color;
 
                     TextGenerationSettings setting = new TextGenerationSettings();
-                    setting.font = elemText.font;
+                    setting.font = this.font;
                     rendElem.width = (int)gen.GetPreferredWidth(rendElem.strChar, setting);
                     rendElem.height = (int)gen.GetPreferredHeight(rendElem.strChar, setting);
                     elemRenderArr.Add(rendElem);
@@ -491,7 +493,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
                     }
                     _lineWidth += elem.width;
                     obj.transform.SetParent(transform);
-                    obj.transform.position = new Vector2(elem.pos.x, elem.pos.y + realLineHeight);
+					obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y + realLineHeight);
                 }
             }
             realLineWidth = Mathf.Max(_lineWidth, realLineWidth);
@@ -516,7 +518,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         }
     }
 
-    void makeLabel(GameObject lab,LRenderElement elem)
+   	void makeLabel(GameObject lab,LRenderElement elem)
     {
         Text comText = lab.GetComponent<Text>();
         if (comText != null)
@@ -527,7 +529,10 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
             TextGenerator gen = new TextGenerator();
             TextGenerationSettings setting = new TextGenerationSettings();
             setting.font = elem.font;
+			setting.fontSize = 20;
+			setting.fontStyle = FontStyle.Normal;
             elem.width = (int)gen.GetPreferredWidth(elem.strChar, setting);
+			elem.height = (int)gen.GetPreferredHeight(elem.strChar,setting);
         }
     }
 
@@ -571,6 +576,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
             ret = new GameObject();
             Text comp = ret.AddComponent<Text>();
             comp.alignment = TextAnchor.LowerLeft;
+			ret.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             cacheLabElements.Add(new LRichCacheElement(ret));
         }
         return ret;
@@ -617,6 +623,9 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 	// Use this for initialization
 	void Start () {
         //TRichElement t = new TRichElement();
+
+		this.insertElement ("hello world!!", Color.blue, false, false, Color.blue,"");
+		this.reloadData ();
 	}
 	
 	// Update is called once per frame

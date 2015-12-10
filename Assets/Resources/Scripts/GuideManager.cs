@@ -12,7 +12,7 @@ public class GuideManager : MonoBehaviour {
 
 	// Use this for initialization
 	// warning!!! this update just for test!!!  you should use Start()
-	void Update () {
+	void OnGUI () {
 
 		Vector2 btn_size = btn_target.GetComponent<RectTransform> ().rect.size;
 		Vector2 btn_pos = btn_target.transform.position;
