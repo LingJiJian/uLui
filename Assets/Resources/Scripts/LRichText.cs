@@ -258,7 +258,6 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 
                     rendElem.width = (int)gen.GetPreferredWidth(rendElem.strChar, setting);
                     rendElem.height = (int)gen.GetPreferredHeight(rendElem.strChar, setting);
-						Debug.Log(" rendElem.height "+rendElem.height+"  "+ rendElem.width+" "+rendElem.strChar);
                     elemRenderArr.Add(rendElem);
                 }
             }
@@ -496,7 +495,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 
             realLineHeight += _lineHeight;
             _offsetLineY += (_lineHeight - 27);
-				Debug.Log("_offsetLineY "+_offsetLineY+" "+_lineHeight);
+
             for (int j = 0; j < _lines.Count; j++ )
             {
                 LRenderElement elem = _lines[j];
@@ -527,13 +526,13 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
                     {
                         obj = getCacheImage();
                         makeImage(obj, elem);
+                        _lineWidth += (int)obj.GetComponent<Image>().preferredWidth;
                     }
                     else if (elem.type == Type.ANIM)
                     {
                         obj = getCacheImage();
                         makeImage(obj, elem);
                     }
-					//_lineWidth += (int)obj.GetComponent<RectTransform>().rect.size.x;
                     obj.transform.SetParent(transform);
 					obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
                 }
@@ -571,14 +570,12 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 
         if (elem.isUnderLine)
         {
-            GameObject underLine = getCacheLabel();
-            Text underText = underLine.GetComponent<Text>();
-            underText.text = "_";
-            underText.color = elem.color;
-            underText.font = elem.font;
-            underText.fontSize = elem.fontSize;
-            underText.fontStyle = FontStyle.Normal;
-            underLine.transform.localPosition = lab.transform.localPosition;
+            GameObject underLine = getCacheImage();
+            Image underImg = underLine.GetComponent<Image>();
+            underImg.color = elem.color;
+            underImg.GetComponent<RectTransform>().sizeDelta = new Vector2(comText.preferredWidth, 1);
+            underLine.transform.SetParent(transform);
+            underLine.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y);
         }
     }
 
@@ -620,17 +617,16 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         if (ret == null)
         {
             ret = new GameObject();
-            Text comp = ret.AddComponent<Text>();
+            ret.AddComponent<Text>();
             ContentSizeFitter fit = ret.AddComponent<ContentSizeFitter>();
             fit.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             fit.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
 			
 			RectTransform rtran = ret.GetComponent<RectTransform>();
 			rtran.pivot = Vector2.zero;
+			rtran.anchorMax =new Vector2(0,1);
+			rtran.anchorMin = new Vector2(0,1);
 
-				rtran.anchorMax =new Vector2(0,1);
-				rtran.anchorMin = new Vector2(0,1);
-			
             LRichCacheElement cacheElem = new LRichCacheElement(ret);
             cacheElem.isUse = true;
             cacheLabElements.Add(cacheElem);
@@ -656,6 +652,12 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         {
             ret = new GameObject();
             ret.AddComponent<Image>();
+
+            RectTransform rtran = ret.GetComponent<RectTransform>();
+            rtran.pivot = Vector2.zero;
+            rtran.anchorMax = new Vector2(0, 1);
+            rtran.anchorMin = new Vector2(0, 1);
+            
             LRichCacheElement cacheElem = new LRichCacheElement(ret);
             cacheElem.isUse = true;
             cacheLabElements.Add(cacheElem);
@@ -681,11 +683,12 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 	// Use this for initialization
 	void Start () {
 
-		this.insertElement("hello world!!", Color.blue,25, false, false, Color.blue,"");
-			this.insertElement("测试b!!", Color.red, 15, false, false, Color.blue, "");
-			this.insertElement("测 试哈abc defghij哈!!", Color.green, 15, false, false, Color.blue, "");
+		this.insertElement("hello world!!", Color.blue,25, true, false, Color.blue,"");
+		this.insertElement("测试b!!", Color.red, 15, false, false, Color.blue, "");
+		this.insertElement("测 试哈abc defghij哈!!", Color.green, 15, true, false, Color.blue, "");
 	    this.insertElement("测试aaaaafffzz zzzzzzzz zzzzz fff哈哈 哈哈!!", Color.yellow, 20, false, false, Color.blue, "");
-		this.reloadData ();
+        this.insertElement("Image/face/face0201","");
+        this.reloadData ();
 
 	}
 	
