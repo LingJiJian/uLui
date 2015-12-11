@@ -213,6 +213,21 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
     {
         this.removeAllElements();
 
+			RectTransform rtran = this.GetComponent<RectTransform>();
+			//align
+			if (alignType == AlignType.DESIGN_CENTER)
+			{
+				rtran.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+
+			}else if (alignType == AlignType.REAL_CENTER)
+			{
+				rtran.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+				
+			}else if (alignType == AlignType.LEFT_TOP)
+			{
+				rtran.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
+			}
+
         foreach (LRichElement elem in richElements)
         {
             if (elem.type == Type.TEXT)
@@ -238,8 +253,12 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
                     setting.fontSize = elemText.fontSize;
                     setting.lineSpacing = 1;
                     setting.scaleFactor = 1;
+					setting.verticalOverflow = VerticalWrapMode.Overflow;
+					setting.horizontalOverflow = HorizontalWrapMode.Overflow;
+
                     rendElem.width = (int)gen.GetPreferredWidth(rendElem.strChar, setting);
                     rendElem.height = (int)gen.GetPreferredHeight(rendElem.strChar, setting);
+						Debug.Log(" rendElem.height "+rendElem.height+"  "+ rendElem.width+" "+rendElem.strChar);
                     elemRenderArr.Add(rendElem);
                 }
             }
@@ -474,14 +493,16 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
             {
                 _lineHeight = Mathf.Max(_lineHeight, elem.height);
             }
+
             realLineHeight += _lineHeight;
             _offsetLineY += (_lineHeight - 27);
-
+				Debug.Log("_offsetLineY "+_offsetLineY+" "+_lineHeight);
             for (int j = 0; j < _lines.Count; j++ )
             {
                 LRenderElement elem = _lines[j];
                 elem.pos = new Vector2(elem.pos.x, elem.pos.y - _offsetLineY);
                 realLineHeight = Mathf.Max(realLineHeight, (int)Mathf.Abs(elem.pos.y));
+				_lines[j] = elem;
             }
             rendLineArrs[i] = _lines;
         }
@@ -500,6 +521,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
                     {
                         obj = getCacheLabel();
                         makeLabel(obj, elem);
+						_lineWidth += (int)obj.GetComponent<Text>().preferredWidth;
                     }
                     else if (elem.type == Type.IMAGE)
                     {
@@ -511,9 +533,9 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
                         obj = getCacheImage();
                         makeImage(obj, elem);
                     }
-                    _lineWidth += elem.width;
+					//_lineWidth += (int)obj.GetComponent<RectTransform>().rect.size.x;
                     obj.transform.SetParent(transform);
-					obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y + realLineHeight);
+					obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
                 }
             }
             realLineWidth = Mathf.Max(_lineWidth, realLineWidth);
@@ -523,17 +545,14 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         //align
         if (alignType == AlignType.DESIGN_CENTER)
         {
-            rtran.anchoredPosition = new Vector2(0.5f, 0.5f);
-            rtran.sizeDelta = new Vector2(maxLineWidth, realLineHeight);
+			rtran.sizeDelta = new Vector2(maxLineWidth, realLineHeight);
 
         }else if (alignType == AlignType.REAL_CENTER)
         {
-            rtran.anchoredPosition = new Vector2(0.5f, 0.5f);
             rtran.sizeDelta = new Vector2(realLineWidth, realLineHeight);
 
         }else if (alignType == AlignType.LEFT_TOP)
         {
-            rtran.anchoredPosition = new Vector2(0, 1);
             rtran.sizeDelta = new Vector2(realLineWidth, realLineHeight);
         }
     }
@@ -605,8 +624,13 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
             ContentSizeFitter fit = ret.AddComponent<ContentSizeFitter>();
             fit.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             fit.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+			
+			RectTransform rtran = ret.GetComponent<RectTransform>();
+			rtran.pivot = Vector2.zero;
 
-			ret.GetComponent<RectTransform>().pivot = Vector2.zero;
+				rtran.anchorMax =new Vector2(0,1);
+				rtran.anchorMin = new Vector2(0,1);
+			
             LRichCacheElement cacheElem = new LRichCacheElement(ret);
             cacheElem.isUse = true;
             cacheLabElements.Add(cacheElem);
@@ -657,11 +681,12 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 	// Use this for initialization
 	void Start () {
 
-		this.insertElement("hello world!!", Color.blue,20, false, false, Color.blue,"");
-        this.insertElement("测试b!!", Color.red, 20, false, false, Color.blue, "");
-		this.insertElement("测 试哈abc defghij哈!!", Color.green, 25, false, false, Color.blue, "");
+		this.insertElement("hello world!!", Color.blue,25, false, false, Color.blue,"");
+			this.insertElement("测试b!!", Color.red, 15, false, false, Color.blue, "");
+			this.insertElement("测 试哈abc defghij哈!!", Color.green, 15, false, false, Color.blue, "");
 	    this.insertElement("测试aaaaafffzz zzzzzzzz zzzzz fff哈哈 哈哈!!", Color.yellow, 20, false, false, Color.blue, "");
 		this.reloadData ();
+
 	}
 	
 	// Update is called once per frame
