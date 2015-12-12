@@ -1,23 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GuideManager : MonoBehaviour {
+public class LGuideLayer : MonoBehaviour {
 
 	public GameObject panel_guide_sub1;
 	public GameObject panel_guide_sub2;
 	public GameObject panel_guide_sub3;
 	public GameObject panel_guide_sub4;
 	public GameObject btn_target;
-	public GameObject panel_guide;
-
-	// Use this for initialization
-	// warning!!! this update just for test!!!  you should use Start()
-	void Update () {
+	
+	void Start () {
 
 		Vector2 btn_size = btn_target.GetComponent<RectTransform> ().rect.size;
 		Vector2 btn_pos = btn_target.transform.position;
 
-		Vector2 root_size = panel_guide.GetComponent<RectTransform> ().rect.size;
+		Vector2 root_size = gameObject.GetComponent<RectTransform> ().rect.size;
 	
 		panel_guide_sub1.transform.position = new Vector3 (0,root_size.y,0);
 		panel_guide_sub1.GetComponent<RectTransform> ().sizeDelta = new Vector2 (root_size.x, root_size.y-btn_pos.y-btn_size.y/2);
