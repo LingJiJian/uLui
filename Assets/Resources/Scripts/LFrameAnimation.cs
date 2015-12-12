@@ -12,62 +12,51 @@ namespace Lui
 		public bool isPlayOnwake = false;
 		public string path;
 
+        protected Image comImage;
         protected float time;
         protected int frameLenght;
-        public Rect rect;
         protected bool isPlaying = false;
 		protected int currentIndex = 0;
-		protected Texture[] frameTex;
-
-		public LFrameAnimation(){
-
-		}
+        protected Sprite[] spriteArr;
 
         // Use this for initialization
         void Start()
         {
+            comImage = gameObject.GetComponent<Image>();
+
 			if (isPlayOnwake) {
 				loadTexture ();
 				play ();
 			}
-				
         }
 
 		public void loadTexture()
 		{
 			//load textures
 			Object[] texObj = Resources.LoadAll(path);
-			frameTex = new Texture[texObj.Length];
-			texObj.CopyTo(frameTex, 0);
-			frameLenght = texObj.Length;
-			
-			RectTransform rtran = GetComponent<RectTransform> ();
-			//rtran.pivot = Vector2.zero;
-			//rtran.anchorMax = new Vector2(0, 0);
-			//rtran.anchorMin = new Vector2(0, 0);
-			rtran.sizeDelta = new Vector2 (frameTex [0].width, frameTex [0].height);
-			refreshDrawPosition (transform.position);
+            frameLenght = texObj.Length;
+            spriteArr = new Sprite[frameLenght];
+
+            for (int i = 0; i < frameLenght; i++)
+            {
+                Texture2D tex = texObj[i] as Texture2D;
+                spriteArr[i] =(Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero));
+            }
 		}
 
-		public void refreshDrawPosition(Vector2 pos)
-		{
-			Debug.Log ("===>" + pos.x + " " + pos.y);
-			rect = new Rect (pos.x,pos.y, frameTex [0].width, frameTex [0].height);
-		}
         void OnGUI()
         {
             if (isPlaying)
             {
                 drawAnimation();
-				Debug.Log("fffbbbb");
             }
         }
 
         // Update is called once per frame
         protected void drawAnimation()
         {
-			Debug.Log (" rect " + rect.position.ToString());
-            GUI.DrawTexture(rect, frameTex[currentIndex]);
+            comImage.sprite = spriteArr[currentIndex];
+
             if (currentIndex < frameLenght - 1)
             {
                 time += Time.deltaTime;
@@ -92,7 +81,7 @@ namespace Lui
         {
             isPlaying = false;
             currentIndex = 0;
-            GUI.DrawTexture(rect, frameTex[currentIndex]);
+            comImage.sprite = spriteArr[0];
         }
 
         public void pause()
