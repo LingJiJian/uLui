@@ -5,54 +5,68 @@ using UnityEngine.UI;
 
 namespace Lui
 {
-    public class LFrameAnimation
+	public class LFrameAnimation : MonoBehaviour
     {
-        protected int currentIndex = 0;
-        protected Texture[] frameTex;
-        public float fps = 15f;
         
+        public float fps = 15f;
+		public bool isPlayOnwake = false;
+		public string path;
+
         protected float time;
         protected int frameLenght;
-        protected Rect rect;
+        public Rect rect;
         protected bool isPlaying = false;
+		protected int currentIndex = 0;
+		protected Texture[] frameTex;
 
-        private string _path;
-        public string path
-        {
-           set {
-               _path = value;
-               //load textures
-               Object[] texObj = Resources.LoadAll(_path);
-               frameTex = new Texture[texObj.Length];
-               texObj.CopyTo(frameTex, 0);
-               frameLenght = texObj.Length;
+		public LFrameAnimation(){
 
-               rect = new Rect(0, 0, frameTex[0].width, frameTex[0].height);
-           }
-        }
+		}
 
         // Use this for initialization
         void Start()
         {
-
+			if (isPlayOnwake) {
+				loadTexture ();
+				play ();
+			}
+				
         }
 
-        public LFrameAnimation(string path)
-        {
-            
-        }
+		public void loadTexture()
+		{
+			//load textures
+			Object[] texObj = Resources.LoadAll(path);
+			frameTex = new Texture[texObj.Length];
+			texObj.CopyTo(frameTex, 0);
+			frameLenght = texObj.Length;
+			
+			RectTransform rtran = GetComponent<RectTransform> ();
+			//rtran.pivot = Vector2.zero;
+			//rtran.anchorMax = new Vector2(0, 0);
+			//rtran.anchorMin = new Vector2(0, 0);
+			rtran.sizeDelta = new Vector2 (frameTex [0].width, frameTex [0].height);
+			refreshDrawPosition (transform.position);
+		}
 
+		public void refreshDrawPosition(Vector2 pos)
+		{
+			Debug.Log ("===>" + pos.x + " " + pos.y);
+			rect = new Rect (pos.x,pos.y, frameTex [0].width, frameTex [0].height);
+		}
         void OnGUI()
         {
             if (isPlaying)
             {
                 drawAnimation();
+				Debug.Log("fffbbbb");
             }
         }
 
         // Update is called once per frame
         protected void drawAnimation()
         {
+			Debug.Log (" rect " + rect.position.ToString());
             GUI.DrawTexture(rect, frameTex[currentIndex]);
             if (currentIndex < frameLenght - 1)
             {

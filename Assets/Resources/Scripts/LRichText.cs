@@ -160,6 +160,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
     List<LRenderElement> elemRenderArr;
     List<LRichCacheElement> cacheLabElements;
     List<LRichCacheElement> cacheImgElements;
+	List<LRichCacheElement> cacheFramAnimElements;
 
     public void removeAllElements()
     {
@@ -173,6 +174,12 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
             img.isUse = false;
             img.node.transform.SetParent(null);
         }
+
+			foreach (LRichCacheElement anim in cacheFramAnimElements)
+			{
+				anim.isUse = false;
+				anim.node.transform.SetParent(null);
+			}
     }
 
     public void insertElement(string txt, Color color,int fontSize, bool isUnderLine, bool isOutLine, Color outLineColor, string data)
@@ -205,6 +212,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         elemRenderArr = new List<LRenderElement>();
         cacheLabElements = new List<LRichCacheElement>();
         cacheImgElements = new List<LRichCacheElement>();
+			cacheFramAnimElements = new List<LRichCacheElement> ();
 
 		
     }
@@ -282,9 +290,8 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
                 rendElem.path = elemAnim.path;
                 rendElem.data = elemAnim.data;
                 rendElem.fs = elemAnim.fs;
-                rendElem.data = elemAnim.data;
            
-                Texture tex = Resources.Load(rendElem.path+"1.png") as Texture;
+                Texture tex = Resources.Load(rendElem.path+"/face011") as Texture;
                 rendElem.width = tex.width;
                 rendElem.height = tex.height;
                 elemRenderArr.Add(rendElem);
@@ -521,20 +528,31 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
                         obj = getCacheLabel();
                         makeLabel(obj, elem);
 						_lineWidth += (int)obj.GetComponent<Text>().preferredWidth;
+
+							obj.transform.SetParent(transform);
+							obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
                     }
                     else if (elem.type == Type.IMAGE)
                     {
-                        obj = getCacheImage();
+                        obj = getCacheImage(true);
                         makeImage(obj, elem);
                         _lineWidth += (int)obj.GetComponent<Image>().preferredWidth;
+
+							obj.transform.SetParent(transform);
+							obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
                     }
                     else if (elem.type == Type.ANIM)
                     {
-                        obj = getCacheImage();
-                        makeImage(obj, elem);
-                    }
-                    obj.transform.SetParent(transform);
-					obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
+                        obj = getCacheFramAnim();
+                        makeFramAnim(obj, elem);
+						_lineWidth += (int)obj.GetComponent<RectTransform>().rect.x;
+
+							obj.transform.SetParent(transform);
+							obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
+                    	
+							LFrameAnimation comAnim = obj.GetComponent<LFrameAnimation>();
+							comAnim.refreshDrawPosition(obj.transform.TransformPoint(obj.transform.localPosition));
+						}
                 }
             }
             realLineWidth = Mathf.Max(_lineWidth, realLineWidth);
@@ -570,7 +588,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 
         if (elem.isUnderLine)
         {
-            GameObject underLine = getCacheImage();
+            GameObject underLine = getCacheImage(false);
             Image underImg = underLine.GetComponent<Image>();
             underImg.color = elem.color;
             underImg.GetComponent<RectTransform>().sizeDelta = new Vector2(comText.preferredWidth, 1);
@@ -589,14 +607,22 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         }
     }
 
-    void makeAnim(GameObject anim, LRenderElement elem)
+	void makeFramAnim(GameObject anim, LRenderElement elem)
     {
         LFrameAnimation comFram = anim.GetComponent<LFrameAnimation>();
         if (comFram != null)
         {
+
+				RectTransform rtran = anim.GetComponent<RectTransform>();
+				rtran.pivot = Vector2.zero;
+				rtran.anchorMax =new Vector2(0,1);
+				rtran.anchorMin = new Vector2(0,1);
+
             comFram.path = elem.path;
-            comFram.fps = elem.fs;
+				comFram.fps = 10;
+				comFram.loadTexture ();
             comFram.play();
+
         }
     }
 
@@ -634,7 +660,7 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         return ret;
     }
 
-    protected GameObject getCacheImage()
+    protected GameObject getCacheImage(bool isFitSize)
     {
         GameObject ret = null;
         int len = cacheLabElements.Count;
@@ -652,6 +678,9 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
         {
             ret = new GameObject();
             ret.AddComponent<Image>();
+				ContentSizeFitter fit = ret.AddComponent<ContentSizeFitter>();
+            fit.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            fit.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
 
             RectTransform rtran = ret.GetComponent<RectTransform>();
             rtran.pivot = Vector2.zero;
@@ -662,8 +691,42 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
             cacheElem.isUse = true;
             cacheLabElements.Add(cacheElem);
         }
+		ContentSizeFitter fitCom = ret.GetComponent<ContentSizeFitter>();
+		fitCom.enabled = isFitSize;
         return ret;
     }
+
+	protected GameObject getCacheFramAnim()
+	{
+		GameObject ret = null;
+		int len = cacheFramAnimElements.Count;
+		for (int i = 0; i < len;i++ )
+		{
+			LRichCacheElement cacheElem = cacheFramAnimElements[i];
+			if (cacheElem.isUse == false)
+			{
+				cacheElem.isUse = true;
+				ret = cacheElem.node;
+				break;
+			}
+		}
+		if (ret == null)
+		{
+			ret = new GameObject();
+			LFrameAnimation fan = ret.AddComponent<LFrameAnimation>();
+				ret.AddComponent<RectTransform>();
+//				fan.isPlayOnwake = true;
+
+
+
+
+			
+			LRichCacheElement cacheElem = new LRichCacheElement(ret);
+			cacheElem.isUse = true;
+			cacheFramAnimElements.Add(cacheElem);
+		}
+		return ret;
+	}
 
     protected bool isChinese(string text)
     {
@@ -685,9 +748,12 @@ public class LRichText : MonoBehaviour, IRichTextClickableProtocol
 
 		this.insertElement("hello world!!", Color.blue,25, true, false, Color.blue,"");
 		this.insertElement("测试b!!", Color.red, 15, false, false, Color.blue, "");
+		this.insertElement("Image/face01",10f,"");
 		this.insertElement("测 试哈abc defghij哈!!", Color.green, 15, true, false, Color.blue, "");
+		this.insertElement("Image/face02/face021","");
+		this.insertElement (1);
 	    this.insertElement("测试aaaaafffzz zzzzzzzz zzzzz fff哈哈 哈哈!!", Color.yellow, 20, false, false, Color.blue, "");
-        this.insertElement("Image/face/face0201","");
+        
         this.reloadData ();
 
 	}
