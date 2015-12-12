@@ -33,14 +33,14 @@ namespace Lui
 		public void loadTexture()
 		{
 			//load textures
-			Object[] texObj = Resources.LoadAll(path);
+			Object[] texObj = Resources.LoadAll(path,typeof(Sprite));
             frameLenght = texObj.Length;
             spriteArr = new Sprite[frameLenght];
 
             for (int i = 0; i < frameLenght; i++)
             {
-                Texture2D tex = texObj[i] as Texture2D;
-                spriteArr[i] =(Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero));
+				Sprite sp = texObj[i] as Sprite;
+				spriteArr[i] = sp;
             }
 		}
 

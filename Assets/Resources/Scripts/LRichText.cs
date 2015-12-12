@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Lui
@@ -72,7 +73,7 @@ class LRichElementAnim : LRichElement
     public string path { get; protected set; }
     public float fs { get; protected set; }
 
-    public LRichElementAnim(string path,float fp, string data)
+    public LRichElementAnim(string path,float fs, string data)
     {
         this.type = Type.ANIM;
         this.path = path;
@@ -148,13 +149,12 @@ struct LRenderElement
 
 public class LRichText : MonoBehaviour, IPointerClickHandler
 {
-	
 	public AlignType alignType;
 	public int verticalSpace;
 	public int maxLineWidth;
 	public Font font;
-    protected delegate void DelegateClickHandle(string data);
-    public DelegateClickHandle delegateClickHandle;
+
+    private UnityAction<string> onClickHandler;
     public int realLineHeight { get; protected set; }
     public int realLineWidth { get; protected set; }
 
@@ -231,10 +231,6 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 			{
 				rtran.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
-			}else if (alignType == AlignType.REAL_CENTER)
-			{
-				rtran.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
-				
 			}else if (alignType == AlignType.LEFT_TOP)
 			{
 				rtran.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
@@ -281,9 +277,9 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                 rendElem.path = elemImg.path;
                 rendElem.data = elemImg.data;
 
-                Texture tex = Resources.Load(rendElem.path) as Texture;
-                rendElem.width = tex.width;
-                rendElem.height = tex.height;
+				Sprite sp = Resources.Load(rendElem.path,typeof(Sprite)) as Sprite;
+				rendElem.width = sp.texture.width;
+				rendElem.height = sp.texture.height;
                 elemRenderArr.Add(rendElem);
             }
             else if (elem.type == Type.ANIM)
@@ -294,10 +290,10 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                 rendElem.path = elemAnim.path;
                 rendElem.data = elemAnim.data;
                 rendElem.fs = elemAnim.fs;
-           
-                Texture tex = Resources.Load(rendElem.path+"/face011") as Texture;
-                rendElem.width = tex.width;
-                rendElem.height = tex.height;
+		
+				Sprite sp = Resources.Load(rendElem.path+"/1",typeof(Sprite)) as Sprite;
+				rendElem.width = sp.texture.width;
+				rendElem.height = sp.texture.height;
                 elemRenderArr.Add(rendElem);
             }
             else if (elem.type == Type.NEWLINE)
@@ -577,6 +573,13 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
             comText.fontSize = elem.fontSize;
             comText.fontStyle = FontStyle.Normal;
             comText.color = elem.color;
+
+
+			Outline outline = lab.GetComponent<Outline>();
+			if(outline == null){
+				outline = lab.AddComponent<Outline>();
+			}
+			outline.enabled = elem.isOutLine;
         }
 
         if (elem.isUnderLine)
@@ -595,8 +598,8 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
         Image comImage = img.GetComponent<Image>();
         if (comImage != null)
         {
-            Texture2D tex = Resources.Load(elem.path) as Texture2D;
-            comImage.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height),Vector2.zero);
+			Sprite sp = Resources.Load(elem.path,typeof(Sprite)) as Sprite;
+			comImage.sprite = sp;
         }
     }
 
@@ -606,7 +609,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
         if (comFram != null)
         {
             comFram.path = elem.path;
-			comFram.fps = 10;
+			comFram.fps = elem.fs;
 			comFram.loadTexture ();
             comFram.play();
         }
@@ -743,28 +746,28 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 	void Start () {
         
 		this.insertElement("hello world!!", Color.blue,25, true, false, Color.blue,"数据");
-		this.insertElement("测试b!!", Color.red, 15, false, false, Color.blue, "");
+		this.insertElement("测试b!!", Color.red, 15, false, true, Color.blue, "");
 		this.insertElement("Image/face01",10f,"");
 		this.insertElement("测 试哈abc defghij哈!!", Color.green, 15, true, false, Color.blue, "");
-		this.insertElement("Image/face02/face021","");
+		this.insertElement("Image/face02/1","");
 		this.insertElement (1);
-	    this.insertElement("测试aaaaafffzz zzzzzzzz zzzzz fff哈哈 哈哈!!", Color.yellow, 20, false, false, Color.blue, "");
+	    this.insertElement("测试aaaaafffzz zzzzzzzz zzzzz fff哈哈 哈哈!!", Color.yellow, 20, false, true, Color.blue, "");
         
         this.reloadData ();
 	}
 
-    public void pushClickHandler(DelegateClickHandle d)
+    public void pushClickHandler(UnityAction<string> action)
     {
-        delegateClickHandle += d;
+		onClickHandler += action;
     }
 
     public void OnPointerClick(PointerEventData data)
     {
         if (objectDataMap.ContainsKey(data.pointerEnter))
         {
-            if ((delegateClickHandle !=null) && (objectDataMap[data.pointerEnter] != ""))
+            if ((onClickHandler !=null) && (objectDataMap[data.pointerEnter] != ""))
             {
-                delegateClickHandle.Invoke(objectDataMap[data.pointerEnter]);
+                onClickHandler.Invoke(objectDataMap[data.pointerEnter]);
             }
         }
         
