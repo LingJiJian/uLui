@@ -574,15 +574,20 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
             comText.fontStyle = FontStyle.Normal;
             comText.color = elem.color;
 
+        }
 
-			Outline outline = lab.GetComponent<Outline>();
+		Outline outline = lab.GetComponent<Outline>();
+		if (elem.isOutLine) {
 			if(outline == null){
 				outline = lab.AddComponent<Outline>();
 			}
-			outline.enabled = elem.isOutLine;
-        }
+		} else {
+			if(outline){
+				Destroy(outline);
+			}
+		}
 
-        if (elem.isUnderLine)
+		if (elem.isUnderLine)
         {
             GameObject underLine = getCacheImage(false);
             Image underImg = underLine.GetComponent<Image>();
