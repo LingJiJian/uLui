@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 namespace Lui
 {
 
-public enum Type
+public enum RichType
 {
     TEXT,
     IMAGE,
@@ -16,7 +16,7 @@ public enum Type
     NEWLINE,
 }
 
-public enum AlignType
+public enum RichAlignType
 {
     DESIGN_CENTER,
     LEFT_TOP,
@@ -24,7 +24,7 @@ public enum AlignType
 
 class LRichElement : Object {
 
-    public Type type { get; protected set; }
+    public RichType type { get; protected set; }
     public Color color { get; protected set; }
     public string data { get; protected set; }
 }
@@ -40,7 +40,7 @@ class LRichElementText : LRichElement
 
     public LRichElementText(Color color, string txt, int fontSize, bool isUnderLine, bool isOutLine, string data)
     {
-        this.type = Type.TEXT;
+        this.type = RichType.TEXT;
         this.color = color;
         this.txt = txt;
         this.fontSize = fontSize;
@@ -59,7 +59,7 @@ class LRichElementImage : LRichElement
 
     public LRichElementImage( string path, string data )
     {
-        this.type = Type.IMAGE;
+        this.type = RichType.IMAGE;
         this.path = path;
         this.data = data;
     }
@@ -75,7 +75,7 @@ class LRichElementAnim : LRichElement
 
     public LRichElementAnim(string path,float fs, string data)
     {
-        this.type = Type.ANIM;
+        this.type = RichType.ANIM;
         this.path = path;
         this.data = data;
         this.fs = fs;
@@ -89,7 +89,7 @@ class LRichElementNewline : LRichElement
 {
     public LRichElementNewline()
     {
-        this.type = Type.NEWLINE;
+        this.type = RichType.NEWLINE;
     }
 }
 
@@ -111,7 +111,7 @@ class LRichCacheElement : Object
 /// </summary>
 struct LRenderElement
 {
-    public Type type;
+    public RichType type;
     public string strChar;
     public int width;
     public int height;
@@ -149,7 +149,7 @@ struct LRenderElement
 
 public class LRichText : MonoBehaviour, IPointerClickHandler
 {
-	public AlignType alignType;
+	public RichAlignType alignType;
 	public int verticalSpace;
 	public int maxLineWidth;
 	public Font font;
@@ -209,7 +209,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
     public LRichText()
     {
-        this.alignType = AlignType.LEFT_TOP;
+        this.alignType = RichAlignType.LEFT_TOP;
         this.verticalSpace = 0;
         this.maxLineWidth = 300;
 
@@ -236,18 +236,18 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
 			RectTransform rtran = this.GetComponent<RectTransform>();
 			//align
-			if (alignType == AlignType.DESIGN_CENTER)
+			if (alignType == RichAlignType.DESIGN_CENTER)
 			{
 				rtran.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
-			}else if (alignType == AlignType.LEFT_TOP)
+			}else if (alignType == RichAlignType.LEFT_TOP)
 			{
 				rtran.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
 			}
 
         foreach (LRichElement elem in richElements)
         {
-            if (elem.type == Type.TEXT)
+            if (elem.type == RichType.TEXT)
             {
                 LRichElementText elemText = elem as LRichElementText;
                 char[] _charArr = elemText.txt.ToCharArray();
@@ -256,7 +256,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                 foreach (char strChar in _charArr)
                 {
                     LRenderElement rendElem = new LRenderElement();
-                    rendElem.type = Type.TEXT;
+                    rendElem.type = RichType.TEXT;
                     rendElem.strChar = strChar.ToString();
                     rendElem.isOutLine = elemText.isOutLine;
                     rendElem.isUnderLine = elemText.isUnderLine;
@@ -278,11 +278,11 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                     elemRenderArr.Add(rendElem);
                 }
             }
-            else if (elem.type == Type.IMAGE)
+            else if (elem.type == RichType.IMAGE)
             {
                 LRichElementImage elemImg = elem as LRichElementImage;
                 LRenderElement rendElem = new LRenderElement();
-                rendElem.type = Type.IMAGE;
+                rendElem.type = RichType.IMAGE;
                 rendElem.path = elemImg.path;
                 rendElem.data = elemImg.data;
 
@@ -291,11 +291,11 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 				rendElem.height = sp.texture.height;
                 elemRenderArr.Add(rendElem);
             }
-            else if (elem.type == Type.ANIM)
+            else if (elem.type == RichType.ANIM)
             {
                 LRichElementAnim elemAnim = elem as LRichElementAnim;
                 LRenderElement rendElem = new LRenderElement();
-                rendElem.type = Type.ANIM;
+                rendElem.type = RichType.ANIM;
                 rendElem.path = elemAnim.path;
                 rendElem.data = elemAnim.data;
                 rendElem.fs = elemAnim.fs;
@@ -305,7 +305,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 				rendElem.height = sp.texture.height;
                 elemRenderArr.Add(rendElem);
             }
-            else if (elem.type == Type.NEWLINE)
+            else if (elem.type == RichType.NEWLINE)
             {
                 LRenderElement rendElem = new LRenderElement();
                 rendElem.isNewLine = true;
@@ -342,7 +342,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
             {
                 if (oneLine + elem.width > maxLineWidth)
                 {
-                    if (elem.type == Type.TEXT)
+                    if (elem.type == RichType.TEXT)
                     {
                        if (isChinese(elem.strChar) || elem.strChar == " ")
                        {
@@ -389,7 +389,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                                }
                            }
                        }
-                    }else if (elem.type == Type.ANIM || elem.type == Type.IMAGE)
+                    }else if (elem.type == RichType.ANIM || elem.type == RichType.IMAGE)
                     {
                         lines++;
                         elem.pos = new Vector2(0, -lines * 27);
@@ -444,7 +444,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
                 foreach (LRenderElement elem in rendElemLineMap[posY])
                 {
-                    if (_lastEleme.type == Type.TEXT && elem.type == Type.TEXT)
+                    if (_lastEleme.type == RichType.TEXT && elem.type == RichType.TEXT)
                     {
                         if (_lastEleme.color == elem.color)
                         {
@@ -453,7 +453,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                         }
                         else // diff color
                         {
-                            if (_lastDiffStartEleme.type == Type.TEXT)
+                            if (_lastDiffStartEleme.type == RichType.TEXT)
                             {
                                 LRenderElement _newElem = _lastDiffStartEleme.Clone();
                                 _newElem.strChar = lineString;
@@ -464,10 +464,10 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                             }
                         }
                     }
-                    else if (elem.type == Type.IMAGE || elem.type == Type.ANIM || elem.type == Type.NEWLINE)
+                    else if (elem.type == RichType.IMAGE || elem.type == RichType.ANIM || elem.type == RichType.NEWLINE)
                     {
                         //interrupt
-                        if (_lastDiffStartEleme.type == Type.TEXT)
+                        if (_lastDiffStartEleme.type == RichType.TEXT)
                         {
                             LRenderElement _newEleme = _lastDiffStartEleme.Clone();
                             _newEleme.strChar = lineString;
@@ -476,11 +476,11 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                         }
                         lineElemArr.Add(elem);
 
-                    }else if (_lastEleme.type != Type.TEXT)
+                    }else if (_lastEleme.type != RichType.TEXT)
                     {
                         //interrupt
                         _lastDiffStartEleme = elem;
-                        if (elem.type == Type.TEXT)
+                        if (elem.type == RichType.TEXT)
                         {
                             lineString = elem.strChar;
                         }
@@ -488,7 +488,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                     _lastEleme = elem;
                 }
                 // the last elementText
-                if (_lastDiffStartEleme.type == Type.TEXT)
+                if (_lastDiffStartEleme.type == RichType.TEXT)
                 {
                     LRenderElement _newElem = _lastDiffStartEleme.Clone();
                     _newElem.strChar = lineString;
@@ -532,21 +532,21 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
             int _lineWidth = 0;
             foreach (LRenderElement elem in _lines)
             {
-                if (elem.type != Type.NEWLINE)
+                if (elem.type != RichType.NEWLINE)
                 {
-                    if (elem.type == Type.TEXT)
+                    if (elem.type == RichType.TEXT)
                     {
                         obj = getCacheLabel();
                         makeLabel(obj, elem);
 						_lineWidth += (int)obj.GetComponent<Text>().preferredWidth;
                     }
-                    else if (elem.type == Type.IMAGE)
+                    else if (elem.type == RichType.IMAGE)
                     {
                         obj = getCacheImage(true);
                         makeImage(obj, elem);
                         _lineWidth += (int)obj.GetComponent<Image>().preferredWidth;
                     }
-                    else if (elem.type == Type.ANIM)
+                    else if (elem.type == RichType.ANIM)
                     {
                         obj = getCacheFramAnim();
                         makeFramAnim(obj, elem);
@@ -562,11 +562,11 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
         RectTransform rtran = this.GetComponent<RectTransform>();
         //align
-        if (alignType == AlignType.DESIGN_CENTER)
+        if (alignType == RichAlignType.DESIGN_CENTER)
         {
 			rtran.sizeDelta = new Vector2(maxLineWidth, realLineHeight);
 
-        }else if (alignType == AlignType.LEFT_TOP)
+        }else if (alignType == RichAlignType.LEFT_TOP)
         {
             rtran.sizeDelta = new Vector2(realLineWidth, realLineHeight);
         }
