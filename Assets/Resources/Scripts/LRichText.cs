@@ -220,6 +220,15 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 		cacheFramAnimElements = new List<LRichCacheElement> ();
         objectDataMap = new Dictionary<GameObject, string>();
     }
+    
+    void OnDestroy()
+    {
+        removeAllElements();
+        richElements.Clear();
+        cacheLabElements.Clear();
+        cacheImgElements.Clear();
+        cacheFramAnimElements.Clear();
+    }
 
     public void reloadData()
     {
@@ -725,12 +734,6 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 		}
 		return ret;
 	}
-
-    public void setClickHandle()
-    {
-
-
-    }
 
     protected bool isChinese(string text)
     {
