@@ -57,14 +57,14 @@ namespace Lui
         {
             comImage.sprite = spriteArr[currentIndex];
 
-            if (currentIndex < frameLenght - 1)
+            if (currentIndex < frameLenght)
             {
                 time += Time.deltaTime;
                 if (time >= 1.0f / fps)
                 {
-                    currentIndex++;
+					currentIndex++;
                     time = 0;
-                    if (currentIndex == frameLenght - 1)
+                    if (currentIndex == frameLenght)
                     {
                         currentIndex = 0;
                     }
