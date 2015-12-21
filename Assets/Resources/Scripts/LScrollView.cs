@@ -18,7 +18,7 @@ namespace Lui
     /// </summary>
     public class LScrollView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
-        protected const float MOVE_OVERFLOW = 100f;
+        protected const float MOVE_OVERFLOW = 10f;
         protected const float MOVE_EASEIN_RATE = 0.5f;
         protected const float RELOCATE_DURATION = 0.2f;
         protected const float DEACCELERATE_INTERVAL = 0.245f;
@@ -28,8 +28,6 @@ namespace Lui
         public GameObject container;
         public ScrollDirection direction;
         private Vector2 lastMovePoint;
-        private bool dragging;
-        private bool touchMoved;
         private Vector2 maxOffset;
         private Vector2 minOffset;
         private bool deaccelerateScrolling;
@@ -43,17 +41,15 @@ namespace Lui
         {
             direction = ScrollDirection.BOTH;
             lastMovePoint = Vector2.zero;
-            bounceable = true;
-            dragging = false;
+            bounceable = false;
             deaccelerateable = true;
             dragSpeed = 0;
             scrollDistance = Vector2.zero;
             dragable = true;
-            touchMoved = false;
             maxOffset = Vector2.zero;
             minOffset = Vector2.zero;
         }
-
+        
         public void setContainerSize(Vector2 size)
         {
             Vector2 cs = GetComponent<RectTransform>().rect.size;
@@ -61,6 +57,7 @@ namespace Lui
             int height = Mathf.Max((int)cs.y, (int)size.y);
 
             container.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+            updateLimitOffset();
         }
 
         protected void updateLimitOffset()
@@ -89,7 +86,6 @@ namespace Lui
             if (dragable)
             {
                 lastMovePoint = point;
-                dragging = true;
                 stoppedDeaccelerateScroll();
                 stoppedAnimatedScroll();
             }
@@ -155,8 +151,6 @@ namespace Lui
                     }
                 }
             }
-            touchMoved = false;
-            dragging = false;
         }
 
         protected void relocateContainerWithoutCheck(Vector2 offset)
@@ -200,11 +194,15 @@ namespace Lui
             {
                 validateOffset(ref offset);
             }
+            iTween.Stop(container);
+            container.transform.localPosition = offset;
+            onScrolling();
         }
 
         protected bool validateOffset(ref Vector2 point)
         {
-            float x = point.x, y = point.y;
+            float x = point.x; 
+            float y = point.y;
             x = Mathf.Max(x, minOffset.x);
             x = Mathf.Min(x, maxOffset.x);
             y = Mathf.Max(y, minOffset.y);
@@ -236,6 +234,11 @@ namespace Lui
         {
             iTween.Stop(container);
             onScrolling();
+        }
+
+        void Awake()
+        {
+            updateLimitOffset();
         }
 
         protected void onScrolling()
