@@ -220,16 +220,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 		cacheFramAnimElements = new List<LRichCacheElement> ();
         objectDataMap = new Dictionary<GameObject, string>();
     }
-    
-    void OnDestroy()
-    {
-        removeAllElements();
-        richElements.Clear();
-        cacheLabElements.Clear();
-        cacheImgElements.Clear();
-        cacheFramAnimElements.Clear();
-    }
-
+   
     public void reloadData()
     {
         this.removeAllElements();
@@ -550,9 +541,9 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                     {
                         obj = getCacheFramAnim();
                         makeFramAnim(obj, elem);
-                        _lineWidth += (int)obj.GetComponent<Image>().preferredWidth;
+						_lineWidth += elem.width;
 					}
-                    obj.transform.SetParent(transform);
+						obj.transform.SetParent(transform);
                     obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
                     objectDataMap[obj] = elem.data;
                 }
@@ -754,12 +745,12 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 	void Start () {
         
 		this.insertElement("hello world!!", Color.blue,25, true, false, Color.blue,"数据");
-		this.insertElement("测试b!!", Color.red, 15, false, true, Color.blue, "");
-		this.insertElement("Image/face01",10f,"");
-		this.insertElement("测 试哈abc defghij哈!!", Color.green, 15, true, false, Color.blue, "");
+		this.insertElement("测试文本内容!!", Color.red, 15, false, true, Color.blue, "");
+		this.insertElement("Image/face01",5f,"");
+		this.insertElement("The article comes from the point of the examination", Color.green, 15, true, false, Color.blue, "");
 		this.insertElement("Image/face02/1","");
 		this.insertElement (1);
-	    this.insertElement("测试aaaaafffzz zzzzzzzz zzzzz fff哈哈 哈哈!!", Color.yellow, 20, false, true, Color.blue, "");
+	    this.insertElement("outline and newline", Color.yellow, 20, false, true, Color.blue, "");
         
         this.reloadData ();
 	}

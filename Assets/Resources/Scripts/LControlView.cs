@@ -17,7 +17,6 @@ namespace Lui
         public Vector2 centerPoint;
         public int radius;
         public bool relocateWithAnimation;
-        public GameObject baseBoard;
         public GameObject joyStick;
         private bool animationUpdate;
         private Vector2 lastPoint;
@@ -156,7 +155,7 @@ namespace Lui
             pushControlHandler((float x, float y) =>
             {
 
-                Debug.Log(" offset x,y " + x + " " + y);
+                //Debug.Log(" offset x,y " + x + " " + y);
             });
         }
     }
