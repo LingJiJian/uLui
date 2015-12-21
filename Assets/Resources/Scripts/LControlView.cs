@@ -18,7 +18,6 @@ namespace Lui
         public int radius;
         public bool relocateWithAnimation;
         public GameObject joyStick;
-        private bool animationUpdate;
         private Vector2 lastPoint;
         private UnityAction<float, float> onControlHandler;
         private Rect joyStickBoundBox;
@@ -29,7 +28,6 @@ namespace Lui
             this.centerPoint = Vector2.zero;
             this.lastPoint = Vector2.zero;
             this.relocateWithAnimation = true;
-            this.animationUpdate = false;
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -102,7 +100,6 @@ namespace Lui
                     "time", MOVE_DELAY,
                     "onupdate", "onExecuteEventHandle",
                     "onupdatetarget", gameObject));
-                performAnimateUpdate();
             }
             else
             {
@@ -110,23 +107,11 @@ namespace Lui
             }
         }
 
-        protected void performAnimateUpdate()
-        {
-            if (!animationUpdate)
-            {
-                animationUpdate = true;
-            }
-        }
-
         protected void stopAnimateUpdate()
         {
-            if (animationUpdate)
+            if (joyStick)
             {
-                if (joyStick)
-                {
-                    iTween.Stop(joyStick);
-                }
-                animationUpdate = false;
+                iTween.Stop(joyStick);
             }
         }
 
