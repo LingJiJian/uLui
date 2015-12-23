@@ -86,9 +86,9 @@ namespace Lui
             }
         }
 
-        public void pushControlHandler(UnityAction<float, float> act)
+        public void setControlHandler(UnityAction<float, float> act)
         {
-            onControlHandler += act;
+            onControlHandler = act;
         }
 
         protected void relocateJoystick(bool anim)
@@ -137,7 +137,7 @@ namespace Lui
 
         void Start()
         {
-            pushControlHandler((float x, float y) =>
+            setControlHandler((float x, float y) =>
             {
 
                 //Debug.Log(" offset x,y " + x + " " + y);

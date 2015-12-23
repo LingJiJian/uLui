@@ -18,8 +18,9 @@ namespace Lui
     /// </summary>
     public class LScrollView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
-        protected const float MOVE_OVERFLOW = 10f;
-        protected const float RELOCATE_DURATION = 0.2f;
+        protected static float MOVE_OVERFLOW = 10f;
+        protected static float RELOCATE_DURATION = 0.2f;
+        public static int INVALID_INDEX = -1;
 
         public bool bounceable;
         public GameObject container;
@@ -165,10 +166,6 @@ namespace Lui
             {
                 validateOffset(ref offset);
             }
-            else
-            {
-                validateOffset(ref offset, new Vector2(0, 100));
-            }
             iTween.Stop(container);
             container.transform.localPosition = offset;
             onScrolling();
@@ -180,18 +177,68 @@ namespace Lui
             onScrolling();
         }
 
-        protected bool validateOffset(ref Vector2 point)
+        public void setContentOffsetToTop()
         {
-            return validateOffset(ref point, Vector2.zero);
+            if (direction == ScrollDirection.VERTICAL)
+            {
+                Vector2 point = new Vector2(0, -(container.GetComponent<RectTransform>().rect.height - GetComponent<RectTransform>().rect.height));
+                setContentOffset(point);
+            }
         }
 
-        protected bool validateOffset(ref Vector2 point, Vector2 append)
+        public void setContentOffsetToBottom()
+        {
+            if (direction == ScrollDirection.VERTICAL)
+            {
+                setContentOffset(maxOffset);
+            }
+        }
+
+        public void setContentOffsetToRight()
+        {
+	        if( direction == ScrollDirection.HORIZONTAL )
+	        {
+		        setContentOffset(minOffset);
+	        }
+        }
+
+        public void setContentOffsetToLeft()
+        {
+            if (direction == ScrollDirection.HORIZONTAL )
+	        {
+		        setContentOffset(maxOffset);
+	        }
+        }
+
+        public void setContentOffsetInDuration(Vector2 offset, float duration)
+        {
+            if (bounceable)
+            {
+                validateOffset(ref offset);
+            }
+            setContentOffsetInDurationWithoutCheck(offset, duration);
+        }
+
+        public void setContentOffsetInDurationWithoutCheck(Vector2 offset, float duration)
+        {
+            iTween.MoveTo(container, iTween.Hash(
+                "position", transform.TransformPoint(offset),
+                "time", duration,
+                "onupdate", "onScrolling",
+                "onupdatetarget", gameObject,
+                "oncomplete", "onMoveComplete",
+                "oncompletetarget", gameObject));
+
+            onScrolling();
+        }
+
+        protected bool validateOffset(ref Vector2 point)
         {
             float x = point.x, y = point.y;
-            x = Mathf.Max(x, minOffset.x );
-            x = Mathf.Min(x, maxOffset.x + append.x);
-            y = Mathf.Max(y, minOffset.y );
-            y = Mathf.Min(y, maxOffset.y + append.y);
+            x = Mathf.Max(x, minOffset.x);
+            x = Mathf.Min(x, maxOffset.x);
+            y = Mathf.Max(y, minOffset.y);
+            y = Mathf.Min(y, maxOffset.y);
 
             if (point.x != x || point.y != y)
             {
@@ -205,6 +252,21 @@ namespace Lui
             return false;
         }
 
+        void Awake()
+        {
+            updateLimitOffset();
+
+            RectTransform rtran = container.GetComponent<RectTransform>();
+            rtran.pivot = Vector2.zero;
+            rtran.anchorMax = Vector2.zero;
+            rtran.anchorMin = Vector2.zero;
+
+            rtran = GetComponent<RectTransform>();
+            rtran.pivot = Vector2.zero;
+            rtran.anchorMax = Vector2.zero;
+            rtran.anchorMin = Vector2.zero;
+        }
+
         public Vector2 getContentOffset()
         {
             return container.transform.localPosition;
@@ -212,24 +274,18 @@ namespace Lui
 
         protected void onMoveComplete()
         {
-            Debug.Log("onMoveComplete");
+            //Debug.Log("onMoveComplete");
         }
 
-        void Awake()
+        protected virtual void onScrolling()
         {
-            updateLimitOffset();
-        }
-
-        protected void onScrolling()
-        {
-            Debug.Log("onScrolling");
+            //Debug.Log("onScrolling");
 
         }
 
-        protected void onDraggingScrollEnded()
+        protected virtual void onDraggingScrollEnded()
         {
-            Debug.Log("onDraggingScrollEnded");
-
+            //Debug.Log("onDraggingScrollEnded");
         }
 
     }

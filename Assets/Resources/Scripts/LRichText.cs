@@ -755,9 +755,9 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
         this.reloadData ();
 	}
 
-    public void pushClickHandler(UnityAction<string> action)
+    public void setClickHandler(UnityAction<string> action)
     {
-		onClickHandler += action;
+		onClickHandler = action;
     }
 
     public void OnPointerClick(PointerEventData data)
