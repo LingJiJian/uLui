@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\LControlView.cs">
+    <Files>
+      <File FileName="Assets\Resources\Scripts\LControlView.cs" Line="8" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="G:\Demo\uLui\Assets\Resources\Scripts\LRichText.cs" line="388" />
+      <Breakpoint file="G:\Demo\uLui\Assets\Resources\Scripts\LRichText.cs" line="466" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
