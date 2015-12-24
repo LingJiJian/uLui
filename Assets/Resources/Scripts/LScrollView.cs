@@ -18,8 +18,6 @@ namespace Lui
     /// </summary>
     public class LScrollView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
-        protected static float MOVE_OVERFLOW = 10f;
-        protected static float RELOCATE_DURATION = 0.2f;
         public static int INVALID_INDEX = -1;
 
         public bool bounceable;

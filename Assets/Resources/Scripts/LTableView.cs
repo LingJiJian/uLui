@@ -50,7 +50,7 @@ namespace Lui
         protected Dictionary<int, int> indices;
         protected LTableViewCell cellTemplate;
         public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
-        private LDataSourceAdapter<LTableViewCell, int> onDataSourceAdapterHandler;
+        protected LDataSourceAdapter<LTableViewCell, int> onDataSourceAdapterHandler;
 
         public LTableView()
         {
@@ -86,7 +86,7 @@ namespace Lui
             relocateContainer();
         }
 
-        protected void removeAllFromUsed()
+        public void removeAllFromUsed()
         {
             foreach (LTableViewCell cell in cellsUsed)
             {
@@ -95,7 +95,7 @@ namespace Lui
             cellsUsed.Clear();
         }
 
-        protected void removeAllFromFreed()
+        public void removeAllFromFreed()
         {
             foreach (LTableViewCell cell in cellsFreed)
             {
@@ -375,7 +375,7 @@ namespace Lui
             return null;
         }
 
-        public void updateCellAtIndex(int idx)
+        public virtual void updateCellAtIndex(int idx)
         {
             LTableViewCell cell = onDataSourceAdapterHandler.Invoke(dequeueCell(), idx);
             if (cell == null)
