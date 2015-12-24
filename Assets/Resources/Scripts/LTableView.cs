@@ -423,10 +423,9 @@ namespace Lui
         {
             this.cellsSize = new Vector2(150, 40);
             this.cellTemplate.node = Resources.Load("Prefabs/tbl_cell") as GameObject;
-            Debug.Log(" this.cellTemplate " + this.cellTemplate);
 
             this.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 40 * 5);
-            this.cellsCount = 15;
+            this.cellsCount = 100;
             this.setDataSourceAdapterHandler(dataSourceAdaptTest);
             this.reloadData();
         }

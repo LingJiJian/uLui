@@ -8,8 +8,9 @@ public class LGuideLayer : MonoBehaviour {
 	public GameObject panel_guide_sub3;
 	public GameObject panel_guide_sub4;
 	public GameObject btn_target;
-	
-	void Start () {
+
+    void Start()
+    {
 
 		Vector2 btn_size = btn_target.GetComponent<RectTransform> ().rect.size;
 		Vector2 btn_pos = btn_target.transform.position;
