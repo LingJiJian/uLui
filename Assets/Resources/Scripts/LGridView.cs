@@ -230,7 +230,7 @@ namespace Lui
             relocateContainer();
         }
 
-        public override void onScrolling()
+        protected override void onScrolling()
         {
             int beginRow = 0, endRow = 0;
             beginRow = cellBeginRowFromOffset(getContentOffset());
