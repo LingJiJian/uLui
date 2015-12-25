@@ -241,14 +241,17 @@ namespace Lui
             GameObject obj = null;
             for (int i = 0; i < nodeList.Count; i++)
             {
-                obj = nodeList[i];
-                if (!bounceBox.Contains(obj.transform.position))
+				obj = nodeList[i];
+				Vector2 pos = obj.transform.position;
+				Vector2 topPoint = new Vector2(pos.x,pos.y+obj.GetComponent<RectTransform>().rect.height);
+				if (bounceBox.Contains(pos) ||
+				    bounceBox.Contains(topPoint))
                 {
-					obj.SetActive(false);
+					obj.SetActive(true);
                 }
                 else
                 {
-					obj.SetActive(true);
+					obj.SetActive(false);
                 }
             }
         }
@@ -257,9 +260,9 @@ namespace Lui
 		{
 			RectTransform rtran = GetComponent<RectTransform>();
 			this.bounceBox = new Rect(transform.position.x,
-			                     transform.position.y-40,
+			                     transform.position.y,
 			                     rtran.rect.width,
-			                     rtran.rect.height+40);
+			                     rtran.rect.height);
 
 			this.itemTemplate = Resources.Load("Prefabs/list_cell") as GameObject;
 			this.limitNum = 10;

@@ -67,7 +67,7 @@ namespace Lui
             cellTemplate = new LTableViewCell();
         }
 
-        public void reloadData()
+        public virtual void reloadData()
         {
             for (int i = 0; i < cellsUsed.Count;i++ )
             {

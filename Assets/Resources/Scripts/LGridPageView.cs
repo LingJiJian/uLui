@@ -73,7 +73,7 @@ namespace Lui
             }
         }
 
-        public void reloadData()
+        public override void reloadData()
         {
             updatePageCount();
             updateGridCellsPosition();

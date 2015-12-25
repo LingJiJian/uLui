@@ -38,7 +38,7 @@ namespace Lui
             cols = 0;
             rows = 0;
             direction = ScrollDirection.VERTICAL;
-
+			cellTemplate = new LGridViewCell ();
             cellsUsed = new List<LGridViewCell>();
             cellsFreed = new List<LGridViewCell>();
             positions = new List<Vector2>();
@@ -213,14 +213,16 @@ namespace Lui
 
         public void reloadData()
         {
-            LGridViewCell cell = cellsUsed[0];
-            while (cell != null)
-            {
-                cellsFreed.Add(cell);
-                cellsUsed.Remove(cell);
-                cell.node.transform.SetParent(null);
-                cell.reset();
-            }
+			if (cellsUsed.Count > 0) 
+			{
+				LGridViewCell cell = cellsUsed [0];
+				while (cell != null) {
+					cellsFreed.Add (cell);
+					cellsUsed.Remove (cell);
+					cell.node.transform.SetParent (null);
+					cell.reset ();
+				}
+			}
             indices.Clear();
             positions.Clear();
             updatePositions();
@@ -232,6 +234,8 @@ namespace Lui
 
         protected override void onScrolling()
         {
+			base.onScrolling ();
+
             int beginRow = 0, endRow = 0;
             beginRow = cellBeginRowFromOffset(getContentOffset());
             endRow = cellEndRowFromOffset(getContentOffset());
@@ -266,6 +270,7 @@ namespace Lui
                 {
                     indices.Remove(idx);
                     cellsUsed.Remove(cell);
+					cellsFreed.Add(cell);
                     cell.reset();
                     cell.node.transform.SetParent(null);
                 }
@@ -344,11 +349,10 @@ namespace Lui
 
         void Start()
         {
-            this.cellsSize = new Vector2(150, 40);
-            this.cellTemplate.node = Resources.Load("Prefabs/tbl_cell") as GameObject;
+            this.cellsSize = new Vector2(100, 100);
+			this.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
 
-            this.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 40 * 5);
-            this.cols = 5;
+            this.cols = 4;
             this.cellsCount = 100;
             this.setDataSourceAdapterHandler(dataSourceAdaptTest);
             this.reloadData();
