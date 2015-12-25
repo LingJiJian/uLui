@@ -132,12 +132,6 @@ namespace Lui
 
         protected void updateNodesPosition()
         {
-            for (int i = 0; i < container.transform.childCount;i++ )
-            {
-                GameObject obj = container.transform.GetChild(i).gameObject;
-                Destroy(obj);
-            }
-            
             if (nodeList.Count == 0)
             {
                 return;
@@ -240,15 +234,6 @@ namespace Lui
             return ret;
         }
 
-        void Awake()
-        {
-            RectTransform rtran = GetComponent<RectTransform>();
-            bounceBox = new Rect(transform.position.x,
-                                 transform.position.y,
-                                 rtran.rect.width,
-                                 rtran.rect.height);
-        }
-
         protected override void onScrolling()
         {
             base.onScrolling();
@@ -259,19 +244,32 @@ namespace Lui
                 obj = nodeList[i];
                 if (!bounceBox.Contains(obj.transform.position))
                 {
-                    if (obj.transform.parent)
-                    {
-                        obj.transform.SetParent(null);
-                    }
+					obj.SetActive(false);
                 }
                 else
                 {
-                    if (obj.transform.parent == null)
-                    {
-                        obj.transform.SetParent(container.transform);
-                    }
+					obj.SetActive(true);
                 }
             }
         }
+
+		void Start()
+		{
+			RectTransform rtran = GetComponent<RectTransform>();
+			this.bounceBox = new Rect(transform.position.x,
+			                     transform.position.y-40,
+			                     rtran.rect.width,
+			                     rtran.rect.height+40);
+
+			this.itemTemplate = Resources.Load("Prefabs/list_cell") as GameObject;
+			this.limitNum = 10;
+			for (int i=0; i<30; i++) {
+				GameObject item = dequeueItem ();
+				item.GetComponent<RectTransform>().sizeDelta = new Vector2(100,40+Random.Range(0,40));
+				item.GetComponent<Text>().text = i.ToString();
+				this.insertNodeAtLast(item);
+			}
+			this.reloadData();
+		}
     }
 }
