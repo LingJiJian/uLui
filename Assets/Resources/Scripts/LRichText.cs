@@ -350,7 +350,8 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                            while (idx > 0)
                            {
                                idx--;
-                               if (elemRenderArr[idx].strChar == " ")
+                               if (elemRenderArr[idx].strChar == " " && 
+                                   elemRenderArr[idx].pos.y == elemRenderArr[i-1].pos.y ) // just for the same line
                                {
                                    spaceIdx = idx;
                                    break;
