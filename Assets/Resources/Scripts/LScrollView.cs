@@ -19,6 +19,7 @@ namespace Lui
     public class LScrollView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         public static int INVALID_INDEX = -1;
+        public static float RELOCATE_DURATION = 0.2f;
 
         public bool bounceable;
         public GameObject container;
