@@ -1,4 +1,30 @@
-﻿using UnityEngine;
+﻿/****************************************************************************
+Copyright (c) 2015 Lingjijian
+
+Created by Lingjijian on 2015
+
+342854406@qq.com
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+using UnityEngine;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine.UI;
@@ -10,6 +36,11 @@ namespace Lui
     public class LGridPageViewPage : LTableViewCell
     {
         public List<LGridPageViewCell> gridCells { get; protected set; }
+        public LGridPageViewPage()
+        {
+            gridCells = new List<LGridPageViewCell>();
+            node = new GameObject();
+        }
     }
 
     public class LGridPageViewCell : LTableViewCell
@@ -28,9 +59,10 @@ namespace Lui
 
         public int pageIndex { get; protected set; }
         protected UnityAction<int> onPageChangedHandler;
-        protected Vector2 gridCellsSize;
+        public Vector2 gridCellsSize;
         protected int cellsMaxCountInPage;
         protected List<Vector2> gridCellsPosition;
+        protected LDataSourceAdapter<LGridPageViewCell, int> onDataSourceAdapterHandler;
 
         public LGridPageView()
         {
@@ -88,6 +120,7 @@ namespace Lui
             }
 
             base.onScrolling();
+
             Vector2 pageIdxOffset = default(Vector2);
             RectTransform rtran = GetComponent<RectTransform>();
             switch (direction)
@@ -113,7 +146,7 @@ namespace Lui
             }
         }
 
-        public void updateCellAtIndex(int page)
+        public override void updateCellAtIndex(int page)
         {
             LGridPageViewPage pageCell = (LGridPageViewPage)dequeueCell();
             if (pageCell == null)
@@ -122,12 +155,107 @@ namespace Lui
 
                 List<LGridPageViewCell> gridCells = pageCell.gridCells;
                 int beginIdx = page * cellsMaxCountInPage;
+                int endIdx = beginIdx + cellsMaxCountInPage;
+
+                for (int idx = beginIdx, i = 0; idx < endIdx;++idx,++i )
+                {
+                    LGridPageViewCell cell = null;
+                    if (idx < gridCellsCount)
+                    {
+                        cell = onDataSourceAdapterHandler.Invoke(null, idx);
+                        RectTransform rtran = cell.node.GetComponent<RectTransform>();
+                        rtran.pivot = Vector2.zero;
+                        rtran.sizeDelta = gridCellsSize;
+                        cell.idx = idx;
+                        cell.node.transform.SetParent(pageCell.node.transform);
+                        cell.node.transform.localPosition = gridCellsPosition[i];
+                        gridCells.Add(cell);
+                    }
+                    else
+                    {
+                        cell = onDataSourceAdapterHandler.Invoke(null, INVALID_INDEX);
+                        RectTransform rtran = cell.node.GetComponent<RectTransform>();
+                        rtran.pivot = Vector2.zero;
+                        cell.idx = INVALID_INDEX;
+                        cell.node.transform.SetParent(pageCell.node.transform);
+                        cell.node.transform.localPosition = gridCellsPosition[i];
+                        gridCells.Add(cell);
+                    }
+                }
             }
+            else
+            {
+                List<LGridPageViewCell> gridCells = pageCell.gridCells;
+                int beginIdx = page * cellsMaxCountInPage;
+                int endIdx = beginIdx + cellsMaxCountInPage;
+
+                for (int idx = beginIdx, i = 0; idx < endIdx; ++idx, ++i)
+                {
+                    LGridPageViewCell cell = gridCells[i];
+                    if (idx < gridCellsCount)
+                    {
+                        cell.idx = idx;
+                        cell = onDataSourceAdapterHandler.Invoke(cell, idx);
+                    }else
+                    {
+                        cell.idx = INVALID_INDEX;
+                        cell.reset();
+                        cell = onDataSourceAdapterHandler.Invoke(cell, INVALID_INDEX);
+                    }
+                }
+            }
+
+            pageCell.idx = page;
+            RectTransform tran = pageCell.node.GetComponent<RectTransform>();
+            switch(direction)
+            {
+                case ScrollDirection.HORIZONTAL:
+                    tran.pivot = Vector2.zero;
+                    break;
+                default:
+                    tran.pivot = new Vector2(0, 1);
+                    break;
+            }
+
+            tran.sizeDelta = cellsSize;
+            pageCell.node.transform.SetParent(container.transform);
+            pageCell.node.transform.localPosition = cellPositionFromIndex(page);
+            insertSortableCell(pageCell, page);
+            indices.Add(page, 1);
         }
 
         public void setPageChangedHandler(UnityAction<int> action)
         {
             onPageChangedHandler = action;
+        }
+
+        public void setDataSourceAdapterHandler(LDataSourceAdapter<LGridPageViewCell, int> action)
+        {
+            onDataSourceAdapterHandler = action;
+        }
+
+        private LGridPageViewCell dataSourceAdaptTest(LGridPageViewCell cell, int idx)
+        {
+            if (cell == null)
+            {
+                cell = new LGridPageViewCell();
+                cell.node = (GameObject)Instantiate(this.cellTemplate.node, Vector3.zero, cellTemplate.node.transform.rotation);
+            }
+            cell.node.GetComponent<Text>().text = idx.ToString();
+            return cell;
+        }
+
+        void Start()
+        {
+            this.cellsSize = new Vector2(400, 400);
+            this.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
+
+            this.cols = 4;
+            this.rows = 4;
+            this.gridCellsCount = 100;
+            this.gridCellsSize = new Vector2(100, 100);
+            this.setDataSourceAdapterHandler(dataSourceAdaptTest);
+            this.reloadData();
         }
     }
 }
