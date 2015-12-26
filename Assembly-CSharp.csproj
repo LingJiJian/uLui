@@ -55,6 +55,8 @@
      <Compile Include="Assets\Resources\Scripts\LRichText.cs" />
      <Compile Include="Assets\Resources\Scripts\LScrollView.cs" />
      <Compile Include="Assets\Resources\Scripts\LTableView.cs" />
+     <Compile Include="Assets\Resources\Scripts\LWindow\LSceneManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\UnitySingleton.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
