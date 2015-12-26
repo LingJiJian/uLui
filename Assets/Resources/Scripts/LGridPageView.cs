@@ -242,6 +242,7 @@ namespace Lui
                 cell.node = (GameObject)Instantiate(this.cellTemplate.node, Vector3.zero, cellTemplate.node.transform.rotation);
             }
             cell.node.GetComponent<Text>().text = idx.ToString();
+            cell.node.SetActive(idx != INVALID_INDEX);
             return cell;
         }
 
