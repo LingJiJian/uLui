@@ -1,4 +1,30 @@
-﻿using UnityEngine;
+﻿/****************************************************************************
+Copyright (c) 2015 Lingjijian
+
+Created by Lingjijian on 2015
+
+342854406@qq.com
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+using UnityEngine;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine.UI;
@@ -50,7 +76,7 @@ namespace Lui
         protected Dictionary<int, int> indices;
         protected LTableViewCell cellTemplate;
         public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
-        private LDataSourceAdapter<LTableViewCell, int> onDataSourceAdapterHandler;
+        protected LDataSourceAdapter<LTableViewCell, int> onDataSourceAdapterHandler;
 
         public LTableView()
         {
@@ -67,7 +93,7 @@ namespace Lui
             cellTemplate = new LTableViewCell();
         }
 
-        public void reloadData()
+        public virtual void reloadData()
         {
             for (int i = 0; i < cellsUsed.Count;i++ )
             {
@@ -86,7 +112,7 @@ namespace Lui
             relocateContainer();
         }
 
-        protected void removeAllFromUsed()
+        public void removeAllFromUsed()
         {
             foreach (LTableViewCell cell in cellsUsed)
             {
@@ -95,7 +121,7 @@ namespace Lui
             cellsUsed.Clear();
         }
 
-        protected void removeAllFromFreed()
+        public void removeAllFromFreed()
         {
             foreach (LTableViewCell cell in cellsFreed)
             {
@@ -375,7 +401,7 @@ namespace Lui
             return null;
         }
 
-        public void updateCellAtIndex(int idx)
+        public virtual void updateCellAtIndex(int idx)
         {
             LTableViewCell cell = onDataSourceAdapterHandler.Invoke(dequeueCell(), idx);
             if (cell == null)
