@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class UnitySingleton<T> : MonoBehaviour
+public class LSingleton<T> : MonoBehaviour
         where T : Component
 {
     private static T _instance;

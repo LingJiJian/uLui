@@ -45,6 +45,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\Button2.cs" />
+     <Compile Include="Assets\Resources\Scripts\LButton.cs" />
      <Compile Include="Assets\Resources\Scripts\LControlView.cs" />
      <Compile Include="Assets\Resources\Scripts\LFrameAnimation.cs" />
      <Compile Include="Assets\Resources\Scripts\LGridPageView.cs" />
@@ -55,8 +57,10 @@
      <Compile Include="Assets\Resources\Scripts\LRichText.cs" />
      <Compile Include="Assets\Resources\Scripts\LScrollView.cs" />
      <Compile Include="Assets\Resources\Scripts\LTableView.cs" />
+     <Compile Include="Assets\Resources\Scripts\LUtils\UnitySingleton.cs" />
      <Compile Include="Assets\Resources\Scripts\LWindow\LSceneManager.cs" />
-     <Compile Include="Assets\Resources\Scripts\UnitySingleton.cs" />
+     <Compile Include="Assets\Resources\Scripts\LWindow\LWindowBase.cs" />
+     <Compile Include="Assets\Resources\Scripts\LWindow\LWindowManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
