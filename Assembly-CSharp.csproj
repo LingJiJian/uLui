@@ -45,8 +45,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Resources\Scripts\Button2.cs" />
-     <Compile Include="Assets\Resources\Scripts\LButton.cs" />
+     <Compile Include="Assets\Resources\Scripts\Demo\Button2.cs" />
+     <Compile Include="Assets\Resources\Scripts\Demo\LButton.cs" />
+     <Compile Include="Assets\Resources\Scripts\Demo\Window1.cs" />
      <Compile Include="Assets\Resources\Scripts\LControlView.cs" />
      <Compile Include="Assets\Resources\Scripts\LFrameAnimation.cs" />
      <Compile Include="Assets\Resources\Scripts\LGridPageView.cs" />
@@ -57,7 +58,8 @@
      <Compile Include="Assets\Resources\Scripts\LRichText.cs" />
      <Compile Include="Assets\Resources\Scripts\LScrollView.cs" />
      <Compile Include="Assets\Resources\Scripts\LTableView.cs" />
-     <Compile Include="Assets\Resources\Scripts\LUtils\UnitySingleton.cs" />
+     <Compile Include="Assets\Resources\Scripts\LUtils\LSingleton.cs" />
+     <Compile Include="Assets\Resources\Scripts\LUtils\LUtils.cs" />
      <Compile Include="Assets\Resources\Scripts\LWindow\LSceneManager.cs" />
      <Compile Include="Assets\Resources\Scripts\LWindow\LWindowBase.cs" />
      <Compile Include="Assets\Resources\Scripts\LWindow\LWindowManager.cs" />

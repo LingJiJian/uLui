@@ -31,8 +31,6 @@ public class LWindowManager : MonoBehaviour
     protected Dictionary<LWindowBase, float> delayWindowsTimes;
     protected GameObject canvas;
 
-    private static LWindowManager _instance = null;
-
     public LWindowManager()
     {
         runningWindows = new Dictionary<WindowHierarchy, List<LWindowBase>>();
@@ -47,27 +45,14 @@ public class LWindowManager : MonoBehaviour
 
         foreach (int item in Enum.GetValues(typeof(WindowHierarchy)))
         {
-            string eKey = Enum.GetName(typeof(WindowHierarchy), item);
             string eVal = item.ToString();
             runningWindows.Add((WindowHierarchy)int.Parse(eVal), new List<LWindowBase>());
         }
     }
 
-    public static LWindowManager getInstance()
-    {
-        if (_instance == null)
-        {
-            _instance = new LWindowManager();
-        }
-        return _instance;
-    }
-
     void OnDestroy()
     {
         CancelInvoke();
-        removeAllCachedWindow();
-        popAllWindow();
-        _instance = null;
     }
 
     void Awake()
@@ -85,7 +70,11 @@ public class LWindowManager : MonoBehaviour
                 layer.transform.SetParent(canvas.transform);
 
                 RectTransform rtran = layer.GetComponent<RectTransform>();
-                rtran.pivot = new Vector2(0.5f,0.5f);
+                if (rtran == null)
+                {
+                    rtran = layer.AddComponent<RectTransform>();
+                }
+                rtran.pivot = new Vector2(0,0);
                 rtran.anchorMin = new Vector2(0, 0);
                 rtran.anchorMax = new Vector2(1, 1);
 
@@ -114,53 +103,56 @@ public class LWindowManager : MonoBehaviour
         {
             if (recycles.Count == 0)
                 break;
-            Destroy(recycles[0]);
+            
             delayWindowsTimes.Remove(recycles[0]);
             delayDisposeWindows.Remove(recycles[0].name);
+            Destroy(recycles[0].gameObject);
             Debug.Log("Destroy Window [{0}]" + recycles[0].name);
         }
     }
 
-    public void registerCreateClass(string name, CreateWindowAction action)
-    {
-        createActions.Add(name, action);
-    }
-
-    protected LWindowBase loadWindow(string name)
+    protected LWindowBase loadWindow(string name,Type t)
     {
         LWindowBase ret = null;
-        if (createActions.ContainsKey(name))
+        if (cacheWindows.ContainsKey(name))
         {
-            if (cacheWindows.ContainsKey(name))
+            ret = cacheWindows[name];
+        }
+        else
+        {
+            GameObject res = Resources.Load(string.Format("Prefabs/{0}", name)) as GameObject;
+            GameObject obj = Instantiate(res) as GameObject;
+            obj.name = name;
+            obj.GetComponent<RectTransform>().sizeDelta = canvas.GetComponent<RectTransform>().rect.size;
+            ret = obj.GetComponent<LWindowBase>();
+            if (ret == null)
             {
-                ret = cacheWindows[name];
+                ret = obj.AddComponent(t) as LWindowBase;
             }
-            else
-            {
-                ret = createActions[name].Invoke();
-                ret.name = name;
-            }
+            ret.name = name;
         }
         return ret;
     }
 
-    public void runWindow(string name, WindowHierarchy e)
+    public void runWindow(string name, Type type, WindowHierarchy e)
     {
         if (isRunning(name))
         {
             return;
         }
-        LWindowBase win = loadWindow(name);
-        if (win)
+        LWindowBase win = loadWindow(name,type);
+
+        if (win != null)
         {
             win.hierarchy = e;
-            win.transform.SetParent(hierarchys[e].transform);
+            win.gameObject.transform.SetParent(hierarchys[e].transform);
+
             runningWindows[e].Add(win);
             
             if (win.disposeType == WindowDispose.Delay)
             {
-                delayDisposeWindows.Add(name, win);
-                delayWindowsTimes.Add(win,Time.time);
+                delayDisposeWindows[name] = win;
+                delayWindowsTimes[win] = Time.time;
             }
             else if (win.disposeType == WindowDispose.Cache)
             {
@@ -200,19 +192,19 @@ public class LWindowManager : MonoBehaviour
 
             if (win.disposeType == WindowDispose.Cache)
             {
-                win.transform.SetParent(null);
+                win.gameObject.transform.SetParent(null);
             }
             else if (win.disposeType == WindowDispose.Normal)
             {
                 cacheWindows.Remove(name);
                 delayDisposeWindows.Remove(name);
                 delayWindowsTimes.Remove(win);
-                Destroy(win);
+                Destroy(win.gameObject);
                 Debug.Log("Destroy Window [{0}]" + name);
             }
             else if (win.disposeType == WindowDispose.Delay)
             {
-                win.transform.SetParent(null);
+                win.gameObject.transform.SetParent(null);
             }
         }
     }

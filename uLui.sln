@@ -5,6 +5,8 @@ Project("{6C6D0CE5-A502-1096-BF01-06A25591D06E}") = "uLui", "Assembly-CSharp-fir
 EndProject
 Project("{6C6D0CE5-A502-1096-BF01-06A25591D06E}") = "uLui", "Assembly-CSharp.csproj", "{637C5E20-0C4C-D436-F010-B1A7A7E1ED5A}"
 EndProject
+Project("{6C6D0CE5-A502-1096-BF01-06A25591D06E}") = "uLui", "Assembly-CSharp-Editor.csproj", "{491050FB-DB9F-41A2-4FA7-0F02E64E726C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,11 +21,15 @@ Global
 		{637C5E20-0C4C-D436-F010-B1A7A7E1ED5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{637C5E20-0C4C-D436-F010-B1A7A7E1ED5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{637C5E20-0C4C-D436-F010-B1A7A7E1ED5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{491050FB-DB9F-41A2-4FA7-0F02E64E726C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{491050FB-DB9F-41A2-4FA7-0F02E64E726C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{491050FB-DB9F-41A2-4FA7-0F02E64E726C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{491050FB-DB9F-41A2-4FA7-0F02E64E726C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																																																															GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																																																																						GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
