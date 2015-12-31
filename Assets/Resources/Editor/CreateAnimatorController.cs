@@ -24,12 +24,14 @@ public class CreateAnimatorController : Editor
                 //得到它的Layer
                 AnimatorControllerLayer layer = animatorController.layers[0];
                 //将动画保存到 AnimatorController中
-                AddStateTransition(string.Format("Assets/Resources/Models/{0}", baseName), layer);
+                AddStateTransition( animatorController, string.Format("Assets/Resources/Models/{0}", baseName), layer);
+
+                Debug.Log(string.Format("创建AnimatorController {0} 成功 ", baseName));
             }
         }
     }
 
-    private static void AddStateTransition(string path, AnimatorControllerLayer layer)
+    private static void AddStateTransition(AnimatorController ctrl, string path, AnimatorControllerLayer layer)
     {
         AnimatorStateMachine sm = layer.stateMachine;
         //根据动画文件读取它的AnimationClip对象
@@ -46,13 +48,15 @@ public class CreateAnimatorController : Editor
 
         foreach (AnimationClip newClip in clips)
         {
-            ////取出动画名子 添加到state里面
             AnimatorState state = sm.AddState(newClip.name);
-            //5.0改变
             state.motion = newClip;
-            Debug.Log(string.Format("创建AnimatorController {0} 成功 ", state.motion.name));
-            //把state添加在layer里面
-            sm.AddAnyStateTransition(state);
+
+            string cond = string.Format("is{0}", state.motion.name);
+            ctrl.AddParameter(cond,AnimatorControllerParameterType.Bool);
+            
+            AnimatorStateTransition tran = sm.AddAnyStateTransition(state);
+            tran.AddCondition(AnimatorConditionMode.If, 0, cond);
+            tran.duration = 0;
         }
     }
 }
