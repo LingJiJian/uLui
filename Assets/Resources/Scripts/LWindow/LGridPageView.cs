@@ -62,7 +62,7 @@ namespace Lui
         public Vector2 gridCellsSize;
         protected int cellsMaxCountInPage;
         protected List<Vector2> gridCellsPosition;
-        protected LDataSourceAdapter<LGridPageViewCell, int> onDataSourceAdapterHandler;
+        protected LDataSourceAdapter<LGridPageViewCell, int> onGridDataSourceAdapterHandler;
 
         public LGridPageView()
         {
@@ -162,7 +162,7 @@ namespace Lui
                     LGridPageViewCell cell = null;
                     if (idx < gridCellsCount)
                     {
-                        cell = onDataSourceAdapterHandler.Invoke(null, idx);
+                        cell = onGridDataSourceAdapterHandler.Invoke(null, idx);
                         RectTransform rtran = cell.node.GetComponent<RectTransform>();
                         rtran.pivot = Vector2.zero;
                         rtran.sizeDelta = gridCellsSize;
@@ -173,7 +173,7 @@ namespace Lui
                     }
                     else
                     {
-                        cell = onDataSourceAdapterHandler.Invoke(null, INVALID_INDEX);
+                        cell = onGridDataSourceAdapterHandler.Invoke(null, INVALID_INDEX);
                         RectTransform rtran = cell.node.GetComponent<RectTransform>();
                         rtran.pivot = Vector2.zero;
                         cell.idx = INVALID_INDEX;
@@ -195,12 +195,12 @@ namespace Lui
                     if (idx < gridCellsCount)
                     {
                         cell.idx = idx;
-                        cell = onDataSourceAdapterHandler.Invoke(cell, idx);
+                        cell = onGridDataSourceAdapterHandler.Invoke(cell, idx);
                     }else
                     {
                         cell.idx = INVALID_INDEX;
                         cell.reset();
-                        cell = onDataSourceAdapterHandler.Invoke(cell, INVALID_INDEX);
+                        cell = onGridDataSourceAdapterHandler.Invoke(cell, INVALID_INDEX);
                     }
                 }
             }
@@ -231,7 +231,7 @@ namespace Lui
 
         public void setDataSourceAdapterHandler(LDataSourceAdapter<LGridPageViewCell, int> action)
         {
-            onDataSourceAdapterHandler = action;
+            onGridDataSourceAdapterHandler = action;
         }
 
         private LGridPageViewCell dataSourceAdaptTest(LGridPageViewCell cell, int idx)

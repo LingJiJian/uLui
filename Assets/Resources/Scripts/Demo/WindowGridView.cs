@@ -1,23 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Window1 : LWindowBase
+public class WindowGridView : LWindowBase
 {
     public Button btn_close;
+    private LWindowManager wm;
 
-    public Window1()
+    public WindowGridView()
     {
-        
+        this.disposeType = WindowDispose.Normal;
     }
 
     void Awake()
     {
-        Debug.Log("Awake Window1 !");
-
         btn_close.onClick.AddListener(() =>
         {
             LWindowManager wm = LSingleton.getInstance("LWindowManager") as LWindowManager;
-            wm.popWindow("Window1");
+            wm.popWindow(this);
         });
     }
 }

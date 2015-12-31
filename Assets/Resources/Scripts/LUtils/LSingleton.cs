@@ -32,7 +32,7 @@ public class LSingleton : MonoBehaviour
     {
         if (m_Container == null)
         {
-            Debug.Log("Create Singleton.");
+            //Debug.Log("Create Singleton.");
             m_Container = new GameObject();
             m_Container.name = m_Name;
             m_Container.AddComponent(typeof(LSingleton));
@@ -62,15 +62,24 @@ public class LSingleton : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        if (m_Container != null)
+        {
+            GameObject.Destroy(m_Container);
+            m_Container = null;
+            m_IsDestroying = true;
+            m_SingletonMap.Clear();
+        }
+    }
+
     void Awake()
     {
-        //Debug.Log("Awake Singleton.");
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void OnApplicationQuit()
     {
-        //Debug.Log("Destroy Singleton");
         if (m_Container != null)
         {
             GameObject.Destroy(m_Container);

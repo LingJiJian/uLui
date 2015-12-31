@@ -68,6 +68,7 @@ public class LWindowManager : MonoBehaviour
                 GameObject layer = new GameObject();
                 layer.name = eKey;
                 layer.transform.SetParent(canvas.transform);
+                layer.transform.localScale = new Vector3(1, 1, 1);
 
                 RectTransform rtran = layer.GetComponent<RectTransform>();
                 if (rtran == null)
@@ -77,7 +78,7 @@ public class LWindowManager : MonoBehaviour
                 rtran.pivot = new Vector2(0,0);
                 rtran.anchorMin = new Vector2(0, 0);
                 rtran.anchorMax = new Vector2(1, 1);
-
+                
                 hierarchys.Add((WindowHierarchy)int.Parse(eVal), layer);
             }
         }
@@ -117,6 +118,10 @@ public class LWindowManager : MonoBehaviour
         if (cacheWindows.ContainsKey(name))
         {
             ret = cacheWindows[name];
+        }
+        else if (delayDisposeWindows.ContainsKey(name))
+        {
+            ret = delayDisposeWindows[name];
         }
         else
         {
@@ -196,11 +201,11 @@ public class LWindowManager : MonoBehaviour
             }
             else if (win.disposeType == WindowDispose.Normal)
             {
-                cacheWindows.Remove(name);
-                delayDisposeWindows.Remove(name);
+                cacheWindows.Remove(win.name);
+                delayDisposeWindows.Remove(win.name);
                 delayWindowsTimes.Remove(win);
                 Destroy(win.gameObject);
-                Debug.Log("Destroy Window [{0}]" + name);
+                Debug.Log(string.Format("Destroy Window [{0}]", win.name));
             }
             else if (win.disposeType == WindowDispose.Delay)
             {
