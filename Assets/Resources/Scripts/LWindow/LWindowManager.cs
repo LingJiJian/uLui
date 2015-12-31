@@ -20,6 +20,7 @@ public enum WindowDispose
 public class LWindowManager : MonoBehaviour
 {
     public delegate LWindowBase CreateWindowAction();
+    public string loadPath;
     protected float recycleDuration;
     protected float disposeDuration;
 
@@ -33,6 +34,8 @@ public class LWindowManager : MonoBehaviour
 
     public LWindowManager()
     {
+        loadPath = "Prefabs/{0}";
+
         runningWindows = new Dictionary<WindowHierarchy, List<LWindowBase>>();
         hierarchys = new Dictionary<WindowHierarchy, GameObject>();
         createActions = new Dictionary<string, CreateWindowAction>();
@@ -40,8 +43,8 @@ public class LWindowManager : MonoBehaviour
         delayDisposeWindows = new Dictionary<string, LWindowBase>();
         delayWindowsTimes = new Dictionary<LWindowBase, float>();
 
-        recycleDuration = 2 * 60;
-        disposeDuration = 1 * 60;
+        recycleDuration = 2 ;
+        disposeDuration = 1 ;
 
         foreach (int item in Enum.GetValues(typeof(WindowHierarchy)))
         {
@@ -66,7 +69,7 @@ public class LWindowManager : MonoBehaviour
                 string eVal = item.ToString();
 
                 GameObject layer = new GameObject();
-                layer.name = eKey;
+                layer.name = "Layer_"+eKey;
                 layer.transform.SetParent(canvas.transform);
                 layer.transform.localScale = new Vector3(1, 1, 1);
 
@@ -104,11 +107,13 @@ public class LWindowManager : MonoBehaviour
         {
             if (recycles.Count == 0)
                 break;
-            
-            delayWindowsTimes.Remove(recycles[0]);
-            delayDisposeWindows.Remove(recycles[0].name);
-            Destroy(recycles[0].gameObject);
-            Debug.Log("Destroy Window [{0}]" + recycles[0].name);
+
+            LWindowBase win = recycles[0];
+            delayWindowsTimes.Remove(win);
+            delayDisposeWindows.Remove(win.name);
+            recycles.RemoveAt(0);
+            Destroy(win.gameObject);
+            Debug.Log(string.Format("Destroy Window [{0}]" , win.name));
         }
     }
 
@@ -125,7 +130,7 @@ public class LWindowManager : MonoBehaviour
         }
         else
         {
-            GameObject res = Resources.Load(string.Format("Prefabs/{0}", name)) as GameObject;
+            GameObject res = Resources.Load(string.Format(loadPath, name)) as GameObject;
             GameObject obj = Instantiate(res) as GameObject;
             obj.name = name;
             obj.GetComponent<RectTransform>().sizeDelta = canvas.GetComponent<RectTransform>().rect.size;
