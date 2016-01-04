@@ -46,6 +46,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Plugins\Pixelplacement\iTween\iTween.cs" />
+     <Compile Include="Assets\Plugins\UEvent\CapsuleObject.cs" />
+     <Compile Include="Assets\Plugins\UEvent\CubeObject.cs" />
+     <Compile Include="Assets\Plugins\UEvent\EventTypeName.cs" />
+     <Compile Include="Assets\Plugins\UEvent\ObjectEventDispatcher.cs" />
+     <Compile Include="Assets\Plugins\UEvent\SphereObject.cs" />
+     <Compile Include="Assets\Plugins\UEvent\UEvent.cs" />
+     <Compile Include="Assets\Plugins\UEvent\UEventDispatcher.cs" />
+     <Compile Include="Assets\Plugins\UEvent\UEventListener.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

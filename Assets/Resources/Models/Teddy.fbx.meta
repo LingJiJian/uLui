@@ -90,7 +90,7 @@ ModelImporter:
     4300004: Teddy_Body
     7400000: run
     7400002: atk
-    7400004: round
+    7400004: idle
     9500000: //RootNode
     13700000: Eye_Left
     13700002: Eye_Right
@@ -392,7 +392,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: round
+      name: idle
       takeName: Take 001
       firstFrame: 60
       lastFrame: 75
@@ -401,7 +401,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

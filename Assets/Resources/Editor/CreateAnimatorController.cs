@@ -7,6 +7,8 @@ using System.IO;
 
 public class CreateAnimatorController : Editor
 {
+    public static string IdleName = "idle";
+
     [MenuItem("LUtil/创建AnimController")]
     static void DoCreateAnimationAssets()
     {
@@ -46,17 +48,41 @@ public class CreateAnimatorController : Editor
             }
         }
 
+        AnimatorState idleState = null;
+        List<AnimatorState> otherStates = new List<AnimatorState>();
+
         foreach (AnimationClip newClip in clips)
         {
             AnimatorState state = sm.AddState(newClip.name);
             state.motion = newClip;
 
-            string cond = string.Format("is{0}", state.motion.name);
-            ctrl.AddParameter(cond,AnimatorControllerParameterType.Bool);
-            
-            AnimatorStateTransition tran = sm.AddAnyStateTransition(state);
+            if (newClip.name == CreateAnimatorController.IdleName)
+            {
+                idleState = state;
+            }
+            else
+            {
+                string cond = string.Format("{0}_{1}",CreateAnimatorController.IdleName, newClip.name);
+                ctrl.AddParameter(cond, AnimatorControllerParameterType.Bool);
+
+                cond = string.Format("{1}_{0}", CreateAnimatorController.IdleName, newClip.name);
+                ctrl.AddParameter(cond, AnimatorControllerParameterType.Bool);
+
+                otherStates.Add(state);
+            }
+        }
+
+        sm.defaultState = idleState;
+
+        foreach (AnimatorState state in otherStates)
+        {
+            string cond = string.Format("{0}_{1}",CreateAnimatorController.IdleName, state.motion.name);
+            AnimatorStateTransition tran = idleState.AddTransition(state);
             tran.AddCondition(AnimatorConditionMode.If, 0, cond);
-            tran.duration = 0;
+
+            cond = string.Format("{1}_{0}", CreateAnimatorController.IdleName, state.motion.name);
+            tran = state.AddTransition(idleState);
+            tran.AddCondition(AnimatorConditionMode.If, 0, cond);
         }
     }
 }

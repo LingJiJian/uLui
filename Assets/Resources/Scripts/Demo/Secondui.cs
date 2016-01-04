@@ -9,6 +9,7 @@ public class Secondui : MonoBehaviour {
     public Button btn_msg;
     public Button btn_trans;
     public Button btn_anim;
+    public Button btn_clean;
     private LWindowManager wm;
     protected Animator teddyAnim;
 
@@ -29,12 +30,14 @@ public class Secondui : MonoBehaviour {
 
         btn_anim.onClick.AddListener(() =>
         {
-            teddyAnim.SetBool("isrun", true);
+            teddyAnim.SetBool("run_idle", false);
+            teddyAnim.SetBool("idle_run", true);
         });
-        
-	}
-	
-	void Update () {
-	
+
+        btn_clean.onClick.AddListener(() =>
+        {
+            teddyAnim.SetBool("idle_run", false);
+            teddyAnim.SetBool("run_idle", true);
+        });
 	}
 }

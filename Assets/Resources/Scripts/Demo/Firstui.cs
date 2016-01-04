@@ -22,7 +22,6 @@ public class Firstui : MonoBehaviour
         btn_trans.onClick.AddListener(() =>
         {
             Application.LoadLevel("second");
-
         });
     }
 }
