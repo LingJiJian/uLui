@@ -179,7 +179,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 	public int maxLineWidth;
 	public Font font;
 
-    private UnityAction<string> onClickHandler;
+    public UnityAction<string> onClickHandler;
     public int realLineHeight { get; protected set; }
     public int realLineWidth { get; protected set; }
 
@@ -250,16 +250,16 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
     {
         this.removeAllElements();
 
-			RectTransform rtran = this.GetComponent<RectTransform>();
-			//align
-			if (alignType == RichAlignType.DESIGN_CENTER)
-			{
-				rtran.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+		RectTransform rtran = this.GetComponent<RectTransform>();
+		//align
+		if (alignType == RichAlignType.DESIGN_CENTER)
+		{
+			rtran.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
-			}else if (alignType == RichAlignType.LEFT_TOP)
-			{
-				rtran.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
-			}
+		}else if (alignType == RichAlignType.LEFT_TOP)
+		{
+			rtran.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
+		}
 
         foreach (LRichElement elem in richElements)
         {
@@ -569,7 +569,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                         makeFramAnim(obj, elem);
 						_lineWidth += elem.width;
 					}
-						obj.transform.SetParent(transform);
+					obj.transform.SetParent(transform);
                     obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
                     objectDataMap[obj] = elem.data;
                 }
@@ -765,25 +765,6 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
             }
         }
         return hasChinese;
-    }
-
-	// Use this for initialization
-	void Start () {
-        
-		this.insertElement("hello world!!", Color.blue,25, true, false, Color.blue,"数据");
-		this.insertElement("测试文本内容!!", Color.red, 15, false, true, Color.blue, "");
-		this.insertElement("Image/face01",5f,"");
-		this.insertElement("The article comes from the point of the examination", Color.green, 15, true, false, Color.blue, "");
-		this.insertElement("Image/face02/1","");
-		this.insertElement (1);
-	    this.insertElement("outline and newline", Color.yellow, 20, false, true, Color.blue, "");
-        
-        this.reloadData ();
-	}
-
-    public void setClickHandler(UnityAction<string> action)
-    {
-		onClickHandler = action;
     }
 
     public void OnPointerClick(PointerEventData data)

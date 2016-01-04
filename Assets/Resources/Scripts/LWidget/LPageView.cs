@@ -38,7 +38,7 @@ namespace Lui
     public class LPageView : LTableView
     {
         public int pageIndex { get; protected set; }
-        protected UnityAction<int> onPageChangedHandler;
+        public UnityAction<int> onPageChangedHandler;
 
         public LPageView()
         {
@@ -106,31 +106,5 @@ namespace Lui
             insertSortableCell(cell,idx);
             indices.Add(idx,1);
         }
-
-        public void setPageChangedHandler(UnityAction<int> action)
-        {
-            onPageChangedHandler = action;
-        }
-
-		private LTableViewCell dataSourceAdaptTest(LTableViewCell cell, int idx)
-		{
-			if (cell == null)
-			{
-				cell = new LTableViewCell();
-				cell.node = (GameObject)Instantiate(this.cellTemplate.node, Vector3.zero, cellTemplate.node.transform.rotation);
-			}
-			cell.node.transform.FindChild("Text").GetComponent<Text>().text = idx.ToString();
-			return cell;
-		}
-		
-		void Start()
-		{
-			this.cellsSize = new Vector2(150, 100);
-			this.cellTemplate.node = Resources.Load("Prefabs/page_cell") as GameObject;
-
-			this.cellsCount = 14;
-			this.setDataSourceAdapterHandler(dataSourceAdaptTest);
-			this.reloadData();
-		}
     }
 }

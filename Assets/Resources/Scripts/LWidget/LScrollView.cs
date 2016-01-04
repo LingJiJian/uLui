@@ -55,6 +55,10 @@ namespace Lui
         protected Vector2 scrollDistance;
         public bool dragable;
 
+        public UnityAction onMoveCompleteHandler;
+        public UnityAction onScrollingHandler;
+        public UnityAction onDraggingScrollEndedHandler;
+
         public LScrollView()
         {
             direction = ScrollDirection.BOTH;
@@ -298,18 +302,26 @@ namespace Lui
 
         protected void onMoveComplete()
         {
-            //Debug.Log("onMoveComplete");
+            if (onMoveCompleteHandler != null)
+            {
+                onMoveCompleteHandler.Invoke();
+            }
         }
 
         protected virtual void onScrolling()
         {
-            //Debug.Log("onScrolling");
-
+            if (onScrollingHandler!=null)
+            {
+                onScrollingHandler.Invoke();
+            }
         }
 
         protected virtual void onDraggingScrollEnded()
         {
-            //Debug.Log("onDraggingScrollEnded");
+            if (onDraggingScrollEndedHandler!=null)
+            {
+                onDraggingScrollEndedHandler.Invoke();
+            }
         }
 
     }

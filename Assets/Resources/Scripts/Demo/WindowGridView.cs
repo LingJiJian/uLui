@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Lui;
 
 public class WindowGridView : LWindowBase
 {
     public Button btn_close;
+    public LGridPageView gridPageView;
     private LWindowManager wm;
 
     public WindowGridView()
@@ -11,12 +13,31 @@ public class WindowGridView : LWindowBase
         this.disposeType = WindowDispose.Normal;
     }
 
-    void Awake()
+    void Start()
     {
         btn_close.onClick.AddListener(() =>
         {
             LWindowManager wm = LSingleton.getInstance("LWindowManager") as LWindowManager;
             wm.popWindow(this);
         });
+
+        gridPageView.cellsSize = new Vector2(400, 400);
+        gridPageView.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
+        gridPageView.cols = 4;
+        gridPageView.rows = 4;
+        gridPageView.gridCellsCount = 100;
+        gridPageView.gridCellsSize = new Vector2(100, 100);
+        gridPageView.onGridDataSourceAdapterHandler = (LGridPageViewCell cell, int idx) =>
+        {
+            if (cell == null)
+            {
+                cell = new LGridPageViewCell();
+                cell.node = (GameObject)Instantiate(gridPageView.cellTemplate.node, Vector3.zero, gridPageView.cellTemplate.node.transform.rotation);
+            }
+            cell.node.GetComponent<Text>().text = idx.ToString();
+            cell.node.SetActive(idx != LScrollView.INVALID_INDEX);
+            return cell;
+        };
+        gridPageView.reloadData();
     }
 }

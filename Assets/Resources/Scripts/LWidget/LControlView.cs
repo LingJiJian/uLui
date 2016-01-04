@@ -44,7 +44,7 @@ namespace Lui
         public bool relocateWithAnimation;
         public GameObject joyStick;
         private Vector2 lastPoint;
-        private UnityAction<float, float> onControlHandler;
+        public UnityAction<float, float> onControlHandler;
         private Rect joyStickBoundBox;
 
         public LControlView()
@@ -111,11 +111,6 @@ namespace Lui
             }
         }
 
-        public void setControlHandler(UnityAction<float, float> act)
-        {
-            onControlHandler = act;
-        }
-
         protected void relocateJoystick(bool anim)
         {
             if (anim)
@@ -158,15 +153,6 @@ namespace Lui
                 Vector2 offset = lastPoint - centerPoint;
                 onControlHandler.Invoke(offset.x / PARAM_PRE, offset.y / PARAM_PRE);
             }
-        }
-
-        void Start()
-        {
-            setControlHandler((float x, float y) =>
-            {
-
-                //Debug.Log(" offset x,y " + x + " " + y);
-            });
         }
     }
 

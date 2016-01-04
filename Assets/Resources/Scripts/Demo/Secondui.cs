@@ -13,7 +13,7 @@ public class Secondui : MonoBehaviour {
     private LWindowManager wm;
     protected Animator teddyAnim;
 
-    void Awake() {
+    void Start() {
 
         wm = LSingleton.getInstance("LWindowManager") as LWindowManager;
         teddyAnim = GameObject.Find("Teddy").GetComponent<Animator>();

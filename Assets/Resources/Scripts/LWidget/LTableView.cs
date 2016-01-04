@@ -74,9 +74,9 @@ namespace Lui
         protected List<LTableViewCell> cellsFreed;
         protected List<float> positions;
         protected Dictionary<int, int> indices;
-        protected LTableViewCell cellTemplate;
+        public LTableViewCell cellTemplate;
         public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
-        protected LDataSourceAdapter<LTableViewCell, int> onDataSourceAdapterHandler;
+        public LDataSourceAdapter<LTableViewCell, int> onDataSourceAdapterHandler;
 
         public LTableView()
         {
@@ -427,33 +427,6 @@ namespace Lui
 
             insertSortableCell(cell, idx);
             indices.Add(idx, 1);
-        }
-
-        public void setDataSourceAdapterHandler(LDataSourceAdapter<LTableViewCell,int> action)
-        {
-            onDataSourceAdapterHandler = action;
-        }
-
-        private LTableViewCell dataSourceAdaptTest(LTableViewCell cell, int idx)
-        {
-            if (cell == null)
-            {
-                cell = new LTableViewCell();
-                cell.node = (GameObject)Instantiate(this.cellTemplate.node, Vector3.zero, cellTemplate.node.transform.rotation);
-            }
-            cell.node.GetComponent<Text>().text = idx.ToString();
-            return cell;
-        }
-
-        void Start()
-        {
-            this.cellsSize = new Vector2(150, 40);
-            this.cellTemplate.node = Resources.Load("Prefabs/tbl_cell") as GameObject;
-
-            this.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 40 * 5);
-            this.cellsCount = 100;
-            this.setDataSourceAdapterHandler(dataSourceAdaptTest);
-            this.reloadData();
         }
     }
 }

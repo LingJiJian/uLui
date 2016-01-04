@@ -45,7 +45,7 @@ namespace Lui
         public List<GameObject> nodeList { get; protected set; }
         public List<GameObject> freeList { get; protected set; }
         public GameObject itemTemplate;
-        protected Rect bounceBox;
+        public Rect bounceBox;
 
         public LListView()
         {

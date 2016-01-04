@@ -52,9 +52,9 @@ namespace Lui
         protected List<LGridViewCell> cellsFreed;
         protected List<Vector2> positions;
         protected Dictionary<int, int> indices;
-        protected LGridViewCell cellTemplate;
+        public LGridViewCell cellTemplate;
         public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
-        private LDataSourceAdapter<LGridViewCell, int> onDataSourceAdapterHandler;
+        public LDataSourceAdapter<LGridViewCell, int> onDataSourceAdapterHandler;
 
         public LGridView()
         {
@@ -354,33 +354,6 @@ namespace Lui
             }
 
             base.onDraggingScrollEnded();
-        }
-
-        public void setDataSourceAdapterHandler(LDataSourceAdapter<LGridViewCell, int> action)
-        {
-            onDataSourceAdapterHandler = action;
-        }
-
-        private LGridViewCell dataSourceAdaptTest(LGridViewCell cell, int idx)
-        {
-            if (cell == null)
-            {
-                cell = new LGridViewCell();
-                cell.node = (GameObject)Instantiate(this.cellTemplate.node, Vector3.zero, cellTemplate.node.transform.rotation);
-            }
-            cell.node.GetComponent<Text>().text = idx.ToString();
-            return cell;
-        }
-
-        void Start()
-        {
-            this.cellsSize = new Vector2(100, 100);
-			this.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
-
-            this.cols = 4;
-            this.cellsCount = 100;
-            this.setDataSourceAdapterHandler(dataSourceAdaptTest);
-            this.reloadData();
         }
     }
 }

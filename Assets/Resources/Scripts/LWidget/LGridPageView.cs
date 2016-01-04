@@ -3,7 +3,8 @@ Copyright (c) 2015 Lingjijian
 
 Created by Lingjijian on 2015
 
-342854406@qq.com
+342854406@qq.com
+
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -61,7 +62,7 @@ namespace Lui
         public Vector2 gridCellsSize;
         protected int cellsMaxCountInPage;
         protected List<Vector2> gridCellsPosition;
-        protected LDataSourceAdapter<LGridPageViewCell, int> onGridDataSourceAdapterHandler;
+        public LDataSourceAdapter<LGridPageViewCell, int> onGridDataSourceAdapterHandler;
 
         public LGridPageView()
         {
@@ -226,36 +227,6 @@ namespace Lui
         public void setPageChangedHandler(UnityAction<int> action)
         {
             onPageChangedHandler = action;
-        }
-
-        public void setDataSourceAdapterHandler(LDataSourceAdapter<LGridPageViewCell, int> action)
-        {
-            onGridDataSourceAdapterHandler = action;
-        }
-
-        private LGridPageViewCell dataSourceAdaptTest(LGridPageViewCell cell, int idx)
-        {
-            if (cell == null)
-            {
-                cell = new LGridPageViewCell();
-                cell.node = (GameObject)Instantiate(this.cellTemplate.node, Vector3.zero, cellTemplate.node.transform.rotation);
-            }
-            cell.node.GetComponent<Text>().text = idx.ToString();
-            cell.node.SetActive(idx != INVALID_INDEX);
-            return cell;
-        }
-
-        void Start()
-        {
-            this.cellsSize = new Vector2(400, 400);
-            this.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
-
-            this.cols = 4;
-            this.rows = 4;
-            this.gridCellsCount = 100;
-            this.gridCellsSize = new Vector2(100, 100);
-            this.setDataSourceAdapterHandler(dataSourceAdaptTest);
-            this.reloadData();
         }
     }
 }
