@@ -1,6 +1,7 @@
 基于ugui组件封装，高级控件库uLui
 ====
 ![](picture/photo1.png)
+![](picture/photo2.png)
 特性
 -------  
 ### 组件LWidget
