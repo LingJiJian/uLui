@@ -29,6 +29,7 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using SLua;
 
 namespace Lui
 {
@@ -172,6 +173,10 @@ struct LRenderElement
     }
 }
 
+/// <summary>
+/// 富文本
+/// </summary>
+[CustomLuaClassAttribute]
 public class LRichText : MonoBehaviour, IPointerClickHandler
 {
 	public RichAlignType alignType;
@@ -179,7 +184,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 	public int maxLineWidth;
 	public Font font;
 
-    public UnityAction<string> onClickHandler;
+    public LAction<string> onClickHandler;
     public int realLineHeight { get; protected set; }
     public int realLineWidth { get; protected set; }
 

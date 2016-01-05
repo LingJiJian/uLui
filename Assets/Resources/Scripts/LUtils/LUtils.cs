@@ -2,7 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SLua;
 
+[CustomLuaClassAttribute]
 public class LUtils
 {
     /// <summary>

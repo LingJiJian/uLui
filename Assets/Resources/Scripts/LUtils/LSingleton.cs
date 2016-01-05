@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SLua;
 
+[CustomLuaClassAttribute]
 public class LSingleton : MonoBehaviour
 {
     private static GameObject m_Container = null;

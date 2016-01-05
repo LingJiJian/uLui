@@ -30,6 +30,7 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using SLua;
 
 namespace Lui
 {
@@ -61,6 +62,7 @@ namespace Lui
     /// <summary>
     /// 复用列表
     /// </summary>
+    [CustomLuaClassAttribute]
     public class LTableView : LScrollView
     {
         public static float AUTO_RELOCATE_SPPED = 100.0f;
@@ -75,7 +77,6 @@ namespace Lui
         protected List<float> positions;
         protected Dictionary<int, int> indices;
         public LTableViewCell cellTemplate;
-        public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
         public LDataSourceAdapter<LTableViewCell, int> onDataSourceAdapterHandler;
 
         public LTableView()

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using SLua;
 
+[CustomLuaClassAttribute]
 public class UEvent
 {
 	/// <summary>

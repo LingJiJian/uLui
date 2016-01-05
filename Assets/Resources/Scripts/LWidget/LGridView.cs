@@ -29,6 +29,7 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using SLua;
 
 namespace Lui
 {
@@ -40,6 +41,7 @@ namespace Lui
     /// <summary>
     /// 网格
     /// </summary>
+    [CustomLuaClassAttribute]
     public class LGridView : LScrollView
     {
         public Vector2 cellsSize;
@@ -53,7 +55,6 @@ namespace Lui
         protected List<Vector2> positions;
         protected Dictionary<int, int> indices;
         public LGridViewCell cellTemplate;
-        public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
         public LDataSourceAdapter<LGridViewCell, int> onDataSourceAdapterHandler;
 
         public LGridView()

@@ -28,12 +28,14 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Collections;
+using SLua;
 
 namespace Lui
 {
     /// <summary>
     /// 摇杆
     /// </summary>
+    [CustomLuaClassAttribute]
     public class LControlView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         protected const float MOVE_DELAY = 0.5f;
@@ -44,7 +46,7 @@ namespace Lui
         public bool relocateWithAnimation;
         public GameObject joyStick;
         private Vector2 lastPoint;
-        public UnityAction<float, float> onControlHandler;
+        public LAction<float, float> onControlHandler;
         private Rect joyStickBoundBox;
 
         public LControlView()

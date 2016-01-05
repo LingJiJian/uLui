@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using SLua;
 
+[CustomLuaClassAttribute]
 public class UEventDispatcher
 {
 	protected IList<UEventListener> eventListenerList;

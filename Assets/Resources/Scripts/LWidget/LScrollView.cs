@@ -29,6 +29,7 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using SLua;
 
 namespace Lui
 {
@@ -41,6 +42,7 @@ namespace Lui
     /// <summary>
     /// 滑块
     /// </summary>
+    [CustomLuaClassAttribute]
     public class LScrollView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         public static int INVALID_INDEX = -1;
@@ -55,9 +57,9 @@ namespace Lui
         protected Vector2 scrollDistance;
         public bool dragable;
 
-        public UnityAction onMoveCompleteHandler;
-        public UnityAction onScrollingHandler;
-        public UnityAction onDraggingScrollEndedHandler;
+        public LAction onMoveCompleteHandler;
+        public LAction onScrollingHandler;
+        public LAction onDraggingScrollEndedHandler;
 
         public LScrollView()
         {

@@ -29,16 +29,18 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using SLua;
 
 namespace Lui
 {
     /// <summary>
     /// 翻页
     /// </summary>
+    [CustomLuaClassAttribute]
     public class LPageView : LTableView
     {
         public int pageIndex { get; protected set; }
-        public UnityAction<int> onPageChangedHandler;
+        public LAction<int> onPageChangedHandler;
 
         public LPageView()
         {

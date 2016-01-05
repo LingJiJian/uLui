@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SLua;
 
 public enum WindowHierarchy
 {
@@ -17,6 +18,10 @@ public enum WindowDispose
     Normal
 }
 
+/// <summary>
+/// 窗体管理
+/// </summary>
+[CustomLuaClassAttribute]
 public class LWindowManager : MonoBehaviour
 {
     public delegate LWindowBase CreateWindowAction();

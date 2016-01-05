@@ -46,6 +46,25 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Plugins\Pixelplacement\iTween\iTween.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\Coroutine.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\Debugger\DebugInterface.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\Debugger\SLuaDebug.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\Helper.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\Lua3rdDLL.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaDLL.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaDLLWrapper.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaObject.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaObject_basetype.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaObject_overload.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaState.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaSvr.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaSvrGameObject.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaValueType.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaVarObject.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\ObjectCache.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\SLuaSetting.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\Timer.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\WeakDictionary.cs" />
      <Compile Include="Assets\Plugins\UEvent\CapsuleObject.cs" />
      <Compile Include="Assets\Plugins\UEvent\CubeObject.cs" />
      <Compile Include="Assets\Plugins\UEvent\EventTypeName.cs" />
@@ -54,17 +73,19 @@
      <Compile Include="Assets\Plugins\UEvent\UEvent.cs" />
      <Compile Include="Assets\Plugins\UEvent\UEventDispatcher.cs" />
      <Compile Include="Assets\Plugins\UEvent\UEventListener.cs" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
+     <None Include="Assets\Slua\Resources\module\some.txt" />
+     <None Include="Assets\Slua\Resources\main.txt" />
+     <None Include="Assets\Slua\Resources\circle\circle.txt" />
+     <None Include="Assets\Slua\Resources\perf.txt" />
+     <None Include="Assets\Slua\Resources\delegate.txt" />
+     <None Include="Assets\Slua\Resources\valuetype.txt" />
+     <None Include="Assets\Slua\Resources\varobj.txt" />
+     <None Include="Assets\Slua\Resources\custom.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>D:/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
