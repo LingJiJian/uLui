@@ -144,7 +144,7 @@ public class LWindowManager : MonoBehaviour
         return ret;
     }
 
-    public void runWindow(string name, Type type, WindowHierarchy e)
+    public void runWindow(string name, Type type, WindowHierarchy e,ArrayList list=null)
     {
         if (isRunning(name))
         {
@@ -156,6 +156,7 @@ public class LWindowManager : MonoBehaviour
         {
             win.hierarchy = e;
             win.gameObject.transform.SetParent(hierarchys[e].transform);
+            win.open(list);
 
             runningWindows[e].Add(win);
             
@@ -199,6 +200,7 @@ public class LWindowManager : MonoBehaviour
         if (win != null)
         {
             runningWindows[win.hierarchy].Remove(win);
+            win.close();
 
             if (win.disposeType == WindowDispose.Cache)
             {

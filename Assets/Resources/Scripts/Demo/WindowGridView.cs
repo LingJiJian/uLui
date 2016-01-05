@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 using Lui;
 
 public class WindowGridView : LWindowBase
@@ -39,5 +41,22 @@ public class WindowGridView : LWindowBase
             return cell;
         };
         gridPageView.reloadData();
+    }
+
+    public override void open(ArrayList list)
+    {
+        base.open(list);
+        if (list!=null)
+        {
+            foreach (var item in list)
+            {
+                Debug.Log("数据"+item.ToString());
+            }
+        }
+    }
+
+    public override void close()
+    {
+        base.close();
     }
 }

@@ -9,6 +9,8 @@ public class Firstui : MonoBehaviour
 {
     public Button btn_grid;
     public Button btn_trans;
+    public Button btn_guide;
+    public LGuideLayer guideLayer;
     public LControlView ctrlView;
     public LTableView tblView;
     public LScrollView scrolView;
@@ -25,12 +27,20 @@ public class Firstui : MonoBehaviour
 
         btn_grid.onClick.AddListener(() =>
         {
-            wm.runWindow("WindowGridView", typeof(WindowGridView), WindowHierarchy.Normal);
+            ArrayList list = new ArrayList();
+            list.Add(123);
+            list.Add("测试内容");
+            wm.runWindow("WindowGridView", typeof(WindowGridView), WindowHierarchy.Normal, list);
         });
 
         btn_trans.onClick.AddListener(() =>
         {
             Application.LoadLevel("second");
+        });
+
+        btn_guide.onClick.AddListener(() =>
+        {
+            guideLayer.gameObject.SetActive(!guideLayer.gameObject.activeInHierarchy);
         });
 
         ctrlView.onControlHandler = (float ox, float oy) =>
