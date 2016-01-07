@@ -30,7 +30,7 @@ public class Lua_UnityEngine_StaticBatchingUtility : LuaObject {
 			}
 			else if(argc==2){
 				UnityEngine.GameObject[] a1;
-				checkType(l,1,out a1);
+				checkArray(l,1,out a1);
 				UnityEngine.GameObject a2;
 				checkType(l,2,out a2);
 				UnityEngine.StaticBatchingUtility.Combine(a1,a2);

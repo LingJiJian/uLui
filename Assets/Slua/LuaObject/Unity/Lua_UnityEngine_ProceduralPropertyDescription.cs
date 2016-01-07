@@ -242,7 +242,7 @@ public class Lua_UnityEngine_ProceduralPropertyDescription : LuaObject {
 		try {
 			UnityEngine.ProceduralPropertyDescription self=(UnityEngine.ProceduralPropertyDescription)checkSelf(l);
 			System.String[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.enumOptions=v;
 			pushValue(l,true);
 			return 1;
@@ -268,7 +268,7 @@ public class Lua_UnityEngine_ProceduralPropertyDescription : LuaObject {
 		try {
 			UnityEngine.ProceduralPropertyDescription self=(UnityEngine.ProceduralPropertyDescription)checkSelf(l);
 			System.String[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.componentLabels=v;
 			pushValue(l,true);
 			return 1;

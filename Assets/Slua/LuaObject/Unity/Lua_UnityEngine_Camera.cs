@@ -24,7 +24,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 			if(matchType(l,argc,2,typeof(UnityEngine.RenderBuffer[]),typeof(UnityEngine.RenderBuffer))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderBuffer[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				UnityEngine.RenderBuffer a2;
 				checkValueType(l,3,out a2);
 				self.SetTargetBuffers(a1,a2);
@@ -431,7 +431,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	static public int GetAllCameras_s(IntPtr l) {
 		try {
 			UnityEngine.Camera[] a1;
-			checkType(l,1,out a1);
+			checkArray(l,1,out a1);
 			var ret=UnityEngine.Camera.GetAllCameras(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
@@ -1308,7 +1308,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 		try {
 			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 			System.Single[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.layerCullDistances=v;
 			pushValue(l,true);
 			return 1;

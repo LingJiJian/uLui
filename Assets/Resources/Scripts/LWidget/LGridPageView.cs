@@ -60,7 +60,7 @@ namespace Lui
         public int rows;
 
         public int pageIndex { get; protected set; }
-        public LAction<int> onPageChangedHandler;
+        public UnityAction<int> onPageChangedHandler;
         public Vector2 gridCellsSize;
         protected int cellsMaxCountInPage;
         protected List<Vector2> gridCellsPosition;
@@ -226,7 +226,7 @@ namespace Lui
             indices.Add(page, 1);
         }
 
-        public void setPageChangedHandler(LAction<int> action)
+        public void setPageChangedHandler(UnityAction<int> action)
         {
             onPageChangedHandler = action;
         }

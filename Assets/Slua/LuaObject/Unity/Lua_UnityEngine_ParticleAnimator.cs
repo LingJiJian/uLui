@@ -242,7 +242,7 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 		try {
 			UnityEngine.ParticleAnimator self=(UnityEngine.ParticleAnimator)checkSelf(l);
 			UnityEngine.Color[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.colorAnimation=v;
 			pushValue(l,true);
 			return 1;

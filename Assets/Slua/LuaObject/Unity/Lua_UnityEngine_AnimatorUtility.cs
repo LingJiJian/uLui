@@ -23,7 +23,7 @@ public class Lua_UnityEngine_AnimatorUtility : LuaObject {
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
 			System.String[] a2;
-			checkType(l,2,out a2);
+			checkArray(l,2,out a2);
 			UnityEngine.AnimatorUtility.OptimizeTransformHierarchy(a1,a2);
 			pushValue(l,true);
 			return 1;

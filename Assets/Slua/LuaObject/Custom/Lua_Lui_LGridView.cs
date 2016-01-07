@@ -247,7 +247,7 @@ public class Lua_Lui_LGridView : LuaObject {
 	static public int set_onDataSourceAdapterHandler(IntPtr l) {
 		try {
 			Lui.LGridView self=(Lui.LGridView)checkSelf(l);
-			Lui.LDataSourceAdapter<Lui.LGridViewCell,System.Int32> v;
+			Lui.LScrollView.LDataSourceAdapter<Lui.LGridViewCell,System.Int32> v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onDataSourceAdapterHandler=v;
 			else if(op==1) self.onDataSourceAdapterHandler+=v;

@@ -79,7 +79,7 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 		try {
 			UnityEngine.SkinnedMeshRenderer self=(UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 			UnityEngine.Transform[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.bones=v;
 			pushValue(l,true);
 			return 1;

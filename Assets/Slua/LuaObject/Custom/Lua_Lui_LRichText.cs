@@ -212,7 +212,7 @@ public class Lua_Lui_LRichText : LuaObject {
 	static public int set_onClickHandler(IntPtr l) {
 		try {
 			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
-			Lui.LAction<System.String> v;
+			UnityEngine.Events.UnityAction<System.String> v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onClickHandler=v;
 			else if(op==1) self.onClickHandler+=v;

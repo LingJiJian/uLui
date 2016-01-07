@@ -39,8 +39,8 @@ namespace Lui
     public class LButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,IPointerExitHandler
     {
         public const float LONGPRESS_TIME = 0.5f;
-        public LAction onLongClickHandler;
-        public LAction onLongClickUpdate;
+        public UnityAction onLongClickHandler;
+        public UnityAction onLongClickUpdate;
         protected bool isRunning;
 
         public LButton()

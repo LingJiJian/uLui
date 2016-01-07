@@ -35,7 +35,7 @@ public class Lua_Lui_LPageView : LuaObject {
 	static public int set_onPageChangedHandler(IntPtr l) {
 		try {
 			Lui.LPageView self=(Lui.LPageView)checkSelf(l);
-			Lui.LAction<System.Int32> v;
+			UnityEngine.Events.UnityAction<System.Int32> v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onPageChangedHandler=v;
 			else if(op==1) self.onPageChangedHandler+=v;

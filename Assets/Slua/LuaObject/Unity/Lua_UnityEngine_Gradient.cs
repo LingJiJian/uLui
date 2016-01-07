@@ -37,9 +37,9 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 		try {
 			UnityEngine.Gradient self=(UnityEngine.Gradient)checkSelf(l);
 			UnityEngine.GradientColorKey[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			UnityEngine.GradientAlphaKey[] a2;
-			checkType(l,3,out a2);
+			checkArray(l,3,out a2);
 			self.SetKeys(a1,a2);
 			pushValue(l,true);
 			return 1;
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 		try {
 			UnityEngine.Gradient self=(UnityEngine.Gradient)checkSelf(l);
 			UnityEngine.GradientColorKey[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.colorKeys=v;
 			pushValue(l,true);
 			return 1;
@@ -91,7 +91,7 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 		try {
 			UnityEngine.Gradient self=(UnityEngine.Gradient)checkSelf(l);
 			UnityEngine.GradientAlphaKey[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.alphaKeys=v;
 			pushValue(l,true);
 			return 1;

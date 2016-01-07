@@ -22,7 +22,7 @@ public class Lua_UnityEngine_RectTransform : LuaObject {
 		try {
 			UnityEngine.RectTransform self=(UnityEngine.RectTransform)checkSelf(l);
 			UnityEngine.Vector3[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			self.GetLocalCorners(a1);
 			pushValue(l,true);
 			return 1;
@@ -36,7 +36,7 @@ public class Lua_UnityEngine_RectTransform : LuaObject {
 		try {
 			UnityEngine.RectTransform self=(UnityEngine.RectTransform)checkSelf(l);
 			UnityEngine.Vector3[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			self.GetWorldCorners(a1);
 			pushValue(l,true);
 			return 1;

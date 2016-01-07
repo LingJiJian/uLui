@@ -34,7 +34,7 @@ public class Lua_UnityEngine_CullingGroup : LuaObject {
 		try {
 			UnityEngine.CullingGroup self=(UnityEngine.CullingGroup)checkSelf(l);
 			UnityEngine.BoundingSphere[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			self.SetBoundingSpheres(a1);
 			pushValue(l,true);
 			return 1;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_CullingGroup : LuaObject {
 				System.Int32 a1;
 				checkType(l,2,out a1);
 				System.Int32[] a2;
-				checkType(l,3,out a2);
+				checkArray(l,3,out a2);
 				System.Int32 a3;
 				checkType(l,4,out a3);
 				var ret=self.QueryIndices(a1,a2,a3);
@@ -93,7 +93,7 @@ public class Lua_UnityEngine_CullingGroup : LuaObject {
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				System.Int32[] a2;
-				checkType(l,3,out a2);
+				checkArray(l,3,out a2);
 				System.Int32 a3;
 				checkType(l,4,out a3);
 				var ret=self.QueryIndices(a1,a2,a3);
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_CullingGroup : LuaObject {
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				System.Int32[] a3;
-				checkType(l,4,out a3);
+				checkArray(l,4,out a3);
 				System.Int32 a4;
 				checkType(l,5,out a4);
 				var ret=self.QueryIndices(a1,a2,a3,a4);
@@ -159,7 +159,7 @@ public class Lua_UnityEngine_CullingGroup : LuaObject {
 		try {
 			UnityEngine.CullingGroup self=(UnityEngine.CullingGroup)checkSelf(l);
 			System.Single[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			self.SetBoundingDistances(a1);
 			pushValue(l,true);
 			return 1;

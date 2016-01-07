@@ -831,7 +831,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.RenderBuffer[]),typeof(UnityEngine.RenderBuffer))){
 				UnityEngine.RenderBuffer[] a1;
-				checkType(l,1,out a1);
+				checkArray(l,1,out a1);
 				UnityEngine.RenderBuffer a2;
 				checkValueType(l,2,out a2);
 				UnityEngine.Graphics.SetRenderTarget(a1,a2);

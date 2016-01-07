@@ -236,7 +236,7 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 		try {
 			UnityEngine.AnimationClip self=(UnityEngine.AnimationClip)checkSelf(l);
 			UnityEngine.AnimationEvent[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.events=v;
 			pushValue(l,true);
 			return 1;

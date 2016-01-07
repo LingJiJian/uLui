@@ -838,7 +838,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 		try {
 			UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
 			System.String[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.shaderKeywords=v;
 			pushValue(l,true);
 			return 1;

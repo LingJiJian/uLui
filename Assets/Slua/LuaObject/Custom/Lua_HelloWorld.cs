@@ -61,7 +61,7 @@ public class Lua_HelloWorld : LuaObject {
 		try {
 			HelloWorld self=(HelloWorld)checkSelf(l);
 			System.Collections.Generic.Dictionary<System.String,UnityEngine.GameObject>[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			var ret=self.gos(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
@@ -152,6 +152,31 @@ public class Lua_HelloWorld : LuaObject {
 	static public int bytes_s(IntPtr l) {
 		try {
 			var ret=HelloWorld.bytes();
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int int16Array_s(IntPtr l) {
+		try {
+			System.Int16[] a1;
+			checkArray(l,1,out a1);
+			HelloWorld.int16Array(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int vectors_s(IntPtr l) {
+		try {
+			var ret=HelloWorld.vectors();
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -318,6 +343,22 @@ public class Lua_HelloWorld : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_someAct(IntPtr l) {
+		try {
+			HelloWorld self=(HelloWorld)checkSelf(l);
+			UnityEngine.Events.UnityAction v;
+			int op=LuaDelegation.checkDelegate(l,2,out v);
+			if(op==0) self.someAct=v;
+			else if(op==1) self.someAct+=v;
+			else if(op==2) self.someAct-=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"HelloWorld");
 		addMember(l,y);
@@ -330,6 +371,8 @@ public class Lua_HelloWorld : LuaObject {
 		addMember(l,func7);
 		addMember(l,say_s);
 		addMember(l,bytes_s);
+		addMember(l,int16Array_s);
+		addMember(l,vectors_s);
 		addMember(l,nullf_s);
 		addMember(l,setv_s);
 		addMember(l,getv_s);
@@ -341,6 +384,7 @@ public class Lua_HelloWorld : LuaObject {
 		addMember(l,test4_s);
 		addMember(l,test5_s);
 		addMember(l,func6_s);
+		addMember(l,"someAct",null,set_someAct,true);
 		createTypeMetatable(l,constructor, typeof(HelloWorld));
 	}
 }

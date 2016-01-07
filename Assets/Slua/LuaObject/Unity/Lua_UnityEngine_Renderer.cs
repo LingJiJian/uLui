@@ -242,7 +242,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		try {
 			UnityEngine.Renderer self=(UnityEngine.Renderer)checkSelf(l);
 			UnityEngine.Material[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.materials=v;
 			pushValue(l,true);
 			return 1;
@@ -268,7 +268,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		try {
 			UnityEngine.Renderer self=(UnityEngine.Renderer)checkSelf(l);
 			UnityEngine.Material[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.sharedMaterials=v;
 			pushValue(l,true);
 			return 1;

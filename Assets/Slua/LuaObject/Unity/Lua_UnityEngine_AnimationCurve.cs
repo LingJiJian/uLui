@@ -180,7 +180,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 		try {
 			UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 			UnityEngine.Keyframe[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.keys=v;
 			pushValue(l,true);
 			return 1;

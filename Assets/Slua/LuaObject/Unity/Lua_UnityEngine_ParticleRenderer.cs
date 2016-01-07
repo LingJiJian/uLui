@@ -268,7 +268,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 		try {
 			UnityEngine.ParticleRenderer self=(UnityEngine.ParticleRenderer)checkSelf(l);
 			UnityEngine.Rect[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.uvTiles=v;
 			pushValue(l,true);
 			return 1;

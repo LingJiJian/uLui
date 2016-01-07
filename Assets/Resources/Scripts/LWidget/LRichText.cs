@@ -184,7 +184,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 	public int maxLineWidth;
 	public Font font;
 
-    public LAction<string> onClickHandler;
+    public UnityAction<string> onClickHandler;
     public int realLineHeight { get; protected set; }
     public int realLineWidth { get; protected set; }
 

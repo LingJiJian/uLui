@@ -223,7 +223,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 			else if(matchType(l,argc,2,typeof(System.Int32[]),typeof(int))){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				System.Int32[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				self.SetTriangles(a1,a2);
@@ -258,7 +258,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			System.Int32[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			UnityEngine.MeshTopology a2;
 			checkEnum(l,3,out a2);
 			System.Int32 a3;
@@ -293,7 +293,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 			if(argc==2){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				self.CombineMeshes(a1);
 				pushValue(l,true);
 				return 1;
@@ -301,7 +301,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 			else if(argc==3){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Boolean a2;
 				checkType(l,3,out a2);
 				self.CombineMeshes(a1,a2);
@@ -311,7 +311,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 			else if(argc==4){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Boolean a2;
 				checkType(l,3,out a2);
 				System.Boolean a3;
@@ -413,7 +413,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Vector3[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.vertices=v;
 			pushValue(l,true);
 			return 1;
@@ -439,7 +439,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Vector3[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.normals=v;
 			pushValue(l,true);
 			return 1;
@@ -465,7 +465,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Vector4[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.tangents=v;
 			pushValue(l,true);
 			return 1;
@@ -491,7 +491,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Vector2[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.uv=v;
 			pushValue(l,true);
 			return 1;
@@ -517,7 +517,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Vector2[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.uv2=v;
 			pushValue(l,true);
 			return 1;
@@ -543,7 +543,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Vector2[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.uv3=v;
 			pushValue(l,true);
 			return 1;
@@ -569,7 +569,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Vector2[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.uv4=v;
 			pushValue(l,true);
 			return 1;
@@ -621,7 +621,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Color[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.colors=v;
 			pushValue(l,true);
 			return 1;
@@ -647,7 +647,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Color32[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.colors32=v;
 			pushValue(l,true);
 			return 1;
@@ -673,7 +673,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			System.Int32[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.triangles=v;
 			pushValue(l,true);
 			return 1;
@@ -737,7 +737,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.BoneWeight[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.boneWeights=v;
 			pushValue(l,true);
 			return 1;
@@ -763,7 +763,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			UnityEngine.Matrix4x4[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.bindposes=v;
 			pushValue(l,true);
 			return 1;

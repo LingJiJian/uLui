@@ -51,6 +51,7 @@
      <Compile Include="Assets\Plugins\Slua_Managed\Debugger\SLuaDebug.cs" />
      <Compile Include="Assets\Plugins\Slua_Managed\Helper.cs" />
      <Compile Include="Assets\Plugins\Slua_Managed\Lua3rdDLL.cs" />
+     <Compile Include="Assets\Plugins\Slua_Managed\LuaArray.cs" />
      <Compile Include="Assets\Plugins\Slua_Managed\LuaDLL.cs" />
      <Compile Include="Assets\Plugins\Slua_Managed\LuaDLLWrapper.cs" />
      <Compile Include="Assets\Plugins\Slua_Managed\LuaObject.cs" />

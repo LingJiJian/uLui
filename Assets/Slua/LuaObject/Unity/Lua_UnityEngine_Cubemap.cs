@@ -101,7 +101,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 			if(argc==3){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.Color[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				UnityEngine.CubemapFace a2;
 				checkEnum(l,3,out a2);
 				self.SetPixels(a1,a2);
@@ -111,7 +111,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 			else if(argc==4){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.Color[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				UnityEngine.CubemapFace a2;
 				checkEnum(l,3,out a2);
 				System.Int32 a3;

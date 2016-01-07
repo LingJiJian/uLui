@@ -60,7 +60,7 @@ public class Lua_UnityEngine_AnimatorOverrideController : LuaObject {
 		try {
 			UnityEngine.AnimatorOverrideController self=(UnityEngine.AnimatorOverrideController)checkSelf(l);
 			UnityEngine.AnimationClipPair[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.clips=v;
 			pushValue(l,true);
 			return 1;

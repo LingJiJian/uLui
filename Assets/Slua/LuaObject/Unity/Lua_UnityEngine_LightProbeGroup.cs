@@ -34,7 +34,7 @@ public class Lua_UnityEngine_LightProbeGroup : LuaObject {
 		try {
 			UnityEngine.LightProbeGroup self=(UnityEngine.LightProbeGroup)checkSelf(l);
 			UnityEngine.Vector3[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.probePositions=v;
 			pushValue(l,true);
 			return 1;

@@ -11,7 +11,7 @@ public class Lua_UnityEngine_LOD : LuaObject {
 			System.Single a1;
 			checkType(l,2,out a1);
 			UnityEngine.Renderer[] a2;
-			checkType(l,3,out a2);
+			checkArray(l,3,out a2);
 			o=new UnityEngine.LOD(a1,a2);
 			pushValue(l,true);
 			pushValue(l,o);
@@ -98,7 +98,7 @@ public class Lua_UnityEngine_LOD : LuaObject {
 			UnityEngine.LOD self;
 			checkValueType(l,1,out self);
 			UnityEngine.Renderer[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.renderers=v;
 			setBack(l,self);
 			pushValue(l,true);

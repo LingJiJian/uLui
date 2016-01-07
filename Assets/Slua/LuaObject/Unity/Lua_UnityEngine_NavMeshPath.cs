@@ -22,7 +22,7 @@ public class Lua_UnityEngine_NavMeshPath : LuaObject {
 		try {
 			UnityEngine.NavMeshPath self=(UnityEngine.NavMeshPath)checkSelf(l);
 			UnityEngine.Vector3[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			var ret=self.GetCornersNonAlloc(a1);
 			pushValue(l,true);
 			pushValue(l,ret);

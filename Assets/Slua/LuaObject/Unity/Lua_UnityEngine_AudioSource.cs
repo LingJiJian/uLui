@@ -201,7 +201,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		try {
 			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 			System.Single[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			System.Int32 a2;
 			checkType(l,3,out a2);
 			self.GetOutputData(a1,a2);
@@ -217,7 +217,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		try {
 			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 			System.Single[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			System.Int32 a2;
 			checkType(l,3,out a2);
 			UnityEngine.FFTWindow a3;

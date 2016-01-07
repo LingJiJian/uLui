@@ -22,9 +22,9 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 		try {
 			UnityEngine.Sprite self=(UnityEngine.Sprite)checkSelf(l);
 			UnityEngine.Vector2[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			System.UInt16[] a2;
-			checkType(l,3,out a2);
+			checkArray(l,3,out a2);
 			self.OverrideGeometry(a1,a2);
 			pushValue(l,true);
 			return 1;

@@ -155,7 +155,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 			int argc = LuaDLL.lua_gettop(l);
 			if(matchType(l,argc,1,typeof(System.String[]),typeof(int))){
 				System.String[] a1;
-				checkType(l,1,out a1);
+				checkArray(l,1,out a1);
 				System.Int32 a2;
 				checkType(l,2,out a2);
 				var ret=UnityEngine.Font.CreateDynamicFontFromOSFont(a1,a2);
@@ -238,7 +238,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 		try {
 			UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
 			System.String[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.fontNames=v;
 			pushValue(l,true);
 			return 1;
@@ -264,7 +264,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 		try {
 			UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
 			UnityEngine.CharacterInfo[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.characterInfo=v;
 			pushValue(l,true);
 			return 1;

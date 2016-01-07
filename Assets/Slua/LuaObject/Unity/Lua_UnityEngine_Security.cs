@@ -57,7 +57,7 @@ public class Lua_UnityEngine_Security : LuaObject {
 			int argc = LuaDLL.lua_gettop(l);
 			if(argc==1){
 				System.Byte[] a1;
-				checkType(l,1,out a1);
+				checkArray(l,1,out a1);
 				var ret=UnityEngine.Security.LoadAndVerifyAssembly(a1);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_Security : LuaObject {
 			}
 			else if(argc==2){
 				System.Byte[] a1;
-				checkType(l,1,out a1);
+				checkArray(l,1,out a1);
 				System.String a2;
 				checkType(l,2,out a2);
 				var ret=UnityEngine.Security.LoadAndVerifyAssembly(a1,a2);

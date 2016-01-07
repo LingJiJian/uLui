@@ -47,7 +47,7 @@ public class Lua_UnityEngine_LODGroup : LuaObject {
 		try {
 			UnityEngine.LODGroup self=(UnityEngine.LODGroup)checkSelf(l);
 			UnityEngine.LOD[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			self.SetLODs(a1);
 			pushValue(l,true);
 			return 1;

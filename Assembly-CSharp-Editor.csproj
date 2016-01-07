@@ -45,7 +45,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Resources\Editor\CreateAnimatorController.cs" />
+     <Compile Include="Assets\Editor\CreateAnimatorController.cs" />
      <Compile Include="Assets\Slua\Editor\CustomEditor.cs" />
      <Compile Include="Assets\Slua\Editor\CustomExport.cs" />
      <Compile Include="Assets\Slua\Editor\LuaCodeGen.cs" />

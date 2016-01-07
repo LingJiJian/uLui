@@ -48,7 +48,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 		try {
 			UnityEngine.AudioClip self=(UnityEngine.AudioClip)checkSelf(l);
 			System.Single[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			System.Int32 a2;
 			checkType(l,3,out a2);
 			var ret=self.GetData(a1,a2);
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 		try {
 			UnityEngine.AudioClip self=(UnityEngine.AudioClip)checkSelf(l);
 			System.Single[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			System.Int32 a2;
 			checkType(l,3,out a2);
 			var ret=self.SetData(a1,a2);

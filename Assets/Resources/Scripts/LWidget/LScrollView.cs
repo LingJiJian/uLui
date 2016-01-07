@@ -57,9 +57,10 @@ namespace Lui
         protected Vector2 scrollDistance;
         public bool dragable;
 
-        public LAction onMoveCompleteHandler;
-        public LAction onScrollingHandler;
-        public LAction onDraggingScrollEndedHandler;
+        public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
+        public UnityAction onMoveCompleteHandler;
+        public UnityAction onScrollingHandler;
+        public UnityAction onDraggingScrollEndedHandler;
 
         public LScrollView()
         {

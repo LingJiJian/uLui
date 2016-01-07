@@ -26,7 +26,7 @@ public class Lua_UnityEngine_ParticlePhysicsExtensions : LuaObject {
 			UnityEngine.GameObject a2;
 			checkType(l,2,out a2);
 			UnityEngine.ParticleCollisionEvent[] a3;
-			checkType(l,3,out a3);
+			checkArray(l,3,out a3);
 			var ret=UnityEngine.ParticlePhysicsExtensions.GetCollisionEvents(a1,a2,a3);
 			pushValue(l,true);
 			pushValue(l,ret);

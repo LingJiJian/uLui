@@ -41,7 +41,7 @@ function main()
 	Deleg.d={"+=",xx}
 
 	Deleg.s=function(path,go)
-		print(path,go)
+		print(path,go.name)
 	end
 
 	-- call delegation

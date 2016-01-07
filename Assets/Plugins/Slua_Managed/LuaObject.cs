@@ -68,15 +68,6 @@ namespace SLua
 
     public class LuaOut { }
 
-	[AttributeUsage(AttributeTargets.Class)]
-	public class IgnoreBaseAttribute : System.Attribute
-	{
-		public IgnoreBaseAttribute()
-		{
-			//
-		}
-	}
-
 	public partial class LuaObject
 	{
 
@@ -98,7 +89,7 @@ namespace SLua
 		delegate void PushVarDelegate(IntPtr l, object o);
 		static Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
-		internal const int VersionNumber = 0x1006;
+		internal const int VersionNumber = 0x1007;
 
 		public static void init(IntPtr l)
 		{
@@ -140,7 +131,7 @@ local function index(ud,k)
         local tp=type(fun)	
         if tp=='function' then 
             return fun 
-        else
+        elseif tp=='table' then
 			local f=fun[1]
 			if f then
 				return f(ud)
@@ -167,6 +158,7 @@ return index
 			addMember (l, GetType);
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
 
+			LuaArray.init(l);
 			LuaVarObject.init(l);
 
 			LuaDLL.lua_newtable(l);
@@ -770,6 +762,12 @@ return index
 			oc.push(l, o);
 		}
 
+		public static void pushObject(IntPtr l, Array o)
+		{
+			ObjectCache oc = ObjectCache.get(l);
+			oc.push(l, o);
+		}
+
 		// lightobj is non-exported object used for re-get from c#, not for lua
 		public static void pushLightObject(IntPtr l, object t)
 		{
@@ -974,14 +972,26 @@ return index
 			return oc.get(l, p);
 		}
 
-		static public bool checkType(IntPtr l, int p, out Type[] t)
+		static public bool checkArray<T>(IntPtr l, int p, out T[] ta)
 		{
-			throw new NotSupportedException();
-		}
-
-		static public bool checkType(IntPtr l, int p, out Array t)
-		{
-			throw new NotSupportedException();
+			if (LuaDLL.lua_type(l, p) == LuaTypes.LUA_TTABLE)
+			{
+				int n = LuaDLL.lua_rawlen(l, p);
+				ta = new T[n];
+				for (int k = 0; k < n; k++)
+				{
+					LuaDLL.lua_rawgeti(l, p, k + 1);
+					ta[k]=(T)Convert.ChangeType(checkVar(l, -1),typeof(T));
+					LuaDLL.lua_pop(l, 1);
+				}
+				return true;
+			}
+			else
+			{
+				Array array = checkObj(l, p) as Array;
+				ta = array as T[];
+				return ta!=null;
+			}
 		}
 
 		static public bool checkParams<T>(IntPtr l, int p, out T[] pars) where T:class
@@ -1177,22 +1187,10 @@ return index
 			pushVar(l, o);
 		}
 
-
-		public static void pushValue(IntPtr l, object[] o)
+		public static void pushValue(IntPtr l, Array a)
 		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
+			pushObject(l, a);
 		}
-
 
 		public static void pushVar(IntPtr l, object o)
 		{
@@ -1213,8 +1211,10 @@ return index
 			{
 				pushEnum(l, Convert.ToInt32(o));
 			}
+			else if (t.IsArray)
+				pushObject(l, (Array)o);
 			else
-				pushObject(l,o);
+				pushObject(l, o);
          
 		}
 

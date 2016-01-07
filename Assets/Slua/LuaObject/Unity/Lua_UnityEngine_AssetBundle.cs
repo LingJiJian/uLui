@@ -260,7 +260,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	static public int CreateFromMemory_s(IntPtr l) {
 		try {
 			System.Byte[] a1;
-			checkType(l,1,out a1);
+			checkArray(l,1,out a1);
 			var ret=UnityEngine.AssetBundle.CreateFromMemory(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
@@ -274,7 +274,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	static public int CreateFromMemoryImmediate_s(IntPtr l) {
 		try {
 			System.Byte[] a1;
-			checkType(l,1,out a1);
+			checkArray(l,1,out a1);
 			var ret=UnityEngine.AssetBundle.CreateFromMemoryImmediate(a1);
 			pushValue(l,true);
 			pushValue(l,ret);

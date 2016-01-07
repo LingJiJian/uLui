@@ -63,7 +63,7 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 		try {
 			UnityEngine.LightProbes self=(UnityEngine.LightProbes)checkSelf(l);
 			UnityEngine.Rendering.SphericalHarmonicsL2[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.bakedProbes=v;
 			pushValue(l,true);
 			return 1;

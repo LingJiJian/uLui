@@ -330,7 +330,7 @@ public class Lua_UnityEngine_Rendering_CommandBuffer : LuaObject {
 			else if(matchType(l,argc,2,typeof(UnityEngine.Rendering.RenderTargetIdentifier[]),typeof(UnityEngine.Rendering.RenderTargetIdentifier))){
 				UnityEngine.Rendering.CommandBuffer self=(UnityEngine.Rendering.CommandBuffer)checkSelf(l);
 				UnityEngine.Rendering.RenderTargetIdentifier[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				UnityEngine.Rendering.RenderTargetIdentifier a2;
 				checkValueType(l,3,out a2);
 				self.SetRenderTarget(a1,a2);

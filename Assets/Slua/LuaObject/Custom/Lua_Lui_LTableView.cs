@@ -214,7 +214,7 @@ public class Lua_Lui_LTableView : LuaObject {
 	static public int set_onDataSourceAdapterHandler(IntPtr l) {
 		try {
 			Lui.LTableView self=(Lui.LTableView)checkSelf(l);
-			Lui.LDataSourceAdapter<Lui.LTableViewCell,System.Int32> v;
+			Lui.LScrollView.LDataSourceAdapter<Lui.LTableViewCell,System.Int32> v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onDataSourceAdapterHandler=v;
 			else if(op==1) self.onDataSourceAdapterHandler+=v;

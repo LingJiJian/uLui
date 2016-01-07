@@ -111,7 +111,7 @@ public class Lua_UnityEngine_Display : LuaObject {
 	static public int set_displays(IntPtr l) {
 		try {
 			UnityEngine.Display[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			UnityEngine.Display.displays=v;
 			pushValue(l,true);
 			return 1;

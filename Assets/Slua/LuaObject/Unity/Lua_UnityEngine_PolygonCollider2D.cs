@@ -39,7 +39,7 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector2[] a2;
-			checkType(l,3,out a2);
+			checkArray(l,3,out a2);
 			self.SetPath(a1,a2);
 			pushValue(l,true);
 			return 1;
@@ -120,7 +120,7 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 		try {
 			UnityEngine.PolygonCollider2D self=(UnityEngine.PolygonCollider2D)checkSelf(l);
 			UnityEngine.Vector2[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.points=v;
 			pushValue(l,true);
 			return 1;

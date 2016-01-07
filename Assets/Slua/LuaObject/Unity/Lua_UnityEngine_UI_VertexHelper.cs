@@ -173,7 +173,7 @@ public class Lua_UnityEngine_UI_VertexHelper : LuaObject {
 		try {
 			UnityEngine.UI.VertexHelper self=(UnityEngine.UI.VertexHelper)checkSelf(l);
 			UnityEngine.UIVertex[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			self.AddUIVertexQuad(a1);
 			pushValue(l,true);
 			return 1;

@@ -47,7 +47,7 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 			}
 			else if(matchType(l,argc,2,typeof(UnityEngine.RenderBuffer[]),typeof(UnityEngine.RenderBuffer))){
 				UnityEngine.RenderBuffer[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				UnityEngine.RenderBuffer a2;
 				checkValueType(l,3,out a2);
 				o=new UnityEngine.RenderTargetSetup(a1,a2);
@@ -57,7 +57,7 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 			}
 			else if(matchType(l,argc,2,typeof(UnityEngine.RenderBuffer[]),typeof(UnityEngine.RenderBuffer),typeof(int))){
 				UnityEngine.RenderBuffer[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				UnityEngine.RenderBuffer a2;
 				checkValueType(l,3,out a2);
 				System.Int32 a3;
@@ -69,7 +69,7 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 			}
 			else if(matchType(l,argc,2,typeof(UnityEngine.RenderBuffer[]),typeof(UnityEngine.RenderBuffer),typeof(int),typeof(UnityEngine.CubemapFace))){
 				UnityEngine.RenderBuffer[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				UnityEngine.RenderBuffer a2;
 				checkValueType(l,3,out a2);
 				System.Int32 a3;
@@ -106,7 +106,7 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 			UnityEngine.RenderTargetSetup self;
 			checkValueType(l,1,out self);
 			UnityEngine.RenderBuffer[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.color=v;
 			setBack(l,self);
 			pushValue(l,true);
@@ -222,7 +222,7 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 			UnityEngine.RenderTargetSetup self;
 			checkValueType(l,1,out self);
 			UnityEngine.Rendering.RenderBufferLoadAction[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.colorLoad=v;
 			setBack(l,self);
 			pushValue(l,true);
@@ -251,7 +251,7 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 			UnityEngine.RenderTargetSetup self;
 			checkValueType(l,1,out self);
 			UnityEngine.Rendering.RenderBufferStoreAction[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.colorStore=v;
 			setBack(l,self);
 			pushValue(l,true);

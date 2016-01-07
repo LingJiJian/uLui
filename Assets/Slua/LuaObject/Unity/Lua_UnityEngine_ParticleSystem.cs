@@ -22,7 +22,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		try {
 			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 			UnityEngine.ParticleSystem.Particle[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			System.Int32 a2;
 			checkType(l,3,out a2);
 			self.SetParticles(a1,a2);
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		try {
 			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 			UnityEngine.ParticleSystem.Particle[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			var ret=self.GetParticles(a1);
 			pushValue(l,true);
 			pushValue(l,ret);

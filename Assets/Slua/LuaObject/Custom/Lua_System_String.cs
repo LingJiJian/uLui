@@ -11,7 +11,7 @@ public class Lua_System_String : LuaObject {
 			System.String o;
 			if(argc==4){
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				System.Int32 a3;
@@ -23,7 +23,7 @@ public class Lua_System_String : LuaObject {
 			}
 			else if(argc==2){
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				o=new System.String(a1);
 				pushValue(l,true);
 				pushObject(l,o);
@@ -104,7 +104,7 @@ public class Lua_System_String : LuaObject {
 			else if(matchType(l,argc,2,typeof(System.Char[]),typeof(System.StringSplitOptions))){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.StringSplitOptions a2;
 				checkEnum(l,3,out a2);
 				var ret=self.Split(a1,a2);
@@ -115,7 +115,7 @@ public class Lua_System_String : LuaObject {
 			else if(matchType(l,argc,2,typeof(System.String[]),typeof(System.StringSplitOptions))){
 				System.String self=(System.String)checkSelf(l);
 				System.String[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.StringSplitOptions a2;
 				checkEnum(l,3,out a2);
 				var ret=self.Split(a1,a2);
@@ -126,7 +126,7 @@ public class Lua_System_String : LuaObject {
 			else if(matchType(l,argc,2,typeof(System.Char[]),typeof(int))){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				var ret=self.Split(a1,a2);
@@ -137,7 +137,7 @@ public class Lua_System_String : LuaObject {
 			else if(matchType(l,argc,2,typeof(System.Char[]),typeof(int),typeof(System.StringSplitOptions))){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				System.StringSplitOptions a3;
@@ -150,7 +150,7 @@ public class Lua_System_String : LuaObject {
 			else if(matchType(l,argc,2,typeof(System.String[]),typeof(int),typeof(System.StringSplitOptions))){
 				System.String self=(System.String)checkSelf(l);
 				System.String[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				System.StringSplitOptions a3;
@@ -340,7 +340,7 @@ public class Lua_System_String : LuaObject {
 			if(argc==2){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				var ret=self.IndexOfAny(a1);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -349,7 +349,7 @@ public class Lua_System_String : LuaObject {
 			else if(argc==3){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				var ret=self.IndexOfAny(a1,a2);
@@ -360,7 +360,7 @@ public class Lua_System_String : LuaObject {
 			else if(argc==4){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				System.Int32 a3;
@@ -619,7 +619,7 @@ public class Lua_System_String : LuaObject {
 			if(argc==2){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				var ret=self.LastIndexOfAny(a1);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -628,7 +628,7 @@ public class Lua_System_String : LuaObject {
 			else if(argc==3){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				var ret=self.LastIndexOfAny(a1,a2);
@@ -639,7 +639,7 @@ public class Lua_System_String : LuaObject {
 			else if(argc==4){
 				System.String self=(System.String)checkSelf(l);
 				System.Char[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				System.Int32 a3;
@@ -1448,7 +1448,7 @@ public class Lua_System_String : LuaObject {
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				var ret=System.String.Join(a1,a2);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -1458,7 +1458,7 @@ public class Lua_System_String : LuaObject {
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				System.Int32 a4;

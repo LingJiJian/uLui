@@ -178,7 +178,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 			else if(argc==2){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color32[] a1;
-				checkType(l,2,out a1);
+				checkArray(l,2,out a1);
 				var ret=self.GetPixels32(a1);
 				pushValue(l,true);
 				pushValue(l,ret);

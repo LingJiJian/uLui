@@ -39,9 +39,9 @@ public class Lua_UnityEngine_Audio_AudioMixer : LuaObject {
 		try {
 			UnityEngine.Audio.AudioMixer self=(UnityEngine.Audio.AudioMixer)checkSelf(l);
 			UnityEngine.Audio.AudioMixerSnapshot[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			System.Single[] a2;
-			checkType(l,3,out a2);
+			checkArray(l,3,out a2);
 			System.Single a3;
 			checkType(l,4,out a3);
 			self.TransitionToSnapshots(a1,a2,a3);

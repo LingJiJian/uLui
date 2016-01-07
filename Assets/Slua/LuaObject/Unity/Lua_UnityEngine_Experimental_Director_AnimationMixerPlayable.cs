@@ -34,7 +34,7 @@ public class Lua_UnityEngine_Experimental_Director_AnimationMixerPlayable : LuaO
 		try {
 			UnityEngine.Experimental.Director.AnimationMixerPlayable self=(UnityEngine.Experimental.Director.AnimationMixerPlayable)checkSelf(l);
 			UnityEngine.AnimationClip[] a1;
-			checkType(l,2,out a1);
+			checkArray(l,2,out a1);
 			var ret=self.SetInputs(a1);
 			pushValue(l,true);
 			pushValue(l,ret);

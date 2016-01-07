@@ -71,7 +71,7 @@ public class Lua_Lui_LGridPageView : LuaObject {
 	static public int setPageChangedHandler(IntPtr l) {
 		try {
 			Lui.LGridPageView self=(Lui.LGridPageView)checkSelf(l);
-			Lui.LAction<System.Int32> a1;
+			UnityEngine.Events.UnityAction<System.Int32> a1;
 			LuaDelegation.checkDelegate(l,2,out a1);
 			self.setPageChangedHandler(a1);
 			pushValue(l,true);
@@ -163,7 +163,7 @@ public class Lua_Lui_LGridPageView : LuaObject {
 	static public int set_onPageChangedHandler(IntPtr l) {
 		try {
 			Lui.LGridPageView self=(Lui.LGridPageView)checkSelf(l);
-			Lui.LAction<System.Int32> v;
+			UnityEngine.Events.UnityAction<System.Int32> v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onPageChangedHandler=v;
 			else if(op==1) self.onPageChangedHandler+=v;
@@ -205,7 +205,7 @@ public class Lua_Lui_LGridPageView : LuaObject {
 	static public int set_onGridDataSourceAdapterHandler(IntPtr l) {
 		try {
 			Lui.LGridPageView self=(Lui.LGridPageView)checkSelf(l);
-			Lui.LDataSourceAdapter<Lui.LGridPageViewCell,System.Int32> v;
+			Lui.LScrollView.LDataSourceAdapter<Lui.LGridPageViewCell,System.Int32> v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onGridDataSourceAdapterHandler=v;
 			else if(op==1) self.onGridDataSourceAdapterHandler+=v;

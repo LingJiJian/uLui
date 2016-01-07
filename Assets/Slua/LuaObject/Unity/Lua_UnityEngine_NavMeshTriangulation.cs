@@ -36,7 +36,7 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 			UnityEngine.NavMeshTriangulation self;
 			checkValueType(l,1,out self);
 			UnityEngine.Vector3[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.vertices=v;
 			setBack(l,self);
 			pushValue(l,true);
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 			UnityEngine.NavMeshTriangulation self;
 			checkValueType(l,1,out self);
 			System.Int32[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.indices=v;
 			setBack(l,self);
 			pushValue(l,true);
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 			UnityEngine.NavMeshTriangulation self;
 			checkValueType(l,1,out self);
 			System.Int32[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.areas=v;
 			setBack(l,self);
 			pushValue(l,true);

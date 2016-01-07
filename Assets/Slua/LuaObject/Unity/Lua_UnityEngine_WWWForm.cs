@@ -70,7 +70,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Byte[] a2;
-				checkType(l,3,out a2);
+				checkArray(l,3,out a2);
 				self.AddBinaryData(a1,a2);
 				pushValue(l,true);
 				return 1;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Byte[] a2;
-				checkType(l,3,out a2);
+				checkArray(l,3,out a2);
 				System.String a3;
 				checkType(l,4,out a3);
 				self.AddBinaryData(a1,a2,a3);
@@ -92,7 +92,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Byte[] a2;
-				checkType(l,3,out a2);
+				checkArray(l,3,out a2);
 				System.String a3;
 				checkType(l,4,out a3);
 				System.String a4;

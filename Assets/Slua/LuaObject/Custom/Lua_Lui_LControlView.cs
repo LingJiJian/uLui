@@ -154,7 +154,7 @@ public class Lua_Lui_LControlView : LuaObject {
 	static public int set_onControlHandler(IntPtr l) {
 		try {
 			Lui.LControlView self=(Lui.LControlView)checkSelf(l);
-			Lui.LAction<System.Single,System.Single> v;
+			UnityEngine.Events.UnityAction<System.Single,System.Single> v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onControlHandler=v;
 			else if(op==1) self.onControlHandler+=v;

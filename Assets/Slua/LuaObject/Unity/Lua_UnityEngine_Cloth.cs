@@ -412,7 +412,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 		try {
 			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
 			UnityEngine.ClothSkinningCoefficient[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.coefficients=v;
 			pushValue(l,true);
 			return 1;
@@ -516,7 +516,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 		try {
 			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
 			UnityEngine.CapsuleCollider[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.capsuleColliders=v;
 			pushValue(l,true);
 			return 1;
@@ -542,7 +542,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 		try {
 			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
 			UnityEngine.ClothSphereColliderPair[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.sphereColliders=v;
 			pushValue(l,true);
 			return 1;

@@ -49,7 +49,7 @@ public class Lua_UnityEngine_GeometryUtility : LuaObject {
 	static public int TestPlanesAABB_s(IntPtr l) {
 		try {
 			UnityEngine.Plane[] a1;
-			checkType(l,1,out a1);
+			checkArray(l,1,out a1);
 			UnityEngine.Bounds a2;
 			checkValueType(l,2,out a2);
 			var ret=UnityEngine.GeometryUtility.TestPlanesAABB(a1,a2);

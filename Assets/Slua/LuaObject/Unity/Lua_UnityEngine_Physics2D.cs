@@ -297,7 +297,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				var ret=UnityEngine.Physics2D.LinecastNonAlloc(a1,a2,a3);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -309,7 +309,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				var ret=UnityEngine.Physics2D.LinecastNonAlloc(a1,a2,a3,a4);
@@ -323,7 +323,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				System.Single a5;
@@ -339,7 +339,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				System.Single a5;
@@ -533,7 +533,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				var ret=UnityEngine.Physics2D.RaycastNonAlloc(a1,a2,a3);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -545,7 +545,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Single a4;
 				checkType(l,4,out a4);
 				var ret=UnityEngine.Physics2D.RaycastNonAlloc(a1,a2,a3,a4);
@@ -559,7 +559,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Single a4;
 				checkType(l,4,out a4);
 				System.Int32 a5;
@@ -575,7 +575,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Single a4;
 				checkType(l,4,out a4);
 				System.Int32 a5;
@@ -593,7 +593,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.RaycastHit2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Single a4;
 				checkType(l,4,out a4);
 				System.Int32 a5;
@@ -811,7 +811,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a3;
 				checkType(l,3,out a3);
 				UnityEngine.RaycastHit2D[] a4;
-				checkType(l,4,out a4);
+				checkArray(l,4,out a4);
 				var ret=UnityEngine.Physics2D.CircleCastNonAlloc(a1,a2,a3,a4);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -825,7 +825,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a3;
 				checkType(l,3,out a3);
 				UnityEngine.RaycastHit2D[] a4;
-				checkType(l,4,out a4);
+				checkArray(l,4,out a4);
 				System.Single a5;
 				checkType(l,5,out a5);
 				var ret=UnityEngine.Physics2D.CircleCastNonAlloc(a1,a2,a3,a4,a5);
@@ -841,7 +841,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a3;
 				checkType(l,3,out a3);
 				UnityEngine.RaycastHit2D[] a4;
-				checkType(l,4,out a4);
+				checkArray(l,4,out a4);
 				System.Single a5;
 				checkType(l,5,out a5);
 				System.Int32 a6;
@@ -859,7 +859,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a3;
 				checkType(l,3,out a3);
 				UnityEngine.RaycastHit2D[] a4;
-				checkType(l,4,out a4);
+				checkArray(l,4,out a4);
 				System.Single a5;
 				checkType(l,5,out a5);
 				System.Int32 a6;
@@ -879,7 +879,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a3;
 				checkType(l,3,out a3);
 				UnityEngine.RaycastHit2D[] a4;
-				checkType(l,4,out a4);
+				checkArray(l,4,out a4);
 				System.Single a5;
 				checkType(l,5,out a5);
 				System.Int32 a6;
@@ -1119,7 +1119,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a4;
 				checkType(l,4,out a4);
 				UnityEngine.RaycastHit2D[] a5;
-				checkType(l,5,out a5);
+				checkArray(l,5,out a5);
 				var ret=UnityEngine.Physics2D.BoxCastNonAlloc(a1,a2,a3,a4,a5);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -1135,7 +1135,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a4;
 				checkType(l,4,out a4);
 				UnityEngine.RaycastHit2D[] a5;
-				checkType(l,5,out a5);
+				checkArray(l,5,out a5);
 				System.Single a6;
 				checkType(l,6,out a6);
 				var ret=UnityEngine.Physics2D.BoxCastNonAlloc(a1,a2,a3,a4,a5,a6);
@@ -1153,7 +1153,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a4;
 				checkType(l,4,out a4);
 				UnityEngine.RaycastHit2D[] a5;
-				checkType(l,5,out a5);
+				checkArray(l,5,out a5);
 				System.Single a6;
 				checkType(l,6,out a6);
 				System.Int32 a7;
@@ -1173,7 +1173,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a4;
 				checkType(l,4,out a4);
 				UnityEngine.RaycastHit2D[] a5;
-				checkType(l,5,out a5);
+				checkArray(l,5,out a5);
 				System.Single a6;
 				checkType(l,6,out a6);
 				System.Int32 a7;
@@ -1195,7 +1195,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a4;
 				checkType(l,4,out a4);
 				UnityEngine.RaycastHit2D[] a5;
-				checkType(l,5,out a5);
+				checkArray(l,5,out a5);
 				System.Single a6;
 				checkType(l,6,out a6);
 				System.Int32 a7;
@@ -1309,7 +1309,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Ray a1;
 				checkValueType(l,1,out a1);
 				UnityEngine.RaycastHit2D[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				var ret=UnityEngine.Physics2D.GetRayIntersectionNonAlloc(a1,a2);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -1319,7 +1319,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Ray a1;
 				checkValueType(l,1,out a1);
 				UnityEngine.RaycastHit2D[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				System.Single a3;
 				checkType(l,3,out a3);
 				var ret=UnityEngine.Physics2D.GetRayIntersectionNonAlloc(a1,a2,a3);
@@ -1331,7 +1331,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Ray a1;
 				checkValueType(l,1,out a1);
 				UnityEngine.RaycastHit2D[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				System.Single a3;
 				checkType(l,3,out a3);
 				System.Int32 a4;
@@ -1469,7 +1469,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				var ret=UnityEngine.Physics2D.OverlapPointNonAlloc(a1,a2);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -1479,7 +1479,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				var ret=UnityEngine.Physics2D.OverlapPointNonAlloc(a1,a2,a3);
@@ -1491,7 +1491,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				System.Single a4;
@@ -1505,7 +1505,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] a2;
-				checkType(l,2,out a2);
+				checkArray(l,2,out a2);
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				System.Single a4;
@@ -1663,7 +1663,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				System.Single a2;
 				checkType(l,2,out a2);
 				UnityEngine.Collider2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				var ret=UnityEngine.Physics2D.OverlapCircleNonAlloc(a1,a2,a3);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -1675,7 +1675,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				System.Single a2;
 				checkType(l,2,out a2);
 				UnityEngine.Collider2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				var ret=UnityEngine.Physics2D.OverlapCircleNonAlloc(a1,a2,a3,a4);
@@ -1689,7 +1689,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				System.Single a2;
 				checkType(l,2,out a2);
 				UnityEngine.Collider2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				System.Single a5;
@@ -1705,7 +1705,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				System.Single a2;
 				checkType(l,2,out a2);
 				UnityEngine.Collider2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				System.Single a5;
@@ -1863,7 +1863,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.Collider2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				var ret=UnityEngine.Physics2D.OverlapAreaNonAlloc(a1,a2,a3);
 				pushValue(l,true);
 				pushValue(l,ret);
@@ -1875,7 +1875,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.Collider2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				var ret=UnityEngine.Physics2D.OverlapAreaNonAlloc(a1,a2,a3,a4);
@@ -1889,7 +1889,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.Collider2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				System.Single a5;
@@ -1905,7 +1905,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,2,out a2);
 				UnityEngine.Collider2D[] a3;
-				checkType(l,3,out a3);
+				checkArray(l,3,out a3);
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				System.Single a5;

@@ -70,7 +70,7 @@ public class Lua_UnityEngine_EdgeCollider2D : LuaObject {
 		try {
 			UnityEngine.EdgeCollider2D self=(UnityEngine.EdgeCollider2D)checkSelf(l);
 			UnityEngine.Vector2[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.points=v;
 			pushValue(l,true);
 			return 1;

@@ -61,7 +61,7 @@ public class Lua_Lui_LButton : LuaObject {
 	static public int set_onLongClickHandler(IntPtr l) {
 		try {
 			Lui.LButton self=(Lui.LButton)checkSelf(l);
-			Lui.LAction v;
+			UnityEngine.Events.UnityAction v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onLongClickHandler=v;
 			else if(op==1) self.onLongClickHandler+=v;
@@ -77,7 +77,7 @@ public class Lua_Lui_LButton : LuaObject {
 	static public int set_onLongClickUpdate(IntPtr l) {
 		try {
 			Lui.LButton self=(Lui.LButton)checkSelf(l);
-			Lui.LAction v;
+			UnityEngine.Events.UnityAction v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onLongClickUpdate=v;
 			else if(op==1) self.onLongClickUpdate+=v;

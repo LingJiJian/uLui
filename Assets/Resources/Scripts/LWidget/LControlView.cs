@@ -46,7 +46,7 @@ namespace Lui
         public bool relocateWithAnimation;
         public GameObject joyStick;
         private Vector2 lastPoint;
-        public LAction<float, float> onControlHandler;
+        public UnityAction<float, float> onControlHandler;
         private Rect joyStickBoundBox;
 
         public LControlView()

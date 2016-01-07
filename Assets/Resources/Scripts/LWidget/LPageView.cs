@@ -40,7 +40,7 @@ namespace Lui
     public class LPageView : LTableView
     {
         public int pageIndex { get; protected set; }
-        public LAction<int> onPageChangedHandler;
+        public UnityAction<int> onPageChangedHandler;
 
         public LPageView()
         {

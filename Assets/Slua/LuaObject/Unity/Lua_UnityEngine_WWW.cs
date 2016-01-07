@@ -31,7 +31,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Byte[] a2;
-				checkType(l,3,out a2);
+				checkArray(l,3,out a2);
 				o=new UnityEngine.WWW(a1,a2);
 				pushValue(l,true);
 				pushValue(l,o);
@@ -41,7 +41,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Byte[] a2;
-				checkType(l,3,out a2);
+				checkArray(l,3,out a2);
 				System.Collections.Generic.Dictionary<System.String,System.String> a3;
 				checkType(l,4,out a3);
 				o=new UnityEngine.WWW(a1,a2,a3);
@@ -74,9 +74,9 @@ public class Lua_UnityEngine_WWW : LuaObject {
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Byte[] a2;
-			checkType(l,3,out a2);
+			checkArray(l,3,out a2);
 			System.String[] a3;
-			checkType(l,4,out a3);
+			checkArray(l,4,out a3);
 			self.InitWWW(a1,a2,a3);
 			pushValue(l,true);
 			return 1;

@@ -56,7 +56,7 @@ public class Lua_UnityEngine_SparseTexture : LuaObject {
 			System.Int32 a3;
 			checkType(l,4,out a3);
 			UnityEngine.Color32[] a4;
-			checkType(l,5,out a4);
+			checkArray(l,5,out a4);
 			self.UpdateTile(a1,a2,a3,a4);
 			pushValue(l,true);
 			return 1;
@@ -76,7 +76,7 @@ public class Lua_UnityEngine_SparseTexture : LuaObject {
 			System.Int32 a3;
 			checkType(l,4,out a3);
 			System.Byte[] a4;
-			checkType(l,5,out a4);
+			checkArray(l,5,out a4);
 			self.UpdateTileRaw(a1,a2,a3,a4);
 			pushValue(l,true);
 			return 1;

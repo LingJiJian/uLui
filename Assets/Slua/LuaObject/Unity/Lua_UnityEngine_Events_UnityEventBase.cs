@@ -83,7 +83,7 @@ public class Lua_UnityEngine_Events_UnityEventBase : LuaObject {
 			System.String a2;
 			checkType(l,2,out a2);
 			System.Type[] a3;
-			checkType(l,3,out a3);
+			checkArray(l,3,out a3);
 			var ret=UnityEngine.Events.UnityEventBase.GetValidMethodInfo(a1,a2,a3);
 			pushValue(l,true);
 			pushValue(l,ret);

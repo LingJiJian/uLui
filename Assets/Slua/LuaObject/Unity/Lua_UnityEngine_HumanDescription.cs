@@ -36,7 +36,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 			UnityEngine.HumanDescription self;
 			checkValueType(l,1,out self);
 			UnityEngine.HumanBone[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.human=v;
 			setBack(l,self);
 			pushValue(l,true);
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 			UnityEngine.HumanDescription self;
 			checkValueType(l,1,out self);
 			UnityEngine.SkeletonBone[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.skeleton=v;
 			setBack(l,self);
 			pushValue(l,true);

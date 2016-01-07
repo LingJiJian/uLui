@@ -499,7 +499,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 		try {
 			UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 			UnityEngine.Particle[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			self.particles=v;
 			pushValue(l,true);
 			return 1;

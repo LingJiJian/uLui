@@ -32,7 +32,7 @@ public class Lua_UnityEngine_LightmapSettings : LuaObject {
 	static public int set_lightmaps(IntPtr l) {
 		try {
 			UnityEngine.LightmapData[] v;
-			checkType(l,2,out v);
+			checkArray(l,2,out v);
 			UnityEngine.LightmapSettings.lightmaps=v;
 			pushValue(l,true);
 			return 1;

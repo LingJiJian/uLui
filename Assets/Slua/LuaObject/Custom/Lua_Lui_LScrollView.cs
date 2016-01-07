@@ -337,7 +337,7 @@ public class Lua_Lui_LScrollView : LuaObject {
 	static public int set_onMoveCompleteHandler(IntPtr l) {
 		try {
 			Lui.LScrollView self=(Lui.LScrollView)checkSelf(l);
-			Lui.LAction v;
+			UnityEngine.Events.UnityAction v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onMoveCompleteHandler=v;
 			else if(op==1) self.onMoveCompleteHandler+=v;
@@ -353,7 +353,7 @@ public class Lua_Lui_LScrollView : LuaObject {
 	static public int set_onScrollingHandler(IntPtr l) {
 		try {
 			Lui.LScrollView self=(Lui.LScrollView)checkSelf(l);
-			Lui.LAction v;
+			UnityEngine.Events.UnityAction v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onScrollingHandler=v;
 			else if(op==1) self.onScrollingHandler+=v;
@@ -369,7 +369,7 @@ public class Lua_Lui_LScrollView : LuaObject {
 	static public int set_onDraggingScrollEndedHandler(IntPtr l) {
 		try {
 			Lui.LScrollView self=(Lui.LScrollView)checkSelf(l);
-			Lui.LAction v;
+			UnityEngine.Events.UnityAction v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onDraggingScrollEndedHandler=v;
 			else if(op==1) self.onDraggingScrollEndedHandler+=v;
