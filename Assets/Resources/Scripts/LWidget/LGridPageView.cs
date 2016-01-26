@@ -62,8 +62,8 @@ namespace Lui
         public int pageIndex { get; protected set; }
         public UnityAction<int> onPageChangedHandler;
         public Vector2 gridCellsSize;
-        protected int cellsMaxCountInPage;
-        protected List<Vector2> gridCellsPosition;
+        protected int _cellsMaxCountInPage;
+        protected List<Vector2> _gridCellsPosition;
         public LDataSourceAdapter<LGridPageViewCell, int> onGridDataSourceAdapterHandler;
 
         public LGridPageView()
@@ -74,7 +74,7 @@ namespace Lui
             this.pageIndex = 0;
             this.gridCellsSize = Vector2.zero;
             autoRelocateSpeed = LTableView.AUTO_RELOCATE_SPPED;
-            gridCellsPosition = new List<Vector2>();
+            _gridCellsPosition = new List<Vector2>();
         }
 
         public void updateGridCellsPosition()
@@ -82,28 +82,28 @@ namespace Lui
             float x = 0.0f;
             float y = GetComponent<RectTransform>().rect.height - gridCellsSize.y;
 
-            for (int i = 0; i < cellsMaxCountInPage; ++i )
+            for (int i = 0; i < _cellsMaxCountInPage; ++i )
             {
                 if ( i!= 0 && i % cols == 0)
                 {
                     x = 0;
                     y = y - gridCellsSize.y;
                 }
-                gridCellsPosition.Add(new Vector2(x, y));
+                _gridCellsPosition.Add(new Vector2(x, y));
                 x += gridCellsSize.x;
             }
         }
 
         public void updatePageCount()
         {
-            cellsMaxCountInPage = cols * rows;
-            if (gridCellsCount % cellsMaxCountInPage == 0)
+            _cellsMaxCountInPage = cols * rows;
+            if (gridCellsCount % _cellsMaxCountInPage == 0)
             {
-                cellsCount = gridCellsCount / cellsMaxCountInPage;
+                cellsCount = gridCellsCount / _cellsMaxCountInPage;
             }
             else
             {
-                cellsCount = gridCellsCount / cellsMaxCountInPage + 1;
+                cellsCount = gridCellsCount / _cellsMaxCountInPage + 1;
             }
         }
 
@@ -156,8 +156,8 @@ namespace Lui
                 pageCell = new LGridPageViewPage();
 
                 List<LGridPageViewCell> gridCells = pageCell.gridCells;
-                int beginIdx = page * cellsMaxCountInPage;
-                int endIdx = beginIdx + cellsMaxCountInPage;
+                int beginIdx = page * _cellsMaxCountInPage;
+                int endIdx = beginIdx + _cellsMaxCountInPage;
 
                 for (int idx = beginIdx, i = 0; idx < endIdx;++idx,++i )
                 {
@@ -170,7 +170,7 @@ namespace Lui
                         rtran.sizeDelta = gridCellsSize;
                         cell.idx = idx;
                         cell.node.transform.SetParent(pageCell.node.transform);
-                        cell.node.transform.localPosition = gridCellsPosition[i];
+                        cell.node.transform.localPosition = _gridCellsPosition[i];
                         gridCells.Add(cell);
                     }
                     else
@@ -180,7 +180,7 @@ namespace Lui
                         rtran.pivot = Vector2.zero;
                         cell.idx = INVALID_INDEX;
                         cell.node.transform.SetParent(pageCell.node.transform);
-                        cell.node.transform.localPosition = gridCellsPosition[i];
+                        cell.node.transform.localPosition = _gridCellsPosition[i];
                         gridCells.Add(cell);
                     }
                 }
@@ -188,8 +188,8 @@ namespace Lui
             else
             {
                 List<LGridPageViewCell> gridCells = pageCell.gridCells;
-                int beginIdx = page * cellsMaxCountInPage;
-                int endIdx = beginIdx + cellsMaxCountInPage;
+                int beginIdx = page * _cellsMaxCountInPage;
+                int endIdx = beginIdx + _cellsMaxCountInPage;
 
                 for (int idx = beginIdx, i = 0; idx < endIdx; ++idx, ++i)
                 {

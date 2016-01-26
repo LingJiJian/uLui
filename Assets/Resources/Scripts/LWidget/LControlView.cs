@@ -45,15 +45,15 @@ namespace Lui
         public int radius;
         public bool relocateWithAnimation;
         public GameObject joyStick;
-        private Vector2 lastPoint;
+        private Vector2 _lastPoint;
         public UnityAction<float, float> onControlHandler;
-        private Rect joyStickBoundBox;
+        private Rect _joyStickBoundBox;
 
         public LControlView()
         {
             this.radius = 100;
             this.centerPoint = Vector2.zero;
-            this.lastPoint = Vector2.zero;
+            this._lastPoint = Vector2.zero;
             this.relocateWithAnimation = true;
         }
 
@@ -70,7 +70,7 @@ namespace Lui
             }
             else
             {
-                lastPoint = point;
+                _lastPoint = point;
                 onExecuteEventHandle();
             }
         }
@@ -89,7 +89,7 @@ namespace Lui
             {
                 Vector2 point = transform.InverseTransformPoint(eventData.position);
                 float dis = Vector3.Distance(centerPoint, point);
-                lastPoint = dis < radius ? point : new Vector2(
+                _lastPoint = dis < radius ? point : new Vector2(
                     ((point.x - centerPoint.x) / dis) * radius + centerPoint.x,
                     ((point.y - centerPoint.y) / dis) * radius + centerPoint.y);
             }
@@ -152,7 +152,7 @@ namespace Lui
             }
             else
             {
-                Vector2 offset = lastPoint - centerPoint;
+                Vector2 offset = _lastPoint - centerPoint;
                 onControlHandler.Invoke(offset.x / PARAM_PRE, offset.y / PARAM_PRE);
             }
         }

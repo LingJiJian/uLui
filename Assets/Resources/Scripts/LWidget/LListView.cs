@@ -43,7 +43,7 @@ namespace Lui
         public static Vector2 VerticalNodeAnchorPoint = Vector2.zero;
 
         public int limitNum;
-        protected float layoutIndexSize;
+        protected float _layoutIndexSize;
         public List<GameObject> nodeList { get; protected set; }
         public List<GameObject> freeList { get; protected set; }
         public GameObject itemTemplate;
@@ -52,7 +52,7 @@ namespace Lui
         public LListView()
         {
             this.limitNum = 0;
-            this.layoutIndexSize = 0;
+            this._layoutIndexSize = 0;
             this.direction = ScrollDirection.VERTICAL;
             this.nodeList = new List<GameObject>();
             this.freeList = new List<GameObject>();
@@ -163,7 +163,7 @@ namespace Lui
             {
                 return;
             }
-            layoutIndexSize = 0;
+            _layoutIndexSize = 0;
             switch (direction)
             {
                 case ScrollDirection.HORIZONTAL:
@@ -173,8 +173,8 @@ namespace Lui
                         {
                             obj = nodeList[i];
                             obj.GetComponent<RectTransform>().pivot = HorizontalNodeAnchorPoint;
-                            obj.transform.localPosition = new Vector2(layoutIndexSize, 0);
-                            layoutIndexSize += obj.GetComponent<RectTransform>().rect.width;
+                            obj.transform.localPosition = new Vector2(_layoutIndexSize, 0);
+                            _layoutIndexSize += obj.GetComponent<RectTransform>().rect.width;
                         }
                     }
                     break;
@@ -188,7 +188,7 @@ namespace Lui
                             allNodesSize += obj.GetComponent<RectTransform>().rect.height;
                         }
 
-                        layoutIndexSize = allNodesSize;
+                        _layoutIndexSize = allNodesSize;
                         RectTransform rtran = GetComponent<RectTransform>();
                         allNodesSize = Mathf.Max(rtran.rect.height, allNodesSize);
                         setContainerSize(new Vector2(rtran.rect.width, allNodesSize));

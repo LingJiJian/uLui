@@ -53,11 +53,12 @@
      <Compile Include="Assets\Resources\Scripts\LUtils\LUtils.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LButton.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LControlView.cs" />
-     <Compile Include="Assets\Resources\Scripts\LWidget\LFrameAnimation.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LGridPageView.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LGridView.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LGuideLayer.cs" />
+     <Compile Include="Assets\Resources\Scripts\LWidget\LLabelAtlas.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LListView.cs" />
+     <Compile Include="Assets\Resources\Scripts\LWidget\LMovieClip.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LPageView.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LRichText.cs" />
      <Compile Include="Assets\Resources\Scripts\LWidget\LScrollView.cs" />
@@ -94,11 +95,12 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_ListViewEvent.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LButton.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LControlView.cs" />
-     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LFrameAnimation.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LGridPageView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LGridView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LGuideLayer.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LLabelAtlas.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LListView.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LMovieClip.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LPageView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LRichText.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LScrollView.cs" />
@@ -712,17 +714,11 @@
      <None Include="Assets\Slua\Resources\valuetype.txt" />
      <None Include="Assets\Slua\Resources\varobj.txt" />
      <None Include="Assets\Slua\Resources\custom.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>D:/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>

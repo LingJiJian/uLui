@@ -188,53 +188,53 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
     public int realLineHeight { get; protected set; }
     public int realLineWidth { get; protected set; }
 
-    List<LRichElement> richElements;
-    List<LRenderElement> elemRenderArr;
-    List<LRichCacheElement> cacheLabElements;
-    List<LRichCacheElement> cacheImgElements;
-	List<LRichCacheElement> cacheFramAnimElements;
-    Dictionary<GameObject, string> objectDataMap;
+    List<LRichElement> _richElements;
+    List<LRenderElement> _elemRenderArr;
+    List<LRichCacheElement> _cacheLabElements;
+    List<LRichCacheElement> _cacheImgElements;
+	List<LRichCacheElement> _cacheFramAnimElements;
+    Dictionary<GameObject, string> _objectDataMap;
 
     public void removeAllElements()
     {
-        foreach(LRichCacheElement lab in cacheLabElements)
+        foreach(LRichCacheElement lab in _cacheLabElements)
         {
             lab.isUse = false;
             lab.node.transform.SetParent(null);
         }
-        foreach (LRichCacheElement img in cacheImgElements)
+        foreach (LRichCacheElement img in _cacheImgElements)
         {
             img.isUse = false;
             img.node.transform.SetParent(null);
         }
 
-        foreach (LRichCacheElement anim in cacheFramAnimElements)
+        foreach (LRichCacheElement anim in _cacheFramAnimElements)
         {
             anim.isUse = false;
             anim.node.transform.SetParent(null);
         }
-        elemRenderArr.Clear();
-        objectDataMap.Clear();
+        _elemRenderArr.Clear();
+        _objectDataMap.Clear();
     }
 
     public void insertElement(string txt, Color color,int fontSize, bool isUnderLine, bool isOutLine, Color outLineColor, string data)
     {
-        richElements.Add(new LRichElementText(color, txt,fontSize, isUnderLine, isOutLine, data));
+        _richElements.Add(new LRichElementText(color, txt,fontSize, isUnderLine, isOutLine, data));
     }
 
     public void insertElement(string path, float fp, string data)
     {
-        richElements.Add(new LRichElementAnim(path, fp, data));
+        _richElements.Add(new LRichElementAnim(path, fp, data));
     }
 
     public void insertElement(string path, string data)
     {
-        richElements.Add(new LRichElementImage(path, data));
+        _richElements.Add(new LRichElementImage(path, data));
     }
 
     public void insertElement(int newline)
     {
-        richElements.Add(new LRichElementNewline());
+        _richElements.Add(new LRichElementNewline());
     }
 
     public LRichText()
@@ -243,12 +243,12 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
         this.verticalSpace = 0;
         this.maxLineWidth = 300;
 
-        richElements = new List<LRichElement>();
-        elemRenderArr = new List<LRenderElement>();
-        cacheLabElements = new List<LRichCacheElement>();
-        cacheImgElements = new List<LRichCacheElement>();
-		cacheFramAnimElements = new List<LRichCacheElement> ();
-        objectDataMap = new Dictionary<GameObject, string>();
+        _richElements = new List<LRichElement>();
+        _elemRenderArr = new List<LRenderElement>();
+        _cacheLabElements = new List<LRichCacheElement>();
+        _cacheImgElements = new List<LRichCacheElement>();
+		_cacheFramAnimElements = new List<LRichCacheElement> ();
+        _objectDataMap = new Dictionary<GameObject, string>();
     }
    
     public void reloadData()
@@ -266,7 +266,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 			rtran.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
 		}
 
-        foreach (LRichElement elem in richElements)
+        foreach (LRichElement elem in _richElements)
         {
             if (elem.type == RichType.TEXT)
             {
@@ -296,7 +296,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
                     rendElem.width = (int)gen.GetPreferredWidth(rendElem.strChar, setting);
                     rendElem.height = (int)gen.GetPreferredHeight(rendElem.strChar, setting);
-                    elemRenderArr.Add(rendElem);
+                    _elemRenderArr.Add(rendElem);
                 }
             }
             else if (elem.type == RichType.IMAGE)
@@ -310,7 +310,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 				Sprite sp = Resources.Load(rendElem.path,typeof(Sprite)) as Sprite;
 				rendElem.width = sp.texture.width;
 				rendElem.height = sp.texture.height;
-                elemRenderArr.Add(rendElem);
+                _elemRenderArr.Add(rendElem);
             }
             else if (elem.type == RichType.ANIM)
             {
@@ -324,17 +324,17 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 				Sprite sp = Resources.Load(rendElem.path+"/1",typeof(Sprite)) as Sprite;
 				rendElem.width = sp.texture.width;
 				rendElem.height = sp.texture.height;
-                elemRenderArr.Add(rendElem);
+                _elemRenderArr.Add(rendElem);
             }
             else if (elem.type == RichType.NEWLINE)
             {
                 LRenderElement rendElem = new LRenderElement();
                 rendElem.isNewLine = true;
-                elemRenderArr.Add(rendElem);
+                _elemRenderArr.Add(rendElem);
             }
         }
 
-        richElements.Clear();
+        _richElements.Clear();
 
         formarRenderers();
     }
@@ -344,12 +344,12 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
         int oneLine = 0;
         int lines = 1;
         bool isReplaceInSpace = false;
-        int len = elemRenderArr.Count;
+        int len = _elemRenderArr.Count;
 
         for (int i = 0; i < len; i++)
         {
             isReplaceInSpace = false;
-            LRenderElement elem = elemRenderArr[i];
+            LRenderElement elem = _elemRenderArr[i];
             if (elem.isNewLine) // new line
             {
                 oneLine = 0;
@@ -380,8 +380,8 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
                            while (idx > 0)
                            {
                                idx--;
-                               if (elemRenderArr[idx].strChar == " " && 
-                                   elemRenderArr[idx].pos.y == elemRenderArr[i-1].pos.y ) // just for the same line
+                               if (_elemRenderArr[idx].strChar == " " && 
+                                   _elemRenderArr[idx].pos.y == _elemRenderArr[i-1].pos.y ) // just for the same line
                                {
                                    spaceIdx = idx;
                                    break;
@@ -403,11 +403,11 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
                                for (int _i = spaceIdx +1; _i <= i; ++_i)
                                {
-                                   LRenderElement _elem = elemRenderArr[_i];
+                                   LRenderElement _elem = _elemRenderArr[_i];
                                    _elem.pos = new Vector2(oneLine, -lines * 27);
                                    oneLine += _elem.width;
 
-                                   elemRenderArr[_i] = _elem;
+                                   _elemRenderArr[_i] = _elem;
                                }
                            }
                        }
@@ -426,16 +426,16 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
             }
             if (isReplaceInSpace == false)
             {
-                elemRenderArr[i] = elem;
+                _elemRenderArr[i] = elem;
             }
         }
         //sort all lines
         Dictionary<int,List<LRenderElement>> rendElemLineMap = new Dictionary<int,List<LRenderElement>>();
         List<int> lineKeyList = new List<int>();
-        len = elemRenderArr.Count;
+        len = _elemRenderArr.Count;
         for (int i = 0; i < len ; i++ )
         {
-            LRenderElement elem = elemRenderArr[i];
+            LRenderElement elem = _elemRenderArr[i];
             List<LRenderElement> lineList;
             
             if (!rendElemLineMap.ContainsKey((int)elem.pos.y))
@@ -576,7 +576,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 					}
 					obj.transform.SetParent(transform);
                     obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
-                    objectDataMap[obj] = elem.data;
+                    _objectDataMap[obj] = elem.data;
                 }
             }
             realLineWidth = Mathf.Max(_lineWidth, realLineWidth);
@@ -641,7 +641,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
 	void makeFramAnim(GameObject anim, LRenderElement elem)
     {
-        LFrameAnimation comFram = anim.GetComponent<LFrameAnimation>();
+        LMovieClip comFram = anim.GetComponent<LMovieClip>();
         if (comFram != null)
         {
             comFram.path = elem.path;
@@ -654,10 +654,10 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
     protected GameObject getCacheLabel()
     {
         GameObject ret = null;
-        int len = cacheLabElements.Count;
+        int len = _cacheLabElements.Count;
         for (int i = 0; i < len;i++ )
         {
-            LRichCacheElement cacheElem = cacheLabElements[i];
+            LRichCacheElement cacheElem = _cacheLabElements[i];
             if (cacheElem.isUse == false)
             {
                 cacheElem.isUse = true;
@@ -680,7 +680,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
             LRichCacheElement cacheElem = new LRichCacheElement(ret);
             cacheElem.isUse = true;
-            cacheLabElements.Add(cacheElem);
+            _cacheLabElements.Add(cacheElem);
         }
         return ret;
     }
@@ -688,10 +688,10 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
     protected GameObject getCacheImage(bool isFitSize)
     {
         GameObject ret = null;
-        int len = cacheLabElements.Count;
+        int len = _cacheLabElements.Count;
         for (int i = 0; i < len; i++)
         {
-            LRichCacheElement cacheElem = cacheLabElements[i];
+            LRichCacheElement cacheElem = _cacheLabElements[i];
             if (cacheElem.isUse == false)
             {
                 cacheElem.isUse = true;
@@ -714,7 +714,7 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
             
             LRichCacheElement cacheElem = new LRichCacheElement(ret);
             cacheElem.isUse = true;
-            cacheLabElements.Add(cacheElem);
+            _cacheLabElements.Add(cacheElem);
         }
 		ContentSizeFitter fitCom = ret.GetComponent<ContentSizeFitter>();
 		fitCom.enabled = isFitSize;
@@ -724,10 +724,10 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 	protected GameObject getCacheFramAnim()
 	{
 		GameObject ret = null;
-		int len = cacheFramAnimElements.Count;
+		int len = _cacheFramAnimElements.Count;
 		for (int i = 0; i < len;i++ )
 		{
-			LRichCacheElement cacheElem = cacheFramAnimElements[i];
+			LRichCacheElement cacheElem = _cacheFramAnimElements[i];
 			if (cacheElem.isUse == false)
 			{
 				cacheElem.isUse = true;
@@ -748,11 +748,11 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
             rtran.anchorMax = new Vector2(0, 1);
             rtran.anchorMin = new Vector2(0, 1);
 
-			ret.AddComponent<LFrameAnimation>();
+			ret.AddComponent<LMovieClip>();
 			
 			LRichCacheElement cacheElem = new LRichCacheElement(ret);
 			cacheElem.isUse = true;
-			cacheFramAnimElements.Add(cacheElem);
+			_cacheFramAnimElements.Add(cacheElem);
 		}
 		return ret;
 	}
@@ -774,11 +774,11 @@ public class LRichText : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData data)
     {
-        if (objectDataMap.ContainsKey(data.pointerEnter))
+        if (_objectDataMap.ContainsKey(data.pointerEnter))
         {
-            if ((onClickHandler !=null) && (objectDataMap[data.pointerEnter] != ""))
+            if ((onClickHandler !=null) && (_objectDataMap[data.pointerEnter] != ""))
             {
-                onClickHandler.Invoke(objectDataMap[data.pointerEnter]);
+                onClickHandler.Invoke(_objectDataMap[data.pointerEnter]);
             }
         }
         
