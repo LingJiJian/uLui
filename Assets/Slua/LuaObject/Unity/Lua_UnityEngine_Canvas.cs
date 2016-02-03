@@ -311,6 +311,32 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_targetDisplay(IntPtr l) {
+		try {
+			UnityEngine.Canvas self=(UnityEngine.Canvas)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.targetDisplay);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_targetDisplay(IntPtr l) {
+		try {
+			UnityEngine.Canvas self=(UnityEngine.Canvas)checkSelf(l);
+			int v;
+			checkType(l,2,out v);
+			self.targetDisplay=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sortingLayerID(IntPtr l) {
 		try {
 			UnityEngine.Canvas self=(UnityEngine.Canvas)checkSelf(l);
@@ -390,6 +416,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 		addMember(l,"renderOrder",get_renderOrder,null,true);
 		addMember(l,"overrideSorting",get_overrideSorting,set_overrideSorting,true);
 		addMember(l,"sortingOrder",get_sortingOrder,set_sortingOrder,true);
+		addMember(l,"targetDisplay",get_targetDisplay,set_targetDisplay,true);
 		addMember(l,"sortingLayerID",get_sortingLayerID,set_sortingLayerID,true);
 		addMember(l,"cachedSortingLayerValue",get_cachedSortingLayerValue,null,true);
 		addMember(l,"sortingLayerName",get_sortingLayerName,set_sortingLayerName,true);

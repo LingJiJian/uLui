@@ -252,12 +252,29 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadImage(IntPtr l) {
 		try {
-			UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
-			System.Byte[] a1;
-			checkArray(l,2,out a1);
-			var ret=self.LoadImage(a1);
-			pushValue(l,true);
-			pushValue(l,ret);
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
+				System.Byte[] a1;
+				checkArray(l,2,out a1);
+				var ret=self.LoadImage(a1);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==3){
+				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
+				System.Byte[] a1;
+				checkArray(l,2,out a1);
+				System.Boolean a2;
+				checkType(l,3,out a2);
+				var ret=self.LoadImage(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
 			return 2;
 		}
 		catch(Exception e) {
@@ -267,12 +284,28 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadRawTextureData(IntPtr l) {
 		try {
-			UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
-			System.Byte[] a1;
-			checkArray(l,2,out a1);
-			self.LoadRawTextureData(a1);
-			pushValue(l,true);
-			return 1;
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
+				System.Byte[] a1;
+				checkArray(l,2,out a1);
+				self.LoadRawTextureData(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(argc==3){
+				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
+				System.IntPtr a1;
+				checkType(l,2,out a1);
+				System.Int32 a2;
+				checkType(l,3,out a2);
+				self.LoadRawTextureData(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);

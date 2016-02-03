@@ -15,7 +15,15 @@ public class Lua_UnityEngine_Event : LuaObject {
 				pushValue(l,o);
 				return 2;
 			}
-			else if(argc==2){
+			else if(matchType(l,argc,2,typeof(int))){
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				o=new UnityEngine.Event(a1);
+				pushValue(l,true);
+				pushValue(l,o);
+				return 2;
+			}
+			else if(matchType(l,argc,2,typeof(UnityEngine.Event))){
 				UnityEngine.Event a1;
 				checkType(l,2,out a1);
 				o=new UnityEngine.Event(a1);
@@ -584,6 +592,32 @@ public class Lua_UnityEngine_Event : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_displayIndex(IntPtr l) {
+		try {
+			UnityEngine.Event self=(UnityEngine.Event)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.displayIndex);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_displayIndex(IntPtr l) {
+		try {
+			UnityEngine.Event self=(UnityEngine.Event)checkSelf(l);
+			int v;
+			checkType(l,2,out v);
+			self.displayIndex=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Event");
 		addMember(l,GetTypeForControl);
@@ -612,6 +646,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 		addMember(l,"character",get_character,set_character,true);
 		addMember(l,"commandName",get_commandName,set_commandName,true);
 		addMember(l,"keyCode",get_keyCode,set_keyCode,true);
+		addMember(l,"displayIndex",get_displayIndex,set_displayIndex,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Event));
 	}
 }

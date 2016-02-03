@@ -132,6 +132,18 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ForceLabelUpdate(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			self.ForceLabelUpdate();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Rebuild(IntPtr l) {
 		try {
 			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
@@ -340,6 +352,32 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_caretWidth(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.caretWidth);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_caretWidth(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			int v;
+			checkType(l,2,out v);
+			self.caretWidth=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_textComponent(IntPtr l) {
 		try {
 			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
@@ -384,6 +422,58 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 			UnityEngine.UI.Graphic v;
 			checkType(l,2,out v);
 			self.placeholder=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_caretColor(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.caretColor);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_caretColor(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			UnityEngine.Color v;
+			checkType(l,2,out v);
+			self.caretColor=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_customCaretColor(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.customCaretColor);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_customCaretColor(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.customCaretColor=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -444,11 +534,11 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_onValueChange(IntPtr l) {
+	static public int get_onValueChanged(IntPtr l) {
 		try {
 			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.onValueChange);
+			pushValue(l,self.onValueChanged);
 			return 2;
 		}
 		catch(Exception e) {
@@ -456,12 +546,12 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_onValueChange(IntPtr l) {
+	static public int set_onValueChanged(IntPtr l) {
 		try {
 			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
 			UnityEngine.UI.InputField.OnChangeEvent v;
 			checkType(l,2,out v);
-			self.onValueChange=v;
+			self.onValueChanged=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -642,6 +732,32 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_readOnly(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.readOnly);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_readOnly(IntPtr l) {
+		try {
+			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.readOnly=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_multiLine(IntPtr l) {
 		try {
 			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
@@ -780,6 +896,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		addMember(l,OnPointerDown);
 		addMember(l,ProcessEvent);
 		addMember(l,OnUpdateSelected);
+		addMember(l,ForceLabelUpdate);
 		addMember(l,Rebuild);
 		addMember(l,LayoutComplete);
 		addMember(l,GraphicUpdateComplete);
@@ -793,11 +910,14 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		addMember(l,"text",get_text,set_text,true);
 		addMember(l,"isFocused",get_isFocused,null,true);
 		addMember(l,"caretBlinkRate",get_caretBlinkRate,set_caretBlinkRate,true);
+		addMember(l,"caretWidth",get_caretWidth,set_caretWidth,true);
 		addMember(l,"textComponent",get_textComponent,set_textComponent,true);
 		addMember(l,"placeholder",get_placeholder,set_placeholder,true);
+		addMember(l,"caretColor",get_caretColor,set_caretColor,true);
+		addMember(l,"customCaretColor",get_customCaretColor,set_customCaretColor,true);
 		addMember(l,"selectionColor",get_selectionColor,set_selectionColor,true);
 		addMember(l,"onEndEdit",get_onEndEdit,set_onEndEdit,true);
-		addMember(l,"onValueChange",get_onValueChange,set_onValueChange,true);
+		addMember(l,"onValueChanged",get_onValueChanged,set_onValueChanged,true);
 		addMember(l,"onValidateInput",null,set_onValidateInput,true);
 		addMember(l,"characterLimit",get_characterLimit,set_characterLimit,true);
 		addMember(l,"contentType",get_contentType,set_contentType,true);
@@ -805,6 +925,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		addMember(l,"inputType",get_inputType,set_inputType,true);
 		addMember(l,"keyboardType",get_keyboardType,set_keyboardType,true);
 		addMember(l,"characterValidation",get_characterValidation,set_characterValidation,true);
+		addMember(l,"readOnly",get_readOnly,set_readOnly,true);
 		addMember(l,"multiLine",get_multiLine,null,true);
 		addMember(l,"asteriskChar",get_asteriskChar,set_asteriskChar,true);
 		addMember(l,"wasCanceled",get_wasCanceled,null,true);

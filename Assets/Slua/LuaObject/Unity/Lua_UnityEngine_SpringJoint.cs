@@ -121,12 +121,39 @@ public class Lua_UnityEngine_SpringJoint : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_tolerance(IntPtr l) {
+		try {
+			UnityEngine.SpringJoint self=(UnityEngine.SpringJoint)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.tolerance);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_tolerance(IntPtr l) {
+		try {
+			UnityEngine.SpringJoint self=(UnityEngine.SpringJoint)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.tolerance=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SpringJoint");
 		addMember(l,"spring",get_spring,set_spring,true);
 		addMember(l,"damper",get_damper,set_damper,true);
 		addMember(l,"minDistance",get_minDistance,set_minDistance,true);
 		addMember(l,"maxDistance",get_maxDistance,set_maxDistance,true);
+		addMember(l,"tolerance",get_tolerance,set_tolerance,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SpringJoint),typeof(UnityEngine.Joint));
 	}
 }

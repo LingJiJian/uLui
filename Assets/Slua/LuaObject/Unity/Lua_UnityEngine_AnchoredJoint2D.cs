@@ -69,10 +69,37 @@ public class Lua_UnityEngine_AnchoredJoint2D : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_autoConfigureConnectedAnchor(IntPtr l) {
+		try {
+			UnityEngine.AnchoredJoint2D self=(UnityEngine.AnchoredJoint2D)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.autoConfigureConnectedAnchor);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_autoConfigureConnectedAnchor(IntPtr l) {
+		try {
+			UnityEngine.AnchoredJoint2D self=(UnityEngine.AnchoredJoint2D)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.autoConfigureConnectedAnchor=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnchoredJoint2D");
 		addMember(l,"anchor",get_anchor,set_anchor,true);
 		addMember(l,"connectedAnchor",get_connectedAnchor,set_connectedAnchor,true);
+		addMember(l,"autoConfigureConnectedAnchor",get_autoConfigureConnectedAnchor,set_autoConfigureConnectedAnchor,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnchoredJoint2D),typeof(UnityEngine.Joint2D));
 	}
 }

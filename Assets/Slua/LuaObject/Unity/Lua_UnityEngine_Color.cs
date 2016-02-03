@@ -78,6 +78,63 @@ public class Lua_UnityEngine_Color : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RGBToHSV_s(IntPtr l) {
+		try {
+			UnityEngine.Color a1;
+			checkType(l,1,out a1);
+			System.Single a2;
+			System.Single a3;
+			System.Single a4;
+			UnityEngine.Color.RGBToHSV(a1,out a2,out a3,out a4);
+			pushValue(l,true);
+			pushValue(l,a2);
+			pushValue(l,a3);
+			pushValue(l,a4);
+			return 4;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int HSVToRGB_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
+				System.Single a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				var ret=UnityEngine.Color.HSVToRGB(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				System.Single a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Boolean a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Color.HSVToRGB(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int op_Addition(IntPtr l) {
 		try {
 			UnityEngine.Color a1;
@@ -525,6 +582,8 @@ public class Lua_UnityEngine_Color : LuaObject {
 		getTypeTable(l,"UnityEngine.Color");
 		addMember(l,Lerp_s);
 		addMember(l,LerpUnclamped_s);
+		addMember(l,RGBToHSV_s);
+		addMember(l,HSVToRGB_s);
 		addMember(l,op_Addition);
 		addMember(l,op_Subtraction);
 		addMember(l,op_Multiply);

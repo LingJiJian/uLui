@@ -18,14 +18,11 @@ public class Lua_UnityEngine_DistanceJoint2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetReactionForce(IntPtr l) {
+	static public int get_autoConfigureDistance(IntPtr l) {
 		try {
 			UnityEngine.DistanceJoint2D self=(UnityEngine.DistanceJoint2D)checkSelf(l);
-			System.Single a1;
-			checkType(l,2,out a1);
-			var ret=self.GetReactionForce(a1);
 			pushValue(l,true);
-			pushValue(l,ret);
+			pushValue(l,self.autoConfigureDistance);
 			return 2;
 		}
 		catch(Exception e) {
@@ -33,15 +30,14 @@ public class Lua_UnityEngine_DistanceJoint2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetReactionTorque(IntPtr l) {
+	static public int set_autoConfigureDistance(IntPtr l) {
 		try {
 			UnityEngine.DistanceJoint2D self=(UnityEngine.DistanceJoint2D)checkSelf(l);
-			System.Single a1;
-			checkType(l,2,out a1);
-			var ret=self.GetReactionTorque(a1);
+			bool v;
+			checkType(l,2,out v);
+			self.autoConfigureDistance=v;
 			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -101,8 +97,7 @@ public class Lua_UnityEngine_DistanceJoint2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.DistanceJoint2D");
-		addMember(l,GetReactionForce);
-		addMember(l,GetReactionTorque);
+		addMember(l,"autoConfigureDistance",get_autoConfigureDistance,set_autoConfigureDistance,true);
 		addMember(l,"distance",get_distance,set_distance,true);
 		addMember(l,"maxDistanceOnly",get_maxDistanceOnly,set_maxDistanceOnly,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.DistanceJoint2D),typeof(UnityEngine.AnchoredJoint2D));

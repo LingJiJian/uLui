@@ -76,6 +76,32 @@ public class Lua_UnityEngine_Collider2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_density(IntPtr l) {
+		try {
+			UnityEngine.Collider2D self=(UnityEngine.Collider2D)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.density);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_density(IntPtr l) {
+		try {
+			UnityEngine.Collider2D self=(UnityEngine.Collider2D)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.density=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isTrigger(IntPtr l) {
 		try {
 			UnityEngine.Collider2D self=(UnityEngine.Collider2D)checkSelf(l);
@@ -220,6 +246,7 @@ public class Lua_UnityEngine_Collider2D : LuaObject {
 		addMember(l,OverlapPoint);
 		addMember(l,IsTouching);
 		addMember(l,IsTouchingLayers);
+		addMember(l,"density",get_density,set_density,true);
 		addMember(l,"isTrigger",get_isTrigger,set_isTrigger,true);
 		addMember(l,"usedByEffector",get_usedByEffector,set_usedByEffector,true);
 		addMember(l,"offset",get_offset,set_offset,true);

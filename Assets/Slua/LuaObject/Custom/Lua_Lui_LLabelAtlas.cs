@@ -5,38 +5,10 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_Lui_LLabelAtlas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int setAtlasMap(IntPtr l) {
+	static public int reload(IntPtr l) {
 		try {
 			Lui.LLabelAtlas self=(Lui.LLabelAtlas)checkSelf(l);
-			System.Collections.Generic.List<System.Collections.Generic.Dictionary<System.Int32,System.Char>> a1;
-			checkType(l,2,out a1);
-			self.setAtlasMap(a1);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sprite(IntPtr l) {
-		try {
-			Lui.LLabelAtlas self=(Lui.LLabelAtlas)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.sprite);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sprite(IntPtr l) {
-		try {
-			Lui.LLabelAtlas self=(Lui.LLabelAtlas)checkSelf(l);
-			UnityEngine.Sprite[] v;
-			checkArray(l,2,out v);
-			self.sprite=v;
+			self.reload();
 			pushValue(l,true);
 			return 1;
 		}
@@ -71,11 +43,11 @@ public class Lua_Lui_LLabelAtlas : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_cuts(IntPtr l) {
+	static public int get_path(IntPtr l) {
 		try {
 			Lui.LLabelAtlas self=(Lui.LLabelAtlas)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.cuts);
+			pushValue(l,self.path);
 			return 2;
 		}
 		catch(Exception e) {
@@ -83,12 +55,12 @@ public class Lua_Lui_LLabelAtlas : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_cuts(IntPtr l) {
+	static public int set_path(IntPtr l) {
 		try {
 			Lui.LLabelAtlas self=(Lui.LLabelAtlas)checkSelf(l);
-			System.Int32 v;
+			System.String v;
 			checkType(l,2,out v);
-			self.cuts=v;
+			self.path=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -98,10 +70,9 @@ public class Lua_Lui_LLabelAtlas : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"Lui.LLabelAtlas");
-		addMember(l,setAtlasMap);
-		addMember(l,"sprite",get_sprite,set_sprite,true);
+		addMember(l,reload);
 		addMember(l,"text",get_text,set_text,true);
-		addMember(l,"cuts",get_cuts,set_cuts,true);
+		addMember(l,"path",get_path,set_path,true);
 		createTypeMetatable(l,null, typeof(Lui.LLabelAtlas),typeof(UnityEngine.MonoBehaviour));
 	}
 }

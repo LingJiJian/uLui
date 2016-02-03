@@ -18,6 +18,18 @@ public class Lua_UnityEngine_TrailRenderer : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Clear(IntPtr l) {
+		try {
+			UnityEngine.TrailRenderer self=(UnityEngine.TrailRenderer)checkSelf(l);
+			self.Clear();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_time(IntPtr l) {
 		try {
 			UnityEngine.TrailRenderer self=(UnityEngine.TrailRenderer)checkSelf(l);
@@ -123,6 +135,7 @@ public class Lua_UnityEngine_TrailRenderer : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.TrailRenderer");
+		addMember(l,Clear);
 		addMember(l,"time",get_time,set_time,true);
 		addMember(l,"startWidth",get_startWidth,set_startWidth,true);
 		addMember(l,"endWidth",get_endWidth,set_endWidth,true);

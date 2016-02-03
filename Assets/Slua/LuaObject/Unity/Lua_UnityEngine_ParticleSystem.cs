@@ -226,15 +226,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	static public int Emit(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
-			if(matchType(l,argc,2,typeof(UnityEngine.ParticleSystem.Particle))){
-				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
-				UnityEngine.ParticleSystem.Particle a1;
-				checkValueType(l,2,out a1);
-				self.Emit(a1);
-				pushValue(l,true);
-				return 1;
-			}
-			else if(matchType(l,argc,2,typeof(int))){
+			if(argc==2){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -242,19 +234,13 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				pushValue(l,true);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==3){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
-				UnityEngine.Vector3 a1;
-				checkType(l,2,out a1);
-				UnityEngine.Vector3 a2;
+				UnityEngine.ParticleSystem.EmitParams a1;
+				checkValueType(l,2,out a1);
+				System.Int32 a2;
 				checkType(l,3,out a2);
-				System.Single a3;
-				checkType(l,4,out a3);
-				System.Single a4;
-				checkType(l,5,out a4);
-				UnityEngine.Color32 a5;
-				checkValueType(l,6,out a5);
-				self.Emit(a1,a2,a3,a4,a5);
+				self.Emit(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -457,58 +443,6 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_enableEmission(IntPtr l) {
-		try {
-			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.enableEmission);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_enableEmission(IntPtr l) {
-		try {
-			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
-			bool v;
-			checkType(l,2,out v);
-			self.enableEmission=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_emissionRate(IntPtr l) {
-		try {
-			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.emissionRate);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_emissionRate(IntPtr l) {
-		try {
-			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
-			float v;
-			checkType(l,2,out v);
-			self.emissionRate=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_startSpeed(IntPtr l) {
 		try {
 			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
@@ -605,6 +539,32 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 			float v;
 			checkType(l,2,out v);
 			self.startRotation=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_startRotation3D(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.startRotation3D);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_startRotation3D(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			UnityEngine.Vector3 v;
+			checkType(l,2,out v);
+			self.startRotation3D=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -717,6 +677,32 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_scalingMode(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.scalingMode);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_scalingMode(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			UnityEngine.ParticleSystemScalingMode v;
+			checkEnum(l,2,out v);
+			self.scalingMode=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_randomSeed(IntPtr l) {
 		try {
 			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
@@ -737,6 +723,198 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 			self.randomSeed=v;
 			pushValue(l,true);
 			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_emission(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.emission);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_shape(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.shape);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_velocityOverLifetime(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.velocityOverLifetime);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_limitVelocityOverLifetime(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.limitVelocityOverLifetime);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_inheritVelocity(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.inheritVelocity);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_forceOverLifetime(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.forceOverLifetime);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_colorOverLifetime(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.colorOverLifetime);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_colorBySpeed(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.colorBySpeed);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sizeOverLifetime(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.sizeOverLifetime);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sizeBySpeed(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.sizeBySpeed);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_rotationOverLifetime(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.rotationOverLifetime);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_rotationBySpeed(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.rotationBySpeed);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_externalForces(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.externalForces);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_collision(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.collision);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_subEmitters(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.subEmitters);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_textureSheetAnimation(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.textureSheetAnimation);
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -763,17 +941,33 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		addMember(l,"duration",get_duration,null,true);
 		addMember(l,"playbackSpeed",get_playbackSpeed,set_playbackSpeed,true);
 		addMember(l,"particleCount",get_particleCount,null,true);
-		addMember(l,"enableEmission",get_enableEmission,set_enableEmission,true);
-		addMember(l,"emissionRate",get_emissionRate,set_emissionRate,true);
 		addMember(l,"startSpeed",get_startSpeed,set_startSpeed,true);
 		addMember(l,"startSize",get_startSize,set_startSize,true);
 		addMember(l,"startColor",get_startColor,set_startColor,true);
 		addMember(l,"startRotation",get_startRotation,set_startRotation,true);
+		addMember(l,"startRotation3D",get_startRotation3D,set_startRotation3D,true);
 		addMember(l,"startLifetime",get_startLifetime,set_startLifetime,true);
 		addMember(l,"gravityModifier",get_gravityModifier,set_gravityModifier,true);
 		addMember(l,"maxParticles",get_maxParticles,set_maxParticles,true);
 		addMember(l,"simulationSpace",get_simulationSpace,set_simulationSpace,true);
+		addMember(l,"scalingMode",get_scalingMode,set_scalingMode,true);
 		addMember(l,"randomSeed",get_randomSeed,set_randomSeed,true);
+		addMember(l,"emission",get_emission,null,true);
+		addMember(l,"shape",get_shape,null,true);
+		addMember(l,"velocityOverLifetime",get_velocityOverLifetime,null,true);
+		addMember(l,"limitVelocityOverLifetime",get_limitVelocityOverLifetime,null,true);
+		addMember(l,"inheritVelocity",get_inheritVelocity,null,true);
+		addMember(l,"forceOverLifetime",get_forceOverLifetime,null,true);
+		addMember(l,"colorOverLifetime",get_colorOverLifetime,null,true);
+		addMember(l,"colorBySpeed",get_colorBySpeed,null,true);
+		addMember(l,"sizeOverLifetime",get_sizeOverLifetime,null,true);
+		addMember(l,"sizeBySpeed",get_sizeBySpeed,null,true);
+		addMember(l,"rotationOverLifetime",get_rotationOverLifetime,null,true);
+		addMember(l,"rotationBySpeed",get_rotationBySpeed,null,true);
+		addMember(l,"externalForces",get_externalForces,null,true);
+		addMember(l,"collision",get_collision,null,true);
+		addMember(l,"subEmitters",get_subEmitters,null,true);
+		addMember(l,"textureSheetAnimation",get_textureSheetAnimation,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ParticleSystem),typeof(UnityEngine.Component));
 	}
 }

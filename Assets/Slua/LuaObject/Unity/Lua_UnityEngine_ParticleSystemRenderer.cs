@@ -122,6 +122,162 @@ public class Lua_UnityEngine_ParticleSystemRenderer : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_normalDirection(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.normalDirection);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_normalDirection(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.normalDirection=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_alignment(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.alignment);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_alignment(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			UnityEngine.ParticleSystemRenderSpace v;
+			checkEnum(l,2,out v);
+			self.alignment=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pivot(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.pivot);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_pivot(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			UnityEngine.Vector3 v;
+			checkType(l,2,out v);
+			self.pivot=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sortMode(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.sortMode);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sortMode(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			UnityEngine.ParticleSystemSortMode v;
+			checkEnum(l,2,out v);
+			self.sortMode=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sortingFudge(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.sortingFudge);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sortingFudge(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.sortingFudge=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_minParticleSize(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.minParticleSize);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_minParticleSize(IntPtr l) {
+		try {
+			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.minParticleSize=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_maxParticleSize(IntPtr l) {
 		try {
 			UnityEngine.ParticleSystemRenderer self=(UnityEngine.ParticleSystemRenderer)checkSelf(l);
@@ -179,6 +335,12 @@ public class Lua_UnityEngine_ParticleSystemRenderer : LuaObject {
 		addMember(l,"lengthScale",get_lengthScale,set_lengthScale,true);
 		addMember(l,"velocityScale",get_velocityScale,set_velocityScale,true);
 		addMember(l,"cameraVelocityScale",get_cameraVelocityScale,set_cameraVelocityScale,true);
+		addMember(l,"normalDirection",get_normalDirection,set_normalDirection,true);
+		addMember(l,"alignment",get_alignment,set_alignment,true);
+		addMember(l,"pivot",get_pivot,set_pivot,true);
+		addMember(l,"sortMode",get_sortMode,set_sortMode,true);
+		addMember(l,"sortingFudge",get_sortingFudge,set_sortingFudge,true);
+		addMember(l,"minParticleSize",get_minParticleSize,set_minParticleSize,true);
 		addMember(l,"maxParticleSize",get_maxParticleSize,set_maxParticleSize,true);
 		addMember(l,"mesh",get_mesh,set_mesh,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ParticleSystemRenderer),typeof(UnityEngine.Renderer));

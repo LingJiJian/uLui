@@ -9,7 +9,29 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
 			UnityEngine.RenderTargetSetup o;
-			if(matchType(l,argc,2,typeof(UnityEngine.RenderBuffer),typeof(UnityEngine.RenderBuffer))){
+			if(argc==9){
+				UnityEngine.RenderBuffer[] a1;
+				checkArray(l,2,out a1);
+				UnityEngine.RenderBuffer a2;
+				checkValueType(l,3,out a2);
+				System.Int32 a3;
+				checkType(l,4,out a3);
+				UnityEngine.CubemapFace a4;
+				checkEnum(l,5,out a4);
+				UnityEngine.Rendering.RenderBufferLoadAction[] a5;
+				checkArray(l,6,out a5);
+				UnityEngine.Rendering.RenderBufferStoreAction[] a6;
+				checkArray(l,7,out a6);
+				UnityEngine.Rendering.RenderBufferLoadAction a7;
+				checkEnum(l,8,out a7);
+				UnityEngine.Rendering.RenderBufferStoreAction a8;
+				checkEnum(l,9,out a8);
+				o=new UnityEngine.RenderTargetSetup(a1,a2,a3,a4,a5,a6,a7,a8);
+				pushValue(l,true);
+				pushValue(l,o);
+				return 2;
+			}
+			else if(matchType(l,argc,2,typeof(UnityEngine.RenderBuffer),typeof(UnityEngine.RenderBuffer))){
 				UnityEngine.RenderBuffer a1;
 				checkValueType(l,2,out a1);
 				UnityEngine.RenderBuffer a2;
@@ -180,7 +202,7 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 			UnityEngine.RenderTargetSetup self;
 			checkValueType(l,1,out self);
 			pushValue(l,true);
-			pushValue(l,self.cubemapFace);
+			pushEnum(l,(int)self.cubemapFace);
 			return 2;
 		}
 		catch(Exception e) {
@@ -192,8 +214,8 @@ public class Lua_UnityEngine_RenderTargetSetup : LuaObject {
 		try {
 			UnityEngine.RenderTargetSetup self;
 			checkValueType(l,1,out self);
-			System.Int32 v;
-			checkType(l,2,out v);
+			UnityEngine.CubemapFace v;
+			checkEnum(l,2,out v);
 			self.cubemapFace=v;
 			setBack(l,self);
 			pushValue(l,true);

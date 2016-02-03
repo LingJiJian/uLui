@@ -804,6 +804,22 @@ public class Lua_UnityEngine_Rendering_CommandBuffer : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetShadowSamplingMode(IntPtr l) {
+		try {
+			UnityEngine.Rendering.CommandBuffer self=(UnityEngine.Rendering.CommandBuffer)checkSelf(l);
+			UnityEngine.Rendering.RenderTargetIdentifier a1;
+			checkValueType(l,2,out a1);
+			UnityEngine.Rendering.ShadowSamplingMode a2;
+			checkEnum(l,3,out a2);
+			self.SetShadowSamplingMode(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IssuePluginEvent(IntPtr l) {
 		try {
 			UnityEngine.Rendering.CommandBuffer self=(UnityEngine.Rendering.CommandBuffer)checkSelf(l);
@@ -876,6 +892,7 @@ public class Lua_UnityEngine_Rendering_CommandBuffer : LuaObject {
 		addMember(l,SetGlobalColor);
 		addMember(l,SetGlobalMatrix);
 		addMember(l,SetGlobalTexture);
+		addMember(l,SetShadowSamplingMode);
 		addMember(l,IssuePluginEvent);
 		addMember(l,"name",get_name,set_name,true);
 		addMember(l,"sizeInBytes",get_sizeInBytes,null,true);

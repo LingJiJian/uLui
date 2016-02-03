@@ -33,6 +33,32 @@ public class Lua_UnityEngine_SliderJoint2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_autoConfigureAngle(IntPtr l) {
+		try {
+			UnityEngine.SliderJoint2D self=(UnityEngine.SliderJoint2D)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.autoConfigureAngle);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_autoConfigureAngle(IntPtr l) {
+		try {
+			UnityEngine.SliderJoint2D self=(UnityEngine.SliderJoint2D)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.autoConfigureAngle=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_angle(IntPtr l) {
 		try {
 			UnityEngine.SliderJoint2D self=(UnityEngine.SliderJoint2D)checkSelf(l);
@@ -213,6 +239,7 @@ public class Lua_UnityEngine_SliderJoint2D : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SliderJoint2D");
 		addMember(l,GetMotorForce);
+		addMember(l,"autoConfigureAngle",get_autoConfigureAngle,set_autoConfigureAngle,true);
 		addMember(l,"angle",get_angle,set_angle,true);
 		addMember(l,"useMotor",get_useMotor,set_useMotor,true);
 		addMember(l,"useLimits",get_useLimits,set_useLimits,true);

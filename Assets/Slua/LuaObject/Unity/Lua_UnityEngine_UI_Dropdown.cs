@@ -5,6 +5,66 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_UI_Dropdown : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RefreshShownValue(IntPtr l) {
+		try {
+			UnityEngine.UI.Dropdown self=(UnityEngine.UI.Dropdown)checkSelf(l);
+			self.RefreshShownValue();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int AddOptions(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(List<UnityEngine.Sprite>))){
+				UnityEngine.UI.Dropdown self=(UnityEngine.UI.Dropdown)checkSelf(l);
+				System.Collections.Generic.List<UnityEngine.Sprite> a1;
+				checkType(l,2,out a1);
+				self.AddOptions(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(List<System.String>))){
+				UnityEngine.UI.Dropdown self=(UnityEngine.UI.Dropdown)checkSelf(l);
+				System.Collections.Generic.List<System.String> a1;
+				checkType(l,2,out a1);
+				self.AddOptions(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(List<UnityEngine.UI.Dropdown.OptionData>))){
+				UnityEngine.UI.Dropdown self=(UnityEngine.UI.Dropdown)checkSelf(l);
+				System.Collections.Generic.List<UnityEngine.UI.Dropdown.OptionData> a1;
+				checkType(l,2,out a1);
+				self.AddOptions(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ClearOptions(IntPtr l) {
+		try {
+			UnityEngine.UI.Dropdown self=(UnityEngine.UI.Dropdown)checkSelf(l);
+			self.ClearOptions();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnPointerClick(IntPtr l) {
 		try {
 			UnityEngine.UI.Dropdown self=(UnityEngine.UI.Dropdown)checkSelf(l);
@@ -280,6 +340,9 @@ public class Lua_UnityEngine_UI_Dropdown : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Dropdown");
+		addMember(l,RefreshShownValue);
+		addMember(l,AddOptions);
+		addMember(l,ClearOptions);
 		addMember(l,OnPointerClick);
 		addMember(l,OnSubmit);
 		addMember(l,OnCancel);

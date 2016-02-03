@@ -230,6 +230,30 @@ public class Lua_UnityEngine_Caching : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_compressionEnabled(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Caching.compressionEnabled);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_compressionEnabled(IntPtr l) {
+		try {
+			bool v;
+			checkType(l,2,out v);
+			UnityEngine.Caching.compressionEnabled=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_ready(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -251,6 +275,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 		addMember(l,"spaceOccupied",get_spaceOccupied,null,false);
 		addMember(l,"expirationDelay",get_expirationDelay,set_expirationDelay,false);
 		addMember(l,"enabled",get_enabled,set_enabled,false);
+		addMember(l,"compressionEnabled",get_compressionEnabled,set_compressionEnabled,false);
 		addMember(l,"ready",get_ready,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Caching));
 	}

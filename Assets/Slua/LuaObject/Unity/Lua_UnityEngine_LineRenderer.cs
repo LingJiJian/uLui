@@ -80,6 +80,20 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetPositions(IntPtr l) {
+		try {
+			UnityEngine.LineRenderer self=(UnityEngine.LineRenderer)checkSelf(l);
+			UnityEngine.Vector3[] a1;
+			checkArray(l,2,out a1);
+			self.SetPositions(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_useWorldSpace(IntPtr l) {
 		try {
 			UnityEngine.LineRenderer self=(UnityEngine.LineRenderer)checkSelf(l);
@@ -111,6 +125,7 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 		addMember(l,SetColors);
 		addMember(l,SetVertexCount);
 		addMember(l,SetPosition);
+		addMember(l,SetPositions);
 		addMember(l,"useWorldSpace",get_useWorldSpace,set_useWorldSpace,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LineRenderer),typeof(UnityEngine.Renderer));
 	}

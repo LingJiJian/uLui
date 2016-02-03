@@ -250,6 +250,35 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_alignByGeometry(IntPtr l) {
+		try {
+			UnityEngine.TextGenerationSettings self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.alignByGeometry);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_alignByGeometry(IntPtr l) {
+		try {
+			UnityEngine.TextGenerationSettings self;
+			checkValueType(l,1,out self);
+			System.Boolean v;
+			checkType(l,2,out v);
+			self.alignByGeometry=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_resizeTextForBestFit(IntPtr l) {
 		try {
 			UnityEngine.TextGenerationSettings self;
@@ -520,6 +549,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 		addMember(l,"scaleFactor",get_scaleFactor,set_scaleFactor,true);
 		addMember(l,"fontStyle",get_fontStyle,set_fontStyle,true);
 		addMember(l,"textAnchor",get_textAnchor,set_textAnchor,true);
+		addMember(l,"alignByGeometry",get_alignByGeometry,set_alignByGeometry,true);
 		addMember(l,"resizeTextForBestFit",get_resizeTextForBestFit,set_resizeTextForBestFit,true);
 		addMember(l,"resizeTextMinSize",get_resizeTextMinSize,set_resizeTextMinSize,true);
 		addMember(l,"resizeTextMaxSize",get_resizeTextMaxSize,set_resizeTextMaxSize,true);

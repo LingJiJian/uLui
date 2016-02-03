@@ -10,13 +10,11 @@ public class Lua_LWindowManager : LuaObject {
 			LWindowManager self=(LWindowManager)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
-			System.Type a2;
-			checkType(l,3,out a2);
-			WindowHierarchy a3;
-			checkEnum(l,4,out a3);
-			System.Collections.ArrayList a4;
-			checkType(l,5,out a4);
-			self.runWindow(a1,a2,a3,a4);
+			WindowHierarchy a2;
+			checkEnum(l,3,out a2);
+			System.Collections.ArrayList a3;
+			checkType(l,4,out a3);
+			self.runWindow(a1,a2,a3);
 			pushValue(l,true);
 			return 1;
 		}

@@ -13,6 +13,7 @@ namespace SLua {
 				Lua_LUtils.reg,
 				Lua_Lui_LButton.reg,
 				Lua_Lui_LControlView.reg,
+				Lua_Lui_LFrameAnimation.reg,
 				Lua_Lui_LScrollView.reg,
 				Lua_Lui_LTableView.reg,
 				Lua_Lui_LGridPageView.reg,

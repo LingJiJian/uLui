@@ -211,6 +211,32 @@ public class Lua_UnityEngine_UI_FontData : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_alignByGeometry(IntPtr l) {
+		try {
+			UnityEngine.UI.FontData self=(UnityEngine.UI.FontData)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.alignByGeometry);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_alignByGeometry(IntPtr l) {
+		try {
+			UnityEngine.UI.FontData self=(UnityEngine.UI.FontData)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.alignByGeometry=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_richText(IntPtr l) {
 		try {
 			UnityEngine.UI.FontData self=(UnityEngine.UI.FontData)checkSelf(l);
@@ -324,6 +350,7 @@ public class Lua_UnityEngine_UI_FontData : LuaObject {
 		addMember(l,"minSize",get_minSize,set_minSize,true);
 		addMember(l,"maxSize",get_maxSize,set_maxSize,true);
 		addMember(l,"alignment",get_alignment,set_alignment,true);
+		addMember(l,"alignByGeometry",get_alignByGeometry,set_alignByGeometry,true);
 		addMember(l,"richText",get_richText,set_richText,true);
 		addMember(l,"horizontalOverflow",get_horizontalOverflow,set_horizontalOverflow,true);
 		addMember(l,"verticalOverflow",get_verticalOverflow,set_verticalOverflow,true);

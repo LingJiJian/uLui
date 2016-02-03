@@ -44,6 +44,32 @@ public class Lua_UnityEngine_PlatformEffector2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_useOneWayGrouping(IntPtr l) {
+		try {
+			UnityEngine.PlatformEffector2D self=(UnityEngine.PlatformEffector2D)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.useOneWayGrouping);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_useOneWayGrouping(IntPtr l) {
+		try {
+			UnityEngine.PlatformEffector2D self=(UnityEngine.PlatformEffector2D)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.useOneWayGrouping=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_useSideFriction(IntPtr l) {
 		try {
 			UnityEngine.PlatformEffector2D self=(UnityEngine.PlatformEffector2D)checkSelf(l);
@@ -150,6 +176,7 @@ public class Lua_UnityEngine_PlatformEffector2D : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.PlatformEffector2D");
 		addMember(l,"useOneWay",get_useOneWay,set_useOneWay,true);
+		addMember(l,"useOneWayGrouping",get_useOneWayGrouping,set_useOneWayGrouping,true);
 		addMember(l,"useSideFriction",get_useSideFriction,set_useSideFriction,true);
 		addMember(l,"useSideBounce",get_useSideBounce,set_useSideBounce,true);
 		addMember(l,"surfaceArc",get_surfaceArc,set_surfaceArc,true);

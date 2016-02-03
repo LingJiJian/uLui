@@ -18,36 +18,6 @@ public class Lua_UnityEngine_HingeJoint2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetReactionForce(IntPtr l) {
-		try {
-			UnityEngine.HingeJoint2D self=(UnityEngine.HingeJoint2D)checkSelf(l);
-			System.Single a1;
-			checkType(l,2,out a1);
-			var ret=self.GetReactionForce(a1);
-			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetReactionTorque(IntPtr l) {
-		try {
-			UnityEngine.HingeJoint2D self=(UnityEngine.HingeJoint2D)checkSelf(l);
-			System.Single a1;
-			checkType(l,2,out a1);
-			var ret=self.GetReactionTorque(a1);
-			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetMotorTorque(IntPtr l) {
 		try {
 			UnityEngine.HingeJoint2D self=(UnityEngine.HingeJoint2D)checkSelf(l);
@@ -216,8 +186,6 @@ public class Lua_UnityEngine_HingeJoint2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.HingeJoint2D");
-		addMember(l,GetReactionForce);
-		addMember(l,GetReactionTorque);
 		addMember(l,GetMotorTorque);
 		addMember(l,"useMotor",get_useMotor,set_useMotor,true);
 		addMember(l,"useLimits",get_useLimits,set_useLimits,true);

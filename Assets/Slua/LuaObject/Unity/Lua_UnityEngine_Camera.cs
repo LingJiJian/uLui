@@ -86,6 +86,74 @@ public class Lua_UnityEngine_Camera : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetFieldOfView(IntPtr l) {
+		try {
+			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
+			self.ResetFieldOfView();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetStereoViewMatrices(IntPtr l) {
+		try {
+			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
+			UnityEngine.Matrix4x4 a1;
+			checkValueType(l,2,out a1);
+			UnityEngine.Matrix4x4 a2;
+			checkValueType(l,3,out a2);
+			self.SetStereoViewMatrices(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetStereoViewMatrices(IntPtr l) {
+		try {
+			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
+			self.ResetStereoViewMatrices();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetStereoProjectionMatrices(IntPtr l) {
+		try {
+			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
+			UnityEngine.Matrix4x4 a1;
+			checkValueType(l,2,out a1);
+			UnityEngine.Matrix4x4 a2;
+			checkValueType(l,3,out a2);
+			self.SetStereoProjectionMatrices(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetStereoProjectionMatrices(IntPtr l) {
+		try {
+			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
+			self.ResetStereoProjectionMatrices();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int WorldToScreenPoint(IntPtr l) {
 		try {
 			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
@@ -1413,6 +1481,11 @@ public class Lua_UnityEngine_Camera : LuaObject {
 		addMember(l,ResetWorldToCameraMatrix);
 		addMember(l,ResetProjectionMatrix);
 		addMember(l,ResetAspect);
+		addMember(l,ResetFieldOfView);
+		addMember(l,SetStereoViewMatrices);
+		addMember(l,ResetStereoViewMatrices);
+		addMember(l,SetStereoProjectionMatrices);
+		addMember(l,ResetStereoProjectionMatrices);
 		addMember(l,WorldToScreenPoint);
 		addMember(l,WorldToViewportPoint);
 		addMember(l,ViewportToWorldPoint);

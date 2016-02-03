@@ -457,6 +457,32 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_useAutoMass(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.useAutoMass);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_useAutoMass(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.useAutoMass=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mass(IntPtr l) {
 		try {
 			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
@@ -830,6 +856,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		addMember(l,"rotation",get_rotation,set_rotation,true);
 		addMember(l,"velocity",get_velocity,set_velocity,true);
 		addMember(l,"angularVelocity",get_angularVelocity,set_angularVelocity,true);
+		addMember(l,"useAutoMass",get_useAutoMass,set_useAutoMass,true);
 		addMember(l,"mass",get_mass,set_mass,true);
 		addMember(l,"centerOfMass",get_centerOfMass,set_centerOfMass,true);
 		addMember(l,"worldCenterOfMass",get_worldCenterOfMass,null,true);

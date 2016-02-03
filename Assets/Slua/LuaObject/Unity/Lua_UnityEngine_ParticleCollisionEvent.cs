@@ -57,12 +57,12 @@ public class Lua_UnityEngine_ParticleCollisionEvent : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_collider(IntPtr l) {
+	static public int get_colliderComponent(IntPtr l) {
 		try {
 			UnityEngine.ParticleCollisionEvent self;
 			checkValueType(l,1,out self);
 			pushValue(l,true);
-			pushValue(l,self.collider);
+			pushValue(l,self.colliderComponent);
 			return 2;
 		}
 		catch(Exception e) {
@@ -74,7 +74,7 @@ public class Lua_UnityEngine_ParticleCollisionEvent : LuaObject {
 		addMember(l,"intersection",get_intersection,null,true);
 		addMember(l,"normal",get_normal,null,true);
 		addMember(l,"velocity",get_velocity,null,true);
-		addMember(l,"collider",get_collider,null,true);
+		addMember(l,"colliderComponent",get_colliderComponent,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ParticleCollisionEvent),typeof(System.ValueType));
 	}
 }

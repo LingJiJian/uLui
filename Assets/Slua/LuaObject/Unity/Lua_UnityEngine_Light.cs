@@ -315,6 +315,32 @@ public class Lua_UnityEngine_Light : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_shadowNearPlane(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.shadowNearPlane);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_shadowNearPlane(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.shadowNearPlane=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_range(IntPtr l) {
 		try {
 			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
@@ -550,6 +576,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 		addMember(l,"shadowStrength",get_shadowStrength,set_shadowStrength,true);
 		addMember(l,"shadowBias",get_shadowBias,set_shadowBias,true);
 		addMember(l,"shadowNormalBias",get_shadowNormalBias,set_shadowNormalBias,true);
+		addMember(l,"shadowNearPlane",get_shadowNearPlane,set_shadowNearPlane,true);
 		addMember(l,"range",get_range,set_range,true);
 		addMember(l,"spotAngle",get_spotAngle,set_spotAngle,true);
 		addMember(l,"cookieSize",get_cookieSize,set_cookieSize,true);

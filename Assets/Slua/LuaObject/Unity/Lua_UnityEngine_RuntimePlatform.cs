@@ -37,6 +37,7 @@ public class Lua_UnityEngine_RuntimePlatform : LuaObject {
 		addMember(l,27,"XboxOne");
 		addMember(l,28,"SamsungTVPlayer");
 		addMember(l,30,"WiiU");
+		addMember(l,31,"tvOS");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

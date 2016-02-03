@@ -454,6 +454,30 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetCenterOfMass(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody self=(UnityEngine.Rigidbody)checkSelf(l);
+			self.ResetCenterOfMass();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetInertiaTensor(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody self=(UnityEngine.Rigidbody)checkSelf(l);
+			self.ResetInertiaTensor();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SweepTest(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -1150,6 +1174,8 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 		addMember(l,Sleep);
 		addMember(l,IsSleeping);
 		addMember(l,WakeUp);
+		addMember(l,ResetCenterOfMass);
+		addMember(l,ResetInertiaTensor);
 		addMember(l,SweepTest);
 		addMember(l,SweepTestAll);
 		addMember(l,"velocity",get_velocity,set_velocity,true);

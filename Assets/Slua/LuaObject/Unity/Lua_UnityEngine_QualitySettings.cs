@@ -594,6 +594,54 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_asyncUploadTimeSlice(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.QualitySettings.asyncUploadTimeSlice);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_asyncUploadTimeSlice(IntPtr l) {
+		try {
+			int v;
+			checkType(l,2,out v);
+			UnityEngine.QualitySettings.asyncUploadTimeSlice=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_asyncUploadBufferSize(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.QualitySettings.asyncUploadBufferSize);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_asyncUploadBufferSize(IntPtr l) {
+		try {
+			int v;
+			checkType(l,2,out v);
+			UnityEngine.QualitySettings.asyncUploadBufferSize=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.QualitySettings");
 		addMember(l,GetQualityLevel_s);
@@ -622,6 +670,8 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		addMember(l,"desiredColorSpace",get_desiredColorSpace,null,false);
 		addMember(l,"activeColorSpace",get_activeColorSpace,null,false);
 		addMember(l,"blendWeights",get_blendWeights,set_blendWeights,false);
+		addMember(l,"asyncUploadTimeSlice",get_asyncUploadTimeSlice,set_asyncUploadTimeSlice,false);
+		addMember(l,"asyncUploadBufferSize",get_asyncUploadBufferSize,set_asyncUploadBufferSize,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.QualitySettings),typeof(UnityEngine.Object));
 	}
 }
