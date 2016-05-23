@@ -5,7 +5,7 @@
 特性
 -------  
 ### 组件LWidget
-1.LGuideLayer 新手引导层，带穿透孔<br>
+1.LScrollView 滑动层<br>
 2.LRichLabel 可复用的富文本<br>
 3.LControlView 摇杆控件<br>
 4.LGridView 网格容器<br>
@@ -22,6 +22,10 @@
 1.自动管理窗体层次<br>
 2.窗体回收和缓存<br>
 3.窗体逻辑跟控件解耦<br>
+
+### 若干小工具
+1.热更模块
+2.打包ab
 
 ### 整合Slua
 1.已经可以用纯lua开发了哦 
