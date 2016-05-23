@@ -13,6 +13,8 @@ public class Game : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = LGameConfig.DEFAULT_FRAME_RATE;
+
         if(_l == null)
         {
 #if UNITY_5

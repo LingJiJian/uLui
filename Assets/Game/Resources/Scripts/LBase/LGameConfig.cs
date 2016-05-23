@@ -9,7 +9,7 @@ using SLua;
 public class LGameConfig
 {
     // The config file path.
-    public static readonly string CONFIG_FILE = "config.txt";
+    public static readonly string CONFIG_FILE = "config";
     // The lua data folder name.
     public static readonly string DATA_CATAGORY_LUA = "Lua";
     // The lua file affix.
@@ -24,6 +24,8 @@ public class LGameConfig
     public bool isDebug = false;
     // remote server resource url
     public string SERVER_RES_URL = "";
+    // game default target frame rate
+    public static int DEFAULT_FRAME_RATE = 30;
 
     // The local file url prefix. (For assetbundle.)
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
@@ -158,37 +160,18 @@ public class LGameConfig
         }
     }
 
-    //public IEnumerator LoadConfig(UnityAction completeFunc)
-    //{
-    //    string path = StreamingAssetsPath + CONFIG_FILE;
-    //    WWW www = new WWW(path);
-    //    while (!www.isDone)
-    //    {
-    //        yield return www;
-    //        ParseXml(www.text);
-    //        completeFunc.Invoke();
-    //    }
-    //}
-
     private void LoadConfig()
     {
-        isDebug = true;
-        SERVER_RES_URL = "http://192.168.1.100/Down";
+        TextAsset textAsset = Resources.Load<TextAsset>(CONFIG_FILE);
+        XmlDocument doc = new XmlDocument();
+        doc.LoadXml(textAsset.text);    //加载Xml文件  
+
+        XmlElement rootElem = doc.DocumentElement;   //获取根节点  
+
+        XmlNodeList debugs = rootElem.GetElementsByTagName("Debug");
+        isDebug = debugs[0].InnerText == "1";
+
+        XmlNodeList resUrls = rootElem.GetElementsByTagName("ResUrl");
+        SERVER_RES_URL = resUrls[0].InnerText;
     }
-
-    //private void ParseXml(string xmlstr)
-    //{
-    //    XmlDocument doc = new XmlDocument();
-    //    doc.LoadXml(xmlstr);    //加载Xml文件  
-
-    //    XmlElement rootElem = doc.DocumentElement;   //获取根节点  
-
-    //    XmlNodeList debugs = rootElem.GetElementsByTagName("Debug");
-    //    isDebug = debugs[0].InnerText == "1";
-
-    //    XmlNodeList resUrls = rootElem.GetElementsByTagName("ResUrl");
-    //    SERVER_RES_URL = resUrls[0].InnerText;
-        
-    //}
-
 }
