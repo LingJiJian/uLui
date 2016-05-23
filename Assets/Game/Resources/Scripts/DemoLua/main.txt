@@ -1,7 +1,0 @@
-﻿function main()
-
-	print("初始化游戏")
-
-	local wm = LSingleton.getInstance("LWindowManager")
-	wm:runWindow("MsgBox", 1)
-end

@@ -266,32 +266,6 @@ public class Lua_Lui_LListView : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_bounceBox(IntPtr l) {
-		try {
-			Lui.LListView self=(Lui.LListView)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.bounceBox);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_bounceBox(IntPtr l) {
-		try {
-			Lui.LListView self=(Lui.LListView)checkSelf(l);
-			UnityEngine.Rect v;
-			checkValueType(l,2,out v);
-			self.bounceBox=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_nodeList(IntPtr l) {
 		try {
 			Lui.LListView self=(Lui.LListView)checkSelf(l);
@@ -332,7 +306,6 @@ public class Lua_Lui_LListView : LuaObject {
 		addMember(l,"VerticalNodeAnchorPoint",get_VerticalNodeAnchorPoint,set_VerticalNodeAnchorPoint,false);
 		addMember(l,"limitNum",get_limitNum,set_limitNum,true);
 		addMember(l,"itemTemplate",get_itemTemplate,set_itemTemplate,true);
-		addMember(l,"bounceBox",get_bounceBox,set_bounceBox,true);
 		addMember(l,"nodeList",get_nodeList,null,true);
 		addMember(l,"freeList",get_freeList,null,true);
 		createTypeMetatable(l,constructor, typeof(Lui.LListView),typeof(Lui.LScrollView));

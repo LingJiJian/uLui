@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Lui;
@@ -11,7 +9,6 @@ public class Firstui : MonoBehaviour
     public Button btn_grid;
     public Button btn_trans;
     public Button btn_guide;
-    public LGuideLayer guideLayer;
     public LControlView ctrlView;
     public LTableView tblView;
     public LScrollView scrolView;
@@ -19,34 +16,41 @@ public class Firstui : MonoBehaviour
     public LPageView pageView;
     public LListView listView;
     public LGridView gridView;
+    public GameObject panel_root;
 
-    private LWindowManager wm;
+    private LWindowManager _wm;
 
     void Start()
     {
-        wm = LSingleton.getInstance("LWindowManager") as LWindowManager;
+        _wm = LWindowManager.GetInstance();
 
         btn_grid.onClick.AddListener(() =>
         {
             ArrayList list = new ArrayList();
             list.Add(123);
             list.Add("测试内容");
-            wm.runWindow("WindowGridView", WindowHierarchy.Normal, list);
+            _wm.runWindow("WindowGridView", WindowHierarchy.Normal, list);
         });
 
         btn_trans.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene("second");
+            _wm.LoadSceneAsync("second",(float p)=>
+            {
+                Debug.Log("进度 " + p);
+            });
         });
 
         btn_guide.onClick.AddListener(() =>
         {
-            guideLayer.gameObject.SetActive(!guideLayer.gameObject.activeInHierarchy);
+            bool isBlock = panel_root.GetComponent<CanvasGroup>().blocksRaycasts;
+            panel_root.GetComponent<CanvasGroup>().blocksRaycasts = !isBlock;
+            Text textComp = btn_guide.transform.FindChild("Text").gameObject.GetComponent<Text>();
+            textComp.text = isBlock ? "关闭遮罩" : "开启遮罩";
         });
 
-        ctrlView.onControlHandler = (float ox, float oy) =>
+        ctrlView.onControlHandler = (float ox, float oy,bool isFinish) =>
         {
-            Debug.Log(string.Format("offsetX={0} offsetY={1}", ox, oy));
+            //Debug.Log(string.Format("offsetX={0} offsetY={1}", ox, oy));
         };
 
         scrolView.onMoveCompleteHandler = () =>
@@ -72,9 +76,9 @@ public class Firstui : MonoBehaviour
 
         rtfView.insertElement("hello world!!", Color.blue, 25, true, false, Color.blue, "数据");
         rtfView.insertElement("测试文本内容!!", Color.red, 15, false, true, Color.blue, "");
-        rtfView.insertElement("Image/face01", 5f, "");
+        rtfView.insertElement("face01", 5f, "");
         rtfView.insertElement("The article comes from the point of the examination", Color.green, 15, true, false, Color.blue, "");
-        rtfView.insertElement("Image/face02/1", "");
+        rtfView.insertElement("face02/1", "");
         rtfView.insertElement(1);
         rtfView.insertElement("outline and newline", Color.yellow, 20, false, true, Color.blue, "");
         rtfView.onClickHandler = (string data) =>
@@ -101,12 +105,6 @@ public class Firstui : MonoBehaviour
             Debug.Log("page " + pageIdx);
         };
         pageView.reloadData();
-
-        RectTransform rtran = listView.GetComponent<RectTransform>();
-        listView.bounceBox = new Rect(listView.transform.position.x,
-                             listView.transform.position.y,
-                             rtran.rect.width,
-                             rtran.rect.height);
 
         listView.itemTemplate = Resources.Load("Prefabs/list_cell") as GameObject;
         listView.limitNum = 10; //not must to set limitNum

@@ -86,18 +86,6 @@ public class Lua_UnityEngine_SceneManagement_SceneManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetAllScenes_s(IntPtr l) {
-		try {
-			var ret=UnityEngine.SceneManagement.SceneManager.GetAllScenes();
-			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadScene_s(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -183,6 +171,20 @@ public class Lua_UnityEngine_SceneManagement_SceneManager : LuaObject {
 			}
 			pushValue(l,false);
 			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CreateScene_s(IntPtr l) {
+		try {
+			System.String a1;
+			checkType(l,1,out a1);
+			var ret=UnityEngine.SceneManagement.SceneManager.CreateScene(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
 			return 2;
 		}
 		catch(Exception e) {
@@ -276,9 +278,9 @@ public class Lua_UnityEngine_SceneManagement_SceneManager : LuaObject {
 		addMember(l,GetSceneByPath_s);
 		addMember(l,GetSceneByName_s);
 		addMember(l,GetSceneAt_s);
-		addMember(l,GetAllScenes_s);
 		addMember(l,LoadScene_s);
 		addMember(l,LoadSceneAsync_s);
+		addMember(l,CreateScene_s);
 		addMember(l,UnloadScene_s);
 		addMember(l,MergeScenes_s);
 		addMember(l,MoveGameObjectToScene_s);

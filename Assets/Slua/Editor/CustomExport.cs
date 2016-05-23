@@ -158,6 +158,10 @@ namespace SLua
 			"GraphicRebuildTracker",
             "Advertisements",
             "UnityEditor",
+            "WSA",
+            "Apple.TV",
+            "ClusterInput",
+            "EventProvider",
         };
         }
 

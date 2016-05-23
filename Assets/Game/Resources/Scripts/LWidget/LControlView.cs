@@ -38,7 +38,7 @@ namespace Lui
     [CustomLuaClassAttribute]
     public class LControlView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
-        protected const float MOVE_DELAY = 0.5f;
+        protected const float MOVE_TIME = 0.5f;
         protected const int PARAM_PRE = 10;
 
         public Vector2 centerPoint;
@@ -46,8 +46,7 @@ namespace Lui
         public bool relocateWithAnimation;
         public GameObject joyStick;
         private Vector2 _lastPoint;
-        public UnityAction<float, float> onControlHandler;
-        private Rect _joyStickBoundBox;
+        public UnityAction<float, float,bool> onControlHandler;
 
         public LControlView()
         {
@@ -56,7 +55,7 @@ namespace Lui
             this._lastPoint = Vector2.zero;
             this.relocateWithAnimation = true;
         }
-
+        [DoNotToLua]
         public void OnPointerDown(PointerEventData eventData)
         {
             stopAnimateUpdate();
@@ -65,16 +64,16 @@ namespace Lui
             {
                 if (eventData.pointerEnter == joyStick)
                 {
-                    onExecuteEventHandle();
+                    onExecuteEventHandle(false);
                 }
             }
             else
             {
                 _lastPoint = point;
-                onExecuteEventHandle();
+                onExecuteEventHandle(false);
             }
         }
-
+        [DoNotToLua]
         public void OnDrag(PointerEventData eventData)
         {
             if (joyStick)
@@ -94,22 +93,22 @@ namespace Lui
                     ((point.y - centerPoint.y) / dis) * radius + centerPoint.y);
             }
 
-            onExecuteEventHandle();
+            onExecuteEventHandle(false);
         }
-
+        [DoNotToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
             if (joyStick)
             {
                 if (!relocateWithAnimation)
                 {
-                    onExecuteEventHandle();
+                    onExecuteEventHandle(true);
                 }
                 relocateJoystick(relocateWithAnimation);
             }
             else
             {
-                onExecuteEventHandle();
+                onExecuteEventHandle(true);
             }
         }
 
@@ -117,11 +116,9 @@ namespace Lui
         {
             if (anim)
             {
-                iTween.MoveTo(joyStick, iTween.Hash(
-                    "position", transform.TransformPoint(centerPoint),
-                    "time", MOVE_DELAY,
-                    "onupdate", "onExecuteEventHandle",
-                    "onupdatetarget", gameObject));
+                LeanTween.move(joyStick, transform.TransformPoint(centerPoint), MOVE_TIME)
+                    .setOnUpdate((float val) => { onExecuteEventHandle(false); })
+                    .setOnComplete(() => { onExecuteEventHandle(true); });
             }
             else
             {
@@ -133,11 +130,11 @@ namespace Lui
         {
             if (joyStick)
             {
-                iTween.Stop(joyStick);
+                LeanTween.cancel(joyStick);
             }
         }
 
-        void onExecuteEventHandle()
+        void onExecuteEventHandle(bool isFinish)
         {
             if (onControlHandler == null)
             {
@@ -148,12 +145,12 @@ namespace Lui
             {
                 Vector2 v = joyStick.transform.localPosition;
                 Vector2 offset = v - centerPoint;
-                onControlHandler.Invoke(offset.x / PARAM_PRE, offset.y / PARAM_PRE);
+                onControlHandler.Invoke(offset.x / PARAM_PRE, offset.y / PARAM_PRE, isFinish);
             }
             else
             {
                 Vector2 offset = _lastPoint - centerPoint;
-                onControlHandler.Invoke(offset.x / PARAM_PRE, offset.y / PARAM_PRE);
+                onControlHandler.Invoke(offset.x / PARAM_PRE, offset.y / PARAM_PRE, isFinish);
             }
         }
     }

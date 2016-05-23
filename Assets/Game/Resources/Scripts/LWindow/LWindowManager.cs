@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using SLua;
 
 public enum WindowHierarchy
@@ -24,32 +26,29 @@ public enum WindowDispose
 [CustomLuaClassAttribute]
 public class LWindowManager : MonoBehaviour
 {
-    public delegate LWindowBase CreateWindowAction();
-    public string loadPath;
     protected float recycleDuration;
     protected float disposeDuration;
 
-    protected Dictionary<WindowHierarchy,List<LWindowBase>> runningWindows;
+    protected Dictionary<WindowHierarchy, List<LWindowBase>> runningWindows;
     protected Dictionary<WindowHierarchy, GameObject> hierarchys;
-    protected Dictionary<string,CreateWindowAction> createActions;
     protected Dictionary<string, LWindowBase> cacheWindows;
     protected Dictionary<string, LWindowBase> delayDisposeWindows;
     protected Dictionary<LWindowBase, float> delayWindowsTimes;
-    protected GameObject canvas;
+    public GameObject canvas { get; private set; }
+    private static LWindowManager _instance;
+    private AsyncOperation _sceneAsync;
+    public UnityAction<float> onProgressAsyncScene;
 
     public LWindowManager()
     {
-        loadPath = "Prefabs/{0}";
-
         runningWindows = new Dictionary<WindowHierarchy, List<LWindowBase>>();
         hierarchys = new Dictionary<WindowHierarchy, GameObject>();
-        createActions = new Dictionary<string, CreateWindowAction>();
         cacheWindows = new Dictionary<string, LWindowBase>();
         delayDisposeWindows = new Dictionary<string, LWindowBase>();
         delayWindowsTimes = new Dictionary<LWindowBase, float>();
 
-        recycleDuration = 2 ;
-        disposeDuration = 1 ;
+        recycleDuration = 2;
+        disposeDuration = 1;
 
         foreach (int item in Enum.GetValues(typeof(WindowHierarchy)))
         {
@@ -63,6 +62,17 @@ public class LWindowManager : MonoBehaviour
         CancelInvoke();
     }
 
+    public static LWindowManager GetInstance()
+    {
+        if (_instance == null)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "LWindowManager";
+            _instance = obj.AddComponent<LWindowManager>();
+        }
+        return _instance;
+    }
+
     void Awake()
     {
         canvas = GameObject.Find("Canvas");
@@ -74,25 +84,26 @@ public class LWindowManager : MonoBehaviour
                 string eVal = item.ToString();
 
                 GameObject layer = new GameObject();
-                layer.name = "Layer_"+eKey;
+                layer.name = "Layer_" + eKey;
                 layer.transform.SetParent(canvas.transform);
                 layer.transform.localScale = new Vector3(1, 1, 1);
+                layer.transform.localPosition = Vector3.zero;
 
                 RectTransform rtran = layer.GetComponent<RectTransform>();
                 if (rtran == null)
                 {
                     rtran = layer.AddComponent<RectTransform>();
                 }
-                rtran.pivot = new Vector2(0,0);
-                rtran.anchorMin = new Vector2(0, 0);
-                rtran.anchorMax = new Vector2(1, 1);
-                
+                rtran.pivot = new Vector2(0.5f, 0.5f);
+                rtran.anchorMin = new Vector2(0.5f, 0.5f);
+                rtran.anchorMax = new Vector2(0.5f, 0.5f);
+
                 hierarchys.Add((WindowHierarchy)int.Parse(eVal), layer);
             }
         }
         else
         {
-            Debug.Log("can't find [Canvas]");
+            Debug.LogWarning("can't find [Canvas]");
         }
 
         InvokeRepeating("checkRecycle", 0, recycleDuration);
@@ -118,8 +129,35 @@ public class LWindowManager : MonoBehaviour
             delayDisposeWindows.Remove(win.name);
             recycles.RemoveAt(0);
             Destroy(win.gameObject);
-            Debug.Log(string.Format("Destroy Window [{0}]" , win.name));
+            Debug.Log(string.Format("Destroy Window [{0}]", win.name));
         }
+    }
+
+    public void LoadScene(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
+
+    public void LoadSceneAsync(string name, UnityAction<float> onProgressFunc)
+    {
+        onProgressAsyncScene = onProgressFunc;
+        StartCoroutine(onLoadSceneAsync(name));
+    }
+
+    void Update()
+    {
+        if (_sceneAsync != null)
+        {
+            onProgressAsyncScene.Invoke(_sceneAsync.progress);
+        }
+    }
+
+    private IEnumerator onLoadSceneAsync(string name)
+    {
+        _sceneAsync = SceneManager.LoadSceneAsync(name);
+        yield return _sceneAsync;
+
+        _sceneAsync = null;
     }
 
     protected LWindowBase loadWindow(string name)
@@ -135,21 +173,18 @@ public class LWindowManager : MonoBehaviour
         }
         else
         {
-            GameObject res = Resources.Load(string.Format(loadPath, name)) as GameObject;
-            GameObject obj = Instantiate(res) as GameObject;
-            obj.name = name;
+            GameObject res = LLoadBundle.GetInstance().LoadAsset(LGameConfig.WINDOW_BUNDLE, name, typeof(GameObject)) as GameObject;
+            GameObject obj = Instantiate(res);
+            string[] split_names = name.Split('/');
+            obj.name = split_names[split_names.Length-1];
             obj.GetComponent<RectTransform>().sizeDelta = canvas.GetComponent<RectTransform>().rect.size;
             ret = obj.GetComponent<LWindowBase>();
-            if (ret == null)
-            {
-                ret = obj.AddComponent(Type.GetType(name)) as LWindowBase;
-            }
-            ret.name = name;
+            if (ret) ret.name = obj.name;
         }
         return ret;
     }
 
-    public void runWindow(string name, WindowHierarchy e,ArrayList list=null)
+    public void runWindow(string name, WindowHierarchy e, ArrayList list = null)
     {
         if (isRunning(name))
         {
@@ -161,10 +196,12 @@ public class LWindowManager : MonoBehaviour
         {
             win.hierarchy = e;
             win.gameObject.transform.SetParent(hierarchys[e].transform);
+            win.gameObject.transform.localScale = new Vector2(1, 1);
+            win.gameObject.transform.localPosition = Vector3.zero;
             win.open(list);
 
             runningWindows[e].Add(win);
-            
+
             if (win.disposeType == WindowDispose.Delay)
             {
                 delayDisposeWindows[name] = win;

@@ -19,7 +19,7 @@ public class WindowGridView : LWindowBase
     {
         btn_close.onClick.AddListener(() =>
         {
-            LWindowManager wm = LSingleton.getInstance("LWindowManager") as LWindowManager;
+            LWindowManager wm = LWindowManager.GetInstance();
             wm.popWindow(this);
         });
 
@@ -50,7 +50,7 @@ public class WindowGridView : LWindowBase
         {
             foreach (var item in list)
             {
-                Debug.Log("数据"+item.ToString());
+                Debug.Log("数据:"+item.ToString());
             }
         }
     }

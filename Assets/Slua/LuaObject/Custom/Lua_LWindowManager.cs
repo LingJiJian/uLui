@@ -5,6 +5,36 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_LWindowManager : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LoadScene(IntPtr l) {
+		try {
+			LWindowManager self=(LWindowManager)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			self.LoadScene(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LoadSceneAsync(IntPtr l) {
+		try {
+			LWindowManager self=(LWindowManager)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			UnityEngine.Events.UnityAction<System.Single> a2;
+			LuaDelegation.checkDelegate(l,3,out a2);
+			self.LoadSceneAsync(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int runWindow(IntPtr l) {
 		try {
 			LWindowManager self=(LWindowManager)checkSelf(l);
@@ -133,11 +163,11 @@ public class Lua_LWindowManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_loadPath(IntPtr l) {
+	static public int GetInstance_s(IntPtr l) {
 		try {
-			LWindowManager self=(LWindowManager)checkSelf(l);
+			var ret=LWindowManager.GetInstance();
 			pushValue(l,true);
-			pushValue(l,self.loadPath);
+			pushValue(l,ret);
 			return 2;
 		}
 		catch(Exception e) {
@@ -145,12 +175,14 @@ public class Lua_LWindowManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_loadPath(IntPtr l) {
+	static public int set_onProgressAsyncScene(IntPtr l) {
 		try {
 			LWindowManager self=(LWindowManager)checkSelf(l);
-			System.String v;
-			checkType(l,2,out v);
-			self.loadPath=v;
+			UnityEngine.Events.UnityAction<System.Single> v;
+			int op=LuaDelegation.checkDelegate(l,2,out v);
+			if(op==0) self.onProgressAsyncScene=v;
+			else if(op==1) self.onProgressAsyncScene+=v;
+			else if(op==2) self.onProgressAsyncScene-=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -158,8 +190,22 @@ public class Lua_LWindowManager : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_canvas(IntPtr l) {
+		try {
+			LWindowManager self=(LWindowManager)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.canvas);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"LWindowManager");
+		addMember(l,LoadScene);
+		addMember(l,LoadSceneAsync);
 		addMember(l,runWindow);
 		addMember(l,seekWindow);
 		addMember(l,popWindow);
@@ -167,7 +213,9 @@ public class Lua_LWindowManager : LuaObject {
 		addMember(l,removeCachedWindow);
 		addMember(l,removeAllCachedWindow);
 		addMember(l,isRunning);
-		addMember(l,"loadPath",get_loadPath,set_loadPath,true);
+		addMember(l,GetInstance_s);
+		addMember(l,"onProgressAsyncScene",null,set_onProgressAsyncScene,true);
+		addMember(l,"canvas",get_canvas,null,true);
 		createTypeMetatable(l,null, typeof(LWindowManager),typeof(UnityEngine.MonoBehaviour));
 	}
 }

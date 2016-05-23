@@ -18,6 +18,38 @@ public class Lua_UnityEngine_UI_ColorBlock : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int op_Equality(IntPtr l) {
+		try {
+			UnityEngine.UI.ColorBlock a1;
+			checkValueType(l,1,out a1);
+			UnityEngine.UI.ColorBlock a2;
+			checkValueType(l,2,out a2);
+			var ret=(a1==a2);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int op_Inequality(IntPtr l) {
+		try {
+			UnityEngine.UI.ColorBlock a1;
+			checkValueType(l,1,out a1);
+			UnityEngine.UI.ColorBlock a2;
+			checkValueType(l,2,out a2);
+			var ret=(a1!=a2);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_normalColor(IntPtr l) {
 		try {
 			UnityEngine.UI.ColorBlock self;
@@ -204,6 +236,8 @@ public class Lua_UnityEngine_UI_ColorBlock : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.ColorBlock");
+		addMember(l,op_Equality);
+		addMember(l,op_Inequality);
 		addMember(l,"normalColor",get_normalColor,set_normalColor,true);
 		addMember(l,"highlightedColor",get_highlightedColor,set_highlightedColor,true);
 		addMember(l,"pressedColor",get_pressedColor,set_pressedColor,true);

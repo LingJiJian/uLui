@@ -108,7 +108,7 @@ namespace Lui
             if (dragable)
             {
                 lastMovePoint = point;
-                iTween.Stop(container);
+                LeanTween.cancel(container);
                 onScrolling();
             }
         }
@@ -169,15 +169,11 @@ namespace Lui
 
         protected void setContentOffsetEaseInWithoutCheck(Vector2 offset, float duration)
         {
-            iTween.Stop(container);
-            iTween.MoveTo(container, iTween.Hash(
-                "position", transform.TransformPoint(offset), 
-                "time", duration,
-                "easetype",iTween.EaseType.easeInQuad,
-                "onupdate","onScrolling",
-                "onupdatetarget",gameObject,
-                "oncomplete", "onMoveComplete",
-                "oncompletetarget",gameObject));
+            LeanTween.cancel(container);
+            LeanTween.move(container, transform.TransformPoint(offset), duration)
+                .setEase(LeanTweenType.easeInQuad)
+                .setOnUpdate((float val) => { onScrolling(); })
+                .setOnComplete(onMoveComplete);
 
             onScrolling();
         }
@@ -197,7 +193,7 @@ namespace Lui
             {
                 validateOffset(ref offset);
             }
-            iTween.Stop(container);
+            LeanTween.cancel(container);
             container.transform.localPosition = offset;
             onScrolling();
         }
@@ -252,14 +248,9 @@ namespace Lui
 
         public void setContentOffsetInDurationWithoutCheck(Vector2 offset, float duration)
         {
-            iTween.MoveTo(container, iTween.Hash(
-                "position", transform.TransformPoint(offset),
-                "time", duration,
-                "onupdate", "onScrolling",
-                "onupdatetarget", gameObject,
-                "oncomplete", "onMoveComplete",
-                "oncompletetarget", gameObject));
-
+            LeanTween.move(container, transform.TransformPoint(offset), duration)
+                .setOnUpdate((float val) => { onScrolling(); })
+                .setOnComplete(onMoveComplete);
             onScrolling();
         }
 

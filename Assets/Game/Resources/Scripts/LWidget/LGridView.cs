@@ -135,6 +135,7 @@ namespace Lui
 
             cell.node.transform.SetParent(container.transform);
             cell.node.transform.localPosition = cellPositionFromIndex(idx);
+            cell.node.transform.localScale = new Vector2(1, 1);
             insertSortableCell(cell, idx);
 
             _indices.Add(idx, 1);

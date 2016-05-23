@@ -329,6 +329,18 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FreezeAndReleaseSourceData(IntPtr l) {
+		try {
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
+			self.FreezeAndReleaseSourceData();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int StopRebuilds_s(IntPtr l) {
 		try {
 			UnityEngine.ProceduralMaterial.StopRebuilds();
@@ -540,6 +552,18 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isFrozen(IntPtr l) {
+		try {
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.isFrozen);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ProceduralMaterial");
 		addMember(l,GetProceduralPropertyDescriptions);
@@ -564,6 +588,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		addMember(l,RebuildTexturesImmediately);
 		addMember(l,GetGeneratedTextures);
 		addMember(l,GetGeneratedTexture);
+		addMember(l,FreezeAndReleaseSourceData);
 		addMember(l,StopRebuilds_s);
 		addMember(l,"cacheSize",get_cacheSize,set_cacheSize,true);
 		addMember(l,"animationUpdateRate",get_animationUpdateRate,set_animationUpdateRate,true);
@@ -575,6 +600,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		addMember(l,"substanceProcessorUsage",get_substanceProcessorUsage,set_substanceProcessorUsage,false);
 		addMember(l,"preset",get_preset,set_preset,true);
 		addMember(l,"isReadable",get_isReadable,set_isReadable,true);
+		addMember(l,"isFrozen",get_isFrozen,null,true);
 		createTypeMetatable(l,null, typeof(UnityEngine.ProceduralMaterial),typeof(UnityEngine.Material));
 	}
 }

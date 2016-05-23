@@ -171,6 +171,7 @@ namespace Lui
                         cell.idx = idx;
                         cell.node.transform.SetParent(pageCell.node.transform);
                         cell.node.transform.localPosition = _gridCellsPosition[i];
+                        cell.node.transform.localScale = new Vector2(1, 1);
                         gridCells.Add(cell);
                     }
                     else
@@ -181,6 +182,7 @@ namespace Lui
                         cell.idx = INVALID_INDEX;
                         cell.node.transform.SetParent(pageCell.node.transform);
                         cell.node.transform.localPosition = _gridCellsPosition[i];
+                        cell.node.transform.localScale = new Vector2(1, 1);
                         gridCells.Add(cell);
                     }
                 }
@@ -221,6 +223,7 @@ namespace Lui
 
             tran.sizeDelta = cellsSize;
             pageCell.node.transform.SetParent(container.transform);
+            pageCell.node.transform.localScale = new Vector2(1, 1);
             pageCell.node.transform.localPosition = cellPositionFromIndex(page);
             insertSortableCell(pageCell, page);
             indices.Add(page, 1);

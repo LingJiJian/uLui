@@ -105,6 +105,22 @@ public class Lua_Lui_LRichText : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int parseRichElemString(IntPtr l) {
+		try {
+			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			UnityEngine.Events.UnityAction<System.String,System.Collections.Generic.Dictionary<System.String,System.Object>> a2;
+			LuaDelegation.checkDelegate(l,3,out a2);
+			self.parseRichElemString(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_alignType(IntPtr l) {
 		try {
 			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
@@ -254,6 +270,7 @@ public class Lua_Lui_LRichText : LuaObject {
 		addMember(l,insertElement);
 		addMember(l,reloadData);
 		addMember(l,OnPointerClick);
+		addMember(l,parseRichElemString);
 		addMember(l,"alignType",get_alignType,set_alignType,true);
 		addMember(l,"verticalSpace",get_verticalSpace,set_verticalSpace,true);
 		addMember(l,"maxLineWidth",get_maxLineWidth,set_maxLineWidth,true);

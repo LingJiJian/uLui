@@ -77,7 +77,7 @@ namespace Lui
 
         protected void loadTexture()
         {
-            Sprite[] sprites = Resources.LoadAll<Sprite>(path);
+            Sprite[] sprites = LLoadBundle.GetInstance().LoadAllAsset<Sprite>(LGameConfig.WINDOW_BUNDLE, path);
             for (int i = 0; i < sprites.Length; i++)
             {
                 _spriteMap.Add(sprites[i].name, sprites[i]);

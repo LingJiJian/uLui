@@ -32,6 +32,36 @@ public class Lua_UnityEngine_SceneManagement_Scene : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetRootGameObjects(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
+				UnityEngine.SceneManagement.Scene self;
+				checkValueType(l,1,out self);
+				var ret=self.GetRootGameObjects();
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==2){
+				UnityEngine.SceneManagement.Scene self;
+				checkValueType(l,1,out self);
+				System.Collections.Generic.List<UnityEngine.GameObject> a1;
+				checkType(l,2,out a1);
+				self.GetRootGameObjects(a1);
+				pushValue(l,true);
+				setBack(l,self);
+				return 1;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int op_Equality(IntPtr l) {
 		try {
 			UnityEngine.SceneManagement.Scene a1;
@@ -144,6 +174,7 @@ public class Lua_UnityEngine_SceneManagement_Scene : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SceneManagement.Scene");
 		addMember(l,IsValid);
+		addMember(l,GetRootGameObjects);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
 		addMember(l,"path",get_path,null,true);

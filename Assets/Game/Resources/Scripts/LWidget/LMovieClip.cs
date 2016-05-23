@@ -37,7 +37,6 @@ namespace Lui
     [CustomLuaClassAttribute]
 	public class LMovieClip : MonoBehaviour
     {
-        
         public float fps = 15f;
 		public bool isPlayOnwake = false;
 		public string path;
@@ -63,11 +62,11 @@ namespace Lui
 		public void loadTexture()
 		{
 			//load textures
-            _spriteArr = Resources.LoadAll<Sprite>(path);
+            _spriteArr = LLoadBundle.GetInstance().LoadAllAsset<Sprite>(LGameConfig.WINDOW_BUNDLE, path);
             _frameLenght = _spriteArr.Length;
 		}
 
-        void OnGUI()
+        void Update()
         {
             if (_isPlaying)
             {

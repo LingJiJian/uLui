@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using System.Collections;
 
 public class Secondui : MonoBehaviour {
 
@@ -16,7 +12,7 @@ public class Secondui : MonoBehaviour {
 
     void Start() {
 
-        _wm = LSingleton.getInstance("LWindowManager") as LWindowManager;
+        _wm = LWindowManager.GetInstance();
         _teddyAnim = GameObject.Find("Teddy").GetComponent<Animator>();
 
         btn_msg.onClick.AddListener(() =>
@@ -26,7 +22,7 @@ public class Secondui : MonoBehaviour {
 
         btn_trans.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene("first");
+            _wm.LoadScene("first");
         });
 
         btn_anim.onClick.AddListener(() =>

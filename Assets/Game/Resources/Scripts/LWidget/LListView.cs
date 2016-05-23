@@ -47,7 +47,7 @@ namespace Lui
         public List<GameObject> nodeList { get; protected set; }
         public List<GameObject> freeList { get; protected set; }
         public GameObject itemTemplate;
-        public Rect bounceBox;
+        //public Rect bounceBox;
 
         public LListView()
         {
@@ -93,7 +93,6 @@ namespace Lui
             if (limitNum > 0)
             {
                 checkRecycleItem();
-                reloadData();
             }
         }
 
@@ -199,6 +198,7 @@ namespace Lui
                             allNodesSize -= obj.GetComponent<RectTransform>().rect.height;
                             obj.GetComponent<RectTransform>().pivot = VerticalNodeAnchorPoint;
                             obj.transform.SetParent(container.transform);
+                            obj.transform.localScale = new Vector2(1, 1);
                             obj.transform.localPosition = new Vector2(0, allNodesSize);
                         }
                     }
@@ -230,7 +230,7 @@ namespace Lui
         {
             if (limitNum > 0)
             {
-                if (nodeList.Count > limitNum)
+                if (nodeList.Count >= limitNum)
                 {
                     GameObject obj = null;
                     for (int i = 0; i < nodeList.Count - limitNum; i++)
@@ -238,6 +238,7 @@ namespace Lui
                         obj = nodeList[i];
                         nodeList.Remove(obj);
                         freeList.Add(obj);
+                        obj.SetActive(false);
                     }
                 }
             }
@@ -251,6 +252,7 @@ namespace Lui
                 if (freeList.Count > 0)
                 {
                     ret = freeList[0];
+                    ret.SetActive(true);
                     freeList.RemoveAt(0);
                 }
             }
@@ -261,45 +263,32 @@ namespace Lui
             return ret;
         }
 
-        protected override void onScrolling()
-        {
-            base.onScrolling();
+        //void Start()
+        //{
+        //    RectTransform rtran = GetComponent<RectTransform>();
+        //    bounceBox = new Rect(transform.position.x, transform.position.y, rtran.sizeDelta.x, rtran.sizeDelta.y);
+        //}
 
-            GameObject obj = null;
-            for (int i = 0; i < nodeList.Count; i++)
-            {
-				obj = nodeList[i];
-				Vector2 pos = obj.transform.position;
-				Vector2 topPoint = new Vector2(pos.x,pos.y+obj.GetComponent<RectTransform>().rect.height);
-				if (bounceBox.Contains(pos) ||
-				    bounceBox.Contains(topPoint))
-                {
-					obj.SetActive(true);
-                }
-                else
-                {
-					obj.SetActive(false);
-                }
-            }
-        }
+        //protected override void onScrolling()
+        //{
+        //    base.onScrolling();
 
-		void Start()
-		{
-			RectTransform rtran = GetComponent<RectTransform>();
-			this.bounceBox = new Rect(transform.position.x,
-			                     transform.position.y,
-			                     rtran.rect.width,
-			                     rtran.rect.height);
-
-			this.itemTemplate = Resources.Load("Prefabs/list_cell") as GameObject;
-			this.limitNum = 10;
-			for (int i=0; i<30; i++) {
-				GameObject item = dequeueItem ();
-				item.GetComponent<RectTransform>().sizeDelta = new Vector2(100,40+Random.Range(0,40));
-				item.GetComponent<Text>().text = i.ToString();
-				this.insertNodeAtLast(item);
-			}
-			this.reloadData();
-		}
+        //    GameObject obj = null;
+        //    for (int i = 0; i < nodeList.Count; i++)
+        //    {
+        //        obj = nodeList[i];
+        //        Vector2 pos = obj.transform.position;
+        //        Vector2 topPoint = new Vector2(pos.x, pos.y + obj.GetComponent<RectTransform>().rect.height);
+        //        if (bounceBox.Contains(pos) ||
+        //            bounceBox.Contains(topPoint))
+        //        {
+        //            obj.SetActive(true);
+        //        }
+        //        else
+        //        {
+        //            obj.SetActive(false);
+        //        }
+        //    }
+        //}
     }
 }

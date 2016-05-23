@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using SLua;
 using System.Collections;
 
-public class LWindowBase : MonoBehaviour
+[CustomLuaClassAttribute]
+public class LWindowBase : LLuaBehaviourBase
 {
     public WindowDispose disposeType;
     public WindowHierarchy hierarchy;

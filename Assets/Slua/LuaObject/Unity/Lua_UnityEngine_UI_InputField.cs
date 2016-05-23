@@ -33,21 +33,6 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ScreenToLocal(IntPtr l) {
-		try {
-			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
-			UnityEngine.Vector2 a1;
-			checkType(l,2,out a1);
-			var ret=self.ScreenToLocal(a1);
-			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnBeginDrag(IntPtr l) {
 		try {
 			UnityEngine.UI.InputField self=(UnityEngine.UI.InputField)checkSelf(l);
@@ -889,7 +874,6 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		getTypeTable(l,"UnityEngine.UI.InputField");
 		addMember(l,MoveTextEnd);
 		addMember(l,MoveTextStart);
-		addMember(l,ScreenToLocal);
 		addMember(l,OnBeginDrag);
 		addMember(l,OnDrag);
 		addMember(l,OnEndDrag);

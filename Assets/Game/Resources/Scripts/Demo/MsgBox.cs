@@ -9,7 +9,7 @@ public class MsgBox : LWindowBase {
 
 	void Awake () {
 
-        wm = LSingleton.getInstance("LWindowManager") as LWindowManager;
+        wm = LWindowManager.GetInstance() ;
 
         btn_close.onClick.AddListener(() =>
         {

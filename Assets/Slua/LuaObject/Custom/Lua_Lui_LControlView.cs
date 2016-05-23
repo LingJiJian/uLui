@@ -5,48 +5,6 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_Lui_LControlView : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OnPointerDown(IntPtr l) {
-		try {
-			Lui.LControlView self=(Lui.LControlView)checkSelf(l);
-			UnityEngine.EventSystems.PointerEventData a1;
-			checkType(l,2,out a1);
-			self.OnPointerDown(a1);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OnDrag(IntPtr l) {
-		try {
-			Lui.LControlView self=(Lui.LControlView)checkSelf(l);
-			UnityEngine.EventSystems.PointerEventData a1;
-			checkType(l,2,out a1);
-			self.OnDrag(a1);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OnPointerUp(IntPtr l) {
-		try {
-			Lui.LControlView self=(Lui.LControlView)checkSelf(l);
-			UnityEngine.EventSystems.PointerEventData a1;
-			checkType(l,2,out a1);
-			self.OnPointerUp(a1);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_centerPoint(IntPtr l) {
 		try {
 			Lui.LControlView self=(Lui.LControlView)checkSelf(l);
@@ -154,7 +112,7 @@ public class Lua_Lui_LControlView : LuaObject {
 	static public int set_onControlHandler(IntPtr l) {
 		try {
 			Lui.LControlView self=(Lui.LControlView)checkSelf(l);
-			UnityEngine.Events.UnityAction<System.Single,System.Single> v;
+			UnityEngine.Events.UnityAction<System.Single,System.Single,System.Boolean> v;
 			int op=LuaDelegation.checkDelegate(l,2,out v);
 			if(op==0) self.onControlHandler=v;
 			else if(op==1) self.onControlHandler+=v;
@@ -168,9 +126,6 @@ public class Lua_Lui_LControlView : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"Lui.LControlView");
-		addMember(l,OnPointerDown);
-		addMember(l,OnDrag);
-		addMember(l,OnPointerUp);
 		addMember(l,"centerPoint",get_centerPoint,set_centerPoint,true);
 		addMember(l,"radius",get_radius,set_radius,true);
 		addMember(l,"relocateWithAnimation",get_relocateWithAnimation,set_relocateWithAnimation,true);
