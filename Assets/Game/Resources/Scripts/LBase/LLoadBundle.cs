@@ -68,6 +68,7 @@ public class LLoadBundle : MonoBehaviour {
         Object prefab = null;
         if (LGameConfig.GetInstance().isDebug)
         {
+            
             prefab = Resources.Load(string.Format("Prefabs/{0}",assetName), assetType);
         }
         else

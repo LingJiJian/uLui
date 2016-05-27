@@ -102,7 +102,7 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_float.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_string.cs" />
-     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_2_string_Dictionary_System_String_object_.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_2_string_Dictionary_System_String_System_String_.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_3_float_float_bool.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEvent_int_string.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_AbsClass.cs" />

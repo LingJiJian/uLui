@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
 using UnityEngine;
@@ -218,5 +219,30 @@ public class LUtil {
     {
         DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, target.Kind);
         return start.AddSeconds(timestamp);
+    }
+
+    public static Color StringToColor(string color)
+    {
+        int red, green, blue = 0;
+        char[] rgb;
+        color = color.TrimStart('#');
+        color = Regex.Replace(color.ToLower(), "[g-zG-Z]", "");
+        switch (color.Length)
+        {
+            case 3:
+                rgb = color.ToCharArray();
+                red = Convert.ToInt32(rgb[0].ToString() + rgb[0].ToString(), 16);
+                green = Convert.ToInt32(rgb[1].ToString() + rgb[1].ToString(), 16);
+                blue = Convert.ToInt32(rgb[2].ToString() + rgb[2].ToString(), 16);
+                return new Color(red, green, blue);
+            case 6:
+                rgb = color.ToCharArray();
+                red = Convert.ToInt32(rgb[0].ToString() + rgb[1].ToString(), 16);
+                green = Convert.ToInt32(rgb[2].ToString() + rgb[3].ToString(), 16);
+                blue = Convert.ToInt32(rgb[4].ToString() + rgb[5].ToString(), 16);
+                return new Color(red, green, blue);
+            default:
+                return Color.white;
+        }
     }
 }

@@ -110,9 +110,25 @@ public class Lua_Lui_LRichText : LuaObject {
 			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
-			UnityEngine.Events.UnityAction<System.String,System.Collections.Generic.Dictionary<System.String,System.Object>> a2;
+			UnityEngine.Events.UnityAction<System.String,System.Collections.Generic.Dictionary<System.String,System.String>> a2;
 			LuaDelegation.checkDelegate(l,3,out a2);
 			self.parseRichElemString(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int parseRichDefaultString(IntPtr l) {
+		try {
+			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			UnityEngine.Events.UnityAction<System.String,System.Collections.Generic.Dictionary<System.String,System.String>> a2;
+			LuaDelegation.checkDelegate(l,3,out a2);
+			self.parseRichDefaultString(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -241,6 +257,58 @@ public class Lua_Lui_LRichText : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_defaultLabSize(IntPtr l) {
+		try {
+			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.defaultLabSize);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_defaultLabSize(IntPtr l) {
+		try {
+			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
+			System.Int32 v;
+			checkType(l,2,out v);
+			self.defaultLabSize=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_defaultLabColor(IntPtr l) {
+		try {
+			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.defaultLabColor);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_defaultLabColor(IntPtr l) {
+		try {
+			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
+			System.String v;
+			checkType(l,2,out v);
+			self.defaultLabColor=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_realLineHeight(IntPtr l) {
 		try {
 			Lui.LRichText self=(Lui.LRichText)checkSelf(l);
@@ -271,11 +339,14 @@ public class Lua_Lui_LRichText : LuaObject {
 		addMember(l,reloadData);
 		addMember(l,OnPointerClick);
 		addMember(l,parseRichElemString);
+		addMember(l,parseRichDefaultString);
 		addMember(l,"alignType",get_alignType,set_alignType,true);
 		addMember(l,"verticalSpace",get_verticalSpace,set_verticalSpace,true);
 		addMember(l,"maxLineWidth",get_maxLineWidth,set_maxLineWidth,true);
 		addMember(l,"font",get_font,set_font,true);
 		addMember(l,"onClickHandler",null,set_onClickHandler,true);
+		addMember(l,"defaultLabSize",get_defaultLabSize,set_defaultLabSize,true);
+		addMember(l,"defaultLabColor",get_defaultLabColor,set_defaultLabColor,true);
 		addMember(l,"realLineHeight",get_realLineHeight,null,true);
 		addMember(l,"realLineWidth",get_realLineWidth,null,true);
 		createTypeMetatable(l,null, typeof(Lui.LRichText),typeof(UnityEngine.MonoBehaviour));

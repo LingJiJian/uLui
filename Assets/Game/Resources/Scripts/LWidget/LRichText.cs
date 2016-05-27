@@ -25,7 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 using UnityEngine;
 using System.Collections.Generic;
-using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -195,6 +194,19 @@ namespace Lui
         List<LRichCacheElement> _cacheImgElements;
         List<LRichCacheElement> _cacheFramAnimElements;
         Dictionary<GameObject, string> _objectDataMap;
+        //custom content parser setting
+        public int defaultLabSize = 20;
+        public string defaultLabColor = "#ff00ff";
+        private string _contentString;
+        public string contentString {
+            set
+            {
+                _contentString = value;
+                if(!_contentString.Equals(""))
+                    parseRichDefaultString(_contentString);
+            }
+            get { return _contentString; }
+        }
 
         public void removeAllElements()
         {
@@ -308,7 +320,6 @@ namespace Lui
                     rendElem.type = RichType.IMAGE;
                     rendElem.path = elemImg.path;
                     rendElem.data = elemImg.data;
-
                     Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.WINDOW_BUNDLE, rendElem.path, typeof(Sprite)) as Sprite;
                     // Sprite sp = Resources.Load(rendElem.path,typeof(Sprite)) as Sprite;
                     rendElem.width = sp.texture.width;
@@ -647,7 +658,7 @@ namespace Lui
             Image comImage = img.GetComponent<Image>();
             if (comImage != null)
             {
-                Sprite sp = Resources.Load(elem.path, typeof(Sprite)) as Sprite;
+                Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.WINDOW_BUNDLE, elem.path, typeof(Sprite)) as Sprite;
                 comImage.sprite = sp;
             }
         }
@@ -796,8 +807,44 @@ namespace Lui
                 }
             }
         }
+//---------------------parse rich element content from string----------------------------------------
+        private string[] SaftSplite(string content, char separater)
+        {
+            List<string> arr = new List<string>();
+            char[] charArr = content.ToCharArray();
+            bool strFlag = false;
+            List<char> line = new List<char>();
+            for (int i =0;i< charArr.Length; i++)
+            {
+                if((charArr[i] == '"') && (charArr[i-1] != '\\')) //string start
+                {
+                    strFlag = !strFlag;
+                }
+                if(charArr[i] == separater)
+                {
+                    if (!strFlag)
+                    {
+                        arr.Add(new string(line.ToArray()));
+                        line.Clear();
+                    }
+                    else
+                    {
+                        line.Add(charArr[i]);
+                    }
+                }
+                else
+                {
+                    line.Add(charArr[i]);
+                }
+            }
+            if(line.Count > 0)
+            {
+                arr.Add(new string(line.ToArray()));
+            }
+            return arr.ToArray();
+        }
 
-        public void parseRichElemString(string content, UnityAction<string, Dictionary<string, object>> handleFunc)
+        public void parseRichElemString(string content, UnityAction<string, Dictionary<string, string>> handleFunc)
         {
             List<string> elemStrs = new List<string>();
 
@@ -809,13 +856,13 @@ namespace Lui
             {
                 string flag = elemStrs[i].Substring(0, elemStrs[i].IndexOf(" "));
                 string paramStr = elemStrs[i].Substring(elemStrs[i].IndexOf(" ") + 1);
-                string[] paramArr = paramStr.Split(' ');
+                string[] paramArr = SaftSplite(paramStr,' ');
 
-                Dictionary<string, object> param = new Dictionary<string, object>();
+                Dictionary<string, string> param = new Dictionary<string, string>();
                 int paramArrLen = paramArr.Length;
                 for (int j = 0; j < paramArrLen; j++)
                 {
-                    string[] paramObj = paramArr[j].Split('=');
+                    string[] paramObj = SaftSplite(paramArr[j], '=');
                     string left = paramObj[0].Trim();
                     string right = paramObj[1].Trim();
 
@@ -859,6 +906,43 @@ namespace Lui
                 result.Add(string.Format("lab txt=\"{0}\"", content.Substring(startIndex, content.Length - startIndex)));
                 return result;
             }
+        }
+
+        public void parseRichDefaultString(string content, UnityAction<string, Dictionary<string, string>> specHandleFunc=null)
+        {
+            parseRichElemString(content, (flag, param) =>
+            {
+                if (flag == "lab")
+                {
+                    this.insertElement(
+                        param.ContainsKey("txt") ? param["txt"] : "",
+                        LUtil.StringToColor(param.ContainsKey("color") ? param["color"] : defaultLabColor),
+                        param.ContainsKey("size") ? System.Convert.ToInt32(param["size"]) : defaultLabSize,
+                        param.ContainsKey("isUnderLine") ? System.Convert.ToBoolean(param["isUnderLine"]) : false,
+                        param.ContainsKey("isOutLine") ? System.Convert.ToBoolean(param["isOutLine"]) : false,
+                        LUtil.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : defaultLabColor),
+                        param.ContainsKey("data") ? param["data"] : ""
+                        );
+                }else if(flag == "img")
+                {
+                    this.insertElement(
+                         param.ContainsKey("path") ? param["path"] : "",
+                         param.ContainsKey("data") ? param["data"] : "");
+                }else if(flag == "anim")
+                {
+                    this.insertElement(param["path"],
+                         param.ContainsKey("fps") ? System.Convert.ToSingle(param["fps"]) : 15f,
+                         param.ContainsKey("data") ? param["data"] : "");
+                }else if(flag == "newline")
+                {
+                    this.insertElement(1);
+                }
+                else
+                {
+                    if(specHandleFunc != null) specHandleFunc.Invoke(flag, param);
+                }
+            });
+            this.reloadData();
         }
     }
 

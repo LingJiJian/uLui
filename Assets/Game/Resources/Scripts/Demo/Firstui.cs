@@ -74,18 +74,19 @@ public class Firstui : MonoBehaviour
         };
         tblView.reloadData();
 
-        rtfView.insertElement("hello world!!", Color.blue, 25, true, false, Color.blue, "数据");
-        rtfView.insertElement("测试文本内容!!", Color.red, 15, false, true, Color.blue, "");
-        rtfView.insertElement("face01", 5f, "");
-        rtfView.insertElement("The article comes from the point of the examination", Color.green, 15, true, false, Color.blue, "");
-        rtfView.insertElement("face02/1", "");
-        rtfView.insertElement(1);
-        rtfView.insertElement("outline and newline", Color.yellow, 20, false, true, Color.blue, "");
+        //rtfView.insertElement("hello world!!", Color.blue, 25, true, false, Color.blue, "数据");
+        //rtfView.insertElement("测试文本内容!!", Color.red, 15, false, true, Color.blue, "");
+        //rtfView.insertElement("face01", 5f, "");
+        //rtfView.insertElement("The article comes from the point of the examination", Color.green, 15, true, false, Color.blue, "");
+        //rtfView.insertElement("face02/1", "");
+        //rtfView.insertElement(1);
+        //rtfView.insertElement("outline and newline", Color.yellow, 20, false, true, Color.blue, "");
+        rtfView.parseRichDefaultString("<lab txt=\"hello world!!\" color=#ffff00 data=数据 /><lab txt=\"测试文本内容\" isUnderLine=true size=40/><anim path=face01 fps=5.0/><newline /><img path=face02/1/><lab txt=\"The article comes from the point of the examination\" color=#ff0000 />");
         rtfView.onClickHandler = (string data) =>
         {
             Debug.Log("data " + data);
         };
-        rtfView.reloadData();
+        //rtfView.reloadData();
 
         pageView.cellsSize = new Vector2(150, 100);
         pageView.cellTemplate.node = Resources.Load("Prefabs/page_cell") as GameObject;
