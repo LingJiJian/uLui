@@ -106,6 +106,7 @@ namespace Lui
                     Image imgCom = img.GetComponent<Image>();
                     imgCom.sprite = _spriteMap[key];
                     img.transform.SetParent(this.transform);
+                    img.transform.localScale = new Vector3(1, 1, 1);
                     img.transform.localPosition = new Vector2(offsetX, 0);
                     offsetX += imgCom.sprite.textureRect.width;
                     offsetY = Mathf.Max(imgCom.sprite.textureRect.height, offsetY);

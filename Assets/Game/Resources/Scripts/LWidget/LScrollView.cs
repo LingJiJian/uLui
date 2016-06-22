@@ -43,7 +43,7 @@ namespace Lui
     /// 滑块
     /// </summary>
     [CustomLuaClassAttribute]
-    public class LScrollView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+    public class LScrollView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public static int INVALID_INDEX = -1;
         public static float RELOCATE_DURATION = 0.2f;
@@ -102,8 +102,9 @@ namespace Lui
             }
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnBeginDrag(PointerEventData eventData)
         {
+            print("ddddddddd");
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {
@@ -115,6 +116,8 @@ namespace Lui
 
         public void OnDrag(PointerEventData eventData)
         {
+            print("ccccc");
+
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {
@@ -137,7 +140,7 @@ namespace Lui
             }
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnEndDrag(PointerEventData eventData)
         {
             if (dragable)
             {

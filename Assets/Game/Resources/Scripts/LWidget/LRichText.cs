@@ -197,16 +197,6 @@ namespace Lui
         //custom content parser setting
         public int defaultLabSize = 20;
         public string defaultLabColor = "#ff00ff";
-        private string _contentString;
-        public string contentString {
-            set
-            {
-                _contentString = value;
-                if(!_contentString.Equals(""))
-                    parseRichDefaultString(_contentString);
-            }
-            get { return _contentString; }
-        }
 
         public void removeAllElements()
         {
