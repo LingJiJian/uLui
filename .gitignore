@@ -5,7 +5,7 @@
 *.suo
 *.user
 *.booproj
-#*.meta
+*.meta
 Assets/data.zip
 Assets/version.ver
 Assets/Slua/LuaObject/*

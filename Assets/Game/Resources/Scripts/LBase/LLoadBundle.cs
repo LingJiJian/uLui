@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using SLua;
 
-[CustomLuaClassAttribute]
-public class LLoadBundle : MonoBehaviour {
+[CustomLuaClass]
+public class LLoadBundle : MonoBehaviour
+{
 
-    private Dictionary<string,AssetBundle> bundles;
+    private Dictionary<string, AssetBundle> bundles;
     private static LLoadBundle _instance;
 
     public AssetBundle GetBundleByName(string name)
@@ -34,55 +35,62 @@ public class LLoadBundle : MonoBehaviour {
 
     public void LoadAllBundles(string[] bundle_names, UnityAction callFunc)
     {
-        if (LGameConfig.GetInstance().isDebug) {
+        if (LGameConfig.GetInstance().isDebug)
+        {
             callFunc.Invoke();
-        }else{
+        }
+        else
+        {
             StartCoroutine(Load(bundle_names, callFunc));
         }
     }
 
-    IEnumerator Load(string[] bundle_names,UnityAction callFunc)
+    IEnumerator Load(string[] bundle_names, UnityAction callFunc)
     {
         int len = bundle_names.Length;
 
-        for(int i = 0; i< len; i++)
+        for (int i = 0; i < len; i++)
         {
             string name = bundle_names[i];
-            using (WWW asset = new WWW(LResUpdate.LOCAL_RES_URL + "/" + name))
+            if (!bundles.ContainsKey(name))
             {
-                yield return asset;
-
-                bundles.Add(name,asset.assetBundle);
-                asset.Dispose();
-
-                if (i == len-1)
+                using (WWW asset = new WWW(LResUpdate.LOCAL_RES_URL + "/" + name))
                 {
-                    callFunc();
+                    yield return asset;
+
+                    bundles.Add(name, asset.assetBundle);
+                    asset.Dispose();
+
+                    if (i == len - 1)
+                    {
+                        callFunc();
+                    }
                 }
             }
         }
     }
 
-    public Object LoadAsset(string bundleName, string assetName,System.Type assetType)
+    public Object LoadAsset(string bundleName, string assetName, System.Type assetType)
     {
         Object prefab = null;
         if (LGameConfig.GetInstance().isDebug)
         {
-            
-            prefab = Resources.Load(string.Format("Prefabs/{0}",assetName), assetType);
+            assetName = assetName.Split('.')[0];
+            prefab = Resources.Load(string.Format("Prefabs/{0}", assetName), assetType);
         }
         else
         {
-            AssetBundle b = bundles[bundleName];
+            AssetBundle b;
+            bundles.TryGetValue(bundleName, out b);
             if (b != null)
             {
-                prefab = b.LoadAsset(string.Format(LGameConfig.ASSETBUNDLE_LOAD_FORMAT, assetName.ToLower()), assetType);
+                prefab = b.LoadAsset(string.Format(LGameConfig.ASSETBUNDLE_LOAD_FORMAT, assetName), assetType);
             }
         }
         return prefab;
     }
 
-    public T[] LoadAllAsset<T>(string bundleName, string assetName) where T:Object
+    public T[] LoadAllAsset<T>(string bundleName, string assetName) where T : Object
     {
         T[] prefabs = null;
         if (LGameConfig.GetInstance().isDebug)
@@ -91,12 +99,27 @@ public class LLoadBundle : MonoBehaviour {
         }
         else
         {
-            AssetBundle b = bundles[bundleName];
+            AssetBundle b;
+            bundles.TryGetValue(bundleName, out b);
             if (b != null)
             {
                 prefabs = b.LoadAllAssets<T>();
             }
         }
         return prefabs;
+    }
+
+    public void UnloadBundles(string[] bundle_names)
+    {
+        for (int i = 0; i < bundle_names.Length; i++)
+        {
+            AssetBundle b;
+            bundles.TryGetValue(bundle_names[i], out b);
+            if (b != null)
+            {
+                b.Unload(false);
+                bundles.Remove(bundle_names[i]);
+            }
+        }
     }
 }

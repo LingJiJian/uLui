@@ -1,56 +1,40 @@
-﻿using UnityEngine;
+﻿/****************************************************************************
+Copyright (c) 2015 Lingjijian
+
+Created by Lingjijian on 2015
+
+342854406@qq.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class LFPSView : MonoBehaviour {
+public class LFPSView : MonoBehaviour
+{
 
     private static LFPSView _instance;
-    private GameObject _canvas;
-    private Text _labelText;
-    public float _updateInterval = 0.5f;//设定更新帧率的时间间隔为0.5秒  
-    float _accum = .0f;//累积时间  
-    int _frames = 0;//在_updateInterval时间内运行了多少帧  
-    float _timeLeft;
-
-    void init()
-    {
-        _canvas = GameObject.Find("Canvas");
-
-        if (!_canvas)
-        {
-            Debug.LogWarning("can't find [Canvas]");
-            return;
-        }
-
-        GameObject _labelObject = new GameObject();
-        _labelObject.name = "LFPSView";
-        _labelObject.AddComponent<CanvasGroup>().blocksRaycasts = false;
-        RectTransform rtran = _labelObject.GetComponent<RectTransform>();
-        if (!rtran)
-        {
-            rtran = _labelObject.AddComponent<RectTransform>();
-        }
-        _labelText = _labelObject.AddComponent<Text>();
-        _labelText.font = Font.CreateDynamicFontFromOSFont("Arial",15);
-        rtran.pivot = new Vector2(0, 1);
-        rtran.anchorMax = new Vector2(0, 1);
-        rtran.anchorMin = new Vector2(0, 1);
-
-        _labelObject.transform.SetParent(_canvas.transform);
-        _labelObject.transform.position = new Vector3(0, 15, 0);
-
-        _timeLeft = _updateInterval;
-    }
-
-    void Start()
-    {
-        init();
-    }
-
-    void OnLevelWasLoaded(int level)
-    {
-        init();
-    }
+    public float updateInterval = 0.5F;
+    private double lastInterval;
+    private int frames = 0;
+    private float fps;
 
     public static LFPSView Show()
     {
@@ -64,26 +48,27 @@ public class LFPSView : MonoBehaviour {
         return _instance;
     }
 
-    // Update is called once per frame  
+    void Start()
+    {
+        lastInterval = Time.realtimeSinceStartup;
+        frames = 0;
+    }
+    void OnGUI()
+    {
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = Color.white;
+        style.fontSize = 30;
+        GUI.Label(new Rect(0, 0, 100, 50), " " + fps.ToString("f2"), style);
+    }
     void Update()
     {
-        _timeLeft -= Time.deltaTime;
-        //Time.timeScale可以控制Update 和LateUpdate 的执行速度,  
-        //Time.deltaTime是以秒计算，完成最后一帧的时间  
-        //相除即可得到相应的一帧所用的时间  
-        _accum += Time.timeScale / Time.deltaTime;
-        ++_frames;//帧数  
-
-        if (_timeLeft <= 0)
+        ++frames;
+        float timeNow = Time.realtimeSinceStartup;
+        if (timeNow > lastInterval + updateInterval)
         {
-            float fps = _accum / _frames;
-            //Debug.Log(_accum + "__" + _frames);  
-            string fpsFormat = System.String.Format("{0:F2} FPS", fps);//保留两位小数  
-            _labelText.text = fpsFormat;
-
-            _timeLeft = _updateInterval;
-            _accum = .0f;
-            _frames = 0;
+            fps = (float)(frames / (timeNow - lastInterval));
+            frames = 0;
+            lastInterval = timeNow;
         }
     }
 }

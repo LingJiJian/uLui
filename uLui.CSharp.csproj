@@ -85,6 +85,7 @@
     <Compile Include="Assets\Game\Resources\Scripts\LBase\LLuaBehaviourInterface.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LBase\LLuaTable.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LBase\LResUpdate.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\LBase\LTextureAtlas.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LBase\LUtil.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LButton.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LControlView.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LHUDView.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LLoadBundle.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LResUpdate.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LTextureAtlas.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LUtil.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LWindowBase.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LWindowManager.cs" />
@@ -812,6 +814,7 @@
     <Compile Include="Assets\Slua\example\test\test.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Game\Resources\Prefabs\test.txt" />
     <None Include="Assets\Game\Resources\config.txt" />
     <None Include="Assets\Slua\Resources\circle\circle.txt" />
     <None Include="Assets\Slua\Resources\custom.txt" />
