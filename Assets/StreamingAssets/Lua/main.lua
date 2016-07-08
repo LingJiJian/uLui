@@ -13,7 +13,7 @@ local function main()
 		wm:runWindow("MsgBox", 1)
 	end)
 
-	LTextureAtlas:GetInstance():LoadData("prefabbundles","test")
+	LTextureAtlas:GetInstance():LoadData("test")
 
 	local sp = LTextureAtlas:GetInstance():getSprite("Coco_tutorial")
 	local obj = GameObject()
@@ -21,6 +21,9 @@ local function main()
 	imageComp.sprite = sp
 	imageComp:SetNativeSize();
 	obj.transform:SetParent(GameObject.Find("Canvas").transform)
+
+	-- Object.Destroy(obj)
+	-- LTextureAtlas:GetInstance():RemoveTexture("test")
 
 
 

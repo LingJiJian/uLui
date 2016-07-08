@@ -42,7 +42,7 @@ namespace Lui
     /// <summary>
     /// 滑块
     /// </summary>
-    [CustomLuaClassAttribute]
+    [CustomLuaClass]
     public class LScrollView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public static int INVALID_INDEX = -1;
@@ -104,7 +104,6 @@ namespace Lui
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            print("ddddddddd");
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {
@@ -116,8 +115,6 @@ namespace Lui
 
         public void OnDrag(PointerEventData eventData)
         {
-            print("ccccc");
-
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {

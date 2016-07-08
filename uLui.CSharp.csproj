@@ -814,7 +814,7 @@
     <Compile Include="Assets\Slua\example\test\test.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Game\Resources\Prefabs\test.txt" />
+    <None Include="Assets\Game\Resources\Atlas\test.txt" />
     <None Include="Assets\Game\Resources\config.txt" />
     <None Include="Assets\Slua\Resources\circle\circle.txt" />
     <None Include="Assets\Slua\Resources\custom.txt" />

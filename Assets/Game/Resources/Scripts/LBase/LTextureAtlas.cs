@@ -58,16 +58,16 @@ public class LTextureAtlas {
         _sprites = new Dictionary<string, Sprite>();
     }
 
-	public void LoadData(string bundleName, string atlasName)
+	public void LoadData(string atlasName)
     {
-        Texture2D tex2d = LLoadBundle.GetInstance().LoadAsset(bundleName, atlasName, typeof(Texture2D)) as Texture2D;
-        string key = string.Format("{0}_{1}", bundleName, atlasName);
+        string atlasTxt;
+        Texture2D tex2d = LLoadBundle.GetInstance().LoadAtlas(atlasName, out atlasTxt).texture;
+        string key = atlasName;
         if (_atlasTexture.ContainsKey(key)) return;
 
         _atlasTexture.Add(key, tex2d);
 
-        TextAsset text = LLoadBundle.GetInstance().LoadAsset(bundleName, atlasName, typeof(TextAsset)) as TextAsset;
-        string[] lineArray = text.text.Split(new char[] { '\n' });
+        string[] lineArray = atlasTxt.Split(new char[] { '\n' });
 
         List<FrameInfo> frameInfos = new List<FrameInfo>();
         for (int i = 0; i < lineArray.Length; i++)
@@ -92,5 +92,22 @@ public class LTextureAtlas {
         Sprite sp;
         _sprites.TryGetValue(name, out sp);
         return sp;
+    }
+
+    public void RemoveTexture(string atlasName)
+    {
+        string key = atlasName;
+        if (_atlasData.ContainsKey(key))
+        {
+            LLoadBundle.GetInstance().UnloadBundles(new string[] { atlasName });
+
+            List<FrameInfo> list = _atlasData[key];
+            for(int i = 0; i < list.Count; i++)
+            {
+                _sprites.Remove(list[i].name);
+            }
+            _atlasData.Remove(key);
+            _atlasTexture.Remove(key);
+        }
     }
 }

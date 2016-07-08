@@ -51,14 +51,14 @@ namespace Lui
     public class LLabelAtlas : MonoBehaviour
     {
         public string text;
-        public string path;
-        protected Dictionary<string, Sprite> _spriteMap;
+        public Sprite[] sprites;
+        Dictionary<string, Sprite> _spriteMap;
         List<LCacheElement> _cacheImg;
 
         public LLabelAtlas()
         {
-            _spriteMap = new Dictionary<string, Sprite>();
             _cacheImg = new List<LCacheElement>();
+            _spriteMap = new Dictionary<string, Sprite>();
         }
 
         void Start()
@@ -68,7 +68,7 @@ namespace Lui
 
         public void reload()
         {
-            if (path != "" && text != "")
+            if (text != "")
             {
                 loadTexture();
                 render();
@@ -77,10 +77,10 @@ namespace Lui
 
         protected void loadTexture()
         {
-            Sprite[] sprites = LLoadBundle.GetInstance().LoadAllAsset<Sprite>(LGameConfig.WINDOW_BUNDLE, path);
+            _spriteMap.Clear();
             for (int i = 0; i < sprites.Length; i++)
             {
-                _spriteMap.Add(sprites[i].name, sprites[i]);
+                _spriteMap.Add(sprites[i].name+"", sprites[i]);
             }
         }
 

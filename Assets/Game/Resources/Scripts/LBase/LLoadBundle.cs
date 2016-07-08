@@ -70,6 +70,28 @@ public class LLoadBundle : MonoBehaviour
         }
     }
 
+    public Sprite LoadAtlas(string atlasName,out string txt)
+    {
+        txt = "";
+        Sprite atlas = null;
+        if (LGameConfig.GetInstance().isDebug)
+        {
+            atlas = Resources.Load<Sprite>(string.Format("Atlas/{0}", atlasName));
+            txt = Resources.Load<TextAsset>(string.Format("Atlas/{0}", atlasName)).text;
+        }
+        else
+        {
+            AssetBundle b;
+            bundles.TryGetValue(atlasName, out b);
+            if (b != null)
+            {
+                atlas = b.LoadAsset<Sprite>(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName));
+                txt = b.LoadAsset<TextAsset>(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName)).text;
+            }
+        }
+        return atlas;
+    }
+
     public Object LoadAsset(string bundleName, string assetName, System.Type assetType)
     {
         Object prefab = null;
@@ -95,6 +117,7 @@ public class LLoadBundle : MonoBehaviour
         T[] prefabs = null;
         if (LGameConfig.GetInstance().isDebug)
         {
+            assetName = assetName.Split('.')[0];
             prefabs = Resources.LoadAll<T>(string.Format("Prefabs/{0}", assetName));
         }
         else

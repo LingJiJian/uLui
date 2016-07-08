@@ -6,6 +6,7 @@ public class ExportConfigWindow : EditorWindow
 {
     public static string EXPORT_PREFABS_PATH = "Assets/Game/Resources/Prefabs";
     public static string EXPORT_SCENE_PATH = "Assets/Game/Resources/Scenes";
+    public static string EXPORT_ATLAS_PATH = "Assets/Game/Resources/Atlas";
     public static string EXPORT_OUT_PATH = Application.dataPath;
 	public static BuildTarget BUILD_TARGET = BuildTarget.StandaloneWindows;
 

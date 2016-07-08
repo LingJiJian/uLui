@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Xml;
-using System.Collections;
-using UnityEngine.Events;
 using SLua;
 
 [CustomLuaClassAttribute]
@@ -17,15 +15,21 @@ public class LGameConfig
     // The lua files zip name.
     public static readonly string UPDATE_FILE_ZIP = "data.zip";
     // assetbundle load asset's format
-    public static readonly string ASSETBUNDLE_LOAD_FORMAT = "assets/game/resources/prefabs/{0}.prefab";
+    public static readonly string ASSETBUNDLE_LOAD_FORMAT = "Assets/Game/Resources/Prefabs/{0}";
+    // assetbundle load atlas's format
+    public static readonly string ASSETBUNDLE_ATLAS_FORMAT = "Assets/Game/Resources/Atlas/{0}";
     // game windows assetbundle's name
-    public static readonly string WINDOW_BUNDLE = "prefabbundles";
+    public static readonly string PREFAB_BUNDLE = "prefabbundles";
     // is activate debug
-    public bool isDebug = false;
+    public bool isDebug = true;
+    // is pack lua files in app
+    public bool isPackLua = true;
+    // is show frame rate
+    public bool isShowFps = true;
     // remote server resource url
     public string SERVER_RES_URL = "";
     // game default target frame rate
-    public static int DEFAULT_FRAME_RATE = 30;
+    public static int DEFAULT_FRAME_RATE = 60;
 
     // The local file url prefix. (For assetbundle.)
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
@@ -163,15 +167,25 @@ public class LGameConfig
     private void LoadConfig()
     {
         TextAsset textAsset = Resources.Load<TextAsset>(CONFIG_FILE);
-        XmlDocument doc = new XmlDocument();
-        doc.LoadXml(textAsset.text);    //加载Xml文件  
+        if (textAsset)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(textAsset.text);    //加载Xml文件  
 
-        XmlElement rootElem = doc.DocumentElement;   //获取根节点  
+            XmlElement rootElem = doc.DocumentElement;   //获取根节点  
 
-        XmlNodeList debugs = rootElem.GetElementsByTagName("Debug");
-        isDebug = debugs[0].InnerText == "1";
+            XmlNodeList debugs = rootElem.GetElementsByTagName("Debug");
+            isDebug = debugs[0].InnerText == "1";
 
-        XmlNodeList resUrls = rootElem.GetElementsByTagName("ResUrl");
-        SERVER_RES_URL = resUrls[0].InnerText;
+            XmlNodeList resUrls = rootElem.GetElementsByTagName("ResUrl");
+            SERVER_RES_URL = resUrls[0].InnerText;
+
+            XmlNodeList packLua = rootElem.GetElementsByTagName("PackLua");
+            isPackLua = isDebug ? packLua[0].InnerText == "1" : false;
+
+            XmlNodeList showFps = rootElem.GetElementsByTagName("ShowFps");
+            isShowFps = showFps[0].InnerText == "1";
+
+        }
     }
 }

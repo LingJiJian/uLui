@@ -62,7 +62,7 @@ namespace Lui
 		public void loadTexture()
 		{
 			//load textures
-            _spriteArr = LLoadBundle.GetInstance().LoadAllAsset<Sprite>(LGameConfig.WINDOW_BUNDLE, path);
+            _spriteArr = LLoadBundle.GetInstance().LoadAllAsset<Sprite>(LGameConfig.ASSETBUNDLE_LOAD_FORMAT, path);
             _frameLenght = _spriteArr.Length;
 		}
 

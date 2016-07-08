@@ -173,7 +173,7 @@ public class LWindowManager : MonoBehaviour
         }
         else
         {
-            GameObject res = LLoadBundle.GetInstance().LoadAsset(LGameConfig.WINDOW_BUNDLE, name, typeof(GameObject)) as GameObject;
+            GameObject res = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, name, typeof(GameObject)) as GameObject;
             GameObject obj = Instantiate(res);
             string[] split_names = name.Split('/');
             obj.name = split_names[split_names.Length-1];

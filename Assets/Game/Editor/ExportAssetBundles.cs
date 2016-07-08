@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.Events;
-using System.Collections;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading;
 
 public class ExportAssetBundles : Editor
 {
@@ -22,35 +22,101 @@ public class ExportAssetBundles : Editor
         ////打包  
         //BuildPipeline.BuildAssetBundle(Selection.activeObject, selection, path, BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets, BuildTarget.StandaloneWindows);
 
-        AssetBundleBuild[] buildMap = new AssetBundleBuild[2];
+        List< AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
 
         var basePath = Application.dataPath + ExportConfigWindow.EXPORT_PREFABS_PATH.Substring(6);
 
         List<string> prefabs = new List<string>();
-        forEachHandle(basePath, "prefab", (string filename) =>
+        List<string> exts = new List<string>();
+        exts.Add("prefab");
+        exts.Add("txt");
+        exts.Add("ogg");
+        exts.Add("png");
+        exts.Add("wav");
+        exts.Add("mp3");
+
+        forEachHandle(basePath, exts, (string filename) =>
         {
-            prefabs.Add(ExportConfigWindow.EXPORT_PREFABS_PATH + filename.Replace(basePath, "").Replace(@"\","/"));
+            prefabs.Add(ExportConfigWindow.EXPORT_PREFABS_PATH + filename.Replace(basePath, "").Replace(@"\", "/"));
         });
 
-        buildMap[0].assetBundleName = "prefabBundles";
-        buildMap[0].assetNames = prefabs.ToArray();
+        AssetBundleBuild build = new AssetBundleBuild();
+        build.assetBundleName = "prefabBundles";
+        build.assetNames = prefabs.ToArray();
+        buildMap.Add(build);
 
         basePath = Application.dataPath + ExportConfigWindow.EXPORT_SCENE_PATH.Substring(6);
 
         List<string> scenes = new List<string>();
-        forEachHandle(basePath, "unity", (string filename) =>
+        exts = new List<string>();
+        exts.Add("unity");
+        forEachHandle(basePath, exts, (string filename) =>
         {
             scenes.Add(ExportConfigWindow.EXPORT_SCENE_PATH + filename.Replace(basePath, "").Replace(@"\", "/"));
         });
 
-        buildMap[1].assetBundleName = "sceneBundles";
-        buildMap[1].assetNames = scenes.ToArray();
+        build = new AssetBundleBuild();
+        build.assetBundleName = "sceneBundles";
+        build.assetNames = scenes.ToArray();
+        buildMap.Add(build);
 
-		BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", buildMap,BuildAssetBundleOptions.ChunkBasedCompression, ExportConfigWindow.BUILD_TARGET);
-        // BuildPipeline.BuildAssetBundles("Assets/StreamingAssets");
+        basePath = Application.dataPath + ExportConfigWindow.EXPORT_ATLAS_PATH.Substring(6);
+
+        List<string> atlas = new List<string>();
+        exts = new List<string>();
+        exts.Add("png");
+        forEachHandle(basePath, exts, (string filename) =>
+        {
+            atlas.Add(ExportConfigWindow.EXPORT_ATLAS_PATH + filename.Replace(basePath, "").Replace(@"\", "/").Split('.')[0]);
+        });
+        for(int i=0;i< atlas.Count; i++)
+        {
+            build = new AssetBundleBuild();
+            string[] strs = atlas[i].Split('/');
+            build.assetBundleName = atlas[i].Split('/')[strs.Length-1];
+            build.assetNames = new string[] { atlas[i] + ".txt" , atlas[i] + ".png" };
+            buildMap.Add(build);
+        }
+
+        BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", buildMap.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, ExportConfigWindow.BUILD_TARGET);
         AssetDatabase.Refresh();
 
         Debug.Log("AssetBundles 打包完成 位于：Assets/StreamingAssets");
+    }
+
+    private static void processCommand(string command, string argument)
+    {
+        System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo(command);
+        start.Arguments = argument;
+        start.CreateNoWindow = false;
+        start.ErrorDialog = true;
+        start.UseShellExecute = true;
+
+        if (start.UseShellExecute)
+        {
+            start.RedirectStandardOutput = false;
+            start.RedirectStandardError = false;
+            start.RedirectStandardInput = false;
+        }
+        else
+        {
+            start.RedirectStandardOutput = true;
+            start.RedirectStandardError = true;
+            start.RedirectStandardInput = true;
+            start.StandardOutputEncoding = System.Text.UTF8Encoding.UTF8;
+            start.StandardErrorEncoding = System.Text.UTF8Encoding.UTF8;
+        }
+
+        System.Diagnostics.Process p = System.Diagnostics.Process.Start(start);
+
+        if (!start.UseShellExecute)
+        {
+            Debug.Log(p.StandardOutput);
+            Debug.Log(p.StandardError);
+        }
+
+        p.WaitForExit();
+        p.Close();
     }
 
     static void CreateVersionFile()
@@ -92,10 +158,12 @@ public class ExportAssetBundles : Editor
 
     static void CreateZipFile()
     {
+        //所有lua + assetbundle
         string srcPath = Application.streamingAssetsPath + Path.DirectorySeparatorChar;
         string outPath = ExportConfigWindow.EXPORT_OUT_PATH + Path.DirectorySeparatorChar;
-
-        forEachHandle(srcPath, "meta", (string filename) =>
+        List<string> ext = new List<string>();
+        ext.Add("meta");
+        forEachHandle(srcPath, ext, (string filename) =>
         {
             File.Delete(@filename);
         });
@@ -109,15 +177,15 @@ public class ExportAssetBundles : Editor
         Debug.Log(" 热更zip包： " + outPath + LGameConfig.UPDATE_FILE_ZIP);
     }
 
-    public static void forEachHandle(string path,string matchExt,UnityAction<string> handle)
+    public static void forEachHandle(string path, List<string> matchExts, UnityAction<string> handle)
     {
         string[] names = Directory.GetFiles(path);
         string[] dirs = Directory.GetDirectories(path);
         foreach (string filename in names)
         {
             string[] name_splits = filename.Split('.');
-            string ext = name_splits[name_splits.Length-1];
-            if (ext.Equals(matchExt))
+            string ext = name_splits[name_splits.Length - 1];
+            if (matchExts.Contains(ext))
             {
                 handle.Invoke(filename);
             }
@@ -125,7 +193,7 @@ public class ExportAssetBundles : Editor
 
         foreach (string dir in dirs)
         {
-            forEachHandle(dir, matchExt, handle);
+            forEachHandle(dir, matchExts, handle);
         }
     }
 
@@ -147,6 +215,41 @@ public class ExportAssetBundles : Editor
         catch (System.Exception ex)
         {
             throw new System.Exception("md5file() fail, error:" + ex.Message);
+        }
+    }
+
+    public static void CopyDirectory(string sourceDirName, string destDirName)
+    {
+        try
+        {
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+                File.SetAttributes(destDirName, File.GetAttributes(sourceDirName));
+
+            }
+
+            if (destDirName[destDirName.Length - 1] != Path.DirectorySeparatorChar)
+                destDirName = destDirName + Path.DirectorySeparatorChar;
+
+            string[] files = Directory.GetFiles(sourceDirName);
+            foreach (string file in files)
+            {
+                //if (File.Exists(destDirName + Path.GetFileName(file)))
+                //    continue;
+                File.Copy(file, destDirName + Path.GetFileName(file), true);
+                File.SetAttributes(destDirName + Path.GetFileName(file), FileAttributes.Normal);
+            }
+
+            string[] dirs = Directory.GetDirectories(sourceDirName);
+            foreach (string dir in dirs)
+            {
+                CopyDirectory(dir, destDirName + Path.GetFileName(dir));
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError(ex.Message);
         }
     }
 }

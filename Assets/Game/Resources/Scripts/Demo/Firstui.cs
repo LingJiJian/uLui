@@ -81,7 +81,7 @@ public class Firstui : MonoBehaviour
         //rtfView.insertElement("face02/1", "");
         //rtfView.insertElement(1);
         //rtfView.insertElement("outline and newline", Color.yellow, 20, false, true, Color.blue, "");
-        rtfView.parseRichDefaultString("<lab txt=\"hello world!!\" color=#ffff00 data=数据 /><lab txt=\"测试文本内容\" isUnderLine=true size=40/><anim path=face01 fps=5.0/><newline /><img path=face02/1/><lab txt=\"The article comes from the point of the examination\" color=#ff0000 />");
+        rtfView.parseRichDefaultString("<lab txt=\"hello world!!\" color=#ffff00 data=数据 /><lab txt=\"测试文本内容\" isUnderLine=true size=40/><anim path=face01 fps=5.0/><newline /><img path=face02/1.png/><lab txt=\"The article comes from the point of the examination\" color=#ff0000 />");
         rtfView.onClickHandler = (string data) =>
         {
             Debug.Log("data " + data);

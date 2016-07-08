@@ -310,7 +310,7 @@ namespace Lui
                     rendElem.type = RichType.IMAGE;
                     rendElem.path = elemImg.path;
                     rendElem.data = elemImg.data;
-                    Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.WINDOW_BUNDLE, rendElem.path, typeof(Sprite)) as Sprite;
+                    Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path, typeof(Sprite)) as Sprite;
                     // Sprite sp = Resources.Load(rendElem.path,typeof(Sprite)) as Sprite;
                     rendElem.width = sp.texture.width;
                     rendElem.height = sp.texture.height;
@@ -324,8 +324,7 @@ namespace Lui
                     rendElem.path = elemAnim.path;
                     rendElem.data = elemAnim.data;
                     rendElem.fs = elemAnim.fs;
-
-                    Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.WINDOW_BUNDLE, rendElem.path + "/1", typeof(Sprite)) as Sprite;
+                    Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path + "/1.png", typeof(Sprite)) as Sprite;
                     // Sprite sp = Resources.Load(rendElem.path+"/1",typeof(Sprite)) as Sprite;
                     rendElem.width = sp.texture.width;
                     rendElem.height = sp.texture.height;
@@ -648,7 +647,7 @@ namespace Lui
             Image comImage = img.GetComponent<Image>();
             if (comImage != null)
             {
-                Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.WINDOW_BUNDLE, elem.path, typeof(Sprite)) as Sprite;
+                Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, elem.path, typeof(Sprite)) as Sprite;
                 comImage.sprite = sp;
             }
         }
