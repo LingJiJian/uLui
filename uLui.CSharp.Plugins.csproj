@@ -71,6 +71,7 @@
     <Compile Include="Assets\Plugins\LeanAudio.cs" />
     <Compile Include="Assets\Plugins\LeanTest.cs" />
     <Compile Include="Assets\Plugins\LeanTween.cs" />
+    <Compile Include="Assets\Plugins\Slua_Managed\ByteArray.cs" />
     <Compile Include="Assets\Plugins\Slua_Managed\Coroutine.cs" />
     <Compile Include="Assets\Plugins\Slua_Managed\Debugger\DebugInterface.cs" />
     <Compile Include="Assets\Plugins\Slua_Managed\Debugger\SLuaDebug.cs" />

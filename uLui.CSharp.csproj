@@ -104,6 +104,8 @@
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LTableView.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWindow\LWindowBase.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWindow\LWindowManager.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\Net\Network.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\Net\Reactor.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\BindCustom.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_Deleg_GetBundleInfoDelegate.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_Deleg_SimpleDelegate.cs" />
