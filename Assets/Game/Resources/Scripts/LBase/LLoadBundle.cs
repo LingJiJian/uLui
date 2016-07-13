@@ -82,11 +82,12 @@ public class LLoadBundle : MonoBehaviour
         else
         {
             AssetBundle b;
-            bundles.TryGetValue(atlasName, out b);
+            bundles.TryGetValue(atlasName.ToLower(), out b);
             if (b != null)
             {
-                atlas = b.LoadAsset<Sprite>(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName));
-                txt = b.LoadAsset<TextAsset>(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName)).text;
+                Debug.Log(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName));
+                atlas = b.LoadAsset<Sprite>(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName)+".png");
+                txt = b.LoadAsset<TextAsset>(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName)+".txt").text;
             }
         }
         return atlas;
@@ -106,7 +107,10 @@ public class LLoadBundle : MonoBehaviour
             bundles.TryGetValue(bundleName, out b);
             if (b != null)
             {
+                Debug.Log(string.Format(LGameConfig.ASSETBUNDLE_LOAD_FORMAT, assetName));
                 prefab = b.LoadAsset(string.Format(LGameConfig.ASSETBUNDLE_LOAD_FORMAT, assetName), assetType);
+            }else{
+                Debug.Log("bundle not exist! : "+bundleName);
             }
         }
         return prefab;

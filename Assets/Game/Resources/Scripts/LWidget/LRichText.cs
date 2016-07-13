@@ -312,8 +312,8 @@ namespace Lui
                     rendElem.data = elemImg.data;
                     Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path, typeof(Sprite)) as Sprite;
                     // Sprite sp = Resources.Load(rendElem.path,typeof(Sprite)) as Sprite;
-                    rendElem.width = sp.texture.width;
-                    rendElem.height = sp.texture.height;
+                    rendElem.width = (int)sp.rect.size.x;
+                    rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
                 }
                 else if (elem.type == RichType.ANIM)
@@ -324,10 +324,12 @@ namespace Lui
                     rendElem.path = elemAnim.path;
                     rendElem.data = elemAnim.data;
                     rendElem.fs = elemAnim.fs;
-                    Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path + "/1.png", typeof(Sprite)) as Sprite;
+                    LTextureAtlas.GetInstance().LoadData(rendElem.path);
+                    Sprite sp = LTextureAtlas.GetInstance().getSprites(rendElem.path)[0];
+                    //Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path + "/1.png", typeof(Sprite)) as Sprite;
                     // Sprite sp = Resources.Load(rendElem.path+"/1",typeof(Sprite)) as Sprite;
-                    rendElem.width = sp.texture.width;
-                    rendElem.height = sp.texture.height;
+                    rendElem.width = (int)sp.rect.size.x;
+                    rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
                 }
                 else if (elem.type == RichType.NEWLINE)

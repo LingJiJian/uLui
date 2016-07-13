@@ -169,6 +169,7 @@ public class LGameConfig
         TextAsset textAsset = Resources.Load<TextAsset>(CONFIG_FILE);
         if (textAsset)
         {
+
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(textAsset.text);    //加载Xml文件  
 

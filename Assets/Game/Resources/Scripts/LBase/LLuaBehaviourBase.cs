@@ -15,7 +15,7 @@ public class LLuaBehaviourBase : MonoBehaviour {
     {
         if (className == string.Empty)
         {
-            Debug.LogWarning("lua class name Invalid");
+            Debug.LogWarning("lua class name Invalid:"+gameObject.name);
             return;
         }
         // Directly creat a lua class instance to associate with this monobehavior.

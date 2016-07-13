@@ -22,7 +22,14 @@ public class Game : MonoBehaviour
 #else
 		Application.RegisterLogCallback(this.log);
 #endif
-            LuaState.loaderDelegate = loadFileWithSuffix;
+            if (LGameConfig.GetInstance().isPackLua)
+            {
+                LuaState.loaderDelegate = loadLuaFileDebug;
+            }else
+            {
+                LuaState.loaderDelegate = loadFileWithSuffix;
+            }
+
             _l = new LuaSvr();
             _l.init(tick, complete);
         }
@@ -82,9 +89,22 @@ public class Game : MonoBehaviour
         return aContents;
     }
 
+    protected byte[] loadLuaFileDebug(string strFile)
+    {
+        byte[] bytes;
+        TextAsset asset = (TextAsset)Resources.Load(LGameConfig.DATA_CATAGORY_LUA + "/" + strFile);
+        if (asset == null)
+            return null;
+        bytes = asset.bytes;
+        return bytes;
+    }
+
     void complete()
     {
-        LFPSView.Show();
+        if (LGameConfig.GetInstance().isShowFps)
+        {
+            LFPSView.Show();
+        }
 
         if (!LGameConfig.GetInstance().isDebug) //生产环境
         {
@@ -97,8 +117,9 @@ public class Game : MonoBehaviour
                 _l.start("main");
             };
             resUpdate.checkUpdate();
+
         }
-        else
+        else //PC端开发
         {
             _l.start("main");
         }

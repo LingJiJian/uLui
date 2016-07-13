@@ -72,7 +72,7 @@ public class LTextureAtlas {
         List<FrameInfo> frameInfos = new List<FrameInfo>();
         for (int i = 0; i < lineArray.Length; i++)
         {
-            if((lineArray[i][0] != '#') && (lineArray[i][0] != ':'))
+            if((lineArray[i].IndexOf('#') == -1 ) && (lineArray[i].IndexOf(':') == -1))
             {
                 lineArray[i] = lineArray[i].Replace("\r", "");
                 if((lineArray[i] != ""))
@@ -80,18 +80,31 @@ public class LTextureAtlas {
                     string[] strArray = lineArray[i].Split(new char[] { ';' });
                     FrameInfo frameInfo = new FrameInfo(strArray);
                     frameInfos.Add(frameInfo);
-                    _sprites.Add(frameInfo.name, Sprite.Create(tex2d, frameInfo.rect, frameInfo.vec2));
+                    Sprite sp = Sprite.Create(tex2d, frameInfo.rect, frameInfo.vec2);
+                    sp.name = frameInfo.name;
+                    _sprites.Add(atlasName +"_"+ frameInfo.name, sp);
                 }
             }
         }
         _atlasData.Add(key, frameInfos);
     }
 
-    public Sprite getSprite(string name)
+    public Sprite getSprite(string atlasName, string name)
     {
         Sprite sp;
-        _sprites.TryGetValue(name, out sp);
+        _sprites.TryGetValue(atlasName + "_" + name, out sp);
         return sp;
+    }
+
+    public Sprite[] getSprites(string atlasName)
+    {
+        List<Sprite> sps = new List<Sprite>();
+        List<FrameInfo> list = _atlasData[atlasName];
+        for (int i = 0; i < list.Count; i++)
+        {
+            sps.Add(_sprites[atlasName + "_" + list[i].name]);
+        }
+        return sps.ToArray();
     }
 
     public void RemoveTexture(string atlasName)
@@ -104,7 +117,7 @@ public class LTextureAtlas {
             List<FrameInfo> list = _atlasData[key];
             for(int i = 0; i < list.Count; i++)
             {
-                _sprites.Remove(list[i].name);
+                _sprites.Remove(atlasName + "_" + list[i].name);
             }
             _atlasData.Remove(key);
             _atlasTexture.Remove(key);

@@ -680,22 +680,22 @@ public class LLuaBehaviourInterface
 
     public void OnEventAnimInt(int i)
     {
-        CallMethod(ref m_cOnEventAnimInt, ON_EVENT_ANIM_INT, m_cLuaTableOpt.GetChunk());
+        CallMethod(ref m_cOnEventAnimInt, ON_EVENT_ANIM_INT, m_cLuaTableOpt.GetChunk(),i);
     }
 
     public void OnEventAnimFloat(float f)
     {
-        CallMethod(ref m_cOnEventAnimFloat, ON_EVENT_ANIM_FLOAT, m_cLuaTableOpt.GetChunk());
+        CallMethod(ref m_cOnEventAnimFloat, ON_EVENT_ANIM_FLOAT, m_cLuaTableOpt.GetChunk(),f);
     }
 
     public void OnEventAnimString(string s)
     {
-        CallMethod(ref m_cOnEventAnimString, ON_EVENT_ANIM_STRING, m_cLuaTableOpt.GetChunk());
+        CallMethod(ref m_cOnEventAnimString, ON_EVENT_ANIM_STRING, m_cLuaTableOpt.GetChunk(),s);
     }
 
     public void OnEventAnimObject(object o)
     {
-        CallMethod(ref m_cOnEventAnimObject, ON_EVENT_ANIM_OBJECT, m_cLuaTableOpt.GetChunk());
+        CallMethod(ref m_cOnEventAnimObject, ON_EVENT_ANIM_OBJECT, m_cLuaTableOpt.GetChunk(),o);
     }
 
     /**

@@ -245,4 +245,8 @@ public class LUtil {
                 return Color.white;
         }
     }
+
+	public static int[] ints(int i){
+		return new int[] { i };
+	}
 }

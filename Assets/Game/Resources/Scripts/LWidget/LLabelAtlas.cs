@@ -51,7 +51,8 @@ namespace Lui
     public class LLabelAtlas : MonoBehaviour
     {
         public string text;
-        public Sprite[] sprites;
+        public string atlas;
+        private Sprite[] sprites;
         Dictionary<string, Sprite> _spriteMap;
         List<LCacheElement> _cacheImg;
 
@@ -70,6 +71,9 @@ namespace Lui
         {
             if (text != "")
             {
+                LTextureAtlas.GetInstance().LoadData(atlas);
+                sprites = LTextureAtlas.GetInstance().getSprites(atlas);
+
                 loadTexture();
                 render();
             }
