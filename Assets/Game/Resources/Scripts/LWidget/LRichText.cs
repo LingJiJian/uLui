@@ -203,18 +203,21 @@ namespace Lui
             foreach (LRichCacheElement lab in _cacheLabElements)
             {
                 lab.isUse = false;
-                lab.node.transform.SetParent(null);
+                //lab.node.transform.SetParent(null);
+                lab.node.gameObject.SetActive(false);
             }
             foreach (LRichCacheElement img in _cacheImgElements)
             {
                 img.isUse = false;
-                img.node.transform.SetParent(null);
+                //img.node.transform.SetParent(null);
+                img.node.gameObject.SetActive(false);
             }
 
             foreach (LRichCacheElement anim in _cacheFramAnimElements)
             {
                 anim.isUse = false;
-                anim.node.transform.SetParent(null);
+                //anim.node.transform.SetParent(null);
+                anim.node.gameObject.SetActive(false);
             }
             _elemRenderArr.Clear();
             _objectDataMap.Clear();
@@ -310,7 +313,13 @@ namespace Lui
                     rendElem.type = RichType.IMAGE;
                     rendElem.path = elemImg.path;
                     rendElem.data = elemImg.data;
-                    Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path, typeof(Sprite)) as Sprite;
+
+                    string atlas = rendElem.path.Split('/')[0];
+                    string spname = rendElem.path.Split('/')[1];
+                    LTextureAtlas.GetInstance().LoadData(atlas);
+                    Sprite sp = LTextureAtlas.GetInstance().getSprite(atlas, spname);
+
+                    //Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path, typeof(Sprite)) as Sprite;
                     // Sprite sp = Resources.Load(rendElem.path,typeof(Sprite)) as Sprite;
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
@@ -583,6 +592,7 @@ namespace Lui
                             makeFramAnim(obj, elem);
                             _lineWidth += elem.width;
                         }
+                        obj.SetActive(true);
                         obj.transform.SetParent(transform);
                         obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
                         obj.transform.localScale = new Vector2(1, 1);
@@ -638,6 +648,7 @@ namespace Lui
                 Image underImg = underLine.GetComponent<Image>();
                 underImg.color = elem.color;
                 underImg.GetComponent<RectTransform>().sizeDelta = new Vector2(comText.preferredWidth, 1);
+                underLine.SetActive(true);
                 underLine.transform.SetParent(transform);
                 underLine.transform.localScale = new Vector2(1, 1);
                 underLine.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y);
@@ -649,7 +660,11 @@ namespace Lui
             Image comImage = img.GetComponent<Image>();
             if (comImage != null)
             {
-                Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, elem.path, typeof(Sprite)) as Sprite;
+                string atlas = elem.path.Split('/')[0];
+                string spname = elem.path.Split('/')[1];
+                LTextureAtlas.GetInstance().LoadData(atlas);
+                Sprite sp = LTextureAtlas.GetInstance().getSprite(atlas, spname);
+                //Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, elem.path, typeof(Sprite)) as Sprite;
                 comImage.sprite = sp;
             }
         }
@@ -703,10 +718,10 @@ namespace Lui
         protected GameObject getCacheImage(bool isFitSize)
         {
             GameObject ret = null;
-            int len = _cacheLabElements.Count;
+            int len = _cacheImgElements.Count;
             for (int i = 0; i < len; i++)
             {
-                LRichCacheElement cacheElem = _cacheLabElements[i];
+                LRichCacheElement cacheElem = _cacheImgElements[i];
                 if (cacheElem.isUse == false)
                 {
                     cacheElem.isUse = true;
@@ -729,7 +744,7 @@ namespace Lui
 
                 LRichCacheElement cacheElem = new LRichCacheElement(ret);
                 cacheElem.isUse = true;
-                _cacheLabElements.Add(cacheElem);
+                _cacheImgElements.Add(cacheElem);
             }
             ContentSizeFitter fitCom = ret.GetComponent<ContentSizeFitter>();
             fitCom.enabled = isFitSize;

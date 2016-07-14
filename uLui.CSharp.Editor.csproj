@@ -94,6 +94,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>Assets\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="TexturePackerImporter">
+      <HintPath>Assets\codeandweb.com\Editor\TexturePackerImporter.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="uLui.CSharp.Plugins.csproj">
@@ -106,15 +109,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Game\Editor\BMFont.cs" />
-    <Compile Include="Assets\Game\Editor\BMFontReader.cs" />
-    <Compile Include="Assets\Game\Editor\BMGlyph.cs" />
-    <Compile Include="Assets\Game\Editor\BmBetterList.cs" />
-    <Compile Include="Assets\Game\Editor\BmByteReader.cs" />
-    <Compile Include="Assets\Game\Editor\BmFontEditor.cs" />
-    <Compile Include="Assets\Game\Editor\CreateAnimatorController.cs" />
-    <Compile Include="Assets\Game\Editor\ExportAssetBundles.cs" />
-    <Compile Include="Assets\Game\Editor\ExportConfigWindow.cs" />
     <Compile Include="Assets\Slua\Editor\CustomEditor.cs" />
     <Compile Include="Assets\Slua\Editor\CustomExport.cs" />
     <Compile Include="Assets\Slua\Editor\LuaCodeGen.cs" />
@@ -123,7 +117,7 @@
     <None Include="Assets\Game\Resources\Atlas\digit1.txt" />
     <None Include="Assets\Game\Resources\Atlas\face01.txt" />
     <None Include="Assets\Game\Resources\Atlas\face02.txt" />
-    <None Include="Assets\Game\Resources\Atlas\test.txt" />
+    <None Include="Assets\Game\Resources\Atlas\mytest.txt" />
     <None Include="Assets\Game\Resources\config.txt" />
     <None Include="Assets\Slua\Resources\circle\circle.txt" />
     <None Include="Assets\Slua\Resources\custom.txt" />
@@ -133,6 +127,8 @@
     <None Include="Assets\Slua\Resources\perf.txt" />
     <None Include="Assets\Slua\Resources\valuetype.txt" />
     <None Include="Assets\Slua\Resources\varobj.txt" />
+    <None Include="Assets\codeandweb.com\Editor\SettingsTexturePackerImporter.txt" />
+    <None Include="Assets\codeandweb.com\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

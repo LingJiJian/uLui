@@ -91,6 +91,9 @@ public class LTextureAtlas {
 
     public Sprite getSprite(string atlasName, string name)
     {
+        if(name.IndexOf('.') != -1)
+            name = name.Split('.')[0];
+
         Sprite sp;
         _sprites.TryGetValue(atlasName + "_" + name, out sp);
         return sp;

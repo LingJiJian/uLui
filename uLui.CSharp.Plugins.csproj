@@ -97,7 +97,7 @@
     <None Include="Assets\Game\Resources\Atlas\digit1.txt" />
     <None Include="Assets\Game\Resources\Atlas\face01.txt" />
     <None Include="Assets\Game\Resources\Atlas\face02.txt" />
-    <None Include="Assets\Game\Resources\Atlas\test.txt" />
+    <None Include="Assets\Game\Resources\Atlas\mytest.txt" />
     <None Include="Assets\Game\Resources\config.txt" />
     <None Include="Assets\Slua\Resources\circle\circle.txt" />
     <None Include="Assets\Slua\Resources\custom.txt" />
@@ -107,6 +107,8 @@
     <None Include="Assets\Slua\Resources\perf.txt" />
     <None Include="Assets\Slua\Resources\valuetype.txt" />
     <None Include="Assets\Slua\Resources\varobj.txt" />
+    <None Include="Assets\codeandweb.com\Editor\SettingsTexturePackerImporter.txt" />
+    <None Include="Assets\codeandweb.com\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
