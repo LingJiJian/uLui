@@ -175,8 +175,9 @@ public class LWindowManager : MonoBehaviour
         {
             GameObject res = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, name, typeof(GameObject)) as GameObject;
             GameObject obj = Instantiate(res);
-            string[] split_names = name.Split('/');
-            obj.name = split_names[split_names.Length-1];
+            //string[] split_names = name.Split('/');
+            //obj.name = split_names[split_names.Length-1];
+            obj.name = name;
             obj.GetComponent<RectTransform>().sizeDelta = canvas.GetComponent<RectTransform>().rect.size;
             ret = obj.GetComponent<LWindowBase>();
             if (ret) ret.name = obj.name;
@@ -196,7 +197,7 @@ public class LWindowManager : MonoBehaviour
         {
             win.hierarchy = e;
             win.gameObject.transform.SetParent(hierarchys[e].transform);
-            win.gameObject.transform.localScale = new Vector2(1, 1);
+            win.gameObject.transform.localScale = new Vector3(1, 1,1);
             win.gameObject.transform.localPosition = Vector3.zero;
             win.open(list);
 

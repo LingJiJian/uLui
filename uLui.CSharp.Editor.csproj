@@ -91,11 +91,11 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>Assets\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="TexturePackerImporter">
       <HintPath>Assets\codeandweb.com\Editor\TexturePackerImporter.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +109,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Game\Editor\BMFont.cs" />
+    <Compile Include="Assets\Game\Editor\BMFontReader.cs" />
+    <Compile Include="Assets\Game\Editor\BMGlyph.cs" />
+    <Compile Include="Assets\Game\Editor\BmBetterList.cs" />
+    <Compile Include="Assets\Game\Editor\BmByteReader.cs" />
+    <Compile Include="Assets\Game\Editor\BmFontEditor.cs" />
+    <Compile Include="Assets\Game\Editor\CopyDebugLua.cs" />
+    <Compile Include="Assets\Game\Editor\CreateAnimatorController.cs" />
+    <Compile Include="Assets\Game\Editor\ExportAssetBundles.cs" />
+    <Compile Include="Assets\Game\Editor\ExportConfigWindow.cs" />
     <Compile Include="Assets\Slua\Editor\CustomEditor.cs" />
     <Compile Include="Assets\Slua\Editor\CustomExport.cs" />
     <Compile Include="Assets\Slua\Editor\LuaCodeGen.cs" />
