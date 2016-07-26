@@ -34,26 +34,35 @@ public class Network : MonoBehaviour
 
     public ByteArray GetProtoBytes(string file)
     {
-        string strFullPath = LGameConfig.GetInstance().GetLoadUrl(LGameConfig.DATA_CATAGORY_LUA + "/Game/Proto/" + file + ".bytes");
-        if (!_protoBytes.ContainsKey(strFullPath))
+        if (!_protoBytes.ContainsKey(file))
         {
-            LArchiveBinFile cArc = new LArchiveBinFile();
-            if (!cArc.Open(strFullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+            if (LGameConfig.GetInstance().isDebug)
             {
-                return null;
+                TextAsset textAsset = Resources.Load<TextAsset>(LGameConfig.DATA_CATAGORY_LUA + "/Game/Proto/" + file);
+                _protoBytes.Add(file, new ByteArray(textAsset.bytes));
             }
-
-            if (!cArc.IsValid())
+            else
             {
-                return null;
+                string strFullPath = LGameConfig.GetInstance().GetLoadUrl(LGameConfig.DATA_CATAGORY_LUA + "/Game/Proto/" + file + ".bytes");
+
+                LArchiveBinFile cArc = new LArchiveBinFile();
+                if (!cArc.Open(strFullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                {
+                    return null;
+                }
+
+                if (!cArc.IsValid())
+                {
+                    return null;
+                }
+
+                int nContentLength = (int)cArc.GetStream().Length;
+                byte[] aContents = new byte[nContentLength];
+                cArc.ReadBuffer(ref aContents, nContentLength);
+                cArc.Close();
+
+                _protoBytes.Add(file, new ByteArray(aContents));
             }
-
-            int nContentLength = (int)cArc.GetStream().Length;
-            byte[] aContents = new byte[nContentLength];
-            cArc.ReadBuffer(ref aContents, nContentLength);
-            cArc.Close();
-
-            _protoBytes.Add(file,new ByteArray(aContents));
         }
         
         return _protoBytes[file];
