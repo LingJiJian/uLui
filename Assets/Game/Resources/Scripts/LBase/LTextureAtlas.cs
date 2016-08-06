@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using SLua;
+
 using System.Collections.Generic;
 
 /// <summary>
@@ -58,7 +59,9 @@ public class LTextureAtlas {
         _sprites = new Dictionary<string, Sprite>();
     }
 
-	public void LoadData(string atlasName)
+    
+
+    public void LoadData(string atlasName)
     {
         string atlasTxt;
         Texture2D tex2d = LLoadBundle.GetInstance().LoadAtlas(atlasName, out atlasTxt).texture;

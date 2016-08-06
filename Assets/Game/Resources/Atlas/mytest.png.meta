@@ -1,0 +1,112 @@
+fileFormatVersion: 2
+guid: 2579823ce5ed00e45842c7fba04cab38
+timeCreated: 1470485456
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: cat_pic
+    21300002: ctlv_left_baseboard
+    21300004: ctlv_left_joystick
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: cat_pic
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 4
+        width: 440
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -220, y: 203}
+        - {x: -220, y: -203}
+        - {x: 220, y: -203}
+        - {x: 220, y: 203}
+    - name: ctlv_left_baseboard
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 282
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 64}
+        - {x: -64, y: 52}
+        - {x: -64, y: -49}
+        - {x: -57, y: -64}
+        - {x: 64, y: -64}
+        - {x: 64, y: 64}
+    - name: ctlv_left_joystick
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 216
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 28}
+        - {x: -17, y: 26}
+        - {x: -28, y: 17}
+        - {x: -28, y: -14}
+        - {x: -21, y: -28}
+        - {x: 13, y: -28}
+        - {x: 28, y: -20}
+        - {x: 28, y: 15}
+        - {x: 11, y: 28}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

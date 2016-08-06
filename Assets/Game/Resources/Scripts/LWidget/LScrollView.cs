@@ -47,7 +47,9 @@ namespace Lui
     {
         public static int INVALID_INDEX = -1;
         public static float RELOCATE_DURATION = 0.2f;
-
+        public static float AUTO_RELOCATE_SPPED = 600.0f;
+        protected float autoRelocateSpeed;
+        
         public bool bounceable;
         public GameObject container;
         public ScrollDirection direction;
@@ -64,6 +66,7 @@ namespace Lui
 
         public LScrollView()
         {
+            autoRelocateSpeed = AUTO_RELOCATE_SPPED;
             direction = ScrollDirection.BOTH;
             lastMovePoint = Vector2.zero;
             bounceable = true;
@@ -170,7 +173,7 @@ namespace Lui
         protected void setContentOffsetEaseInWithoutCheck(Vector2 offset, float duration)
         {
             LeanTween.cancel(container);
-            LeanTween.move(container, transform.TransformPoint(offset), duration)
+            LeanTween.moveLocal(container, offset, duration)
                 .setEase(LeanTweenType.easeInQuad)
                 .setOnUpdate((float val) => { onScrolling(); })
                 .setOnComplete(onMoveComplete);
@@ -248,7 +251,7 @@ namespace Lui
 
         public void setContentOffsetInDurationWithoutCheck(Vector2 offset, float duration)
         {
-            LeanTween.move(container, transform.TransformPoint(offset), duration)
+            LeanTween.moveLocal(container, offset, duration)
                 .setOnUpdate((float val) => { onScrolling(); })
                 .setOnComplete(onMoveComplete);
             onScrolling();

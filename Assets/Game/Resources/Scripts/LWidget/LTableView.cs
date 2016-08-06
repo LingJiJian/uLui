@@ -26,10 +26,6 @@ THE SOFTWARE.
 ****************************************************************************/
 using UnityEngine;
 using System.Collections.Generic;
-using System.Security;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using SLua;
 
 namespace Lui
@@ -65,13 +61,10 @@ namespace Lui
     [CustomLuaClassAttribute]
     public class LTableView : LScrollView
     {
-        public static float AUTO_RELOCATE_SPPED = 100.0f;
-
         public int cellsCount;
         public Vector2 cellsSize;
         public bool autoRelocate;
-
-        protected float autoRelocateSpeed;
+        
         protected List<LTableViewCell> cellsUsed;
         protected List<LTableViewCell> cellsFreed;
         protected List<float> positions;
@@ -85,7 +78,6 @@ namespace Lui
             cellsSize = Vector2.zero;
             direction = ScrollDirection.HORIZONTAL;
             autoRelocate = false;
-            autoRelocateSpeed = AUTO_RELOCATE_SPPED;
 
             cellsUsed = new List<LTableViewCell>();
             cellsFreed = new List<LTableViewCell>();
@@ -100,7 +92,8 @@ namespace Lui
             {
                 LTableViewCell cell = cellsUsed[i];
                 cellsFreed.Add(cell);
-                cell.node.transform.SetParent(null);
+                //cell.node.transform.SetParent(null);
+                cell.node.SetActive(false);
                 cell.reset();
             }
 
@@ -153,7 +146,9 @@ namespace Lui
                     cellsUsed.Remove(cell);
                     cellsFreed.Add(cell);
                     cell.reset();
-                    cell.node.transform.SetParent(null);
+                    
+                    cell.node.SetActive(false);
+                    //cell.node.transform.SetParent(null);
                 }
                 else
                 {
@@ -172,7 +167,8 @@ namespace Lui
                     cellsUsed.RemoveAt(cellsUsed.Count - 1);
                     cellsFreed.Add(cell);
                     cell.reset();
-                    cell.node.transform.SetParent(null);
+                    cell.node.SetActive(false);
+                    //cell.node.transform.SetParent(null);
                 }
                 else
                 {
@@ -422,6 +418,7 @@ namespace Lui
             }
 
             rtran.sizeDelta = cellsSize;
+            cell.node.SetActive(true);
             cell.node.transform.SetParent(container.transform);
             cell.node.transform.localScale = new Vector2(1,1);
             cell.node.transform.localPosition = cellPositionFromIndex(idx);

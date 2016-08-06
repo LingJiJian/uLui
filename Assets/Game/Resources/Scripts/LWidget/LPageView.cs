@@ -42,12 +42,6 @@ namespace Lui
         public int pageIndex { get; protected set; }
         public UnityAction<int> onPageChangedHandler;
 
-        public LPageView()
-        {
-            autoRelocate = true;
-            autoRelocateSpeed = 900;
-        }
-
         protected override void onScrolling()
         {
             if (cellsCount == 0)
@@ -103,6 +97,7 @@ namespace Lui
             }
 
             rtran.sizeDelta = cellsSize;
+            cell.node.SetActive(true);
             cell.node.transform.SetParent(container.transform);
             cell.node.transform.localScale = new Vector2(1, 1);
             cell.node.transform.localPosition = cellPositionFromIndex(idx);

@@ -1,6 +1,6 @@
 <Root>
 	<Debug>1</Debug>
-	<PackLua>0</PackLua>
+	<PackLua>1</PackLua>
 	<ShowFps>1</ShowFps>
 	<ResUrl>http://192.168.1.14/down</ResUrl>
 </Root>

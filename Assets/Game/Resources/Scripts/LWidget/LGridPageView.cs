@@ -169,6 +169,7 @@ namespace Lui
                         rtran.pivot = Vector2.zero;
                         rtran.sizeDelta = gridCellsSize;
                         cell.idx = idx;
+                        cell.node.SetActive(true);
                         cell.node.transform.SetParent(pageCell.node.transform);
                         cell.node.transform.localPosition = _gridCellsPosition[i];
                         cell.node.transform.localScale = new Vector2(1, 1);
@@ -180,6 +181,7 @@ namespace Lui
                         RectTransform rtran = cell.node.GetComponent<RectTransform>();
                         rtran.pivot = Vector2.zero;
                         cell.idx = INVALID_INDEX;
+                        cell.node.SetActive(false);
                         cell.node.transform.SetParent(pageCell.node.transform);
                         cell.node.transform.localPosition = _gridCellsPosition[i];
                         cell.node.transform.localScale = new Vector2(1, 1);
@@ -200,11 +202,14 @@ namespace Lui
                     {
                         cell.idx = idx;
                         cell = onGridDataSourceAdapterHandler.Invoke(cell, idx);
-                    }else
+                        cell.node.SetActive(true);
+                    }
+                    else
                     {
                         cell.idx = INVALID_INDEX;
                         cell.reset();
                         cell = onGridDataSourceAdapterHandler.Invoke(cell, INVALID_INDEX);
+                        cell.node.SetActive(false);
                     }
                 }
             }
@@ -222,6 +227,7 @@ namespace Lui
             }
 
             tran.sizeDelta = cellsSize;
+            pageCell.node.SetActive(true);
             pageCell.node.transform.SetParent(container.transform);
             pageCell.node.transform.localScale = new Vector2(1, 1);
             pageCell.node.transform.localPosition = cellPositionFromIndex(page);

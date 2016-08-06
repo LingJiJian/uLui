@@ -132,7 +132,7 @@ namespace Lui
             RectTransform rtran = cell.node.GetComponent<RectTransform>();
             rtran.pivot = new Vector2(0, 1);
             rtran.sizeDelta = cellsSize;
-
+            cell.node.SetActive(true);
             cell.node.transform.SetParent(container.transform);
             cell.node.transform.localPosition = cellPositionFromIndex(idx);
             cell.node.transform.localScale = new Vector2(1, 1);
@@ -246,9 +246,10 @@ namespace Lui
 				while (cell != null) {
 					_cellsFreed.Add (cell);
 					_cellsUsed.Remove (cell);
-					cell.node.transform.SetParent (null);
-					cell.reset ();
-				}
+                    //cell.node.transform.SetParent (null);
+                    cell.reset ();
+                    cell.node.SetActive(false);
+                }
 			}
             _indices.Clear();
             _positions.Clear();
@@ -279,7 +280,8 @@ namespace Lui
                     _cellsUsed.Remove(cell);
                     _cellsFreed.Add(cell);
                     cell.reset();
-                    cell.node.transform.SetParent(null);
+                    //cell.node.transform.SetParent(null);
+                    cell.node.SetActive(false);
                 }
                 else
                 {
@@ -299,7 +301,8 @@ namespace Lui
                     _cellsUsed.Remove(cell);
 					_cellsFreed.Add(cell);
                     cell.reset();
-                    cell.node.transform.SetParent(null);
+                    //cell.node.transform.SetParent(null);
+                    cell.node.SetActive(false);
                 }
                 else
                 {
