@@ -19,6 +19,7 @@ public class MakeDebugFile : Editor
         Directory.CreateDirectory(toUrl);
 
         CopyDirectory(fromUrl, toUrl);
+        AssetDatabase.Refresh();
         Debug.Log("copy finish:" + toUrl);
     }
 
@@ -42,6 +43,7 @@ public class MakeDebugFile : Editor
                 File.Move(name_splits[0] + ".txt", name_splits[0] + ".tpsheet");
             }
         });
+        AssetDatabase.Refresh();
         Debug.Log("Atlas后缀修改完成");
     }
 

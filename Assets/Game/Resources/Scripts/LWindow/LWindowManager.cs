@@ -37,6 +37,7 @@ public class LWindowManager : MonoBehaviour
     public GameObject canvas { get; private set; }
     private static LWindowManager _instance;
     private AsyncOperation _sceneAsync;
+    private uint _nowProcess;
     public UnityAction<float> onProgressAsyncScene;
 
     public LWindowManager()
@@ -140,24 +141,39 @@ public class LWindowManager : MonoBehaviour
 
     public void LoadSceneAsync(string name, UnityAction<float> onProgressFunc)
     {
-        onProgressAsyncScene = onProgressFunc;
-        StartCoroutine(onLoadSceneAsync(name));
+        StartCoroutine(onLoadSceneAsync(name, onProgressFunc));
     }
 
     void Update()
     {
         if (_sceneAsync != null)
         {
-            onProgressAsyncScene.Invoke(_sceneAsync.progress);
+            uint progress;
+            if (_sceneAsync.progress < 0.9f)
+            {
+                progress = (uint)(_sceneAsync.progress * 100);
+            }
+            else
+            {
+                progress = 100;
+            }
+            if(_nowProcess < progress)
+                _nowProcess++;
+            if (onProgressAsyncScene != null)
+                onProgressAsyncScene.Invoke(_nowProcess);
+            if(_nowProcess == 100)
+                _sceneAsync.allowSceneActivation = true;
         }
     }
 
-    private IEnumerator onLoadSceneAsync(string name)
+    private IEnumerator onLoadSceneAsync(string name, UnityAction<float> onProgressFunc)
     {
+        _nowProcess = 0;
+        onProgressAsyncScene = onProgressFunc;
         _sceneAsync = SceneManager.LoadSceneAsync(name);
-        yield return _sceneAsync;
+        _sceneAsync.allowSceneActivation = false;
 
-        _sceneAsync = null;
+        yield return _sceneAsync;
     }
 
     protected LWindowBase loadWindow(string name)

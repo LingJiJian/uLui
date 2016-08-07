@@ -9,7 +9,7 @@ public class CreateAnimatorController : Editor
 {
     public static string IdleName = "idle";
 
-    [MenuItem("Tools/Animator Controller Creator")]
+    //[MenuItem("Tools/Animator Controller Creator")]
     static void DoCreateAnimationAssets()
     {
         string curDir = System.Environment.CurrentDirectory + "/Assets/Resources/Models";

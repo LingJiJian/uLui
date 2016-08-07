@@ -8,9 +8,15 @@ require "import"
 local function main()
 	print("初始化游戏")
 
-	LLoadBundle.GetInstance():LoadAllBundles({"scenebundles","prefabbundles"},function()
-		local wm = LWindowManager.GetInstance();
-		wm:runWindow("MsgBox", 1)
+	LLoadBundle.GetInstance():LoadAllBundles({"scenebundles","prefabbundles","digit1","face01","face02","mytest"},function()
+	-- 	local wm = LWindowManager.GetInstance();
+	-- 	wm:runWindow("MsgBox", 1)
+
+		local lab_progress = GameObject.Find("lab_progress"):GetComponent(Text)
+
+		LWindowManager:GetInstance():LoadSceneAsync("first",function( p )
+			lab_progress.text = string.format("初始化需要一点点时间(%d/100)",p)
+		end)
 	end)
 
 	-- LTextureAtlas:GetInstance():LoadData("mytest")
@@ -25,7 +31,7 @@ local function main()
 	-- Object.Destroy(obj)
 	-- LTextureAtlas:GetInstance():RemoveTexture("test")
 
-
+	
 
 end
 

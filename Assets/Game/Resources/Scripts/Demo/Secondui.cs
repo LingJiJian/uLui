@@ -17,7 +17,7 @@ public class Secondui : MonoBehaviour {
 
         btn_msg.onClick.AddListener(() =>
         {
-            _wm.runWindow("MsgBox", WindowHierarchy.Normal);
+            _wm.runWindow("MsgBox.prefab", WindowHierarchy.Normal);
         });
 
         btn_trans.onClick.AddListener(() =>

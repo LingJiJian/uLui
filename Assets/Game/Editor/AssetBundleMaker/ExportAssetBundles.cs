@@ -4,7 +4,6 @@ using UnityEngine.Events;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
-using System.Threading;
 
 public class ExportAssetBundles : Editor
 {
@@ -13,6 +12,7 @@ public class ExportAssetBundles : Editor
         CreateResources();
         CreateZipFile();
         CreateVersionFile();
+        AssetDatabase.Refresh();
     }
 
     static void CreateResources()

@@ -29,7 +29,7 @@ public class Firstui : MonoBehaviour
             ArrayList list = new ArrayList();
             list.Add(123);
             list.Add("测试内容");
-            _wm.runWindow("WindowGridView", WindowHierarchy.Normal, list);
+            _wm.runWindow("WindowGridView.prefab", WindowHierarchy.Normal, list);
         });
 
         btn_trans.onClick.AddListener(() =>
@@ -59,7 +59,8 @@ public class Firstui : MonoBehaviour
         };
         
         tblView.cellsSize = new Vector2(150, 40);
-        tblView.cellTemplate.node = Resources.Load("Prefabs/tbl_cell") as GameObject;
+        tblView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "tbl_cell.prefab", typeof(GameObject)) as GameObject;
+        //tblView.cellTemplate.node = Resources.Load("Prefabs/tbl_cell") as GameObject;
         tblView.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 40 * 5);
         tblView.cellsCount = 100;
         tblView.onDataSourceAdapterHandler = (LTableViewCell cell, int idx) =>
@@ -89,7 +90,8 @@ public class Firstui : MonoBehaviour
         //rtfView.reloadData();
 
         pageView.cellsSize = new Vector2(150, 100);
-        pageView.cellTemplate.node = Resources.Load("Prefabs/page_cell") as GameObject;
+        pageView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "page_cell.prefab", typeof(GameObject)) as GameObject;
+        //pageView.cellTemplate.node = Resources.Load("Prefabs/page_cell") as GameObject;
         pageView.cellsCount = 14;
         pageView.onDataSourceAdapterHandler = (LTableViewCell cell, int idx) =>
         {
@@ -107,7 +109,8 @@ public class Firstui : MonoBehaviour
         };
         pageView.reloadData();
 
-        listView.itemTemplate = Resources.Load("Prefabs/list_cell") as GameObject;
+        //listView.itemTemplate = Resources.Load("Prefabs/list_cell") as GameObject;
+        listView.itemTemplate = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "list_cell.prefab", typeof(GameObject)) as GameObject;
         listView.limitNum = 10; //not must to set limitNum
         for (int i = 0; i < 30; i++)
         {
@@ -119,7 +122,8 @@ public class Firstui : MonoBehaviour
         listView.reloadData();
 
         gridView.cellsSize = new Vector2(100, 100);
-        gridView.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
+        gridView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "grid_cell.prefab", typeof(GameObject)) as GameObject;
+        //gridView.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
         gridView.cols = 4;
         gridView.cellsCount = 100;
         gridView.onDataSourceAdapterHandler = (LGridViewCell cell, int idx) =>

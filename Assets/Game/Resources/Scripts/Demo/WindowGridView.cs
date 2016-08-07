@@ -24,7 +24,8 @@ public class WindowGridView : LWindowBase
         });
 
         gridPageView.cellsSize = new Vector2(400, 400);
-        gridPageView.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
+        gridPageView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "grid_cell.prefab", typeof(GameObject)) as GameObject;
+        //gridPageView.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
         gridPageView.cols = 4;
         gridPageView.rows = 4;
         gridPageView.gridCellsCount = 100;
