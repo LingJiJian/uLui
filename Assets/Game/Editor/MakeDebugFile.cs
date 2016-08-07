@@ -69,7 +69,8 @@ public class MakeDebugFile : Editor
                     continue;
                 File.Copy(file, destDirName + Path.GetFileName(file), true);
                 File.SetAttributes(destDirName + Path.GetFileName(file), FileAttributes.Normal);
-                File.Move(destDirName + Path.GetFileName(file), Path.ChangeExtension(destDirName + Path.GetFileName(file), ".txt"));
+                if (file.IndexOf(".bytes") == -1)
+                    File.Move(destDirName + Path.GetFileName(file), Path.ChangeExtension(destDirName + Path.GetFileName(file), ".txt"));
             }
 
             string[] dirs = Directory.GetDirectories(sourceDirName);

@@ -1,0 +1,48 @@
+
+²
+masterd.proto	component"B
+component_hello
+appId (
+appType (
+groupId ("å
+component_broadcastApp
+
+id (
+type (
+state (
+internaladdr (
+internalport (
+externaladdr (
+externalport (
+	processid (
+groupid	 (
+
+externaddr
+ (	
+
+externport ("Â
+component_registerApp
+
+id (
+type (
+groupid (
+internaladdr (
+internalport (
+externaladdr (
+externalport (
+
+externaddr (	
+
+externport	 ("=
+component_updateApp
+
+id (
+type (
+load (*f
+msgId	
+hello
+registerApp
+broadcastApp
+	updateApp
+	webAppCmdè
+adminAppCmdé

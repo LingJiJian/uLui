@@ -20,10 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
+#endif
+#if !SLUA_STANDALONE
+using UnityEngine;
 #endif
 
 namespace SLua{
@@ -34,7 +36,11 @@ namespace SLua{
 		LF,
 	}
 
-	public class SLuaSetting : ScriptableObject {
+	public class SLuaSetting 
+#if !SLUA_STANDALONE
+        : ScriptableObject
+#endif
+    {
 
 		public EOL eol = EOL.Native;
 		public bool exportExtensionMethod = true;
@@ -43,9 +49,10 @@ namespace SLua{
 		public int debugPort=10240;
 		public string debugIP="0.0.0.0";
 
-		private static SLuaSetting _instance;
+		private static SLuaSetting _instance=null;
 		public static SLuaSetting Instance{
 			get{
+#if !SLUA_STANDALONE
 				if(_instance == null){
 					_instance = Resources.Load<SLuaSetting>("setting");
 
@@ -57,11 +64,12 @@ namespace SLua{
 #endif
 
 				}
+#endif
 				return _instance;
 			}
 		}
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && !SLUA_STANDALONE
 		[MenuItem("SLua/Setting")]
 		public static void Open(){
 			Selection.activeObject = Instance;

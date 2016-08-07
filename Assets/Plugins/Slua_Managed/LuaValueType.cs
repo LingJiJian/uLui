@@ -26,7 +26,7 @@ namespace SLua
     using LuaInterface;
     class LuaValueType : LuaObject
     {
-#if !UNITY_IPHONE && !LUA_5_3
+#if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE
         static string script = @"
 local setmetatable=setmetatable
 local getmetatable=getmetatable
@@ -314,15 +314,18 @@ do
 	end
 
 	function Vector3.Magnitude(v)
-		return sqrt(v[1]^2+v[2]^2+v[3]^2)
+		local v= sqrt(v[1]^2+v[2]^2+v[3]^2)
+		return v
 	end
 
 	function Vector3.SqrMagnitude(v)
-		return v[1]^2+v[2]^2+v[3]^2
+		local v= v[1]^2+v[2]^2+v[3]^2
+		return v
 	end
 
 	function Vector3.Dot(a,b)
-		return a[1]*b[1] + a[2]*b[2] + a[3]*b[3]
+		local v= a[1]*b[1] + a[2]*b[2] + a[3]*b[3]
+		return v
 	end
 
 	function Vector3.Cross(a,b)
@@ -993,14 +996,14 @@ do
 		if type(x)=='table' then
 			x,y,z=x[1],x[2],x[3]
 		end
-		x,y,z=x*ToRad,y*ToRad,z*ToRad
+		x,y,z=x*ToRad*0.5,y*ToRad*0.5,z*ToRad*0.5
 
-		local cX=cos(x/2)
-		local sX=sin(x/2)
-		local cY=cos(y/2)
-		local sY=sin(y/2)
-		local cZ=cos(z/2)
-		local sZ=sin(z/2)
+		local cX=cos(x)
+		local sX=sin(x)
+		local cY=cos(y)
+		local sY=sin(y)
+		local cZ=cos(z)
+		local sZ=sin(z)
 		
 		local qX=Quaternion.New(sX, 0, 0, cX)
 		local qY=Quaternion.New(0, sY, 0, cY)
@@ -1075,7 +1078,7 @@ end
 #endif
         public static void reg(IntPtr l)
         {
-#if !UNITY_IPHONE && !LUA_5_3
+#if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE
             // lua implemented valuetype isn't faster than raw under non-jit.
 			LuaState.get(l).doString(script,"ValueTypeScript");
 #endif

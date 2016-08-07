@@ -187,6 +187,21 @@ return Class
 			}
 		}
 
+		//convert lua binary string to c# byte[]
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int ToBytes(IntPtr l){
+			try{
+				byte[] bytes = null;
+				checkBinaryString(l,1,out bytes);
+				pushValue(l,true);
+				LuaObject.pushObject(l,bytes);
+				return 2;
+
+			}catch(System.Exception e){
+				return error(l, e);
+			}
+		}
+
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public new int ToString(IntPtr l)
 		{
@@ -282,11 +297,13 @@ return Class
 				else if (t == LuaTypes.LUA_TUSERDATA || isLuaClass(l, 1))
 				{
 					object o = checkObj(l, 1);
+#if !SLUA_STANDALONE
 					if( o is UnityEngine.Object )
 					{
 						pushValue(l, ((UnityEngine.Object)o)==null);
 					}
 					else
+#endif
 						pushValue(l, o.Equals(null));
 				}
 				else
@@ -327,6 +344,7 @@ return Class
             addMember(l, As, false);
 			addMember(l, IsNull, false);
 			addMember(l, MakeArray, false);
+			addMember(l,ToBytes,false);
 			addMember(l, "out", get_out, null, false);
 			addMember(l, "version", get_version, null, false);
 

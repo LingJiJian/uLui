@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -111,6 +110,9 @@ namespace SLua
 		{
 			LuaDLL.lua_pushinteger(l, i);
 		}
+
+		// why doesn't have a checkArray<byte[]> function accept lua string?
+		// I think you should did a Buffer class to wrap byte[] pass/accept between mono and lua vm
 		#endregion
 
 		#region char
@@ -301,7 +303,16 @@ namespace SLua
 			v = null;
 			return false;
 		}
-		
+
+		static public bool checkBinaryString(IntPtr l,int p,out byte[] bytes){
+			if(LuaDLL.lua_isstring(l,p)){
+				bytes = LuaDLL.lua_tobytes(l, p);
+				return true;
+			}
+			bytes = null;
+			return false;
+		}
+
 		public static void pushValue(IntPtr l, string s)
 		{
 			LuaDLL.lua_pushstring(l, s);
