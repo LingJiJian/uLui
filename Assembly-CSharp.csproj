@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Game\Resources\Scripts\Demo\Firstui.cs" />
-     <Compile Include="Assets\Game\Resources\Scripts\Demo\MsgBox.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\Demo\Secondui.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\Demo\WindowGridView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LBase\Game.cs" />
@@ -811,6 +810,7 @@
      <None Include="Assets\Game\Resources\Lua\Game\Common\EventNames.txt" />
      <None Include="Assets\Game\Resources\Lua\Lib\protobuf\parser.txt" />
      <None Include="Assets\Game\Resources\Lua\Base\LVersion.txt" />
+     <None Include="Assets\Game\Resources\Lua\Game\MsgBox.txt" />
      <None Include="Assets\Game\Resources\Scenes\CubeMap.shader" />
      <None Include="Assets\Game\Resources\Lua\Base\LMessage.txt" />
      <None Include="Assets\Slua\Resources\valuetype.txt" />

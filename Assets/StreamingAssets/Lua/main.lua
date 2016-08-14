@@ -13,7 +13,6 @@ local function main()
 	LLoadBundle.GetInstance():LoadAllBundles({"scenebundles","prefabbundles","digit1","face01","face02","mytest"},function()
 	-- 	local wm = LWindowManager.GetInstance();
 	-- 	wm:runWindow("MsgBox", 1)
-
 		local lab_progress = GameObject.Find("lab_progress"):GetComponent(Text)
 
 		LWindowManager:GetInstance():LoadSceneAsync("first",function( p )

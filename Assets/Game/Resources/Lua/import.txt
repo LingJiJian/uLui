@@ -7,3 +7,5 @@ require "Game/Common/Util"
 require "Game/Common/MsgId"
 require "Game/Common/EventNames"
 require "Game/Common/NetworkManager"
+
+require "Game/MsgBox"
