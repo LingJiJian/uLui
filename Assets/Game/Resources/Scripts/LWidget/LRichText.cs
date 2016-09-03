@@ -351,10 +351,10 @@ namespace Lui
 
             _richElements.Clear();
 
-            formarRenderers();
+            formatRenderers();
         }
 
-        protected void formarRenderers()
+        protected void formatRenderers()
         {
             int oneLine = 0;
             int lines = 1;
@@ -484,12 +484,12 @@ namespace Lui
                     {
                         if (_lastEleme.type == RichType.TEXT && elem.type == RichType.TEXT)
                         {
-                            if (_lastEleme.color == elem.color)
+                            if (_lastEleme.color == elem.color && _lastEleme.data == elem.data)
                             {
-                                // the same color can mergin one string
+                                // the same color&data can mergin one element
                                 lineString += elem.strChar;
                             }
-                            else // diff color
+                            else // diff color or data
                             {
                                 if (_lastDiffStartEleme.type == RichType.TEXT)
                                 {
