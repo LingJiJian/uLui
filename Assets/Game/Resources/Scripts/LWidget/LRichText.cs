@@ -171,6 +171,16 @@ namespace Lui
             cloneOjb.pos = this.pos;
             return cloneOjb;
         }
+
+		public bool isSameStyle(LRenderElement elem)
+		{
+			return (this.color 			== elem.color &&
+				    this.isOutLine 		== elem.isOutLine &&
+					this.isUnderLine 	== elem.isUnderLine && 
+					this.font 			== elem.font &&
+					this.fontSize 		== elem.fontSize &&
+					this.data 			== elem.data);
+		}
     }
 
     /// <summary>
@@ -203,20 +213,17 @@ namespace Lui
             foreach (LRichCacheElement lab in _cacheLabElements)
             {
                 lab.isUse = false;
-                //lab.node.transform.SetParent(null);
                 lab.node.gameObject.SetActive(false);
             }
             foreach (LRichCacheElement img in _cacheImgElements)
             {
                 img.isUse = false;
-                //img.node.transform.SetParent(null);
                 img.node.gameObject.SetActive(false);
             }
 
             foreach (LRichCacheElement anim in _cacheFramAnimElements)
             {
                 anim.isUse = false;
-                //anim.node.transform.SetParent(null);
                 anim.node.gameObject.SetActive(false);
             }
             _elemRenderArr.Clear();
@@ -318,9 +325,6 @@ namespace Lui
                     string spname = rendElem.path.Split('/')[1];
                     LTextureAtlas.GetInstance().LoadData(atlas);
                     Sprite sp = LTextureAtlas.GetInstance().getSprite(atlas, spname);
-
-                    //Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path, typeof(Sprite)) as Sprite;
-                    // Sprite sp = Resources.Load(rendElem.path,typeof(Sprite)) as Sprite;
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -335,8 +339,6 @@ namespace Lui
                     rendElem.fs = elemAnim.fs;
                     LTextureAtlas.GetInstance().LoadData(rendElem.path);
                     Sprite sp = LTextureAtlas.GetInstance().getSprites(rendElem.path)[0];
-                    //Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, rendElem.path + "/1.png", typeof(Sprite)) as Sprite;
-                    // Sprite sp = Resources.Load(rendElem.path+"/1",typeof(Sprite)) as Sprite;
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -484,12 +486,12 @@ namespace Lui
                     {
                         if (_lastEleme.type == RichType.TEXT && elem.type == RichType.TEXT)
                         {
-                            if (_lastEleme.color == elem.color && _lastEleme.data == elem.data)
+							if (_lastEleme.isSameStyle(elem))
                             {
-                                // the same color&data can mergin one element
+								// the same style can mergin one element
                                 lineString += elem.strChar;
                             }
-                            else // diff color or data
+                            else // diff style
                             {
                                 if (_lastDiffStartEleme.type == RichType.TEXT)
                                 {
@@ -664,7 +666,6 @@ namespace Lui
                 string spname = elem.path.Split('/')[1];
                 LTextureAtlas.GetInstance().LoadData(atlas);
                 Sprite sp = LTextureAtlas.GetInstance().getSprite(atlas, spname);
-                //Sprite sp = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, elem.path, typeof(Sprite)) as Sprite;
                 comImage.sprite = sp;
             }
         }
