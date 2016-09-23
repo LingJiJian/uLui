@@ -59,8 +59,6 @@ public class LTextureAtlas {
         _sprites = new Dictionary<string, Sprite>();
     }
 
-    
-
     public void LoadData(string atlasName)
     {
         string atlasTxt;

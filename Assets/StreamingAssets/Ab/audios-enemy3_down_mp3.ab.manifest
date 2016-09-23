@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 773995069
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 56b90e01d41ed2e423d6d5bcd2f6ce5d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Game/Resources/Audios/enemy3_down.mp3
+Dependencies: []

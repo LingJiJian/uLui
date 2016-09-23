@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 579638973
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f5387482e2171abc03417e4040fbee8d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Game/Resources/Audios/effect_noclear.mp3
+Dependencies: []

@@ -321,9 +321,9 @@ namespace Lui
                     rendElem.path = elemImg.path;
                     rendElem.data = elemImg.data;
 
-                    string atlas = rendElem.path.Split('/')[0];
-                    string spname = rendElem.path.Split('/')[1];
-                    LTextureAtlas.GetInstance().LoadData(atlas);
+					string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
+					string spname = System.IO.Path.GetFileName(rendElem.path);
+					LTextureAtlas.GetInstance().LoadData(atlas);
                     Sprite sp = LTextureAtlas.GetInstance().getSprite(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
@@ -662,8 +662,8 @@ namespace Lui
             Image comImage = img.GetComponent<Image>();
             if (comImage != null)
             {
-                string atlas = elem.path.Split('/')[0];
-                string spname = elem.path.Split('/')[1];
+				string atlas = System.IO.Path.GetDirectoryName(elem.path);
+				string spname = System.IO.Path.GetFileName(elem.path);
                 LTextureAtlas.GetInstance().LoadData(atlas);
                 Sprite sp = LTextureAtlas.GetInstance().getSprite(atlas, spname);
                 comImage.sprite = sp;

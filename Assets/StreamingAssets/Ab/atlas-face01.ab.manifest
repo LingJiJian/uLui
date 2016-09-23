@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 486202773
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f6166238f707ffa1c057384c0729118c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3a86b9bde1b930a56947f720531fa611
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Game/Resources/Atlas/face01.png
+- Assets/Game/Resources/Atlas/face01.txt
+Dependencies: []

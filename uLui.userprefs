@@ -1,14 +1,15 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Scripts\LControlView.cs">
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Game/Resources/Scripts/Demo/Firstui.cs">
     <Files>
-      <File FileName="Assets\Resources\Scripts\LControlView.cs" Line="8" Column="1" />
+      <File FileName="Assets/Game/Resources/Scripts/LWidget/LRichText.cs" Line="145" Column="32" />
+      <File FileName="Assets/Game/Resources/Scripts/Demo/Firstui.cs" Line="87" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="G:\Demo\uLui\Assets\Resources\Scripts\LRichText.cs" line="388" />
-      <Breakpoint file="G:\Demo\uLui\Assets\Resources\Scripts\LRichText.cs" line="466" />
+      <Breakpoint file="G:\Demo\uLui\Assets\Resources\Scripts\LRichText.cs" line="388" column="1" />
+      <Breakpoint file="G:\Demo\uLui\Assets\Resources\Scripts\LRichText.cs" line="466" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -7,18 +7,16 @@ using System;
 
 public class MakeDebugFile : Editor
 {
-    [MenuItem("Tools/Copy Debug Lua")]
-    public static void Run() {
+//    [MenuItem("Tools/Copy Debug Lua")]
+    public static void CopyLuaTxt() {
 
-        string fromUrl = Application.streamingAssetsPath + "/Lua";
-        string toUrl = Application.dataPath + "/Game/Resources/Lua";
+        string fromUrl = Application.streamingAssetsPath + "/@Lua";
+        string toUrl = Application.dataPath + "/Game/Resources/@Lua";
 
-        if (Directory.Exists(toUrl))
-            Directory.Delete(toUrl, true);
-
+		AssetDatabase.DeleteAsset ("Assets/Game/Resources/@Lua");
         Directory.CreateDirectory(toUrl);
 
-        CopyDirectory(fromUrl, toUrl);
+		CopyDirectory(fromUrl, toUrl,new List<string>{".lua"});
         AssetDatabase.Refresh();
         Debug.Log("copy finish:" + toUrl);
     }
@@ -27,11 +25,9 @@ public class MakeDebugFile : Editor
     public static void EditAtlasSuffix()
     {
         string basePath = Application.dataPath + "/Game/Resources/Atlas";
-        List<string> list = new List<string>();
-        list.Add("tpsheet");
-        list.Add("txt");
-        forEachHandle(basePath, list, (string path) =>
+		forEachHandle(basePath, new List<string>{"txt","tpsheet"}, (string path) =>
         {
+				
             string[] name_splits = path.Split('.');
             string ext = name_splits[name_splits.Length - 1];
             if(ext == "tpsheet")
@@ -47,7 +43,7 @@ public class MakeDebugFile : Editor
         Debug.Log("Atlas后缀修改完成");
     }
 
-    public static void CopyDirectory(string sourceDirName, string destDirName)
+	public static void CopyDirectory(string sourceDirName, string destDirName,List<string> exts)
     {
         try
         {
@@ -65,18 +61,19 @@ public class MakeDebugFile : Editor
             {
                 //if (File.Exists(destDirName + Path.GetFileName(file)))
                 //    continue;
-                if (file.IndexOf(".meta") > -1)
+				if (file.EndsWith("meta"))
                     continue;
                 File.Copy(file, destDirName + Path.GetFileName(file), true);
                 File.SetAttributes(destDirName + Path.GetFileName(file), FileAttributes.Normal);
-                if (file.IndexOf(".bytes") == -1)
+
+				if (exts.Contains( Path.GetExtension(file) ))
                     File.Move(destDirName + Path.GetFileName(file), Path.ChangeExtension(destDirName + Path.GetFileName(file), ".txt"));
             }
 
             string[] dirs = Directory.GetDirectories(sourceDirName);
             foreach (string dir in dirs)
             {
-                CopyDirectory(dir, destDirName + Path.GetFileName(dir));
+				CopyDirectory(dir, destDirName + Path.GetFileName(dir),exts);
             }
         }
         catch (Exception ex)

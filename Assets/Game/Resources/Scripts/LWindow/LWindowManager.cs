@@ -189,10 +189,10 @@ public class LWindowManager : MonoBehaviour
         }
         else
         {
-            GameObject res = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, name, typeof(GameObject)) as GameObject;
+			string abName = LGameConfig.GetABNameWithAtlasPath (name);
+			GameObject res = LLoadBundle.GetInstance().LoadAsset<GameObject>(abName, name);
             GameObject obj = Instantiate(res);
-            //string[] split_names = name.Split('/');
-            //obj.name = split_names[split_names.Length-1];
+
             obj.name = name;
             obj.GetComponent<RectTransform>().sizeDelta = canvas.GetComponent<RectTransform>().rect.size;
             ret = obj.GetComponent<LWindowBase>();

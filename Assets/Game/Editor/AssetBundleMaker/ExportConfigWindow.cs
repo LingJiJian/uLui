@@ -4,10 +4,7 @@ using System.Collections;
 
 public class ExportConfigWindow : EditorWindow
 {
-    public static string EXPORT_PREFABS_PATH = "Assets/Game/Resources/Prefabs";
-    public static string EXPORT_SCENE_PATH = "Assets/Game/Resources/Scenes";
-    public static string EXPORT_ATLAS_PATH = "Assets/Game/Resources/Atlas";
-    public static string EXPORT_OUT_PATH = Application.dataPath;
+	public static string EXPORT_OUT_PATH = Application.streamingAssetsPath;
     public static BuildTarget BUILD_TARGET = BuildTarget.StandaloneWindows;
 
     [MenuItem("Tools/HotFix Config")]
@@ -29,14 +26,6 @@ public class ExportConfigWindow : EditorWindow
 
     void OnGUI()
     {
-
-        GUILayout.Label("Resource Path", EditorStyles.boldLabel);
-        EXPORT_SCENE_PATH = EditorGUILayout.TextField("Scenes", EXPORT_SCENE_PATH);
-        EXPORT_PREFABS_PATH = EditorGUILayout.TextField("Prefabs", EXPORT_PREFABS_PATH);
-
-        GUILayout.Label("Output Path", EditorStyles.boldLabel);
-        EXPORT_OUT_PATH = EditorGUILayout.TextField("Output", EXPORT_OUT_PATH);
-
         GUILayout.Label("build target", EditorStyles.boldLabel);
         BUILD_TARGET = (BuildTarget)EditorGUILayout.EnumPopup("Target", BUILD_TARGET);
 
@@ -44,7 +33,6 @@ public class ExportConfigWindow : EditorWindow
         {
             EditorApplication.delayCall += ExportAssetBundles.Run;
         }
-
     }
 
 }

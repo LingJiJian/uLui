@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1230323131
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c842413d21176131fcedd295a0151d1e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Game/Resources/Audios/dungeon02.mp3
+Dependencies: []

@@ -11,18 +11,29 @@ public class Secondui : MonoBehaviour {
     protected Animator _teddyAnim;
 
     void Start() {
-
+		
         _wm = LWindowManager.GetInstance();
         _teddyAnim = GameObject.Find("Teddy").GetComponent<Animator>();
 
         btn_msg.onClick.AddListener(() =>
         {
-            _wm.runWindow("MsgBox.prefab", WindowHierarchy.Normal);
+			LLoadBundle.GetInstance().LoadAllBundles(new string[]{ 
+				"Ab/prefabs-msgbox_prefab.ab",
+				"Ab/atlas-face01.ab" },()=>
+			{
+
+				_wm.runWindow("Prefabs/MsgBox.prefab", WindowHierarchy.Normal);
+			});
         });
 
         btn_trans.onClick.AddListener(() =>
         {
-            _wm.LoadScene("first");
+			LLoadBundle.GetInstance().LoadAllBundles(new string[]{ 
+				"Ab/atlas-face01.ab",
+				"Ab/atlas-face02.ab"},()=>
+			{
+    			_wm.LoadScene("first");
+			});
         });
 
         btn_anim.onClick.AddListener(() =>
@@ -36,5 +47,15 @@ public class Secondui : MonoBehaviour {
             _teddyAnim.SetBool("idle_run", false);
             _teddyAnim.SetBool("run_idle", true);
         });
+	}
+
+	void OnLevelWasLoaded(int level){
+		//remove first textures
+		LLoadBundle.GetInstance().UnloadBundles( new string[]{
+			"Ab/atlas-face01.ab",
+			"Ab/atlas-face02.ab"
+		});
+		LTextureAtlas.GetInstance().RemoveTexture("Atlas/face01");
+		LTextureAtlas.GetInstance().RemoveTexture("Atlas/face02");
 	}
 }

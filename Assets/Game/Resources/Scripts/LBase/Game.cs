@@ -22,14 +22,13 @@ public class Game : MonoBehaviour
 #else
 		Application.RegisterLogCallback(this.log);
 #endif
-            if (LGameConfig.GetInstance().isPackLua)
+			if (LGameConfig.GetInstance().isDebug)
             {
-                LuaState.loaderDelegate = loadLuaFileDebug;
+				LuaState.loaderDelegate = loadFileWithSuffix;
             }else
             {
-                LuaState.loaderDelegate = loadFileWithSuffix;
+				LuaState.loaderDelegate = loadLuaWithAb;
             }
-
             _l = new LuaSvr();
             _l.init(tick, complete);
         }
@@ -89,14 +88,11 @@ public class Game : MonoBehaviour
         return aContents;
     }
 
-    protected byte[] loadLuaFileDebug(string strFile)
+    protected byte[] loadLuaWithAb(string strFile)
     {
-        byte[] bytes;
-        TextAsset asset = (TextAsset)Resources.Load(LGameConfig.DATA_CATAGORY_LUA + "/" + strFile);
-        if (asset == null)
-            return null;
-        bytes = asset.bytes;
-        return bytes;
+		TextAsset asset = LLoadBundle.GetInstance ().LoadAsset<TextAsset>("Ab/@lua.ab", "@Lua/" + strFile + ".txt");
+        if (asset == null) return null;
+		return asset.bytes;
     }
 
     void complete()
@@ -108,16 +104,20 @@ public class Game : MonoBehaviour
 
         if (!LGameConfig.GetInstance().isDebug) //生产环境
         {
-            GameObject obj = new GameObject();
-            obj.name = "ResUpdate";
-            LResUpdate resUpdate = obj.AddComponent<LResUpdate>();
-            resUpdate.onCompleteHandler = () =>
-            {
-                Destroy(obj);
-                _l.start("main");
-            };
-            resUpdate.checkUpdate();
-
+			if (LGameConfig.GetInstance ().isHotFix) {
+				GameObject obj = new GameObject ();
+				obj.name = "ResUpdate";
+				LResUpdate resUpdate = obj.AddComponent<LResUpdate> ();
+				resUpdate.onCompleteHandler = () => {
+					Destroy (obj);
+					_l.start ("main");
+				};
+				resUpdate.checkUpdate ();
+			} else {
+				LLoadBundle.GetInstance ().LoadAllBundles (new string[] { "Ab/@lua.ab" },()=>{
+					_l.start ("main");
+				});
+			}
         }
         else //PC端开发
         {

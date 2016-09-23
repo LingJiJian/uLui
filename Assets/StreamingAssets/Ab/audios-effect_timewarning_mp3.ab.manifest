@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 261116505
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f6d5cba5bb351150229d75968630aeca
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Game/Resources/Audios/effect_timewarning.mp3
+Dependencies: []

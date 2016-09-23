@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2887225664
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: aff1b2f5bc046da2b3355105110bf0ed
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Game/Resources/Audios/enemy2_out.mp3
+Dependencies: []

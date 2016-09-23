@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2411754060
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 387e583e047abffd616aeb618872e6ef
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Game/Resources/Audios/effect2.mp3
+Dependencies: []

@@ -1,0 +1,7 @@
+<Root>
+	<Asset path="Audios"/>
+	<Asset path="Prefabs"/>
+	<Asset path="Models"/>
+	<Asset path="Lua" type="unit"/>
+	<Asset path="Atlas"/>
+</Root>

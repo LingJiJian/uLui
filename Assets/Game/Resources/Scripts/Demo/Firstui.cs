@@ -29,7 +29,7 @@ public class Firstui : MonoBehaviour
             ArrayList list = new ArrayList();
             list.Add(123);
             list.Add("测试内容");
-            _wm.runWindow("WindowGridView.prefab", WindowHierarchy.Normal, list);
+            _wm.runWindow("Prefabs/WindowGridView.prefab", WindowHierarchy.Normal, list);
         });
 
         btn_trans.onClick.AddListener(() =>
@@ -59,8 +59,7 @@ public class Firstui : MonoBehaviour
         };
         
         tblView.cellsSize = new Vector2(150, 40);
-        tblView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "tbl_cell.prefab", typeof(GameObject)) as GameObject;
-        //tblView.cellTemplate.node = Resources.Load("Prefabs/tbl_cell") as GameObject;
+		tblView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("Ab/prefabs-tbl_cell_prefab.ab", "Prefabs/tbl_cell.prefab");
         tblView.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 40 * 5);
         tblView.cellsCount = 100;
         tblView.onDataSourceAdapterHandler = (LTableViewCell cell, int idx) =>
@@ -79,10 +78,10 @@ public class Firstui : MonoBehaviour
         //rtfView.insertElement("测试文本内容!!", Color.red, 15, false, true, Color.blue, "");
         //rtfView.insertElement("face01", 5f, "");
         //rtfView.insertElement("The article comes from the point of the examination", Color.green, 15, true, false, Color.blue, "");
-        //rtfView.insertElement("face02/1", "");
+//		rtfView.insertElement("Atlas/face02/1.png", "");
         //rtfView.insertElement(1);
         //rtfView.insertElement("outline and newline", Color.yellow, 20, false, true, Color.blue, "");
-        rtfView.parseRichDefaultString("<lab txt=\"hello world!!\" color=#ffff00 data=数据 /><lab txt=\"测试文本内容\" isUnderLine=true size=40/><anim path=face01 fps=5.0/><newline /><img path=face02/1.png/><lab txt=\"The article comes from the point of the examination\" color=#ff0000 />");
+		rtfView.parseRichDefaultString("<lab txt=\"hello world!!\" color=#ffff00 data=数据 /><lab txt=\"测试文本内容\" isUnderLine=true size=40/><anim path=Atlas/face01 fps=5.0/><newline /><img path=Atlas/face02/1.png/><lab txt=\"The article comes from the point of the examination\" color=#ff0000 />");
         rtfView.onClickHandler = (string data) =>
         {
             Debug.Log("data " + data);
@@ -90,7 +89,7 @@ public class Firstui : MonoBehaviour
         //rtfView.reloadData();
 
         pageView.cellsSize = new Vector2(150, 100);
-        pageView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "page_cell.prefab", typeof(GameObject)) as GameObject;
+		pageView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("Ab/prefabs-page_cell_prefab.ab", "Prefabs/page_cell.prefab");
         //pageView.cellTemplate.node = Resources.Load("Prefabs/page_cell") as GameObject;
         pageView.cellsCount = 14;
         pageView.onDataSourceAdapterHandler = (LTableViewCell cell, int idx) =>
@@ -109,8 +108,7 @@ public class Firstui : MonoBehaviour
         };
         pageView.reloadData();
 
-        //listView.itemTemplate = Resources.Load("Prefabs/list_cell") as GameObject;
-        listView.itemTemplate = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "list_cell.prefab", typeof(GameObject)) as GameObject;
+		listView.itemTemplate = LLoadBundle.GetInstance().LoadAsset<GameObject>("Ab/prefabs-list_cell_prefab.ab", "Prefabs/list_cell.prefab");
         listView.limitNum = 10; //not must to set limitNum
         for (int i = 0; i < 30; i++)
         {
@@ -122,8 +120,7 @@ public class Firstui : MonoBehaviour
         listView.reloadData();
 
         gridView.cellsSize = new Vector2(100, 100);
-        gridView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset(LGameConfig.PREFAB_BUNDLE, "grid_cell.prefab", typeof(GameObject)) as GameObject;
-        //gridView.cellTemplate.node = Resources.Load("Prefabs/grid_cell") as GameObject;
+		gridView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("Ab/prefabs-grid_cell_prefab.ab", "Prefabs/grid_cell.prefab");
         gridView.cols = 4;
         gridView.cellsCount = 100;
         gridView.onDataSourceAdapterHandler = (LGridViewCell cell, int idx) =>

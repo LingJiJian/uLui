@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 935500089
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f926e3dd220132535efdecadab06abb1
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c516f2a3b2b6b67ef759f6410a790acd
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Game/Resources/Audios/effect_game_fail.mp3
+Dependencies: []

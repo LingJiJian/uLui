@@ -9,21 +9,20 @@ public class LGameConfig
     // The config file path.
     public static readonly string CONFIG_FILE = "config";
     // The lua data folder name.
-    public static readonly string DATA_CATAGORY_LUA = "Lua";
+    public static readonly string DATA_CATAGORY_LUA = "@Lua";
+
+	public static readonly string ASSETBUNDLE_PATH = "Ab/";
+	public static readonly string ASSETBUNDLE_AFFIX = ".ab";
     // The lua file affix.
     public static readonly string FILE_AFFIX_LUA = ".lua";
     // The lua files zip name.
     public static readonly string UPDATE_FILE_ZIP = "data.zip";
-    // assetbundle load asset's format
-    public static readonly string ASSETBUNDLE_LOAD_FORMAT = "Assets/Game/Resources/Prefabs/{0}";
-    // assetbundle load atlas's format
-    public static readonly string ASSETBUNDLE_ATLAS_FORMAT = "Assets/Game/Resources/Atlas/{0}";
-    // game windows assetbundle's name
-    public static readonly string PREFAB_BUNDLE = "prefabbundles";
+    // asset load base format
+	public static readonly string ASSET_BASE_FORMAT = "Assets/Game/Resources/{0}";
     // is activate debug
     public bool isDebug = true;
     // is pack lua files in app
-    public bool isPackLua = true;
+    public bool isHotFix = true;
     // is show frame rate
     public bool isShowFps = true;
     // remote server resource url
@@ -164,12 +163,15 @@ public class LGameConfig
         }
     }
 
+	public static string GetABNameWithAtlasPath(string path){
+		return string.Format("{0}{1}{2}",ASSETBUNDLE_PATH, path.Replace ('/', '-').Replace ('.', '_').ToLower(),ASSETBUNDLE_AFFIX);
+	}
+
     private void LoadConfig()
     {
         TextAsset textAsset = Resources.Load<TextAsset>(CONFIG_FILE);
         if (textAsset)
         {
-
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(textAsset.text);    //加载Xml文件  
 
@@ -181,12 +183,11 @@ public class LGameConfig
             XmlNodeList resUrls = rootElem.GetElementsByTagName("ResUrl");
             SERVER_RES_URL = resUrls[0].InnerText;
 
-            XmlNodeList packLua = rootElem.GetElementsByTagName("PackLua");
-            isPackLua = isDebug ? packLua[0].InnerText == "1" : false;
+			XmlNodeList hotFix = rootElem.GetElementsByTagName("HotFix");
+			isHotFix = hotFix[0].InnerText == "1";
 
             XmlNodeList showFps = rootElem.GetElementsByTagName("ShowFps");
             isShowFps = showFps[0].InnerText == "1";
-
         }
     }
 }

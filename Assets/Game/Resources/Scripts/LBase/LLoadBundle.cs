@@ -54,19 +54,19 @@ public class LLoadBundle : MonoBehaviour
             string name = bundle_names[i];
             if (!bundles.ContainsKey(name))
             {
-                using (WWW asset = new WWW(LResUpdate.LOCAL_RES_URL + "/" + name))
+                using (WWW asset = new WWW(LResUpdate.LOCAL_RES_URL + name))
                 {
                     yield return asset;
 
                     bundles.Add(name, asset.assetBundle);
                     asset.Dispose();
-
-                    if (i == len - 1)
-                    {
-                        callFunc();
-                    }
                 }
             }
+
+			if (i == len - 1)
+			{
+				callFunc();
+			}
         }
     }
 
@@ -76,30 +76,30 @@ public class LLoadBundle : MonoBehaviour
         Sprite atlas = null;
         if (LGameConfig.GetInstance().isDebug)
         {
-            atlas = Resources.Load<Sprite>(string.Format("Atlas/{0}", atlasName));
-            txt = Resources.Load<TextAsset>(string.Format("Atlas/{0}", atlasName)).text;
+			atlas = Resources.Load<Sprite>(atlasName);
+			txt = Resources.Load<TextAsset>(atlasName).text;
         }
         else
         {
             AssetBundle b;
-            bundles.TryGetValue(atlasName.ToLower(), out b);
+			bundles.TryGetValue(LGameConfig.GetABNameWithAtlasPath(atlasName) , out b);
             if (b != null)
             {
-                Debug.Log(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName));
-                atlas = b.LoadAsset<Sprite>(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName)+".png");
-                txt = b.LoadAsset<TextAsset>(string.Format(LGameConfig.ASSETBUNDLE_ATLAS_FORMAT, atlasName)+".txt").text;
+				Debug.Log(string.Format(LGameConfig.ASSET_BASE_FORMAT, atlasName));
+				atlas = b.LoadAsset<Sprite>(string.Format(LGameConfig.ASSET_BASE_FORMAT, atlasName)+".png");
+				txt = b.LoadAsset<TextAsset>(string.Format(LGameConfig.ASSET_BASE_FORMAT, atlasName)+".txt").text;
             }
         }
         return atlas;
     }
 
-    public Object LoadAsset(string bundleName, string assetName, System.Type assetType)
+	public T LoadAsset<T>(string bundleName, string assetName) where T : Object 
     {
-        Object prefab = null;
+        T prefab = null;
         if (LGameConfig.GetInstance().isDebug)
         {
             assetName = assetName.Split('.')[0];
-            prefab = Resources.Load(string.Format("Prefabs/{0}", assetName), assetType);
+			prefab = Resources.Load<T>(assetName);
         }
         else
         {
@@ -107,8 +107,8 @@ public class LLoadBundle : MonoBehaviour
             bundles.TryGetValue(bundleName, out b);
             if (b != null)
             {
-                Debug.Log(string.Format(LGameConfig.ASSETBUNDLE_LOAD_FORMAT, assetName));
-                prefab = b.LoadAsset(string.Format(LGameConfig.ASSETBUNDLE_LOAD_FORMAT, assetName), assetType);
+//				Debug.Log(string.Format(LGameConfig.ASSET_BASE_FORMAT, assetName));
+				prefab = b.LoadAsset<T>(string.Format(LGameConfig.ASSET_BASE_FORMAT, assetName));
             }else{
                 Debug.Log("bundle not exist! : "+bundleName);
             }
@@ -122,7 +122,7 @@ public class LLoadBundle : MonoBehaviour
         if (LGameConfig.GetInstance().isDebug)
         {
             assetName = assetName.Split('.')[0];
-            prefabs = Resources.LoadAll<T>(string.Format("Prefabs/{0}", assetName));
+            prefabs = Resources.LoadAll<T>(assetName);
         }
         else
         {
@@ -144,7 +144,7 @@ public class LLoadBundle : MonoBehaviour
             bundles.TryGetValue(bundle_names[i], out b);
             if (b != null)
             {
-                b.Unload(false);
+				b.Unload(true);
                 bundles.Remove(bundle_names[i]);
             }
         }
