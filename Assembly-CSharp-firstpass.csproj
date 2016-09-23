@@ -90,7 +90,6 @@
      <None Include="Assets\Game\Resources\@Lua\Game\Common\MsgId.txt" />
      <None Include="Assets\Game\Editor\TexturePackerImporter\SettingsTexturePackerImporter.txt" />
      <None Include="Assets\Slua\Resources\perf.txt" />
-     <None Include="Assets\Game\Editor\AssetBundleMaker\config.xml" />
      <None Include="Assets\Game\Resources\config.txt" />
      <None Include="Assets\Game\Resources\Atlas\digit1.txt" />
      <None Include="Assets\Slua\Resources\delegate.txt" />
