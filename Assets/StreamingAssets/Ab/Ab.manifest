@@ -65,30 +65,30 @@ AssetBundleManifest:
       Name: audios-enemy3_down_mp3.ab
       Dependencies: {}
     Info_21:
+      Name: prefabs-grid_cell_prefab.ab
+      Dependencies: {}
+    Info_22:
+      Name: prefabs-list_cell_prefab.ab
+      Dependencies: {}
+    Info_23:
       Name: prefabs-msgbox_prefab.ab
       Dependencies:
         Dependency_0: atlas-face01.ab
-    Info_22:
-      Name: prefabs-teddy_prefab.ab
-      Dependencies: {}
-    Info_23:
-      Name: prefabs-windowgridview_prefab.ab
-      Dependencies: {}
     Info_24:
-      Name: prefabs-grid_cell_prefab.ab
-      Dependencies: {}
-    Info_25:
-      Name: prefabs-list_cell_prefab.ab
-      Dependencies: {}
-    Info_26:
       Name: prefabs-page_cell_prefab.ab
       Dependencies: {}
-    Info_27:
+    Info_25:
       Name: prefabs-scorl_test_prefab.ab
       Dependencies:
         Dependency_0: atlas-mytest.ab
-    Info_28:
+    Info_26:
       Name: prefabs-tbl_cell_prefab.ab
+      Dependencies: {}
+    Info_27:
+      Name: prefabs-teddy_prefab.ab
+      Dependencies: {}
+    Info_28:
+      Name: prefabs-windowgridview_prefab.ab
       Dependencies: {}
     Info_29:
       Name: atlas-digit1.ab

@@ -36,7 +36,7 @@ public class ExportAssetBundles : Editor
 					list.Add(assetPath);
 				});
 				AssetBundleBuild build = new AssetBundleBuild ();
-				build.assetBundleName = path.Replace('.','_').Replace('/','-') +".ab";
+				build.assetBundleName = path.Replace('.','_').Replace(Path.DirectorySeparatorChar,'-') +".ab";
 				build.assetNames = list.ToArray();
 				buildMap.Add (build);
 			
@@ -61,10 +61,10 @@ public class ExportAssetBundles : Editor
 					string abName = "";
 					string _path = dic [baseFile] [0];
 					if (dic [baseFile].Count > 1) { //mix
-						string mixPath = Path.GetDirectoryName (_path) + "/" + Path.GetFileNameWithoutExtension (_path);
-						abName = mixPath.Replace ('.', '_').Replace ('/', '-') + ".ab";
+						string mixPath = Path.GetDirectoryName (_path) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (_path);
+						abName = mixPath.Replace ('.', '_').Replace (Path.DirectorySeparatorChar, '-') + ".ab";
 					} else {
-						abName = _path.Replace ('.', '_').Replace ('/', '-') + ".ab";
+						abName = _path.Replace ('.', '_').Replace (Path.DirectorySeparatorChar, '-') + ".ab";
 					}
 
 

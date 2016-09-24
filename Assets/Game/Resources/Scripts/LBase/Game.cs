@@ -90,7 +90,7 @@ public class Game : MonoBehaviour
 
     protected byte[] loadLuaWithAb(string strFile)
     {
-		TextAsset asset = LLoadBundle.GetInstance ().LoadAsset<TextAsset>("Ab/@lua.ab", "@Lua/" + strFile + ".txt");
+		TextAsset asset = LLoadBundle.GetInstance ().LoadAsset<TextAsset>("@lua.ab", "@Lua/" + strFile + ".txt");
         if (asset == null) return null;
 		return asset.bytes;
     }
@@ -110,11 +110,15 @@ public class Game : MonoBehaviour
 				LResUpdate resUpdate = obj.AddComponent<LResUpdate> ();
 				resUpdate.onCompleteHandler = () => {
 					Destroy (obj);
-					_l.start ("main");
-				};
+                    LLoadBundle.GetInstance().LoadAllBundles(new string[] { "@lua.ab" }, () =>
+                    {
+                        _l.start("main");
+                    });
+                };
 				resUpdate.checkUpdate ();
 			} else {
-				LLoadBundle.GetInstance ().LoadAllBundles (new string[] { "Ab/@lua.ab" },()=>{
+				LLoadBundle.GetInstance ().LoadAllBundles (new string[] { "@lua.ab" },()=>
+                {
 					_l.start ("main");
 				});
 			}

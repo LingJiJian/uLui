@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2327562761
+CRC: 2000606210
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7f83a32b81c127d5135de4b96c3c8e66
+    Hash: 797d7d27bef1aff5d711815a41222163
   TypeTreeHash:
     serializedVersion: 2
     Hash: d53f8c057a10f2f7c10788130ea18551
@@ -38,4 +38,4 @@ ClassTypes:
 Assets:
 - Assets/Game/Resources/Prefabs/MsgBox.prefab
 Dependencies:
-- /Users/air/Documents/github/uLui/Assets/StreamingAssets/Ab/atlas-face01.ab
+- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/atlas-face01.ab

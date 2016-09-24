@@ -164,7 +164,7 @@ public class LGameConfig
     }
 
 	public static string GetABNameWithAtlasPath(string path){
-		return string.Format("{0}{1}{2}",ASSETBUNDLE_PATH, path.Replace ('/', '-').Replace ('.', '_').ToLower(),ASSETBUNDLE_AFFIX);
+		return string.Format("{0}{1}", path.Replace ('/', '-').Replace ('.', '_').ToLower(),ASSETBUNDLE_AFFIX);
 	}
 
     private void LoadConfig()

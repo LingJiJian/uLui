@@ -72,6 +72,7 @@ public class LLoadBundle : MonoBehaviour
 
     public Sprite LoadAtlas(string atlasName,out string txt)
     {
+        Debug.Log("LoadAtlas:" + atlasName);
         txt = "";
         Sprite atlas = null;
         if (LGameConfig.GetInstance().isDebug)

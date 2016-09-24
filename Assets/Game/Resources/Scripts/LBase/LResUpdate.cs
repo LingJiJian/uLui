@@ -24,7 +24,7 @@ public class LResUpdate : MonoBehaviour
 			if (!LGameConfig.GetInstance().isDebug && LGameConfig.GetInstance().isHotFix) {
 				return LGameConfig.LOCAL_URL_PREFIX + Application.persistentDataPath + Path.DirectorySeparatorChar;
 			} else {
-				return LGameConfig.LOCAL_URL_PREFIX + Application.streamingAssetsPath + Path.DirectorySeparatorChar;
+				return LGameConfig.LOCAL_URL_PREFIX + Application.streamingAssetsPath + Path.DirectorySeparatorChar + LGameConfig.ASSETBUNDLE_PATH;
 			}
 		}
 	}
@@ -32,9 +32,9 @@ public class LResUpdate : MonoBehaviour
 	public static string LOCAL_RES_PATH {
 		get {
 			if (LGameConfig.GetInstance ().isDebug) {
-				return Application.streamingAssetsPath + Path.DirectorySeparatorChar;
+				return Application.streamingAssetsPath + Path.DirectorySeparatorChar + LGameConfig.ASSETBUNDLE_PATH;
 			} else {
-				return Application.persistentDataPath + Path.DirectorySeparatorChar;
+				return Application.persistentDataPath + Path.DirectorySeparatorChar ;
 			}
 		}
 	}

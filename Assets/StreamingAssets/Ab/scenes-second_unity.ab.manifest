@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2736671247
+CRC: 3294368432
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 038389f04b0aea15e224ecddc64aa4f8
+    Hash: 16f772e1e7ab8bf14abe135b7eba8961
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0adce546101b2652165f436d6139e824
@@ -106,4 +106,4 @@ ClassTypes:
 Assets:
 - Assets/Game/Resources/Scenes/second.unity
 Dependencies:
-- /Users/air/Documents/github/uLui/Assets/StreamingAssets/Ab/prefabs-teddy_prefab.ab
+- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/prefabs-teddy_prefab.ab

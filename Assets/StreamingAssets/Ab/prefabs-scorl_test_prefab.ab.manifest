@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3251944230
+CRC: 3073281913
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 016e5139a5a599251e346ac251e3a633
+    Hash: 2b3b4c8843899d52458da1b59918bedb
   TypeTreeHash:
     serializedVersion: 2
     Hash: c992def56aa9b7f78fd18ee38abe0197
@@ -28,4 +28,4 @@ ClassTypes:
 Assets:
 - Assets/Game/Resources/Prefabs/scorl_test.prefab
 Dependencies:
-- /Users/air/Documents/github/uLui/Assets/StreamingAssets/Ab/atlas-mytest.ab
+- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/atlas-mytest.ab

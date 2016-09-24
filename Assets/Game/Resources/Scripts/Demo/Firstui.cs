@@ -59,7 +59,7 @@ public class Firstui : MonoBehaviour
         };
         
         tblView.cellsSize = new Vector2(150, 40);
-		tblView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("Ab/prefabs-tbl_cell_prefab.ab", "Prefabs/tbl_cell.prefab");
+		tblView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-tbl_cell_prefab.ab", "Prefabs/tbl_cell.prefab");
         tblView.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 40 * 5);
         tblView.cellsCount = 100;
         tblView.onDataSourceAdapterHandler = (LTableViewCell cell, int idx) =>
@@ -89,7 +89,7 @@ public class Firstui : MonoBehaviour
         //rtfView.reloadData();
 
         pageView.cellsSize = new Vector2(150, 100);
-		pageView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("Ab/prefabs-page_cell_prefab.ab", "Prefabs/page_cell.prefab");
+		pageView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-page_cell_prefab.ab", "Prefabs/page_cell.prefab");
         //pageView.cellTemplate.node = Resources.Load("Prefabs/page_cell") as GameObject;
         pageView.cellsCount = 14;
         pageView.onDataSourceAdapterHandler = (LTableViewCell cell, int idx) =>
@@ -108,7 +108,7 @@ public class Firstui : MonoBehaviour
         };
         pageView.reloadData();
 
-		listView.itemTemplate = LLoadBundle.GetInstance().LoadAsset<GameObject>("Ab/prefabs-list_cell_prefab.ab", "Prefabs/list_cell.prefab");
+		listView.itemTemplate = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-list_cell_prefab.ab", "Prefabs/list_cell.prefab");
         listView.limitNum = 10; //not must to set limitNum
         for (int i = 0; i < 30; i++)
         {
@@ -120,7 +120,7 @@ public class Firstui : MonoBehaviour
         listView.reloadData();
 
         gridView.cellsSize = new Vector2(100, 100);
-		gridView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("Ab/prefabs-grid_cell_prefab.ab", "Prefabs/grid_cell.prefab");
+		gridView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-grid_cell_prefab.ab", "Prefabs/grid_cell.prefab");
         gridView.cols = 4;
         gridView.cellsCount = 100;
         gridView.onDataSourceAdapterHandler = (LGridViewCell cell, int idx) =>
