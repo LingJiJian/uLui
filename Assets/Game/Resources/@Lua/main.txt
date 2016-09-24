@@ -13,6 +13,8 @@ local function main()
 	LLoadBundle.GetInstance():LoadAllBundles({
 		"Ab/scenes-first_unity.ab",
 		"Ab/scenes-second_unity.ab",
+		"Ab/prefabs-windowgridview_prefab.ab",
+		"Ab/prefabs-windowgridview_prefab.ab",
 		"Ab/atlas-digit1.ab",
 		"Ab/atlas-face01.ab",
 		"Ab/atlas-face02.ab",

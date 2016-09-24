@@ -18,6 +18,7 @@ local function main()
 		"Ab/atlas-face02.ab",
 		"Ab/atlas-mytest.ab",
 		"Ab/prefabs-msgbox_prefab.ab",
+		"Ab/prefabs-windowgridview_prefab.ab",
 		"Ab/prefabs-tbl_cell_prefab.ab",
 		"Ab/prefabs-list_cell_prefab.ab",
 		"Ab/prefabs-grid_cell_prefab.ab",
