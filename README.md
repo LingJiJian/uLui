@@ -38,8 +38,9 @@
 
 ### 如何热更？
 1.首先配置热更<br>
-①config.txt 中修改 Debug 为 1<br>
-②config.txt 中修改 ResUrl 为 你的cdn地址<br>
+①config.txt 中修改 Debug 为 0<br>
+①config.txt 中修改 HotFix 为 1<br>
+③config.txt 中修改 ResUrl 为 你的cdn地址<br>
 2.准备打包ab<br>
 ①点击菜单栏Tools->HotfixConfig，然后选择对应的平台<br>
 ②然后会生成data.zip和version.ver，把他们放到cdn服务器下准备下载<br>
