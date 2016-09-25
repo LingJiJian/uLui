@@ -31,7 +31,7 @@ public class ExportAssetBundles : Editor
 			if (path.StartsWith ("@")) {
 			
 				List<string> list = new List<string> ();
-				forEachHandle (basePath, null, (string filename) => {
+                Helper.forEachHandle (basePath, null, (string filename) => {
 					string assetPath = filename.Replace(Application.dataPath,"Assets");
 					list.Add(assetPath);
 				});
@@ -43,7 +43,7 @@ public class ExportAssetBundles : Editor
 			} else {
 				Dictionary<string,List<string>> dic = new Dictionary<string, List<string>> ();
 
-				forEachHandle (basePath, null, (string filename) => {
+                Helper.forEachHandle (basePath, null, (string filename) => {
 					
 					string assetPath = filename.Replace(Application.dataPath,"Assets");
 
@@ -110,7 +110,7 @@ public class ExportAssetBundles : Editor
         string srcPath = Application.streamingAssetsPath + "/Ab";
         string outPath = ExportConfigWindow.EXPORT_OUT_PATH + Path.DirectorySeparatorChar;
 
-		forEachHandle(srcPath, new List<string>(){"meta"}, (string filename) =>
+		Helper.forEachHandle(srcPath, new List<string>(){"meta"}, (string filename) =>
         {
             File.Delete(@filename);
         });
@@ -122,30 +122,6 @@ public class ExportAssetBundles : Editor
         LUtil.PackFiles(outPath + LGameConfig.UPDATE_FILE_ZIP, srcPath);
 
         Debug.Log(" 热更zip包： " + outPath + LGameConfig.UPDATE_FILE_ZIP);
-    }
-
-    public static void forEachHandle(string path, List<string> matchExts, UnityAction<string> handle)
-    {
-        string[] names = Directory.GetFiles(path);
-        string[] dirs = Directory.GetDirectories(path);
-        foreach (string filename in names)
-        {
-			if (filename.EndsWith ("meta") || string.IsNullOrEmpty(Path.GetFileNameWithoutExtension(filename)))
-				continue;
-
-            string[] name_splits = filename.Split('.');
-            string ext = name_splits[name_splits.Length - 1];
-			if (matchExts == null) {
-				handle.Invoke (filename);
-			}else if(matchExts.Contains (ext)) {
-				handle.Invoke (filename);
-			}
-        }
-
-        foreach (string dir in dirs)
-        {
-            forEachHandle(dir, matchExts, handle);
-        }
     }
 
     public static string MD5File(string file)
@@ -166,40 +142,6 @@ public class ExportAssetBundles : Editor
         catch (System.Exception ex)
         {
             throw new System.Exception("md5file() fail, error:" + ex.Message);
-        }
-    }
-
-    public static void CopyDirectory(string sourceDirName, string destDirName)
-    {
-        try
-        {
-            if (!Directory.Exists(destDirName))
-            {
-                Directory.CreateDirectory(destDirName);
-                File.SetAttributes(destDirName, File.GetAttributes(sourceDirName));
-            }
-
-            if (destDirName[destDirName.Length - 1] != Path.DirectorySeparatorChar)
-                destDirName = destDirName + Path.DirectorySeparatorChar;
-
-            string[] files = Directory.GetFiles(sourceDirName);
-            foreach (string file in files)
-            {
-                //if (File.Exists(destDirName + Path.GetFileName(file)))
-                //    continue;
-                File.Copy(file, destDirName + Path.GetFileName(file), true);
-                File.SetAttributes(destDirName + Path.GetFileName(file), FileAttributes.Normal);
-            }
-
-            string[] dirs = Directory.GetDirectories(sourceDirName);
-            foreach (string dir in dirs)
-            {
-                CopyDirectory(dir, destDirName + Path.GetFileName(dir));
-            }
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError(ex.Message);
         }
     }
 }

@@ -90,9 +90,13 @@ public class Game : MonoBehaviour
 
     protected byte[] loadLuaWithAb(string strFile)
     {
-		TextAsset asset = LLoadBundle.GetInstance ().LoadAsset<TextAsset>("@lua.ab", "@Lua/" + strFile + ".txt");
+        string ext = LGameConfig.GetInstance().isEncrypt ? ".bytes" : ".txt";
+        TextAsset asset = LLoadBundle.GetInstance ().LoadAsset<TextAsset>("@lua.ab", "@Lua/" + strFile + ext);
         if (asset == null) return null;
-		return asset.bytes;
+        //if (LGameConfig.GetInstance().isEncrypt)
+        //    return LUtil.AESDecrypt(asset.bytes, LGameConfig.EncryptKey32, LGameConfig.EncryptKey16);
+        //else
+            return asset.bytes;
     }
 
     void complete()

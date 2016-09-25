@@ -19,12 +19,18 @@ public class LGameConfig
     public static readonly string UPDATE_FILE_ZIP = "data.zip";
     // asset load base format
 	public static readonly string ASSET_BASE_FORMAT = "Assets/Game/Resources/{0}";
+    // 32 bytes encrypt key
+    public static string EncryptKey32 = "12345678901234567890123456789012";
+    // 16 bytes encrypt key
+    public static string EncryptKey16 = "1234567890123456";
     // is activate debug
     public bool isDebug = true;
     // is pack lua files in app
     public bool isHotFix = true;
     // is show frame rate
     public bool isShowFps = true;
+    // is use luajit & encode
+    public bool isEncrypt = true;
     // remote server resource url
     public string SERVER_RES_URL = "";
     // game default target frame rate
@@ -188,6 +194,10 @@ public class LGameConfig
 
             XmlNodeList showFps = rootElem.GetElementsByTagName("ShowFps");
             isShowFps = showFps[0].InnerText == "1";
+
+            XmlNodeList encrypt = rootElem.GetElementsByTagName("Encrypt");
+            isEncrypt = encrypt[0].InnerText == "1";
+            
         }
     }
 }

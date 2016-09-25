@@ -7,7 +7,9 @@ using System;
 
 public class MakeDebugFile : Editor
 {
-//    [MenuItem("Tools/Copy Debug Lua")]
+    public static string luajitPath = Application.dataPath + "/../build/luajit-2.0.4/src";
+
+    //[MenuItem("Tools/Copy")]
     public static void CopyLuaTxt() {
 
         string fromUrl = Application.streamingAssetsPath + "/@Lua";
@@ -16,16 +18,27 @@ public class MakeDebugFile : Editor
 		AssetDatabase.DeleteAsset ("Assets/Game/Resources/@Lua");
         Directory.CreateDirectory(toUrl);
 
-		CopyDirectory(fromUrl, toUrl,new List<string>{".lua"});
+		CopyAndChangeDirectory(fromUrl, toUrl,new List<string>{".lua"});
         AssetDatabase.Refresh();
         Debug.Log("copy finish:" + toUrl);
     }
+
+    //[MenuItem("Tools/test")]
+    //public static void Test()
+    //{
+    //    TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/test.txt");
+
+    //    byte[] encrypts = LUtil.AESEncrypt(textAsset.bytes,LGameConfig.EncryptKey32,"1234567890123456");
+    //    byte[] content = LUtil.AESDecrypt(encrypts, LGameConfig.EncryptKey32, "1234567890123456");
+
+    //    Debug.Log(System.Text.Encoding.UTF8.GetString(content));
+    //}
 
     [MenuItem("Tools/Edit Atlas Suffix")]
     public static void EditAtlasSuffix()
     {
         string basePath = Application.dataPath + "/Game/Resources/Atlas";
-		forEachHandle(basePath, new List<string>{"txt","tpsheet"}, (string path) =>
+        Helper.forEachHandle(basePath, new List<string>{"txt","tpsheet"}, (string path) =>
         {
 				
             string[] name_splits = path.Split('.');
@@ -43,7 +56,7 @@ public class MakeDebugFile : Editor
         Debug.Log("Atlas后缀修改完成");
     }
 
-	public static void CopyDirectory(string sourceDirName, string destDirName,List<string> exts)
+	public static void CopyAndChangeDirectory(string sourceDirName, string destDirName,List<string> exts)
     {
         try
         {
@@ -63,43 +76,49 @@ public class MakeDebugFile : Editor
                 //    continue;
 				if (file.EndsWith("meta"))
                     continue;
-                File.Copy(file, destDirName + Path.GetFileName(file), true);
-                File.SetAttributes(destDirName + Path.GetFileName(file), FileAttributes.Normal);
 
-				if (exts.Contains( Path.GetExtension(file) ))
-                    File.Move(destDirName + Path.GetFileName(file), Path.ChangeExtension(destDirName + Path.GetFileName(file), ".txt"));
+                string destFileName = destDirName + Path.GetFileName(file);
+                if (exts.Contains(Path.GetExtension(file)))
+                {
+                    if (LGameConfig.GetInstance().isEncrypt)
+                    {
+                        destFileName = destDirName + Path.GetFileNameWithoutExtension(file) + ".bytes";
+                        //luajit
+                        Helper.RunCmd(luajitPath + "/luajit.exe", string.Format("-b {0} {1}", file, destFileName), luajitPath);
+                        ////encrypt
+
+                        //FileStream fr = new FileStream(destFileName, FileMode.Open);
+                        //byte[] encryptStrs = new byte[fr.Length];
+                        //fr.Read(encryptStrs, 0, encryptStrs.Length);
+                        //fr.Close();
+
+                        //FileStream fs = new FileStream(destFileName, FileMode.Create);
+                        //fs.Write(encryptStrs, 0, encryptStrs.Length);
+                        //fs.Flush();
+                        //fs.Close();
+                    }
+                    else
+                    {
+                        destFileName = destDirName + Path.GetFileNameWithoutExtension(file) + ".txt";
+                        File.Copy(file, destFileName, true);
+                    }
+                }
+                else
+                {
+                    File.Copy(file, destFileName, true);
+                }
+                File.SetAttributes(destFileName, FileAttributes.Normal);
             }
 
             string[] dirs = Directory.GetDirectories(sourceDirName);
             foreach (string dir in dirs)
             {
-				CopyDirectory(dir, destDirName + Path.GetFileName(dir),exts);
+				CopyAndChangeDirectory(dir, destDirName + Path.GetFileName(dir),exts);
             }
         }
         catch (Exception ex)
         {
             Debug.Log(ex.Message);
-        }
-    }
-    
-
-    public static void forEachHandle(string path, List<string> matchExts, UnityAction<string> handle)
-    {
-        string[] names = Directory.GetFiles(path);
-        string[] dirs = Directory.GetDirectories(path);
-        foreach (string filename in names)
-        {
-            string[] name_splits = filename.Split('.');
-            string ext = name_splits[name_splits.Length - 1];
-            if (matchExts.Contains(ext))
-            {
-                handle.Invoke(filename);
-            }
-        }
-
-        foreach (string dir in dirs)
-        {
-            forEachHandle(dir, matchExts, handle);
         }
     }
 

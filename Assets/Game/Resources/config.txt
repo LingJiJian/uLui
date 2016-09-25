@@ -2,5 +2,6 @@
 	<Debug>0</Debug>
 	<HotFix>0</HotFix>
 	<ShowFps>1</ShowFps>
+	<Encrypt>1</Encrypt>
 	<ResUrl>http://192.168.1.106/down</ResUrl>
 </Root>

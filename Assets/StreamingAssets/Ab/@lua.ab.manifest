@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2638093672
+CRC: 1203438538
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: af1b6236794473d9bc65292a0c2cc5c2
+    Hash: f2260dedc3258ff878b519127bea7ab8
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,18 +12,18 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/Game/Resources/@Lua/Game/Common/NetworkManager.txt
-- Assets/Game/Resources/@Lua/Base/LGlobal.txt
-- Assets/Game/Resources/@Lua/Lib/protobuf/protobuf.txt
-- Assets/Game/Resources/@Lua/main.txt
-- Assets/Game/Resources/@Lua/Game/Common/MsgId.txt
+- Assets/Game/Resources/@Lua/Game/Common/MsgId.bytes
+- Assets/Game/Resources/@Lua/Game/Common/NetworkManager.bytes
+- Assets/Game/Resources/@Lua/Base/LClass.bytes
+- Assets/Game/Resources/@Lua/Game/Common/Util.bytes
 - Assets/Game/Resources/@Lua/Game/Proto/masterd.bytes
-- Assets/Game/Resources/@Lua/Game/Common/EventNames.txt
-- Assets/Game/Resources/@Lua/Lib/protobuf/parser.txt
-- Assets/Game/Resources/@Lua/Base/LVersion.txt
-- Assets/Game/Resources/@Lua/Game/MsgBox.txt
-- Assets/Game/Resources/@Lua/Base/LMessage.txt
-- Assets/Game/Resources/@Lua/Base/LClass.txt
-- Assets/Game/Resources/@Lua/Game/Common/Util.txt
-- Assets/Game/Resources/@Lua/import.txt
+- Assets/Game/Resources/@Lua/Lib/protobuf/protobuf.bytes
+- Assets/Game/Resources/@Lua/Lib/protobuf/parser.bytes
+- Assets/Game/Resources/@Lua/Base/LMessage.bytes
+- Assets/Game/Resources/@Lua/Game/MsgBox.bytes
+- Assets/Game/Resources/@Lua/Game/Common/EventNames.bytes
+- Assets/Game/Resources/@Lua/import.bytes
+- Assets/Game/Resources/@Lua/main.bytes
+- Assets/Game/Resources/@Lua/Base/LGlobal.bytes
+- Assets/Game/Resources/@Lua/Base/LVersion.bytes
 Dependencies: []
