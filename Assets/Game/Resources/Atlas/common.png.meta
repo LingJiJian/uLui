@@ -1,0 +1,111 @@
+fileFormatVersion: 2
+guid: 70d5c8ff6242c9b4eb6cb9c65da6ffec
+timeCreated: 1475292844
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ctlv_bg
+    21300002: ctlv_joy
+    21300004: img_cat
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: ctlv_bg
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 486
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32, y: 64}
+        - {x: -64, y: 52}
+        - {x: -64, y: -49}
+        - {x: -57, y: -64}
+        - {x: 64, y: -64}
+        - {x: 64, y: 64}
+    - name: ctlv_joy
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 970
+        width: 52
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: 26}
+        - {x: -26, y: 23}
+        - {x: -26, y: -17}
+        - {x: -16, y: -26}
+        - {x: 13, y: -26}
+        - {x: 26, y: -18}
+        - {x: 26, y: 20}
+        - {x: 23, y: 26}
+    - name: img_cat
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 616
+        width: 440
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -220, y: 203}
+        - {x: -220, y: -203}
+        - {x: 220, y: -203}
+        - {x: 220, y: 203}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

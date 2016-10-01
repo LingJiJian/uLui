@@ -59,29 +59,27 @@ public class Firstui : MonoBehaviour
         };
         
         tblView.cellsSize = new Vector2(150, 40);
-		tblView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-tbl_cell_prefab.ab", "Prefabs/tbl_cell.prefab");
         tblView.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 40 * 5);
         tblView.cellsCount = 100;
-        tblView.onDataSourceAdapterHandler = (LTableViewCell cell, int idx) =>
+        tblView.SetCellHandle((int idx, GameObject obj) =>
         {
-            if (cell == null)
-            {
-                cell = new LTableViewCell();
-                cell.node = (GameObject)Instantiate(tblView.cellTemplate.node);
-            }
-            cell.node.GetComponent<Text>().text = idx.ToString();
-            return cell;
-        };
+            obj.GetComponent<Text>().text = idx.ToString();
+        });
         tblView.reloadData();
 
         //rtfView.insertElement("hello world!!", Color.blue, 25, true, false, Color.blue, "数据");
         //rtfView.insertElement("测试文本内容!!", Color.red, 15, false, true, Color.blue, "");
-        //rtfView.insertElement("face01", 5f, "");
+        //rtfView.insertElement("Atlas/face/01", 5f, "");
         //rtfView.insertElement("The article comes from the point of the examination", Color.green, 15, true, false, Color.blue, "");
-//		rtfView.insertElement("Atlas/face02/1.png", "");
+        //		rtfView.insertElement("Atlas/face/0201.png", "");
         //rtfView.insertElement(1);
         //rtfView.insertElement("outline and newline", Color.yellow, 20, false, true, Color.blue, "");
-		rtfView.parseRichDefaultString("<lab txt=\"hello world!!\" color=#ffff00 data=数据 /><lab txt=\"测试文本内容\" isUnderLine=true size=40/><anim path=Atlas/face01 fps=5.0/><newline /><img path=Atlas/face02/1.png/><lab txt=\"The article comes from the point of the examination\" color=#ff0000 />");
+        rtfView.parseRichDefaultString(
+            "<lab txt=\"hello world!!\" color=#ffff00 data=数据 />"+
+            "<lab txt=\"测试文本内容\" isUnderLine=true size=40/><anim path=Atlas/face/01 fps=5.0/>"+
+            "<newline /><img path=Atlas/face/0201/>"+
+            "<lab txt=\"The article comes from the point of the \" color=#ff0000 />"+
+            "<lab txt=\"Examination\" color=#ff0000 isOutLine=true/>");
         rtfView.onClickHandler = (string data) =>
         {
             Debug.Log("data " + data);
@@ -89,26 +87,17 @@ public class Firstui : MonoBehaviour
         //rtfView.reloadData();
 
         pageView.cellsSize = new Vector2(150, 100);
-		pageView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-page_cell_prefab.ab", "Prefabs/page_cell.prefab");
-        //pageView.cellTemplate.node = Resources.Load("Prefabs/page_cell") as GameObject;
         pageView.cellsCount = 14;
-        pageView.onDataSourceAdapterHandler = (LTableViewCell cell, int idx) =>
+        pageView.SetCellHandle((int idx,GameObject obj) =>
         {
-            if (cell == null)
-            {
-                cell = new LTableViewCell();
-                cell.node = (GameObject)Instantiate(pageView.cellTemplate.node, Vector3.zero, pageView.cellTemplate.node.transform.rotation);
-            }
-            cell.node.transform.FindChild("Text").GetComponent<Text>().text = idx.ToString();
-            return cell;
-        };
+            obj.transform.FindChild("Text").GetComponent<Text>().text = idx.ToString();
+        });
         pageView.onPageChangedHandler = (int pageIdx) =>
         {
             Debug.Log("page " + pageIdx);
         };
         pageView.reloadData();
 
-		listView.itemTemplate = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-list_cell_prefab.ab", "Prefabs/list_cell.prefab");
         listView.limitNum = 10; //not must to set limitNum
         for (int i = 0; i < 30; i++)
         {
@@ -120,19 +109,12 @@ public class Firstui : MonoBehaviour
         listView.reloadData();
 
         gridView.cellsSize = new Vector2(100, 100);
-		gridView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-grid_cell_prefab.ab", "Prefabs/grid_cell.prefab");
         gridView.cols = 4;
         gridView.cellsCount = 100;
-        gridView.onDataSourceAdapterHandler = (LGridViewCell cell, int idx) =>
+        gridView.SetCellHandle((int idx,GameObject obj) =>
         {
-            if (cell == null)
-            {
-                cell = new LGridViewCell();
-                cell.node = (GameObject)Instantiate(gridView.cellTemplate.node);
-            }
-            cell.node.GetComponent<Text>().text = idx.ToString();
-            return cell;
-        };
+            obj.GetComponent<Text>().text = idx.ToString();
+        });
         gridView.reloadData();
     }
 }

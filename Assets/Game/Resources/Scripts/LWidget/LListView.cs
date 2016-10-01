@@ -46,8 +46,6 @@ namespace Lui
         protected float _layoutIndexSize;
         public List<GameObject> nodeList { get; protected set; }
         public List<GameObject> freeList { get; protected set; }
-        public GameObject itemTemplate;
-        //public Rect bounceBox;
 
         public LListView()
         {
@@ -258,37 +256,9 @@ namespace Lui
             }
             if (ret == null)
             {
-                ret = (GameObject)Instantiate(itemTemplate, Vector3.zero, itemTemplate.transform.rotation);
+                ret = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
             }
             return ret;
         }
-
-        //void Start()
-        //{
-        //    RectTransform rtran = GetComponent<RectTransform>();
-        //    bounceBox = new Rect(transform.position.x, transform.position.y, rtran.sizeDelta.x, rtran.sizeDelta.y);
-        //}
-
-        //protected override void onScrolling()
-        //{
-        //    base.onScrolling();
-
-        //    GameObject obj = null;
-        //    for (int i = 0; i < nodeList.Count; i++)
-        //    {
-        //        obj = nodeList[i];
-        //        Vector2 pos = obj.transform.position;
-        //        Vector2 topPoint = new Vector2(pos.x, pos.y + obj.GetComponent<RectTransform>().rect.height);
-        //        if (bounceBox.Contains(pos) ||
-        //            bounceBox.Contains(topPoint))
-        //        {
-        //            obj.SetActive(true);
-        //        }
-        //        else
-        //        {
-        //            obj.SetActive(false);
-        //        }
-        //    }
-        //}
     }
 }

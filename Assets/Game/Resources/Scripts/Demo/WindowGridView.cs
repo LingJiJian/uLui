@@ -24,22 +24,14 @@ public class WindowGridView : LWindowBase
         });
 
         gridPageView.cellsSize = new Vector2(400, 400);
-		gridPageView.cellTemplate.node = LLoadBundle.GetInstance().LoadAsset<GameObject>("prefabs-grid_cell_prefab.ab", "Prefabs/grid_cell.prefab");
         gridPageView.cols = 4;
         gridPageView.rows = 4;
         gridPageView.gridCellsCount = 100;
         gridPageView.gridCellsSize = new Vector2(100, 100);
-        gridPageView.onGridDataSourceAdapterHandler = (LGridPageViewCell cell, int idx) =>
+        gridPageView.SetCellHandle((int idx,GameObject obj) =>
         {
-            if (cell == null)
-            {
-                cell = new LGridPageViewCell();
-                cell.node = (GameObject)Instantiate(gridPageView.cellTemplate.node, Vector3.zero, gridPageView.cellTemplate.node.transform.rotation);
-            }
-            cell.node.GetComponent<Text>().text = idx.ToString();
-            cell.node.SetActive(idx != LScrollView.INVALID_INDEX);
-            return cell;
-        };
+            obj.GetComponent<Text>().text = idx.ToString();
+        });
         gridPageView.reloadData();
     }
 

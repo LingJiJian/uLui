@@ -13,13 +13,11 @@ local function main()
 	LLoadBundle.GetInstance():LoadAllBundles({
 		"scenes-first_unity.ab",
 		"scenes-second_unity.ab",
-		"atlas-digit1.ab",
-		"atlas-face01.ab",
-		"atlas-face02.ab",
-		"atlas-mytest.ab",
+		"atlas-num_png.ab",
+		"atlas-face_png.ab",
+		"atlas-common_png.ab",
 		"prefabs-msgbox_prefab.ab",
 		"prefabs-windowgridview_prefab.ab",
-		"prefabs-tbl_cell_prefab.ab",
 		"prefabs-list_cell_prefab.ab",
 		"prefabs-grid_cell_prefab.ab",
 		"prefabs-page_cell_prefab.ab"
@@ -32,18 +30,6 @@ local function main()
 		end)
 
 	end)
-
-	-- LTextureAtlas:GetInstance():LoadData("mytest")
-
-	-- local sp = LTextureAtlas:GetInstance():getSprite("cat_pic")
-	-- local obj = GameObject()
-	-- local imageComp = obj:AddComponent(Image)
-	-- imageComp.sprite = sp
-	-- imageComp:SetNativeSize();
-	-- obj.transform:SetParent(GameObject.Find("Canvas").transform)
-
-	-- Object.Destroy(obj)
-	-- LTextureAtlas:GetInstance():RemoveTexture("test")
 
 end
 

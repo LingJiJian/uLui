@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4217434962
+CRC: 1373252058
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 71bc8cdb762d9a88c1d1ce412a38deb6
+    Hash: f546929f27c18923fa6727e3b22ef723
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e6352107588a85aedd094bf7aca9747e
+    Hash: a8d9935d4752db3d34e384705f1e5956
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -88,6 +88,9 @@ ClassTypes:
 Assets:
 - Assets/Game/Resources/Scenes/first.unity
 Dependencies:
+- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/prefabs-grid_cell_prefab.ab
 - F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/prefabs-list_cell_prefab.ab
+- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/prefabs-page_cell_prefab.ab
 - F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/prefabs-scorl_test_prefab.ab
-- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/atlas-mytest.ab
+- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/prefabs-tbl_test_prefab.ab
+- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/atlas-common_png.ab

@@ -49,7 +49,6 @@ namespace Lui
 
     class LRichElement : Object
     {
-
         public RichType type { get; protected set; }
         public Color color { get; protected set; }
         public string data { get; protected set; }
@@ -63,8 +62,9 @@ namespace Lui
         public bool isUnderLine { get; protected set; }
         public bool isOutLine { get; protected set; }
         public int fontSize { get; protected set; }
+        public Color outLineColor { get; protected set; }
 
-        public LRichElementText(Color color, string txt, int fontSize, bool isUnderLine, bool isOutLine, string data)
+        public LRichElementText(Color color, string txt, int fontSize, bool isUnderLine, bool isOutLine,Color outLineColor, string data)
         {
             this.type = RichType.TEXT;
             this.color = color;
@@ -72,6 +72,7 @@ namespace Lui
             this.fontSize = fontSize;
             this.isUnderLine = isUnderLine;
             this.isOutLine = isOutLine;
+            this.outLineColor = outLineColor;
             this.data = data;
         }
     }
@@ -143,6 +144,7 @@ namespace Lui
         public int height;
         public bool isOutLine;
         public bool isUnderLine;
+        public Color outLineColor;
         public Font font;
         public int fontSize;
         public Color color;
@@ -161,6 +163,7 @@ namespace Lui
             cloneOjb.height = this.height;
             cloneOjb.isOutLine = this.isOutLine;
             cloneOjb.isUnderLine = this.isUnderLine;
+            cloneOjb.outLineColor = this.outLineColor;
             cloneOjb.font = this.font;
             cloneOjb.fontSize = this.fontSize;
             cloneOjb.color = this.color;
@@ -176,8 +179,9 @@ namespace Lui
 		{
 			return (this.color 			== elem.color &&
 				    this.isOutLine 		== elem.isOutLine &&
-					this.isUnderLine 	== elem.isUnderLine && 
-					this.font 			== elem.font &&
+					this.isUnderLine 	== elem.isUnderLine &&
+                    this.outLineColor   == elem.outLineColor &&
+                    this.font 			== elem.font &&
 					this.fontSize 		== elem.fontSize &&
 					this.data 			== elem.data);
 		}
@@ -232,7 +236,7 @@ namespace Lui
 
         public void insertElement(string txt, Color color, int fontSize, bool isUnderLine, bool isOutLine, Color outLineColor, string data)
         {
-            _richElements.Add(new LRichElementText(color, txt, fontSize, isUnderLine, isOutLine, data));
+            _richElements.Add(new LRichElementText(color, txt, fontSize, isUnderLine, isOutLine, outLineColor, data));
         }
 
         public void insertElement(string path, float fp, string data)
@@ -295,6 +299,7 @@ namespace Lui
                         rendElem.strChar = strChar.ToString();
                         rendElem.isOutLine = elemText.isOutLine;
                         rendElem.isUnderLine = elemText.isUnderLine;
+                        rendElem.outLineColor = elemText.outLineColor;
                         rendElem.font = this.font;
                         rendElem.fontSize = elemText.fontSize;
                         rendElem.data = elemText.data;
@@ -323,8 +328,8 @@ namespace Lui
 
 					string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
 					string spname = System.IO.Path.GetFileName(rendElem.path);
-					LTextureAtlas.GetInstance().LoadData(atlas);
-                    Sprite sp = LTextureAtlas.GetInstance().getSprite(atlas, spname);
+
+                    Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -337,8 +342,11 @@ namespace Lui
                     rendElem.path = elemAnim.path;
                     rendElem.data = elemAnim.data;
                     rendElem.fs = elemAnim.fs;
-                    LTextureAtlas.GetInstance().LoadData(rendElem.path);
-                    Sprite sp = LTextureAtlas.GetInstance().getSprites(rendElem.path)[0];
+
+                    string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
+                    string spname = System.IO.Path.GetFileName(rendElem.path);
+
+                    Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -635,6 +643,7 @@ namespace Lui
                 if (outline == null)
                 {
                     outline = lab.AddComponent<Outline>();
+                    outline.effectColor = elem.outLineColor;
                 }
             }
             else {
@@ -664,8 +673,7 @@ namespace Lui
             {
 				string atlas = System.IO.Path.GetDirectoryName(elem.path);
 				string spname = System.IO.Path.GetFileName(elem.path);
-                LTextureAtlas.GetInstance().LoadData(atlas);
-                Sprite sp = LTextureAtlas.GetInstance().getSprite(atlas, spname);
+                Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
                 comImage.sprite = sp;
             }
         }
@@ -927,7 +935,7 @@ namespace Lui
                         param.ContainsKey("size") ? System.Convert.ToInt32(param["size"]) : defaultLabSize,
                         param.ContainsKey("isUnderLine") ? System.Convert.ToBoolean(param["isUnderLine"]) : false,
                         param.ContainsKey("isOutLine") ? System.Convert.ToBoolean(param["isOutLine"]) : false,
-                        LUtil.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : defaultLabColor),
+                        LUtil.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : "#000000"),
                         param.ContainsKey("data") ? param["data"] : ""
                         );
                 }else if(flag == "img")

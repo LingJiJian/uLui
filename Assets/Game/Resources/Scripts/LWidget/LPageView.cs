@@ -41,6 +41,10 @@ namespace Lui
     {
         public int pageIndex { get; protected set; }
         public UnityAction<int> onPageChangedHandler;
+        public void SetCellHandle(UnityAction<int, GameObject> act)
+        {
+            onCellHandle = act;
+        }
 
         protected override void onScrolling()
         {
@@ -78,7 +82,7 @@ namespace Lui
 
         public override void updateCellAtIndex(int idx)
         {
-            LTableViewCell cell = onDataSourceAdapterHandler.Invoke(dequeueCell(), idx);
+            LTableViewCell cell = _onDataSourceAdapterHandler(dequeueCell(), idx);
             if (cell == null)
             {
                 Debug.LogError("cell can not be NULL");

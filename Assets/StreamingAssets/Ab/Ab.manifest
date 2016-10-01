@@ -73,16 +73,15 @@ AssetBundleManifest:
     Info_23:
       Name: prefabs-msgbox_prefab.ab
       Dependencies:
-        Dependency_0: atlas-face01.ab
+        Dependency_0: atlas-face_png.ab
     Info_24:
       Name: prefabs-page_cell_prefab.ab
       Dependencies: {}
     Info_25:
       Name: prefabs-scorl_test_prefab.ab
-      Dependencies:
-        Dependency_0: atlas-mytest.ab
+      Dependencies: {}
     Info_26:
-      Name: prefabs-tbl_cell_prefab.ab
+      Name: prefabs-tbl_test_prefab.ab
       Dependencies: {}
     Info_27:
       Name: prefabs-teddy_prefab.ab
@@ -91,30 +90,31 @@ AssetBundleManifest:
       Name: prefabs-windowgridview_prefab.ab
       Dependencies: {}
     Info_29:
-      Name: atlas-digit1.ab
+      Name: atlas-common_png.ab
       Dependencies: {}
     Info_30:
-      Name: atlas-face01.ab
+      Name: atlas-face_png.ab
       Dependencies: {}
     Info_31:
-      Name: atlas-face02.ab
+      Name: atlas-num_png.ab
       Dependencies: {}
     Info_32:
-      Name: atlas-mytest.ab
-      Dependencies: {}
-    Info_33:
       Name: '@lua.ab'
       Dependencies: {}
-    Info_34:
+    Info_33:
       Name: scenes-first_unity.ab
       Dependencies:
-        Dependency_0: prefabs-list_cell_prefab.ab
-        Dependency_1: prefabs-scorl_test_prefab.ab
-        Dependency_2: atlas-mytest.ab
-    Info_35:
+        Dependency_0: prefabs-grid_cell_prefab.ab
+        Dependency_1: prefabs-list_cell_prefab.ab
+        Dependency_2: prefabs-page_cell_prefab.ab
+        Dependency_3: prefabs-scorl_test_prefab.ab
+        Dependency_4: prefabs-tbl_test_prefab.ab
+        Dependency_5: atlas-common_png.ab
+    Info_34:
       Name: scenes-second_unity.ab
       Dependencies:
         Dependency_0: prefabs-teddy_prefab.ab
-    Info_36:
+    Info_35:
       Name: scenes-start_unity.ab
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: prefabs-windowgridview_prefab.ab

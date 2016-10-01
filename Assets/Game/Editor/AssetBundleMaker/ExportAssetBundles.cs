@@ -36,43 +36,20 @@ public class ExportAssetBundles : Editor
 					list.Add(assetPath);
 				});
 				AssetBundleBuild build = new AssetBundleBuild ();
-				build.assetBundleName = path.Replace('.','_').Replace(Path.DirectorySeparatorChar,'-') +".ab";
+				build.assetBundleName = path +".ab";
 				build.assetNames = list.ToArray();
 				buildMap.Add (build);
 			
 			} else {
-				Dictionary<string,List<string>> dic = new Dictionary<string, List<string>> ();
 
                 Helper.forEachHandle (basePath, null, (string filename) => {
-					
 					string assetPath = filename.Replace(Application.dataPath,"Assets");
-
-					string baseFile = Path.GetFileNameWithoutExtension(assetPath);
-					List<string> list = null;
-					dic.TryGetValue(baseFile,out list);
-					if(list == null){
-						list = new List<string>();
-						dic.Add(baseFile,list);
-					}
-					list.Add(assetPath);
-				});
-
-				foreach (string baseFile in dic.Keys) {
-					string abName = "";
-					string _path = dic [baseFile] [0];
-					if (dic [baseFile].Count > 1) { //mix
-						string mixPath = Path.GetDirectoryName (_path) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (_path);
-						abName = mixPath.Replace ('.', '_').Replace (Path.DirectorySeparatorChar, '-') + ".ab";
-					} else {
-						abName = _path.Replace ('.', '_').Replace (Path.DirectorySeparatorChar, '-') + ".ab";
-					}
-
-
-					AssetBundleBuild build = new AssetBundleBuild ();
-					build.assetBundleName = abName.Substring(22);
-					build.assetNames = dic[baseFile].ToArray();
-					buildMap.Add(build);
-				}
+                    string baseName = assetPath.Substring(22);
+                    AssetBundleBuild build = new AssetBundleBuild();
+                    build.assetBundleName = baseName.Replace('.', '_').Replace(Path.DirectorySeparatorChar, '-') + ".ab";
+                    build.assetNames = new string[] { assetPath };
+                    buildMap.Add(build);
+                });
 			}
 		}
 		BuildPipeline.BuildAssetBundles (Application.streamingAssetsPath+"/Ab", buildMap.ToArray (),

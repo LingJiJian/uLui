@@ -71,9 +71,7 @@ namespace Lui
         {
             if (text != "")
             {
-                LTextureAtlas.GetInstance().LoadData(atlas);
-                sprites = LTextureAtlas.GetInstance().getSprites(atlas);
-
+                sprites = LLoadBundle.GetInstance().GetSpritesByName(atlas,"");
                 loadTexture();
                 render();
             }
@@ -84,7 +82,7 @@ namespace Lui
             _spriteMap.Clear();
             for (int i = 0; i < sprites.Length; i++)
             {
-                _spriteMap.Add(sprites[i].name+"", sprites[i]);
+                _spriteMap.Add(sprites[i].name, sprites[i]);
             }
         }
 

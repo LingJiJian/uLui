@@ -62,11 +62,29 @@ namespace Lui
 		public void loadTexture()
 		{
             //load textures
-            //_spriteArr = LLoadBundle.GetInstance().LoadAllAsset<Sprite>(LGameConfig.ASSETBUNDLE_LOAD_FORMAT, path);
-            LTextureAtlas.GetInstance().LoadData(path);
-            _spriteArr = LTextureAtlas.GetInstance().getSprites(path);
-            _frameLenght = _spriteArr.Length;
-		}
+            string atlasPath = System.IO.Path.GetDirectoryName(path);
+            string assetName = System.IO.Path.GetFileNameWithoutExtension(path);
+
+            Sprite[] sprites = LLoadBundle.GetInstance().GetSpritesByName(atlasPath, assetName);
+            Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
+            foreach (Sprite s in sprites)
+            {
+                if (s.name.StartsWith(assetName))
+                {
+                    dic.Add(s.name, s);
+                }
+            }
+            int idx = 1;
+            List<Sprite> list = new List<Sprite>();
+            while (dic.ContainsKey(assetName + idx.ToString("D2")))
+            {
+                list.Add(dic[assetName + idx.ToString("D2")]);
+                idx++;
+            }
+            _frameLenght = list.Count;
+            _spriteArr = list.ToArray();
+
+        }
 
         void Update()
         {

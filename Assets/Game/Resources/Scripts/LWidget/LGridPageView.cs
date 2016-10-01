@@ -64,7 +64,10 @@ namespace Lui
         public Vector2 gridCellsSize;
         protected int _cellsMaxCountInPage;
         protected List<Vector2> _gridCellsPosition;
-        public LDataSourceAdapter<LGridPageViewCell, int> onGridDataSourceAdapterHandler;
+        public void SetCellHandle(UnityAction<int, GameObject> act)
+        {
+            onCellHandle = act;
+        }
 
         public LGridPageView()
         {
@@ -164,7 +167,7 @@ namespace Lui
                     LGridPageViewCell cell = null;
                     if (idx < gridCellsCount)
                     {
-                        cell = onGridDataSourceAdapterHandler.Invoke(null, idx);
+                        cell = _onGridDataSourceAdapterHandler(null, idx);
                         RectTransform rtran = cell.node.GetComponent<RectTransform>();
                         rtran.pivot = Vector2.zero;
                         rtran.sizeDelta = gridCellsSize;
@@ -177,7 +180,7 @@ namespace Lui
                     }
                     else
                     {
-                        cell = onGridDataSourceAdapterHandler.Invoke(null, INVALID_INDEX);
+                        cell = _onGridDataSourceAdapterHandler(null, INVALID_INDEX);
                         RectTransform rtran = cell.node.GetComponent<RectTransform>();
                         rtran.pivot = Vector2.zero;
                         cell.idx = INVALID_INDEX;
@@ -201,14 +204,14 @@ namespace Lui
                     if (idx < gridCellsCount)
                     {
                         cell.idx = idx;
-                        cell = onGridDataSourceAdapterHandler.Invoke(cell, idx);
+                        cell = _onGridDataSourceAdapterHandler(cell, idx);
                         cell.node.SetActive(true);
                     }
                     else
                     {
                         cell.idx = INVALID_INDEX;
                         cell.reset();
-                        cell = onGridDataSourceAdapterHandler.Invoke(cell, INVALID_INDEX);
+                        cell = _onGridDataSourceAdapterHandler(cell, INVALID_INDEX);
                         cell.node.SetActive(false);
                     }
                 }
@@ -233,6 +236,22 @@ namespace Lui
             pageCell.node.transform.localPosition = cellPositionFromIndex(page);
             insertSortableCell(pageCell, page);
             indices.Add(page, 1);
+        }
+
+        protected LGridPageViewCell _onGridDataSourceAdapterHandler(LGridPageViewCell cell, int idx)
+        {
+            if (cell == null)
+            {
+                cell = new LGridPageViewCell();
+                cell.node = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
+            }
+            cell.node.SetActive(idx != LScrollView.INVALID_INDEX);
+
+            if(onCellHandle != null)
+            {
+                onCellHandle.Invoke(idx, cell.node);
+            }
+            return cell;
         }
 
         public void setPageChangedHandler(UnityAction<int> action)

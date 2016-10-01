@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3073281913
+CRC: 945027558
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2b3b4c8843899d52458da1b59918bedb
+    Hash: 0687362c35f830f0d6ee5ceb0e7c405a
   TypeTreeHash:
     serializedVersion: 2
-    Hash: c992def56aa9b7f78fd18ee38abe0197
+    Hash: 6a82fb62fd726861437c279f13addbb2
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -19,13 +19,10 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 0cb3196efe477284198d818640d5b48b, type: 3}
 - Class: 115
   Script: {instanceID: 0}
-- Class: 213
-  Script: {instanceID: 0}
 - Class: 222
   Script: {instanceID: 0}
 - Class: 224
   Script: {instanceID: 0}
 Assets:
 - Assets/Game/Resources/Prefabs/scorl_test.prefab
-Dependencies:
-- F:/WorkSpace/CShapWorkSpace/uLui/Assets/StreamingAssets/Ab/atlas-mytest.ab
+Dependencies: []

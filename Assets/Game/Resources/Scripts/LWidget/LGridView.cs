@@ -54,8 +54,11 @@ namespace Lui
         protected List<LGridViewCell> _cellsFreed;
         protected List<Vector2> _positions;
         protected Dictionary<int, int> _indices;
-        public LGridViewCell cellTemplate;
-        public LDataSourceAdapter<LGridViewCell, int> onDataSourceAdapterHandler;
+        protected UnityAction<int, GameObject> onCellHandle;
+        public void SetCellHandle(UnityAction<int, GameObject> act)
+        {
+            onCellHandle = act;
+        }
 
         public LGridView()
         {
@@ -64,7 +67,6 @@ namespace Lui
             cols = 0;
             _rows = 0;
             direction = ScrollDirection.VERTICAL;
-			cellTemplate = new LGridViewCell ();
             _cellsUsed = new List<LGridViewCell>();
             _cellsFreed = new List<LGridViewCell>();
             _positions = new List<Vector2>();
@@ -126,7 +128,7 @@ namespace Lui
                 return;
             }
 
-            LGridViewCell cell = onDataSourceAdapterHandler.Invoke(dequeueCell(), idx);
+            LGridViewCell cell = _onDataSourceAdapterHandler(dequeueCell(), idx);
             cell.idx = idx;
             cell.row = row;
             RectTransform rtran = cell.node.GetComponent<RectTransform>();
@@ -360,5 +362,20 @@ namespace Lui
 
             base.onDraggingScrollEnded();
         }
+
+        protected LGridViewCell _onDataSourceAdapterHandler(LGridViewCell cell, int idx)
+        {
+            if (cell == null)
+            {
+                cell = new LGridViewCell();
+                cell.node = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
+            }
+            if(onCellHandle != null)
+            {
+                onCellHandle.Invoke(idx, cell.node);
+            }
+            return cell;
+        }
+
     }
 }

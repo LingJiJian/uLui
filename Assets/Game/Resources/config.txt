@@ -1,5 +1,5 @@
 <Root>
-	<Debug>0</Debug>
+	<Debug>1</Debug>
 	<HotFix>0</HotFix>
 	<ShowFps>1</ShowFps>
 	<Encrypt>1</Encrypt>

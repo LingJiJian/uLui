@@ -19,9 +19,9 @@ end
 function MsgBox:OnDestroy()
 
 	LLoadBundle.GetInstance():UnloadBundles({
-		"Ab/atlas-face01.ab",
-		"Ab/scenes-first_unity.ab",
-		"Ab/prefabs-msgbox_prefab.ab"})
+		"atlas-face_png.ab",
+		"scenes-first_unity.ab",
+		"prefabs-msgbox_prefab.ab"})
 end
 
 return MsgBox

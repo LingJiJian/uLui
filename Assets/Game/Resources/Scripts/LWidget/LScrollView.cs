@@ -51,7 +51,7 @@ namespace Lui
         protected float autoRelocateSpeed;
         
         public bool bounceable;
-        public GameObject container;
+        protected GameObject container;
         public ScrollDirection direction;
         private Vector2 lastMovePoint;
         private Vector2 maxOffset;
@@ -75,7 +75,24 @@ namespace Lui
             maxOffset = Vector2.zero;
             minOffset = Vector2.zero;
         }
-        
+
+        void Awake()
+        {
+            container = transform.Find("container").gameObject;
+
+            updateLimitOffset();
+
+            RectTransform rtran = container.GetComponent<RectTransform>();
+            rtran.pivot = Vector2.zero;
+            rtran.anchorMax = Vector2.zero;
+            rtran.anchorMin = Vector2.zero;
+
+            rtran = GetComponent<RectTransform>();
+            rtran.pivot = Vector2.zero;
+            rtran.anchorMax = Vector2.zero;
+            rtran.anchorMin = Vector2.zero;
+        }
+
         public void setContainerSize(Vector2 size)
         {
             Vector2 cs = GetComponent<RectTransform>().rect.size;
@@ -275,21 +292,6 @@ namespace Lui
             point.x = x;
             point.y = y;
             return false;
-        }
-
-        void Awake()
-        {
-            updateLimitOffset();
-
-            RectTransform rtran = container.GetComponent<RectTransform>();
-            rtran.pivot = Vector2.zero;
-            rtran.anchorMax = Vector2.zero;
-            rtran.anchorMin = Vector2.zero;
-
-            rtran = GetComponent<RectTransform>();
-            rtran.pivot = Vector2.zero;
-            rtran.anchorMax = Vector2.zero;
-            rtran.anchorMin = Vector2.zero;
         }
 
         public Vector2 getContentOffset()

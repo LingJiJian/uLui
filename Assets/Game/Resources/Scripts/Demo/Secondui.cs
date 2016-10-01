@@ -19,7 +19,7 @@ public class Secondui : MonoBehaviour {
         {
 			LLoadBundle.GetInstance().LoadAllBundles(new string[]{ 
 				"prefabs-msgbox_prefab.ab",
-				"atlas-face01.ab" },()=>
+				"atlas-face_png.ab" },()=>
 			{
 
 				_wm.runWindow("Prefabs/MsgBox.prefab", WindowHierarchy.Normal);
@@ -28,9 +28,8 @@ public class Secondui : MonoBehaviour {
 
         btn_trans.onClick.AddListener(() =>
         {
-			LLoadBundle.GetInstance().LoadAllBundles(new string[]{ 
-				"atlas-face01.ab",
-				"atlas-face02.ab"},()=>
+			LLoadBundle.GetInstance().LoadAllBundles(new string[]{
+                "atlas-face_png.ab"},()=>
 			{
     			_wm.LoadScene("first");
 			});
@@ -52,10 +51,7 @@ public class Secondui : MonoBehaviour {
 	void OnLevelWasLoaded(int level){
 		//remove first textures
 		LLoadBundle.GetInstance().UnloadBundles( new string[]{
-			"atlas-face01.ab",
-			"atlas-face02.ab"
-		});
-		LTextureAtlas.GetInstance().RemoveTexture("Atlas/face01");
-		LTextureAtlas.GetInstance().RemoveTexture("Atlas/face02");
+            "atlas-face_png.ab"
+        });
 	}
 }

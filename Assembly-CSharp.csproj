@@ -57,7 +57,6 @@
      <Compile Include="Assets\Game\Resources\Scripts\LBase\LLuaBehaviourInterface.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LBase\LLuaTable.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LBase\LResUpdate.cs" />
-     <Compile Include="Assets\Game\Resources\Scripts\LBase\LTextureAtlas.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LBase\LUtil.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LButton.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LControlView.cs" />
@@ -83,9 +82,6 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_Deleg_GetBundleInfoDelegate.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_Deleg_SimpleDelegate.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_System_Action.cs" />
-     <Compile Include="Assets\Slua\LuaObject\Custom\LuaLui_LScrollView_LDataSourceAdapter_2_Lui_LGridPageViewCell_int.cs" />
-     <Compile Include="Assets\Slua\LuaObject\Custom\LuaLui_LScrollView_LDataSourceAdapter_2_Lui_LGridViewCell_int.cs" />
-     <Compile Include="Assets\Slua\LuaObject\Custom\LuaLui_LScrollView_LDataSourceAdapter_2_Lui_LTableViewCell_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_1_LTEvent.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_1_System_Object.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_1_UnityEngine_Color.cs" />
@@ -108,6 +104,7 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_float.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_string.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_2_int_UnityEngine_GameObject.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_2_string_Dictionary_System_String_System_String_.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_3_float_float_bool.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEvent_int_string.cs" />
@@ -122,7 +119,6 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LHUDView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LLoadBundle.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LResUpdate.cs" />
-     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LTextureAtlas.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LUtil.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LWindowBase.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LWindowManager.cs" />
@@ -792,21 +788,17 @@
      <Compile Include="Assets\Slua\example\VarObj.cs" />
      <Compile Include="Assets\Slua\example\test\TestLua.cs" />
      <Compile Include="Assets\Slua\example\test\test.cs" />
-     <None Include="Assets\Game\Resources\Atlas\mytest.txt" />
      <None Include="Assets\Slua\Resources\module\some.txt" />
      <None Include="Assets\Slua\Resources\main.txt" />
      <None Include="Assets\Slua\Resources\circle\circle.txt" />
-     <None Include="Assets\Game\Resources\Atlas\face01.txt" />
      <None Include="Assets\Game\Editor\TexturePackerImporter\SettingsTexturePackerImporter.txt" />
      <None Include="Assets\Slua\Resources\perf.txt" />
      <None Include="Assets\Game\Resources\config.txt" />
-     <None Include="Assets\Game\Resources\Atlas\digit1.txt" />
      <None Include="Assets\Slua\Resources\delegate.txt" />
      <None Include="Assets\Game\Models\CubeMap.shader" />
      <None Include="Assets\Slua\Resources\valuetype.txt" />
      <None Include="Assets\Slua\Resources\varobj.txt" />
      <None Include="Assets\Slua\Resources\custom.txt" />
-     <None Include="Assets\Game\Resources\Atlas\face02.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

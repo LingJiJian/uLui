@@ -13,7 +13,9 @@ public class LLoadBundle : MonoBehaviour
 
     public AssetBundle GetBundleByName(string name)
     {
-        return bundles[name];
+        AssetBundle b;
+        bundles.TryGetValue(name, out b);
+        return b;
     }
 
     private LLoadBundle()
@@ -70,30 +72,6 @@ public class LLoadBundle : MonoBehaviour
         }
     }
 
-    public Sprite LoadAtlas(string atlasName,out string txt)
-    {
-        Debug.Log("LoadAtlas:" + atlasName);
-        txt = "";
-        Sprite atlas = null;
-        if (LGameConfig.GetInstance().isDebug)
-        {
-			atlas = Resources.Load<Sprite>(atlasName);
-			txt = Resources.Load<TextAsset>(atlasName).text;
-        }
-        else
-        {
-            AssetBundle b;
-			bundles.TryGetValue(LGameConfig.GetABNameWithAtlasPath(atlasName) , out b);
-            if (b != null)
-            {
-				Debug.Log(string.Format(LGameConfig.ASSET_BASE_FORMAT, atlasName));
-				atlas = b.LoadAsset<Sprite>(string.Format(LGameConfig.ASSET_BASE_FORMAT, atlasName)+".png");
-				txt = b.LoadAsset<TextAsset>(string.Format(LGameConfig.ASSET_BASE_FORMAT, atlasName)+".txt").text;
-            }
-        }
-        return atlas;
-    }
-
 	public T LoadAsset<T>(string bundleName, string assetName) where T : Object 
     {
         T prefab = null;
@@ -135,6 +113,45 @@ public class LLoadBundle : MonoBehaviour
             }
         }
         return prefabs;
+    }
+
+    public Sprite[] GetSpritesByName(string bundlePath,string atlasName)
+    {
+        List<Sprite> arr = new List<Sprite>();
+        if (LGameConfig.GetInstance().isDebug)
+        {
+            Sprite[] sprites = Resources.LoadAll<Sprite>(bundlePath);
+            foreach (Sprite s in sprites)
+            {
+                if (string.IsNullOrEmpty(atlasName) || s.name.StartsWith(atlasName))
+                {
+                    arr.Add(s);
+                }
+            }
+        }
+        else
+        {
+            string bundleName = LGameConfig.GetABNameWithAtlasPath(bundlePath.Split('.')[0] +".png");
+            AssetBundle assetBundle = this.GetBundleByName(bundleName);
+            if (assetBundle)
+            {
+                Sprite[] sprites = assetBundle.LoadAllAssets<Sprite>();
+                foreach (Sprite s in sprites)
+                {
+                    if (string.IsNullOrEmpty(atlasName) || s.name.StartsWith(atlasName))
+                    {
+                        arr.Add(s);
+                    }
+                }
+            }
+        }
+        return arr.ToArray();
+    }
+
+    public Sprite GetSpriteByName(string bundlePath, string assetName)
+    {
+        Sprite[] sprites = GetSpritesByName(bundlePath, assetName);
+        return sprites.Length > 0 ? sprites[0] : null;
     }
 
     public void UnloadBundles(string[] bundle_names)

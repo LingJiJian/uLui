@@ -26,6 +26,10 @@ THE SOFTWARE.
 ****************************************************************************/
 using UnityEngine;
 using System.Collections.Generic;
+using System.Security;
+using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using SLua;
 
 namespace Lui
@@ -69,8 +73,11 @@ namespace Lui
         protected List<LTableViewCell> cellsFreed;
         protected List<float> positions;
         protected Dictionary<int, int> indices;
-        public LTableViewCell cellTemplate;
-        public LDataSourceAdapter<LTableViewCell, int> onDataSourceAdapterHandler;
+        protected UnityAction<int,GameObject> onCellHandle;
+        public void SetCellHandle(UnityAction<int, GameObject> act)
+        {
+            onCellHandle = act;
+        }
 
         public LTableView()
         {
@@ -83,7 +90,6 @@ namespace Lui
             cellsFreed = new List<LTableViewCell>();
             positions = new List<float>();
             indices = new Dictionary<int, int>();
-            cellTemplate = new LTableViewCell();
         }
 
         public virtual void reloadData()
@@ -148,7 +154,6 @@ namespace Lui
                     cell.reset();
                     
                     cell.node.SetActive(false);
-                    //cell.node.transform.SetParent(null);
                 }
                 else
                 {
@@ -168,7 +173,6 @@ namespace Lui
                     cellsFreed.Add(cell);
                     cell.reset();
                     cell.node.SetActive(false);
-                    //cell.node.transform.SetParent(null);
                 }
                 else
                 {
@@ -400,7 +404,7 @@ namespace Lui
 
         public virtual void updateCellAtIndex(int idx)
         {
-            LTableViewCell cell = onDataSourceAdapterHandler.Invoke(dequeueCell(), idx);
+            LTableViewCell cell = _onDataSourceAdapterHandler(dequeueCell(), idx);
             if (cell == null)
             {
                 Debug.LogError("cell can not be NULL");
@@ -425,6 +429,20 @@ namespace Lui
 
             insertSortableCell(cell, idx);
             indices.Add(idx, 1);
+        }
+
+        protected LTableViewCell _onDataSourceAdapterHandler(LTableViewCell cell, int idx)
+        {
+            if (cell == null)
+            {
+                cell = new LTableViewCell();
+                cell.node = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
+            }
+            if(onCellHandle != null)
+            {
+                onCellHandle.Invoke(idx, cell.node);
+            }
+            return cell;
         }
     }
 }
