@@ -1,9 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Game/Resources/Scripts/Demo/Firstui.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Game\Resources\Scripts\LWidget\LRichText.cs">
     <Files>
-      <File FileName="Assets/Game/Resources/Scripts/LWidget/LRichText.cs" Line="145" Column="32" />
-      <File FileName="Assets/Game/Resources/Scripts/Demo/Firstui.cs" Line="87" Column="10" />
+      <File FileName="Assets\Game\Resources\Scripts\Demo\Firstui.cs" Line="18" Column="31" />
+      <File FileName="Assets\Game\Resources\Scripts\LWidget\LRichText.cs" Line="145" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

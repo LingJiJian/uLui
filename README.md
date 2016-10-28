@@ -10,7 +10,7 @@
 3.LControlView 摇杆控件<br>
 4.LGridView 网格容器<br>
 5.LGridPageView 网格翻页容器<br>
-6.LFrameAnimation 序列帧控件<br>
+6.LMovieClip 序列帧控件<br>
 7.LPageView 翻页容器<br>
 8.LButton 长按按钮<br>
 9.LListView 复用列表<br>
