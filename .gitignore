@@ -8,6 +8,7 @@
 Assets/data.zip
 Assets/version.ver
 Assets/Slua/LuaObject/*
+Assets/Game/Source/Generate/*
 /Library
 /Library/FailedAssetImports.txt
 /Library/cache/

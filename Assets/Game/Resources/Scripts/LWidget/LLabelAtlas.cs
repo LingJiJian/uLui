@@ -27,7 +27,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using SLua;
+
 
 namespace Lui
 {
@@ -47,7 +47,6 @@ namespace Lui
     /// <summary>
     /// 图集字
     /// </summary>
-    [CustomLuaClassAttribute]
     public class LLabelAtlas : MonoBehaviour
     {
         public string text;

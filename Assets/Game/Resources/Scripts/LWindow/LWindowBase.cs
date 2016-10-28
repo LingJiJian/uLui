@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using SLua;
+
 using System.Collections;
 
-[CustomLuaClassAttribute]
+
 public class LWindowBase : LLuaBehaviourBase
 {
     public WindowDispose disposeType;

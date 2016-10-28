@@ -7,7 +7,7 @@ using System;
 
 public class MakeDebugFile : Editor
 {
-    public static string luajitPath = Application.dataPath + "/../build/luajit-2.0.4/src";
+    public static string luajitPath = Application.dataPath + "/../Luajit";
 
     //[MenuItem("Tools/Copy")]
     public static void CopyLuaTxt() {

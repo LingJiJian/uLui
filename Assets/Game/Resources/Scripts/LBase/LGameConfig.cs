@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Xml;
-using SLua;
 
-[CustomLuaClassAttribute]
+
+
 public class LGameConfig
 {
     // The config file path.

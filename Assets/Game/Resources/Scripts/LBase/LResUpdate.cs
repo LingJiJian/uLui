@@ -5,9 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using SLua;
 
-[CustomLuaClassAttribute]
+
+
 public class LResUpdate : MonoBehaviour
 {
     public static readonly string VERSION_FILE = "version.ver";

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
-using SLua;
+
 
 //namespace AppEngine
 //{
@@ -20,7 +20,7 @@ using SLua;
         private bool sending = false;
         private Action<bool> callback_;
         private Action disconnect_;
-		private Action<ushort,ByteArray> handleMessage_;
+		private Action<ushort, byte[]> handleMessage_;
         private Action<bool> connectResult_;
 
         private string ipaddr_;
@@ -37,7 +37,7 @@ using SLua;
         private static UInt32 READBUFF_SIZE = 1024000;
         private static UInt32 WRITEBUFF_SIZE = 81920;
 
-		public Reactor(Action<bool> callback, Action disconnect, Action<ushort,ByteArray> handleMessage)
+		public Reactor(Action<bool> callback, Action disconnect, Action<ushort, byte[]> handleMessage)
         {
             rbuffer_ = new byte[READBUFF_SIZE];
             rwpos_ = 0;
@@ -327,7 +327,7 @@ using SLua;
                         Array.Copy(rbuffer_, rpos + headlen, packet, 0, msglen);
 
                     //Message.handleMessage(msgid, packet);
-					handleMessage_(msgid, new ByteArray(packet));
+					handleMessage_(msgid, packet);
 
                     rpos += (int)(headlen + msglen);
                         length -= (int)(headlen + msglen);

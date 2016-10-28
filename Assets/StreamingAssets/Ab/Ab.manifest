@@ -116,5 +116,4 @@ AssetBundleManifest:
         Dependency_0: prefabs-teddy_prefab.ab
     Info_35:
       Name: scenes-start_unity.ab
-      Dependencies:
-        Dependency_0: prefabs-windowgridview_prefab.ab
+      Dependencies: {}

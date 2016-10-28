@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 using System;
-using SLua;
+
 using System.Collections.Generic;
 
-[CustomLuaClass]
+
 public class Network : MonoBehaviour
 {
     private static Network _instance;
     private Reactor _reactor;
     public Action<bool> onConnect;
     public Action onDisconnect;
-	public Action<ushort, ByteArray> onHandleMessage;
-    private Dictionary<string, ByteArray> _protoBytes;
+	public Action<ushort, byte[]> onHandleMessage;
+    private Dictionary<string, byte[]> _protoBytes;
 
     public Network()
     {
-        _protoBytes = new Dictionary<string, ByteArray>();
+        _protoBytes = new Dictionary<string, byte[]>();
         _reactor = new Reactor(OnConnect,OnDisconnect, OnHandleMessage);
     }
 
@@ -32,14 +32,14 @@ public class Network : MonoBehaviour
         return _instance;
     }
 
-    public ByteArray GetProtoBytes(string file)
+    public byte[] GetProtoBytes(string file)
     {
         if (!_protoBytes.ContainsKey(file))
         {
             if (LGameConfig.GetInstance().isDebug)
             {
                 TextAsset textAsset = Resources.Load<TextAsset>(LGameConfig.DATA_CATAGORY_LUA + "/Game/Proto/" + file);
-                _protoBytes.Add(file, new ByteArray(textAsset.bytes));
+                _protoBytes.Add(file, textAsset.bytes);
             }
             else
             {
@@ -61,7 +61,7 @@ public class Network : MonoBehaviour
                 cArc.ReadBuffer(ref aContents, nContentLength);
                 cArc.Close();
 
-                _protoBytes.Add(file, new ByteArray(aContents));
+                _protoBytes.Add(file, aContents);
             }
         }
         
@@ -78,9 +78,9 @@ public class Network : MonoBehaviour
         _reactor.connect(ip, port);
     }
 
-	public void send(ushort msgid, ByteArray content)
+	public void send(ushort msgid, byte[] content)
     {
-		byte[] data = content.data;
+		byte[] data = content;
         byte[] packet = new byte[data.Length + 2 + 2];
 
 		packet[0] = (byte)(msgid & 0xff);
@@ -114,7 +114,7 @@ public class Network : MonoBehaviour
             onDisconnect.Invoke();
     }
 
-	private void OnHandleMessage(ushort msgId,ByteArray packet)
+	private void OnHandleMessage(ushort msgId, byte[] packet)
     {
         if (onHandleMessage != null)
 			onHandleMessage.Invoke(msgId, packet);

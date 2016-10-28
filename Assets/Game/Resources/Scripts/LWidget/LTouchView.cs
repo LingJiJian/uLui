@@ -28,11 +28,11 @@ using System.Collections;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using SLua;
+
 
 namespace Lui
 {
-    [CustomLuaClass]
+    
     public class LTouchView : MonoBehaviour
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
         , IPointerDownHandler, IPointerUpHandler, IDragHandler

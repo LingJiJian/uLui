@@ -138,7 +138,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using SLua;
 
 public enum TweenAction{
 	MOVE_X,
@@ -1276,7 +1275,6 @@ public class LTUtility {
 * @class LeanTween
 */
 
-[CustomLuaClass]
 public class LeanTween : MonoBehaviour {
 
 public static bool throwErrors = true;

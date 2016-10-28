@@ -29,7 +29,7 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
+
 
 namespace Lui
 {
@@ -42,7 +42,7 @@ namespace Lui
     /// <summary>
     /// 滑块
     /// </summary>
-    [CustomLuaClass]
+    
     public class LScrollView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public static int INVALID_INDEX = -1;

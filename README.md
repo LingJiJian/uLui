@@ -28,7 +28,7 @@
 2.打包ab<br>
 3.使用texturepacker图集<br>
 
-### 整合Slua
+### 整合tolua#
 1.已经可以用纯lua开发了哦 <br>
 
 ### 运行

@@ -29,7 +29,7 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
+
 
 namespace Lui
 {
@@ -41,7 +41,7 @@ namespace Lui
     /// <summary>
     /// 网格
     /// </summary>
-    [CustomLuaClassAttribute]
+    
     public class LGridView : LScrollView
     {
         public Vector2 cellsSize;

@@ -1,14 +1,10 @@
-import "UnityEngine"
-import "UnityEngine.Object"
-import "UnityEngine.UI"
-import "UnityEngine.SceneManagement"
-import "Lui"
+
 require "import"
 
 local function main() 
 	print("初始化游戏")
 
-	NetworkManager:GetInstance()
+	-- NetworkManager:GetInstance()
 
 	LLoadBundle.GetInstance():LoadAllBundles({
 		"scenes-first_unity.ab",
@@ -23,9 +19,9 @@ local function main()
 		"prefabs-page_cell_prefab.ab"
 	},function()
 
-		local lab_progress = GameObject.Find("lab_progress"):GetComponent(Text)
+		local lab_progress = GameObject.Find("lab_progress"):GetComponent('Text')
 
-		LWindowManager:GetInstance():LoadSceneAsync("first",function( p )
+		LWindowManager.GetInstance():LoadSceneAsync("first",function( p )
 			lab_progress.text = string.format("初始化需要一点点时间(%d/100)",p)
 		end)
 
@@ -33,6 +29,7 @@ local function main()
 
 end
 
+main()
 -- Declare global function.
 LDeclare("main", main)
 

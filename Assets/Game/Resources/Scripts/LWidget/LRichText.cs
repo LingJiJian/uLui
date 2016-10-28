@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
+
 
 namespace Lui
 {
@@ -190,7 +190,7 @@ namespace Lui
     /// <summary>
     /// 富文本
     /// </summary>
-    [CustomLuaClassAttribute]
+    
     public class LRichText : MonoBehaviour, IPointerClickHandler
     {
         public RichAlignType alignType;

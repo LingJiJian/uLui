@@ -28,14 +28,14 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Collections;
-using SLua;
+
 
 namespace Lui
 {
     /// <summary>
     /// 摇杆
     /// </summary>
-    [CustomLuaClassAttribute]
+    
     public class LControlView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         protected const float MOVE_TIME = 0.5f;
@@ -55,7 +55,7 @@ namespace Lui
             this._lastPoint = Vector2.zero;
             this.relocateWithAnimation = true;
         }
-        [DoNotToLua]
+        [LuaInterface.NoToLua]
         public void OnPointerDown(PointerEventData eventData)
         {
             stopAnimateUpdate();
@@ -73,7 +73,7 @@ namespace Lui
                 onExecuteEventHandle(false);
             }
         }
-        [DoNotToLua]
+        [LuaInterface.NoToLua]
         public void OnDrag(PointerEventData eventData)
         {
             if (joyStick)
@@ -95,7 +95,7 @@ namespace Lui
 
             onExecuteEventHandle(false);
         }
-        [DoNotToLua]
+        [LuaInterface.NoToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
             if (joyStick)

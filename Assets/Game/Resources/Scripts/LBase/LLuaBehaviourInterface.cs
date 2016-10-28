@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using SLua;
-using System.Collections;
+
+using LuaInterface;
 
 // The lua behavior base class.
 public class LLuaBehaviourInterface
@@ -698,40 +698,40 @@ public class LLuaBehaviourInterface
         CallMethod(ref m_cOnEventAnimObject, ON_EVENT_ANIM_OBJECT, m_cLuaTableOpt.GetChunk(),o);
     }
 
-    /**
-     * Load an lua file.
-     * 
-     * @param string strFile - The file name without extension.
-     * @return bool - true if success, otherwise false.
-     */
-    public bool DoFile(string strFile)
-	{
-		if (string.IsNullOrEmpty(strFile))
-		{
-			return false;
-		}
+ //   /**
+ //    * Load an lua file.
+ //    * 
+ //    * @param string strFile - The file name without extension.
+ //    * @return bool - true if success, otherwise false.
+ //    */
+ //   public bool DoFile(string strFile)
+	//{
+	//	if (string.IsNullOrEmpty(strFile))
+	//	{
+	//		return false;
+	//	}
 
-		// Try to do file.
-		try
-		{
-			// The lua file return the table itself.
-			object cChunk = Game.GetLuaSvr().luaState.doFile(strFile);
-			if ((null == cChunk) || !(cChunk is LuaTable))
-			{
-				return false;
-			}
+	//	// Try to do file.
+	//	try
+	//	{
+	//		// The lua file return the table itself.
+	//		object cChunk = Game.GetLuaSvr().luaState.doFile(strFile);
+	//		if ((null == cChunk) || !(cChunk is LuaTable))
+	//		{
+	//			return false;
+	//		}
 
-			// Remember lua table.
-			m_cLuaTableOpt = new LLuaTable((LuaTable)cChunk);
-			return true;
-		}
-		catch (System.Exception e)
-		{
-			Debug.LogError(LUtil.FormatException(e));
-		}
+	//		// Remember lua table.
+	//		m_cLuaTableOpt = new LLuaTable((LuaTable)cChunk);
+	//		return true;
+	//	}
+	//	catch (System.Exception e)
+	//	{
+	//		Debug.LogError(LUtil.FormatException(e));
+	//	}
 
-		return false;
-	}
+	//	return false;
+	//}
 
 	/**
      * Create a lua class instance for monobehavior instead of do a file.
@@ -750,7 +750,7 @@ public class LLuaBehaviourInterface
 		try
 		{
 			// Get class first.
-			LuaTable cClsTable = (LuaTable)Game.GetLuaSvr().luaState[strClassName];
+			LuaTable cClsTable = (LuaTable)Game.GetLuaSvr()[strClassName];
 			if (null == cClsTable)
 			{
 				return false;
@@ -763,9 +763,13 @@ public class LLuaBehaviourInterface
 				return false;
 			}
 
-			// We choose no default init parameter for constructor.
-			object cInsChunk = cNew.call();
-			if (null == cInsChunk)
+            // We choose no default init parameter for constructor.
+            cNew.BeginPCall();
+            cNew.PCall();
+            object cInsChunk = (object)cNew.CheckVariant();
+            cNew.EndPCall();
+
+            if (null == cInsChunk)
 			{
 				return false;
 			}

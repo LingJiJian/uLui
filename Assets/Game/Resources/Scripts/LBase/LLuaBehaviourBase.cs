@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using SLua;
+
 
 public class LLuaBehaviourBase : MonoBehaviour {
 
@@ -444,7 +444,7 @@ public class LLuaBehaviourBase : MonoBehaviour {
      * @param void.
      * @return LuaTable - The class instance table..
      */
-    public LuaTable GetInstance()
+    public LuaInterface.LuaTable GetInstance()
     {
         return m_cBehavior.GetChunk();
     }

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using SLua;
+
 
 public enum WindowHierarchy
 {
@@ -23,7 +23,7 @@ public enum WindowDispose
 /// <summary>
 /// 窗体管理
 /// </summary>
-[CustomLuaClassAttribute]
+
 public class LWindowManager : MonoBehaviour
 {
     protected float recycleDuration;

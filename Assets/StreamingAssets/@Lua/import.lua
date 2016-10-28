@@ -1,3 +1,5 @@
+GameObject = require "UnityEngine.GameObject"
+
 require "Base/LGlobal"
 require "Base/LVersion"
 require "Base/LClass"

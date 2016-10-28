@@ -30,7 +30,7 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
+
 
 namespace Lui
 {
@@ -62,7 +62,7 @@ namespace Lui
     /// <summary>
     /// 复用列表
     /// </summary>
-    [CustomLuaClassAttribute]
+    
     public class LTableView : LScrollView
     {
         public int cellsCount;

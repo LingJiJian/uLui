@@ -29,14 +29,14 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
+
 
 namespace Lui
 {
     /// <summary>
     /// 列表
     /// </summary>
-    [CustomLuaClassAttribute]
+    
     public class LListView : LScrollView
     {
         public static Vector2 HorizontalNodeAnchorPoint = Vector2.zero;

@@ -27,14 +27,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using SLua;
+
 
 namespace Lui
 {
     /// <summary>
     /// 序列帧动画
     /// </summary>
-    [CustomLuaClassAttribute]
+    
 	public class LMovieClip : MonoBehaviour
     {
         public float fps = 15f;

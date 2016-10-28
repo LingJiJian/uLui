@@ -1,5 +1,5 @@
 using UnityEngine;
-using SLua;
+
 using LuaInterface;
 using System.Collections;
 using System;
@@ -43,7 +43,7 @@ public class LLuaTable
 	{
 		get
 		{
-			return (null != m_cLuaTable) && (null != LuaState.main);
+			return (null != m_cLuaTable) ;
 		}
 	}
 
@@ -232,11 +232,16 @@ public class LLuaTable
         // Try to call this method.
         try
         {
-            return cResFunc.call();
+            cResFunc.BeginPCall();
+            cResFunc.PCall();
+            object ret = cResFunc.CheckVariant();
+            cResFunc.EndPCall();
+            return ret;
         }
         catch (Exception e)
         {
             Debug.LogError(LUtil.FormatException(e));
+            cResFunc.EndPCall();
             cResFunc = null;
             return null;
         }
@@ -285,11 +290,17 @@ public class LLuaTable
         // Try to call this method.
         try
         {
-            return cResFunc.call(cParam);
+            cResFunc.BeginPCall();
+            cResFunc.Push(cParam);
+            cResFunc.PCall();
+            object ret = cResFunc.CheckVariant();
+            cResFunc.EndPCall();
+            return ret;
         }
         catch (Exception e)
         {
             Debug.LogError(LUtil.FormatException(e));
+            cResFunc.EndPCall();
             cResFunc = null;
             return null;
         }
@@ -339,11 +350,18 @@ public class LLuaTable
         // Try to call this method.
         try
         {
-            return cResFunc.call(cParam1, cParam2);
+            cResFunc.BeginPCall();
+            cResFunc.Push(cParam1);
+            cResFunc.Push(cParam2);
+            cResFunc.PCall();
+            object ret = cResFunc.CheckVariant();
+            cResFunc.EndPCall();
+            return ret;
         }
         catch (Exception e)
         {
             Debug.LogError(LUtil.FormatException(e));
+            cResFunc.EndPCall();
             cResFunc = null;
             return null;
         }
@@ -394,11 +412,19 @@ public class LLuaTable
         // Try to call this method.
         try
         {
-            return cResFunc.call(cParam1, cParam2, cParam3);
+            cResFunc.BeginPCall();
+            cResFunc.Push(cParam1);
+            cResFunc.Push(cParam2);
+            cResFunc.Push(cParam3);
+            cResFunc.PCall();
+            object ret = cResFunc.CheckVariant();
+            cResFunc.EndPCall();
+            return ret;
         }
         catch (Exception e)
         {
             Debug.LogError(LUtil.FormatException(e));
+            cResFunc.EndPCall();
             cResFunc = null;
             return null;
         }
@@ -449,16 +475,26 @@ public class LLuaTable
         {
             if (null == aParams)
             {
-                return cResFunc.call();
+                cResFunc.BeginPCall();
+                cResFunc.PCall();
+                object ret = cResFunc.CheckVariant();
+                cResFunc.EndPCall();
+                return ret;
             }
             else
             {
-                return cResFunc.call(aParams);
+                cResFunc.BeginPCall();
+                cResFunc.PushArgs(aParams);
+                cResFunc.PCall();
+                object ret = cResFunc.CheckVariant();
+                cResFunc.EndPCall();
+                return ret;
             }
         }
         catch (Exception e)
         {
             Debug.LogError(LUtil.FormatException(e));
+            cResFunc.EndPCall();
             cResFunc = null;
             return null;
         }

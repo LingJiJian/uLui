@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2469543979
+CRC: 4006306980
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1a43e26555ebc7789bfbdb25973833ca
+    Hash: a8ac69e97f9073745bf55cd7eedcff7d
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,18 +12,62 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
+- Assets/Game/Resources/@Lua/UnityEngine/Vector4.bytes
+- Assets/Game/Resources/@Lua/protobuf/protobuf.bytes
+- Assets/Game/Resources/@Lua/lpeg/re.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Bounds.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Ray.bytes
 - Assets/Game/Resources/@Lua/Game/Common/MsgId.bytes
+- Assets/Game/Resources/@Lua/misc/strict.bytes
+- Assets/Game/Resources/@Lua/System/ValueType.bytes
 - Assets/Game/Resources/@Lua/Game/Common/NetworkManager.bytes
 - Assets/Game/Resources/@Lua/Base/LClass.bytes
+- Assets/Game/Resources/@Lua/protobuf/descriptor.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Touch.bytes
+- Assets/Game/Resources/@Lua/socket/http.bytes
+- Assets/Game/Resources/@Lua/System/Reflection/BindingFlags.bytes
+- Assets/Game/Resources/@Lua/protobuf/listener.bytes
 - Assets/Game/Resources/@Lua/Game/Common/Util.bytes
-- Assets/Game/Resources/@Lua/Game/Proto/masterd.bytes
-- Assets/Game/Resources/@Lua/Lib/protobuf/protobuf.bytes
-- Assets/Game/Resources/@Lua/Lib/protobuf/parser.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Quaternion.bytes
+- Assets/Game/Resources/@Lua/socket/ftp.bytes
+- Assets/Game/Resources/@Lua/misc/misc.bytes
+- Assets/Game/Resources/@Lua/protobuf/text_format.bytes
+- Assets/Game/Resources/@Lua/cjson/util.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Mathf.bytes
+- Assets/Game/Resources/@Lua/list.bytes
 - Assets/Game/Resources/@Lua/Base/LMessage.bytes
+- Assets/Game/Resources/@Lua/tolua.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Vector2.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Vector3.bytes
 - Assets/Game/Resources/@Lua/Game/MsgBox.bytes
+- Assets/Game/Resources/@Lua/socket/url.bytes
+- Assets/Game/Resources/@Lua/protobuf/encoder.bytes
+- Assets/Game/Resources/@Lua/protobuf/wire_format.bytes
 - Assets/Game/Resources/@Lua/Game/Common/EventNames.bytes
+- Assets/Game/Resources/@Lua/socket/mbox.bytes
+- Assets/Game/Resources/@Lua/misc/utf8.bytes
+- Assets/Game/Resources/@Lua/slot.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Plane.bytes
+- Assets/Game/Resources/@Lua/socket/headers.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Time.bytes
+- Assets/Game/Resources/@Lua/misc/functions.bytes
 - Assets/Game/Resources/@Lua/import.bytes
 - Assets/Game/Resources/@Lua/main.bytes
 - Assets/Game/Resources/@Lua/Base/LGlobal.bytes
+- Assets/Game/Resources/@Lua/System/coroutine.bytes
+- Assets/Game/Resources/@Lua/mime.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/LayerMask.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/Color.bytes
+- Assets/Game/Resources/@Lua/socket/smtp.bytes
+- Assets/Game/Resources/@Lua/event.bytes
+- Assets/Game/Resources/@Lua/protobuf/containers.bytes
+- Assets/Game/Resources/@Lua/socket/tp.bytes
+- Assets/Game/Resources/@Lua/System/Timer.bytes
+- Assets/Game/Resources/@Lua/protobuf/decoder.bytes
+- Assets/Game/Resources/@Lua/socket.bytes
+- Assets/Game/Resources/@Lua/ltn12.bytes
 - Assets/Game/Resources/@Lua/Base/LVersion.bytes
+- Assets/Game/Resources/@Lua/typeof.bytes
+- Assets/Game/Resources/@Lua/protobuf/type_checkers.bytes
+- Assets/Game/Resources/@Lua/UnityEngine/RaycastHit.bytes
 Dependencies: []

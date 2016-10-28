@@ -30,7 +30,7 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
+
 
 namespace Lui
 {
@@ -52,7 +52,7 @@ namespace Lui
     /// <summary>
     /// 网格翻页
     /// </summary>
-    [CustomLuaClassAttribute]
+    
     public class LGridPageView : LTableView
     {
         public int gridCellsCount;
