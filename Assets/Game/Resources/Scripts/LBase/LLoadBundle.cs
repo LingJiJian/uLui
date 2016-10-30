@@ -72,7 +72,17 @@ public class LLoadBundle : MonoBehaviour
         }
     }
 
-	public T LoadAsset<T>(string bundleName, string assetName) where T : Object 
+    public Object LoadAsset(string bundleName, string assetName)
+    {
+        return LoadAsset<Object>(bundleName, assetName);
+    }
+
+    public Object[] LoadAllAsset(string bundleName, string assetName)
+    {
+        return LoadAllAsset<Object>(bundleName, assetName);
+    }
+
+    public T LoadAsset<T>(string bundleName, string assetName) where T : Object 
     {
         T prefab = null;
         if (LGameConfig.GetInstance().isDebug)

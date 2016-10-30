@@ -8,7 +8,7 @@ require "import"
 local function main() 
 	print("初始化游戏")
 
-	NetworkManager:GetInstance()
+	-- NetworkManager:GetInstance()
 
 	LLoadBundle.GetInstance():LoadAllBundles({
 		"scenes-first_unity.ab",

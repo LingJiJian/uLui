@@ -19,25 +19,35 @@ public class LResUpdate : MonoBehaviour
 
     public UnityAction onCompleteHandler;
 
-	public static string LOCAL_RES_URL {
-		get {
-			if (!LGameConfig.GetInstance().isDebug && LGameConfig.GetInstance().isHotFix) {
-				return LGameConfig.LOCAL_URL_PREFIX + Application.persistentDataPath + Path.DirectorySeparatorChar;
-			} else {
-				return LGameConfig.LOCAL_URL_PREFIX + Application.streamingAssetsPath + Path.DirectorySeparatorChar + LGameConfig.ASSETBUNDLE_PATH;
-			}
-		}
-	}
+    public static string LOCAL_RES_URL
+    {
+        get
+        {
+            if (!LGameConfig.GetInstance().isDebug && LGameConfig.GetInstance().isHotFix)
+            {
+                return LGameConfig.LOCAL_URL_PREFIX + Application.persistentDataPath + Path.DirectorySeparatorChar;
+            }
+            else {
+#if UNITY_ANDROID
+                return Application.streamingAssetsPath + Path.DirectorySeparatorChar;
+#elif UNITY_IPHONE
+				return "file://"+Application.streamingAssetsPath+ Path.DirectorySeparatorChar;  
+#elif UNITY_STANDALONE_WIN || UNITY_EDITOR
+                return "file://" + Application.dataPath + "/StreamingAssets/";
+#else
+        return string.Empty;  
+#endif
+            }
+        }
+    }
 
-	public static string LOCAL_RES_PATH {
-		get {
-			if (LGameConfig.GetInstance ().isDebug) {
-				return Application.streamingAssetsPath + Path.DirectorySeparatorChar + LGameConfig.ASSETBUNDLE_PATH;
-			} else {
-				return Application.persistentDataPath + Path.DirectorySeparatorChar ;
-			}
-		}
-	}
+    public static string LOCAL_RES_PATH
+    {
+        get
+        {
+            return Application.persistentDataPath + Path.DirectorySeparatorChar;
+        }
+    }
 
     public void checkUpdate()
     {

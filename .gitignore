@@ -8,6 +8,9 @@
 Assets/data.zip
 Assets/version.ver
 Assets/Slua/LuaObject/*
+Assets/StreamingAssets/*.ab
+Assets/StreamingAssets/*.manifest
+Assets/StreamingAssets/*.meta
 /Library
 /Library/FailedAssetImports.txt
 /Library/cache/

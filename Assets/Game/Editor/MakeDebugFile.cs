@@ -12,7 +12,7 @@ public class MakeDebugFile : Editor
     //[MenuItem("Tools/Copy")]
     public static void CopyLuaTxt() {
 
-        string fromUrl = Application.streamingAssetsPath + "/@Lua";
+        string fromUrl = Application.dataPath + "/Game/@Lua";
         string toUrl = Application.dataPath + "/Game/Resources/@Lua";
 
 		AssetDatabase.DeleteAsset ("Assets/Game/Resources/@Lua");

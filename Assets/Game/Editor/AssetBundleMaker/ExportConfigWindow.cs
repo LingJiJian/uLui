@@ -4,7 +4,7 @@ using System.Collections;
 
 public class ExportConfigWindow : EditorWindow
 {
-	public static string EXPORT_OUT_PATH = Application.streamingAssetsPath;
+	public static string EXPORT_OUT_PATH = Application.dataPath;
     public static BuildTarget BUILD_TARGET = BuildTarget.StandaloneWindows;
 
     [MenuItem("Tools/HotFix Config")]

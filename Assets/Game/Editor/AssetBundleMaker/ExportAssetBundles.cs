@@ -9,58 +9,67 @@ public class ExportAssetBundles : Editor
 {
     public static void Run()
     {
-		MakeDebugFile.CopyLuaTxt ();
-		CreateAssetBundles();
+        MakeDebugFile.CopyLuaTxt();
+        CreateAssetBundles();
         CreateZipFile();
         CreateVersionFile();
         AssetDatabase.Refresh();
     }
 
-	public static void CreateAssetBundles(){
+    public static void CreateAssetBundles()
+    {
 
-		AssetDatabase.DeleteAsset ("Assets/StreamingAssets/Ab");
-		Directory.CreateDirectory (Application.streamingAssetsPath + "/Ab");
+        Helper.forEachHandle(Application.dataPath + "/StreamingAssets", new List<string> { "ab", "manifest" }, (string filename) =>
+        {
+            string assetPath = filename.Replace(Application.dataPath, "Assets");
+            AssetDatabase.DeleteAsset(assetPath);
+        });
 
-		string[] paths = new string[]{ "Audios","Prefabs","Atlas","@Lua","Scenes"};
-		List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
+        string[] paths = new string[] { "Audios", "Prefabs", "Atlas", "@Lua", "Scenes" };
+        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
 
-		foreach (string path in paths) {
+        foreach (string path in paths)
+        {
 
-			string basePath = Application.dataPath + "/Game/Resources/" + path;
+            string basePath = Application.dataPath + "/Game/Resources/" + path;
 
-			if (path.StartsWith ("@")) {
-			
-				List<string> list = new List<string> ();
-                Helper.forEachHandle (basePath, null, (string filename) => {
-					string assetPath = filename.Replace(Application.dataPath,"Assets");
-					list.Add(assetPath);
-				});
-				AssetBundleBuild build = new AssetBundleBuild ();
-				build.assetBundleName = path +".ab";
-				build.assetNames = list.ToArray();
-				buildMap.Add (build);
-			
-			} else {
+            if (path.StartsWith("@"))
+            {
 
-                Helper.forEachHandle (basePath, null, (string filename) => {
-					string assetPath = filename.Replace(Application.dataPath,"Assets");
+                List<string> list = new List<string>();
+                Helper.forEachHandle(basePath, null, (string filename) => {
+                    string assetPath = filename.Replace(Application.dataPath, "Assets");
+                    list.Add(assetPath);
+                });
+                AssetBundleBuild build = new AssetBundleBuild();
+                build.assetBundleName = path + ".ab";
+                build.assetNames = list.ToArray();
+                buildMap.Add(build);
+
+            }
+            else {
+
+                Helper.forEachHandle(basePath, null, (string filename) => {
+                    string assetPath = filename.Replace(Application.dataPath, "Assets");
                     string baseName = assetPath.Substring(22);
                     AssetBundleBuild build = new AssetBundleBuild();
                     build.assetBundleName = baseName.Replace('.', '_').Replace(Path.DirectorySeparatorChar, '-') + ".ab";
                     build.assetNames = new string[] { assetPath };
                     buildMap.Add(build);
                 });
-			}
-		}
-		BuildPipeline.BuildAssetBundles (Application.streamingAssetsPath+"/Ab", buildMap.ToArray (),
-			BuildAssetBundleOptions.DeterministicAssetBundle |
-			BuildAssetBundleOptions.DisableWriteTypeTree |
-			BuildAssetBundleOptions.ChunkBasedCompression,ExportConfigWindow.BUILD_TARGET);
-	}
+            }
+        }
+        BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, buildMap.ToArray(),
+            BuildAssetBundleOptions.DeterministicAssetBundle |
+            BuildAssetBundleOptions.DisableWriteTypeTree |
+            BuildAssetBundleOptions.ChunkBasedCompression, ExportConfigWindow.BUILD_TARGET);
+        //删除临时lua文件
+        AssetDatabase.DeleteAsset("Assets/Game/Resources/@Lua");
+    }
 
     static void CreateVersionFile()
     {
-		string resPath = ExportConfigWindow.EXPORT_OUT_PATH + Path.DirectorySeparatorChar;
+        string resPath = ExportConfigWindow.EXPORT_OUT_PATH + Path.DirectorySeparatorChar;
         StringBuilder versions = new StringBuilder();
 
         string zipPath = resPath + LGameConfig.UPDATE_FILE_ZIP;
@@ -84,10 +93,10 @@ public class ExportAssetBundles : Editor
 
     static void CreateZipFile()
     {
-        string srcPath = Application.streamingAssetsPath + "/Ab";
+        string srcPath = Application.streamingAssetsPath;
         string outPath = ExportConfigWindow.EXPORT_OUT_PATH + Path.DirectorySeparatorChar;
 
-		Helper.forEachHandle(srcPath, new List<string>(){"meta"}, (string filename) =>
+        Helper.forEachHandle(srcPath, new List<string>() { "meta" }, (string filename) =>
         {
             File.Delete(@filename);
         });

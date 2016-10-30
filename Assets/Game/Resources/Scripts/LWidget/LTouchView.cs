@@ -41,11 +41,8 @@ namespace Lui
         public UnityAction<Vector2> onTouchHandler;
         private Vector2 _lastPoint;
 
-        public LTouchView()
-        {
-        }
-
 #if UNITY_ANDROID || UNITY_IPHONE
+        [DoNotToLua]
         void Update()
         {
             if( !LUtil.Windows )
@@ -62,11 +59,12 @@ namespace Lui
 #endif
 
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
+        [DoNotToLua]
         public void OnPointerDown(PointerEventData eventData)
         {
             _lastPoint = eventData.position;
         }
-
+        [DoNotToLua]
         public void OnDrag(PointerEventData eventData)
         {
             Vector2 offset = eventData.position - _lastPoint;
@@ -76,7 +74,7 @@ namespace Lui
                 onTouchHandler.Invoke(offset);
             }
         }
-
+        [DoNotToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
             if (onTouchHandler != null)
