@@ -17,6 +17,8 @@
 10.LLabelAtlas 图集字<br>
 11.LTableView 复用表<br>
 12.LHUDView hud容器<br>
+13.LSlider 滑块<br>
+14.LProgress 进度条<br>
 
 ### 窗体LWindow
 1.自动管理窗体层次<br>

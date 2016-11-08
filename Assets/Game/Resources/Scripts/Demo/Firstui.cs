@@ -16,6 +16,7 @@ public class Firstui : MonoBehaviour
     public LPageView pageView;
     public LListView listView;
     public LGridView gridView;
+	public LProgress progView;
     public GameObject panel_root;
 
     private LWindowManager _wm;
@@ -116,5 +117,8 @@ public class Firstui : MonoBehaviour
             obj.GetComponent<Text>().text = idx.ToString();
         });
         gridView.reloadData();
+
+		progView.setValue (10);
+		progView.startProgress (80, 1.0f);
     }
 }

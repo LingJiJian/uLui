@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 205b5b726328cb34e85eafe453d86ae7
-timeCreated: 1475292846
+timeCreated: 1478518870
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -58,11 +58,14 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: +
+    - serializedVersion: 2
+      name: +
       rect:
         serializedVersion: 2
         x: 45
@@ -72,16 +75,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -13, y: 21}
-        - {x: -21, y: 14}
-        - {x: -21, y: -13}
-        - {x: -13, y: -21}
-        - {x: 11, y: -21}
-        - {x: 21, y: -10}
-        - {x: 21, y: 12}
-        - {x: 12, y: 21}
-    - name: '-'
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: '-'
       rect:
         serializedVersion: 2
         x: 2
@@ -92,7 +89,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: 0
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 0
       rect:
         serializedVersion: 2
         x: 45
@@ -102,14 +101,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 25.5}
-        - {x: -20, y: 21.5}
-        - {x: -20, y: -25.5}
-        - {x: 13, y: -25.5}
-        - {x: 20, y: -23.5}
-        - {x: 20, y: 25.5}
-    - name: 1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 1
       rect:
         serializedVersion: 2
         x: 87
@@ -120,7 +115,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: 2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 2
       rect:
         serializedVersion: 2
         x: 2
@@ -130,16 +127,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -13.5, y: 25}
-        - {x: -20.5, y: 23}
-        - {x: -21.5, y: 20}
-        - {x: -21.5, y: -25}
-        - {x: 19.5, y: -25}
-        - {x: 21.5, y: -23}
-        - {x: 21.5, y: 23}
-        - {x: 20.5, y: 25}
-    - name: 3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 3
       rect:
         serializedVersion: 2
         x: 2
@@ -149,15 +140,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -13.5, y: 25.5}
-        - {x: -20.5, y: 23.5}
-        - {x: -20.5, y: -25.5}
-        - {x: 14.5, y: -25.5}
-        - {x: 20.5, y: -22.5}
-        - {x: 20.5, y: 23.5}
-        - {x: 19.5, y: 25.5}
-    - name: 4
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 4
       rect:
         serializedVersion: 2
         x: 47
@@ -167,15 +153,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -8.5, y: 24.5}
-        - {x: -16.5, y: 23.5}
-        - {x: -20.5, y: 9.5}
-        - {x: -20.5, y: -22.5}
-        - {x: -14.5, y: -24.5}
-        - {x: 20.5, y: -24.5}
-        - {x: 20.5, y: 24.5}
-    - name: 5
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 5
       rect:
         serializedVersion: 2
         x: 47
@@ -185,13 +166,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -20, y: 25}
-        - {x: -20, y: -25}
-        - {x: 17, y: -25}
-        - {x: 20, y: -18}
-        - {x: 20, y: 25}
-    - name: 6
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 6
       rect:
         serializedVersion: 2
         x: 45
@@ -201,13 +179,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: 25.5}
-        - {x: -20, y: 22.5}
-        - {x: -20, y: -25.5}
-        - {x: 20, y: -25.5}
-        - {x: 20, y: 25.5}
-    - name: 7
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 7
       rect:
         serializedVersion: 2
         x: 87
@@ -217,13 +192,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18.5, y: 24.5}
-        - {x: -18.5, y: -24.5}
-        - {x: 3.5, y: -24.5}
-        - {x: 18.5, y: -14.5}
-        - {x: 18.5, y: 24.5}
-    - name: 8
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 8
       rect:
         serializedVersion: 2
         x: 2
@@ -233,16 +205,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -13.5, y: 25.5}
-        - {x: -18.5, y: 24.5}
-        - {x: -20.5, y: 12.5}
-        - {x: -20.5, y: -22.5}
-        - {x: -16.5, y: -25.5}
-        - {x: 19.5, y: -25.5}
-        - {x: 20.5, y: -19.5}
-        - {x: 20.5, y: 25.5}
-    - name: 9
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: 9
       rect:
         serializedVersion: 2
         x: 2
@@ -252,14 +218,8 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17.5, y: 25.5}
-        - {x: -20.5, y: 24.5}
-        - {x: -20.5, y: -22.5}
-        - {x: -16.5, y: -25.5}
-        - {x: 13.5, y: -25.5}
-        - {x: 20.5, y: -19.5}
-        - {x: 20.5, y: 25.5}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 

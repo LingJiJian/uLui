@@ -34,7 +34,7 @@ public class TexturePackerImporter : Editor {
             }
             string name = Path.GetFileName(path);
             string sheetPath = string.Format("{0}/Game/Resources/Atlas/{1}", Application.dataPath, name);//用TP打包好的图集存放目录
-            Helper.RunCmd("E:/TexturePacker/bin/TexturePacker.exe", string.Format(args, sheetPath, sheetPath, sb.ToString()), "");
+            Helper.RunCmd("D:/TexturePacker/bin/TexturePacker.exe", string.Format(args, sheetPath, sheetPath, sb.ToString()), "");
             Debug.Log("生成图集:" + sheetPath);
         }
         AssetDatabase.Refresh();

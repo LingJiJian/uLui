@@ -41,6 +41,7 @@ namespace SLua
             add(typeof(List<int>), "ListInt");
             add(typeof(Dictionary<int, string>), "DictIntStr");
             add(typeof(string), "String");
+			add (typeof(LeanTween), "LeanTween");
             
             // add your custom class here
             // add( type, typename)
@@ -162,6 +163,7 @@ namespace SLua
             "Apple.TV",
             "ClusterInput",
             "EventProvider",
+				"Graphics",
         };
         }
 
