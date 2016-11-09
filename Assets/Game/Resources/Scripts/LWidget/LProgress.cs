@@ -59,6 +59,11 @@ public class LProgress : MonoBehaviour {
 		bar.fillAmount = this._value / maxValue;
 	}
 
+	public float getValue()
+	{
+		return _value;
+	}
+
 	public float getPercentage()
 	{
 		return (_value - minValue) / (maxValue - minValue); 
