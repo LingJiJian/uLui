@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Lui;
 
 public class Secondui : MonoBehaviour {
 
@@ -7,6 +8,7 @@ public class Secondui : MonoBehaviour {
     public Button btn_trans;
     public Button btn_anim;
     public Button btn_clean;
+	public LTouchView touch_view;
     private LWindowManager _wm;
     protected Animator _teddyAnim;
 
@@ -21,7 +23,6 @@ public class Secondui : MonoBehaviour {
 				"prefabs-msgbox_prefab.ab",
 				"atlas-face_png.ab" },()=>
 			{
-
 				_wm.runWindow("Prefabs/MsgBox.prefab", WindowHierarchy.Normal);
 			});
         });
@@ -46,6 +47,10 @@ public class Secondui : MonoBehaviour {
             _teddyAnim.SetBool("idle_run", false);
             _teddyAnim.SetBool("run_idle", true);
         });
+
+		touch_view.onClickHandler = (GameObject obj) => {
+			Debug.Log(obj.name);
+		};
 	}
 
 	void OnLevelWasLoaded(int level){

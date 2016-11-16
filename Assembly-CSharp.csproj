@@ -102,6 +102,7 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Func_1_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Func_3_int_string_bool.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Predicate_1_int.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_GameObject.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_Vector2.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_float.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_int.cs" />
@@ -122,6 +123,7 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LLoadBundle.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LProgress.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LResUpdate.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LSlider.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LUtil.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LWindowBase.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LWindowManager.cs" />
