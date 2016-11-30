@@ -57,6 +57,10 @@ public class LProgress : MonoBehaviour {
 	{
 		this._value = Mathf.Min(maxValue, Mathf.Max(minValue, value));
 		bar.fillAmount = this._value / maxValue;
+		if (label)
+        {
+            label.text = (this._value / maxValue * 100).ToString("0.0") + "%";
+        }
 	}
 
 	public float getValue()

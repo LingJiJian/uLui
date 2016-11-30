@@ -54,6 +54,7 @@
      <Compile Include="Assets\Game\Editor\BmfontMaker\BmByteReader.cs" />
      <Compile Include="Assets\Game\Editor\BmfontMaker\BmFontEditor.cs" />
      <Compile Include="Assets\Game\Editor\Helper.cs" />
+     <Compile Include="Assets\Game\Editor\I18nExporter\I18nExporter.cs" />
      <Compile Include="Assets\Game\Editor\MakeDebugFile.cs" />
      <Compile Include="Assets\Game\Editor\TexturePackerImporter\TexturePackerImporter.cs" />
      <Compile Include="Assets\Slua\Editor\CustomEditor.cs" />

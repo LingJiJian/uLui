@@ -3,6 +3,7 @@ require "Base/LVersion"
 require "Base/LClass"
 require "Base/LMessage"
 
+require "Game/Common/i18n"
 require "Game/Common/Util"
 require "Game/Common/MsgId"
 require "Game/Common/EventNames"

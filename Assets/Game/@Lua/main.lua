@@ -6,7 +6,7 @@ import "Lui"
 require "import"
 
 local function main() 
-	print("初始化游戏")
+	print(i18n["1001"])
 
 	-- NetworkManager:GetInstance()
 
@@ -26,7 +26,7 @@ local function main()
 		local lab_progress = GameObject.Find("lab_progress"):GetComponent(Text)
 
 		LWindowManager:GetInstance():LoadSceneAsync("first",function( p )
-			lab_progress.text = string.format("初始化需要一点点时间(%d/100)",p)
+			lab_progress.text = string.format(i18n["1002"],p)
 		end)
 
 	end)
