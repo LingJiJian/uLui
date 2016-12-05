@@ -35,15 +35,17 @@ public class LProgress : MonoBehaviour {
 	public float maxValue;
 	public float minValue;
 	private float _value;
-	public Image bar;
+	public RectMask2D mask;
 	public Text label;
 	private bool _isStartProgress;
 	private float _arrivePercentage;
 	private float _startProgressStep;
 	public UnityAction onProgress;
 	public UnityAction onProgressEnd;
+    protected float _width;
+    protected float _height;
 
-	public LProgress()
+    public LProgress()
 	{
 		maxValue = 100;
 		minValue = 0;
@@ -53,11 +55,18 @@ public class LProgress : MonoBehaviour {
 		_startProgressStep = 0;
 	}
 
-	public void setValue(float value)
+    void Start()
+    {
+        _width = GetComponent<RectTransform>().rect.width;
+        _height = GetComponent<RectTransform>().rect.height;
+    }
+
+    public void setValue(float value)
 	{
 		this._value = Mathf.Min(maxValue, Mathf.Max(minValue, value));
-		bar.fillAmount = this._value / maxValue;
-		if (label)
+        mask.GetComponent<RectTransform>().sizeDelta = new Vector2(_width * getPercentage(), _height);
+        mask.gameObject.SetActive(_value != 0);
+        if (label)
         {
             label.text = (this._value / maxValue * 100).ToString("0.0") + "%";
         }
@@ -89,9 +98,9 @@ public class LProgress : MonoBehaviour {
 		if (_isStartProgress) {
 			_value = _value + _startProgressStep;
 			float perc = getPercentage ();
-			bar.fillAmount = perc;
-
-			if (label) {
+            mask.GetComponent<RectTransform>().sizeDelta = new Vector2(_width * perc, _height);
+            
+            if (label) {
 				label.text = (perc * 100 ).ToString("0.0")+"%";
 			}
 

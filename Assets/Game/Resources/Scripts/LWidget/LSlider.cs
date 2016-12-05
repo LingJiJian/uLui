@@ -29,8 +29,7 @@ public class LSlider : LProgress, IDragHandler,IPointerDownHandler,IPointerUpHan
 {
 
     public Image block;
-    private float _width;
-    private float _height;
+    
     public UnityAction<PointerEventData> onPointerDownHandle;
     public UnityAction<PointerEventData> onPointerUpHandle;
 
