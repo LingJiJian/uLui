@@ -322,13 +322,13 @@ public class LUtil {
                 red = Convert.ToInt32(rgb[0].ToString() + rgb[0].ToString(), 16);
                 green = Convert.ToInt32(rgb[1].ToString() + rgb[1].ToString(), 16);
                 blue = Convert.ToInt32(rgb[2].ToString() + rgb[2].ToString(), 16);
-                return new Color(red, green, blue, 255);
+                return new Color(red/255.0f, green/255.0f, blue/255.0f, 1);
             case 6:
                 rgb = color.ToCharArray();
                 red = Convert.ToInt32(rgb[0].ToString() + rgb[1].ToString(), 16);
                 green = Convert.ToInt32(rgb[2].ToString() + rgb[3].ToString(), 16);
                 blue = Convert.ToInt32(rgb[4].ToString() + rgb[5].ToString(), 16);
-                return new Color(red, green, blue,255);
+                return new Color(red/255.0f, green/255.0f, blue/255.0f,1);
             default:
                 return Color.white;
         }
