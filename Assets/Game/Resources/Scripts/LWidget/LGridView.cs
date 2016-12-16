@@ -235,7 +235,7 @@ namespace Lui
             else
             {
                 cell = _cellsFreed[0];
-                _cellsFreed.Remove(cell);
+                _cellsFreed.RemoveAt(0);
             }
             return cell;
         }
@@ -244,15 +244,15 @@ namespace Lui
         {
 			if (_cellsUsed.Count > 0) 
 			{
-				LGridViewCell cell = _cellsUsed [0];
-				while (cell != null) {
-					_cellsFreed.Add (cell);
-					_cellsUsed.Remove (cell);
-                    //cell.node.transform.SetParent (null);
-                    cell.reset ();
+                for (int i = 0; i < _cellsUsed.Count; i++)
+                {
+                    LGridViewCell cell = _cellsUsed[i];
+                    _cellsFreed.Add(cell);
+                    cell.reset();
                     cell.node.SetActive(false);
                 }
-			}
+                _cellsUsed.Clear();
+            }
             _indices.Clear();
             _positions.Clear();
             updatePositions();
