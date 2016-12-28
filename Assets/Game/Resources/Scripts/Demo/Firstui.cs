@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Lui;
 
@@ -17,6 +19,7 @@ public class Firstui : MonoBehaviour
     public LListView listView;
     public LGridView gridView;
 	public LProgress progView;
+    public LExpandListView expandView;
     public GameObject panel_root;
 
     private LWindowManager _wm;
@@ -108,6 +111,13 @@ public class Firstui : MonoBehaviour
             listView.insertNodeAtLast(item);
         }
         listView.reloadData();
+
+        expandView.nodeNum = 20;
+        expandView.nodeItemNum = 1;
+        expandView.prepare();
+        expandView.expand(0);
+        expandView.expand(1);
+        expandView.reloadData();
 
         gridView.cellsSize = new Vector2(100, 100);
         gridView.cols = 4;

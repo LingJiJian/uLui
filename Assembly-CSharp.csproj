@@ -60,6 +60,8 @@
      <Compile Include="Assets\Game\Resources\Scripts\LBase\LUtil.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LButton.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LControlView.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LExpandListView.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LExpandNode.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LFPSView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LGridPageView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LGridView.cs" />
@@ -833,6 +835,7 @@
      <Compile Include="Assets\Slua\example\VarObj.cs" />
      <Compile Include="Assets\Slua\example\test\TestLua.cs" />
      <Compile Include="Assets\Slua\example\test\test.cs" />
+     <Compile Include="Assets\TestMeshAlpha.cs" />
      <None Include="Assets\Slua\Resources\module\some.txt" />
      <None Include="Assets\Slua\Resources\main.txt" />
      <None Include="Assets\Slua\Resources\circle\circle.txt" />
