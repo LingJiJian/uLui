@@ -20,6 +20,7 @@
 13.LSlider 滑块<br>
 14.LProgress 进度条<br>
 15.LExpandListView 可折叠列表<br>
+16.LDragView 拖拽控件<br>
 
 ### 窗体LWindow
 1.自动管理窗体层次<br>

@@ -87,6 +87,9 @@
     <Compile Include="Assets\Game\Resources\Scripts\LBase\LUtil.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LButton.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LControlView.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\LWidget\LDragView.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\LWidget\LExpandListView.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\LWidget\LExpandNode.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LFPSView.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LGridPageView.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LGridView.cs" />
@@ -97,8 +100,10 @@
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LMacros.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LMovieClip.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LPageView.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\LWidget\LProgress.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LRichText.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LScrollView.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\LWidget\LSlider.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LTableView.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LTouchView.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWindow\LWindowBase.cs" />
@@ -127,6 +132,8 @@
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Func_1_int.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Func_3_int_string_bool.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Predicate_1_int.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_EventSystems_PointerEventData.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_GameObject.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_Vector2.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_float.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_int.cs" />
@@ -145,7 +152,9 @@
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LHUDSort.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LHUDView.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LLoadBundle.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LProgress.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LResUpdate.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LSlider.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LUtil.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LWindowBase.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LWindowManager.cs" />
@@ -153,6 +162,8 @@
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_ListViewEvent.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LButton.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LControlView.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LExpandListView.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LExpandNode.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LGridPageView.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LGridView.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LLabelAtlas.cs" />
