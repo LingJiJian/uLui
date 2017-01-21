@@ -221,6 +221,15 @@ namespace Lui
                 updateNodesPosition();
             }
 
+            //unactive all tpl cell
+            for(int i = 0; i < 10; i++)
+            {
+                Transform tran = transform.Find("container/cell_tpl" + i);
+                if (tran != null) {
+                    tran.gameObject.SetActive(false);
+                }
+            }
+
             relocateContainer();
         }
 
@@ -242,7 +251,7 @@ namespace Lui
             }
         }
 
-        public GameObject dequeueItem()
+        public GameObject dequeueItem(int id)
         {
             GameObject ret = null;
             if (limitNum > 0)
@@ -256,7 +265,8 @@ namespace Lui
             }
             if (ret == null)
             {
-                ret = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
+                ret = Instantiate(transform.Find("container/cell_tpl"+id).gameObject);
+                ret.SetActive(true);
             }
             return ret;
         }

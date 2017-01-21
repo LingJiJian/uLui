@@ -5,6 +5,7 @@ Created by Lingjijian on 2015
 
 342854406@qq.com
 
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -24,50 +25,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using UnityEngine;
+using System.Collections.Generic;
+using System.Security;
 using UnityEngine.UI;
-using System.Collections;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using SLua;
 
-public class LFPSView : MonoBehaviour
-{
-    private static LFPSView _instance;
-    public float updateInterval = 0.5F;
-    private double lastInterval;
-    private int frames = 0;
-    private float fps;
+public class LPickMark : MonoBehaviour,IPointerDownHandler {
 
-    public static LFPSView Show()
-    {
-        if (_instance == null)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "LFPSView";
-            _instance = obj.AddComponent<LFPSView>();
-            DontDestroyOnLoad(obj);
-        }
-        return _instance;
-    }
+    public Lui.LTableView tableView;
 
-    void Start()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        lastInterval = Time.realtimeSinceStartup;
-        frames = 0;
-    }
-    void OnGUI()
-    {
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = Color.white;
-        style.fontSize = 30;
-        GUI.Label(new Rect(0, 0, 100, 50), " " + fps.ToString("f2"), style);
-    }
-    void Update()
-    {
-        ++frames;
-        float timeNow = Time.realtimeSinceStartup;
-        if (timeNow > lastInterval + updateInterval)
-        {
-            fps = (float)(frames / (timeNow - lastInterval));
-            frames = 0;
-            lastInterval = timeNow;
-        }
+        tableView.curPickObj = gameObject;
     }
 }

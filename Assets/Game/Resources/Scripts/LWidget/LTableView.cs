@@ -103,6 +103,11 @@ namespace Lui
                 cell.reset();
             }
 
+            Transform tran = transform.Find("container/cell_tpl");
+            if(tran!=null){
+                tran.gameObject.SetActive(false);
+            }
+
             cellsUsed.Clear();
             indices.Clear();
             positions.Clear();

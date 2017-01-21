@@ -100,6 +100,7 @@
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LMacros.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LMovieClip.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LPageView.cs" />
+    <Compile Include="Assets\Game\Resources\Scripts\LWidget\LPickMark.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LProgress.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LRichText.cs" />
     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LScrollView.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_EventSystems_PointerEventData.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_GameObject.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_Vector2.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_Vector3.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_float.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_int.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_string.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_FloatEvent.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Game.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_HelloWorld.cs" />
+    <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LDragView.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LGameConfig.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LHUDSort.cs" />
     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LHUDView.cs" />

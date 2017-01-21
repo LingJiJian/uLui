@@ -48,7 +48,7 @@ public class Secondui : MonoBehaviour {
             _teddyAnim.SetBool("run_idle", true);
         });
 
-		touch_view.onClickHandler = (GameObject obj) => {
+		touch_view.onClickHandler2D = (GameObject obj) => {
 			Debug.Log(obj.name);
 		};
 	}

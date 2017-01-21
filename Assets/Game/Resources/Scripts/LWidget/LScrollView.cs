@@ -58,11 +58,18 @@ namespace Lui
         private Vector2 minOffset;
         protected Vector2 scrollDistance;
         public bool dragable;
+        private bool _isPicking;
+        public bool pickEnable;
+        [HideInInspector]
+        public GameObject curPickObj;
 
         public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
         public UnityAction onMoveCompleteHandler;
         public UnityAction onScrollingHandler;
         public UnityAction onDraggingScrollEndedHandler;
+        public UnityAction<GameObject> onPickBeginHandler;
+        public UnityAction<Vector3> onPickIngHandler;
+        public UnityAction<GameObject> onPickEndHandler;
 
         public LScrollView()
         {
@@ -131,15 +138,38 @@ namespace Lui
                 LeanTween.cancel(container);
                 onScrolling();
             }
+
+            if (pickEnable)
+            {
+                _isPicking = false;
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (pickEnable && _isPicking)
+            {
+                if (onPickIngHandler != null)
+                    onPickIngHandler.Invoke(eventData.position);
+                return;
+            }
+                
+
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {
                 scrollDistance = point - lastMovePoint;
                 lastMovePoint = point;
+
+                if(pickEnable && (Mathf.Abs(scrollDistance.y) > Mathf.Abs(scrollDistance.x)))
+                {
+                    _isPicking = true;
+                    if (onPickBeginHandler != null)
+                    {
+                        onPickBeginHandler.Invoke(curPickObj);
+                    }
+                    return;
+                }
 
                 switch (direction)
                 {
@@ -170,6 +200,16 @@ namespace Lui
                 {
                     onDraggingScrollEnded();
                 }
+            }
+
+            if (pickEnable)
+            {
+                _isPicking = false;
+
+                if (onPickEndHandler != null)
+                    onPickEndHandler.Invoke(curPickObj);
+
+                curPickObj = null;
             }
         }
 

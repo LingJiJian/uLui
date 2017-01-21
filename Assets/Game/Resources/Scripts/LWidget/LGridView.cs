@@ -253,6 +253,12 @@ namespace Lui
                 }
                 _cellsUsed.Clear();
             }
+
+            Transform tran = transform.Find("container/cell_tpl");
+            if(tran!=null){
+                tran.gameObject.SetActive(false);
+            }
+            
             _indices.Clear();
             _positions.Clear();
             updatePositions();

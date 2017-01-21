@@ -107,7 +107,7 @@ public class Firstui : MonoBehaviour
         listView.limitNum = 10; //not must to set limitNum
         for (int i = 0; i < 30; i++)
         {
-            GameObject item = listView.dequeueItem();
+            GameObject item = listView.dequeueItem(1);
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 40 + Random.Range(0, 40));
             item.GetComponent<Text>().text = i.ToString();
             listView.insertNodeAtLast(item);
@@ -133,80 +133,40 @@ public class Firstui : MonoBehaviour
 		progView.setValue (10);
 		progView.startProgress (80, 1.0f);
 
-        //drag1.onBeginDrag = (Vector2 position) =>
-        //{
-        //    dragSelect.SetActive(true);
-        //    dragSelect.transform.Find("sprite").GetComponent<Image>().sprite = drag1.transform.Find("sprite").GetComponent<Image>().sprite;
-        //    dragSelect.transform.position = position;
-        //};
-        //drag1.onDrag = (Vector2 position) =>
-        //{
-        //    dragSelect.transform.position = position;
-        //};
-        //drag1.onEndDrag = (Vector2 position) =>
-        //{
-        //    dragSelect.SetActive(false);
-        //    if(Vector2.Distance(dragSelect.transform.position, drag2.transform.position) < 50)
-        //    {
-        //        Sprite oldSprite = drag1.transform.Find("sprite").GetComponent<Image>().sprite;
-        //        drag1.transform.Find("sprite").GetComponent<Image>().sprite = drag2.transform.Find("sprite").GetComponent<Image>().sprite;
-        //        drag2.transform.Find("sprite").GetComponent<Image>().sprite = oldSprite;
-        //    }
-        //};
+        tbl_drag.onPickBeginHandler = (GameObject obj) => {
+            dragSelect.SetActive(true);
+            dragSelect.transform.position = obj.transform.position;
+            dragSelect.transform.Find("sprite").GetComponent<Image>().sprite = obj.GetComponent<Image>().sprite;
+        };
 
-        //drag2.onBeginDrag = (Vector2 position) =>
-        //{
-        //    dragSelect.SetActive(true);
-        //    dragSelect.transform.Find("sprite").GetComponent<Image>().sprite = drag2.transform.Find("sprite").GetComponent<Image>().sprite;
-        //    dragSelect.transform.position = position;
-        //};
-        //drag2.onDrag = (Vector2 position) =>
-        //{
-        //    dragSelect.transform.position = position;
-        //};
-        //drag2.onEndDrag = (Vector2 position) =>
-        //{
-        //    dragSelect.SetActive(false);
-        //    if (Vector2.Distance(drag1.transform.position, dragSelect.transform.position) < 50)
-        //    {
-        //        Sprite oldSprite = drag2.transform.Find("sprite").GetComponent<Image>().sprite;
-        //        drag2.transform.Find("sprite").GetComponent<Image>().sprite = drag1.transform.Find("sprite").GetComponent<Image>().sprite;
-        //        drag1.transform.Find("sprite").GetComponent<Image>().sprite = oldSprite;
-        //    }
-        //};
+        tbl_drag.onPickIngHandler = (Vector3 position) => {
+            dragSelect.transform.position = position;
+        };
+
+        tbl_drag.onPickEndHandler = (GameObject obj) =>
+        {
+            dragSelect.SetActive(false);
+            GameObject dragTarget = null;
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject drag = GameObject.Find("drag" + (i + 1));
+                if (Vector2.Distance(drag.transform.position, dragSelect.transform.position) < 50)
+                {
+                    dragTarget = drag;
+                    break;
+                }
+            }
+            if (dragTarget != null)
+            {
+                Sprite oldSprite = obj.GetComponent<Image>().sprite;
+                obj.GetComponent<Image>().sprite = dragTarget.transform.Find("sprite").GetComponent<Image>().sprite;
+                dragTarget.transform.Find("sprite").GetComponent<Image>().sprite = oldSprite;
+            }
+        };
 
         tbl_drag.SetCellHandle((int idx, GameObject obj) =>
         {
-            obj.transform.Find("drag").GetComponent<LDragView>().onBeginDrag = (Vector2 position) =>
-            {
-                dragSelect.SetActive(true);
-                dragSelect.transform.position = position;
-                dragSelect.transform.Find("sprite").GetComponent<Image>().sprite = obj.transform.Find("sprite").GetComponent<Image>().sprite;
-            };
-            obj.transform.Find("drag").GetComponent<LDragView>().onDrag = (Vector2 position) =>
-            {
-                dragSelect.transform.position = position;
-            };
-            obj.transform.Find("drag").GetComponent<LDragView>().onEndDrag = (Vector2 position) =>
-            {
-                dragSelect.SetActive(false);
-                GameObject dragTarget = null;
-                for (int i=0;i<3;i++)
-                {
-                    GameObject drag = GameObject.Find("drag" + (i + 1));
-                    if (Vector2.Distance(drag.transform.position, dragSelect.transform.position) < 50)
-                    {
-                        dragTarget = drag;
-                        break;
-                    }
-                }
-                if (dragTarget != null)
-                {
-                    Sprite oldSprite = obj.transform.Find("sprite").GetComponent<Image>().sprite;
-                    obj.transform.Find("sprite").GetComponent<Image>().sprite = dragTarget.transform.Find("sprite").GetComponent<Image>().sprite;
-                    dragTarget.transform.Find("sprite").GetComponent<Image>().sprite = oldSprite;
-                }
-            };
+
         });
         tbl_drag.reloadData();
 

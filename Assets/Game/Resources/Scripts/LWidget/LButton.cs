@@ -42,6 +42,9 @@ namespace Lui
         public UnityAction onLongClickHandler;
         public UnityAction onLongClickUpdate;
         protected bool _isRunning;
+        public UnityAction onPointerDown;
+        public UnityAction onPointerUp;
+        public UnityAction onPointerExit;
 
         public LButton()
         {
@@ -52,18 +55,30 @@ namespace Lui
         {
             _isRunning = true;
             Invoke("executeLongClickHandler", LONGPRESS_TIME);
+            if (onPointerDown != null)
+            {
+                onPointerDown.Invoke();
+            }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             _isRunning = false;
             CancelInvoke();
+            if (onPointerUp != null)
+            {
+                onPointerUp.Invoke();
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             _isRunning = false;
             CancelInvoke();
+            if (onPointerExit != null)
+            {
+                onPointerExit.Invoke();
+            }
         }
 
         protected void executeLongClickHandler()
