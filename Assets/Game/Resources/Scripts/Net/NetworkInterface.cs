@@ -239,7 +239,7 @@ using System.Net.Sockets;
             {
                 if (m_tcpWorker == null)
                     return;
-                Profiler.BeginSample("myNetworkRev");
+                
                 byte[] data = m_tcpWorker.Recv();
                 if (data == null || data.Length == 0)
                 {
@@ -257,11 +257,8 @@ using System.Net.Sockets;
 						byte[] packet = new byte[nLength];
 						Buffer.BlockCopy(data, 4 + 4 + 1, packet, 0, nLength);
 
-                        Profiler.EndSample();
-                        
-                        Profiler.BeginSample("myNetworkDo");
 						NetworkInterface.OnDataReceive(msgid,new SLua.ByteArray(packet),isEncrypt);
-                        Profiler.EndSample();
+                        
                     }
                     hasRecieved++;
                 }

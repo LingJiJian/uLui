@@ -24,10 +24,9 @@ namespace SLua
 {
 	using System.Collections;
 	using System;
-	using LuaInterface;
 	using System.Reflection;
 
-    class Helper : LuaObject
+    public class Helper : LuaObject
 	{
 
 		static string classfunc = @"
@@ -114,7 +113,36 @@ return Class
 			return error(l,"passed in object isn't enumerable");
 		}
 
-		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        /// <summary>
+        /// Create standard System.Action
+        /// </summary>
+        /// <param name="l"></param>
+        /// <returns></returns>
+        [MonoPInvokeCallbackAttribute(typeof (LuaCSFunction))]
+        public static int CreateAction(IntPtr l)
+        {
+            try
+            {
+
+                LuaFunction func;
+                checkType(l, 1, out func);
+                var action = new Action(() =>
+                {
+                    func.call();
+
+                });
+                pushValue(l, true);
+                pushVar(l, action);
+                return 2;
+            }
+            catch (Exception e)
+            {
+                return error(l, e);
+            }
+
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof (LuaCSFunction))]
 		static public int CreateClass(IntPtr l)
 		{
 			try
@@ -144,7 +172,7 @@ return Class
 					ParameterInfo[] pis = target.GetParameters();
 					object[] args = new object[pis.Length];
 					for (int n = 0; n < pis.Length; n++)
-						args[n] = Convert.ChangeType(checkVar(l, n + 2), pis[n].ParameterType);
+						args[n] = changeType(checkVar(l, n + 2), pis[n].ParameterType);
 
 					object ret = target.Invoke(args);
 					pushValue(l, true);
@@ -246,7 +274,8 @@ return Class
 				for (int k = 0; k < n; k++)
 				{
 					LuaDLL.lua_rawgeti(l, 2, k + 1);
-					array.SetValue(Convert.ChangeType(checkVar(l, -1),t),k);
+				    var obj = checkVar(l, -1);
+					array.SetValue(changeType(obj, t), k);
 					LuaDLL.lua_pop(l, 1);
 				}
 				pushValue(l, true);
@@ -337,16 +366,17 @@ return Class
         static public void reg(IntPtr l)
 		{
             getTypeTable(l, "Slua");
+            addMember(l, CreateAction, false);
             addMember(l, CreateClass, false);
             addMember(l, GetClass, false);
             addMember(l, iter, false);
             addMember(l, ToString, false);
             addMember(l, As, false);
-			addMember(l, IsNull, false);
-			addMember(l, MakeArray, false);
-			addMember(l,ToBytes,false);
-			addMember(l, "out", get_out, null, false);
-			addMember(l, "version", get_version, null, false);
+            addMember(l, IsNull, false);
+            addMember(l, MakeArray, false);
+            addMember(l, ToBytes, false);
+            addMember(l, "out", get_out, null, false);
+            addMember(l, "version", get_version, null, false);
 
 			LuaFunction func = LuaState.get(l).doString(classfunc) as LuaFunction;
 			func.push(l);
@@ -355,5 +385,5 @@ return Class
 
             createTypeMetatable(l, null, typeof(Helper));
         }
-	}
+    }
 }

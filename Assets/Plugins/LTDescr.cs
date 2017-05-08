@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-
 public interface LTDescr
 {
 	bool toggle { get; set; }

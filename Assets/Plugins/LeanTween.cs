@@ -227,6 +227,7 @@ public enum LeanTweenType{
 * @constructor
 */
 
+[SLua.CustomLuaClass]
 public class LTDescrImpl : LTDescr {
 	public bool toggle { get; set; }
 	public bool useEstimatedTime { get; set; }

@@ -28,7 +28,6 @@ namespace SLua
 	using System.Collections;
 	using System.Collections.Generic;
 	using System;
-	using LuaInterface;
 	using System.Reflection;
 	using System.Runtime.InteropServices;
 
@@ -75,6 +74,14 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Color c)
 		{
 			float x, y, z, w;
+			if (LuaDLL.lua_type (l, p) == LuaTypes.LUA_TUSERDATA) {
+				object o = checkObj(l,p);
+				if(o is Color32) {
+					c = (Color32)o;
+					return true;
+				}
+				throw new Exception(string.Format("Invalid color argument at {0}", p));
+			}
 			if (LuaDLL.luaS_checkColor(l, p, out x, out y, out z, out w) != 0)
 				throw new Exception(string.Format("Invalid color argument at {0}", p));
 			c = new Color(x, y, z, w);
@@ -87,18 +94,6 @@ namespace SLua
 			checkType(l, p, out v);
 			lm = v;
 			return true;
-		}
-
-		static public bool checkType(IntPtr l, int p, out ByteArray pb)
-		{
-			if (LuaDLL.lua_isstring(l, p))
-			{
-				pb = new ByteArray();
-				pb.data = LuaDLL.lua_tobytes(l, p);
-				return true;
-			}
-			pb = null;
-			return false;
 		}
 
 		static public bool checkParams(IntPtr l, int p, out Vector2[] pars)
@@ -172,9 +167,8 @@ namespace SLua
 			LuaDLL.luaS_pushColor(l, o.r, o.g, o.b, o.a);
 		}
 
-		public static void pushValue(IntPtr l, ByteArray pb)
-		{
-			LuaDLL.lua_pushlstring(l, pb.data , pb.data.Length);
+		public static void pushValue(IntPtr l, Color32 c32) {
+			pushObject(l, c32); 
 		}
 	}
 }

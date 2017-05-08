@@ -1,6 +1,5 @@
 using UnityEngine;
 using SLua;
-using LuaInterface;
 using System.Collections;
 using System;
 

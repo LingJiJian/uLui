@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using LuaInterface;
 using System;
 using System.Linq;
 using System.Reflection;
+#if !SLUA_STANDALONE
 using UnityEngine;
+#endif
 using System.IO;
 
 namespace SLua{
@@ -60,7 +61,7 @@ namespace SLua{
 				#if UNITY_EDITOR
 				if(_instance == null){
 					_instance = ScriptableObject.CreateInstance<Lua3rdMeta>();
-					string path = "Assets/Slua/Meta/Resources";
+					string path = "Assets/Slua/Resources";
 					if(!Directory.Exists(path)){
 						Directory.CreateDirectory(path);
 					}
