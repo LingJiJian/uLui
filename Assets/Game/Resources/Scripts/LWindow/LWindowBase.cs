@@ -2,7 +2,7 @@
 using SLua;
 using System.Collections;
 
-[CustomLuaClassAttribute]
+[CustomLuaClass]
 public class LWindowBase : LLuaBehaviourBase
 {
     public WindowDispose disposeType;
@@ -13,14 +13,22 @@ public class LWindowBase : LLuaBehaviourBase
         this.disposeType = WindowDispose.Delay;
     }
 
-    public virtual void open(ArrayList list)
+    [DoNotToLua]
+    public virtual void Open(object[] list)
     {
-        
+        if (m_bReady)
+        {
+            m_cBehavior.OnWindowOpen(list);
+        }
     }
 
-    public virtual void close()
+    [DoNotToLua]
+    public virtual void Close()
     {
-
+        if (m_bReady)
+        {
+            m_cBehavior.OnWindowClose();
+        }
     }
 }
 

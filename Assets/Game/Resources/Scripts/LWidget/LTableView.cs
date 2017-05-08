@@ -119,18 +119,20 @@ namespace Lui
 
         public void removeAllFromUsed()
         {
-            foreach (LTableViewCell cell in cellsUsed)
+			int len = cellsUsed.Count;
+            for (int i=0;i<len;i++)
             {
-                Destroy(cell.node);
+                Destroy(cellsUsed[i].node);
             }
             cellsUsed.Clear();
         }
 
         public void removeAllFromFreed()
         {
-            foreach (LTableViewCell cell in cellsFreed)
+			int len = cellsFreed.Count;
+            for (int i=0;i<len;i++)
             {
-                Destroy(cell.node);
+                Destroy(cellsFreed[i].node);
             }
             cellsFreed.Clear();
         }
@@ -429,7 +431,7 @@ namespace Lui
             rtran.sizeDelta = cellsSize;
             cell.node.SetActive(true);
             cell.node.transform.SetParent(container.transform);
-            cell.node.transform.localScale = new Vector2(1,1);
+            cell.node.transform.localScale = new Vector3(1,1,1);
             cell.node.transform.localPosition = cellPositionFromIndex(idx);
 
             insertSortableCell(cell, idx);

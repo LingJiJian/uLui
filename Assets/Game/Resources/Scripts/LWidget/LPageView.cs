@@ -103,7 +103,7 @@ namespace Lui
             rtran.sizeDelta = cellsSize;
             cell.node.SetActive(true);
             cell.node.transform.SetParent(container.transform);
-            cell.node.transform.localScale = new Vector2(1, 1);
+            cell.node.transform.localScale = new Vector3(1, 1,1);
             cell.node.transform.localPosition = cellPositionFromIndex(idx);
             insertSortableCell(cell,idx);
             indices.Add(idx,1);

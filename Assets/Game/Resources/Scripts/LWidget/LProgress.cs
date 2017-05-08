@@ -30,6 +30,13 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [SLua.CustomLuaClass]
+public enum ProgressLabStyle
+{
+    Normal,
+    Value
+}
+
+[SLua.CustomLuaClass]
 public class LProgress : MonoBehaviour {
 
 	public float maxValue;
@@ -42,6 +49,7 @@ public class LProgress : MonoBehaviour {
 	private float _startProgressStep;
 	public UnityAction onProgress;
 	public UnityAction onProgressEnd;
+    public ProgressLabStyle style;
     protected float _width;
     protected float _height;
 
@@ -53,22 +61,24 @@ public class LProgress : MonoBehaviour {
 		_isStartProgress = false;
 		_arrivePercentage = 0;
 		_startProgressStep = 0;
+		style = ProgressLabStyle.Normal;
 	}
-
-    void Start()
-    {
-        _width = GetComponent<RectTransform>().rect.width;
-        _height = GetComponent<RectTransform>().rect.height;
-    }
 
     public void setValue(float value)
 	{
 		this._value = Mathf.Min(maxValue, Mathf.Max(minValue, value));
-        mask.GetComponent<RectTransform>().sizeDelta = new Vector2(_width * getPercentage(), _height);
+        mask.GetComponent<RectTransform>().sizeDelta = new Vector2(
+        	GetComponent<RectTransform>().rect.width * getPercentage(), 
+        	GetComponent<RectTransform>().rect.height);
         mask.gameObject.SetActive(_value != 0);
         if (label)
         {
-            label.text = (this._value / maxValue * 100).ToString("0.0") + "%";
+        	if(style == ProgressLabStyle.Normal){
+        		label.text = (this._value / maxValue * 100).ToString("0.0") + "%";
+    		}else if(style == ProgressLabStyle.Value){
+    			label.text = string.Format("{0}/{1}",this._value,maxValue);
+    		}
+           
         }
 	}
 
@@ -98,10 +108,19 @@ public class LProgress : MonoBehaviour {
 		if (_isStartProgress) {
 			_value = _value + _startProgressStep;
 			float perc = getPercentage ();
-            mask.GetComponent<RectTransform>().sizeDelta = new Vector2(_width * perc, _height);
+            mask.GetComponent<RectTransform>().sizeDelta = new Vector2(
+            	GetComponent<RectTransform>().rect.width * perc, 
+            	GetComponent<RectTransform>().rect.height);
             
             if (label) {
-				label.text = (perc * 100 ).ToString("0.0")+"%";
+                if (style == ProgressLabStyle.Normal)
+                {
+                    label.text = (perc * 100).ToString("0.0") + "%";
+                }
+                else if (style == ProgressLabStyle.Value)
+                {
+                    label.text = string.Format("{0}/{1}", this._value, maxValue);
+                }
 			}
 
 			if (perc < _arrivePercentage) {

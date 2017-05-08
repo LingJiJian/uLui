@@ -29,7 +29,7 @@ local function main()
 			lab_progress.text = string.format(i18n["1002"],p)
 		end)
 
-	end)
+	end,nil)
 
 end
 

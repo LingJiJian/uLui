@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.IO;
 using System.Xml;
 using SLua;
 
-[CustomLuaClassAttribute]
+[CustomLuaClass]
 public class LGameConfig
 {
     // The config file path.
     public static readonly string CONFIG_FILE = "config";
     // The lua data folder name.
     public static readonly string DATA_CATAGORY_LUA = "@Lua";
+    // The lua config folder name.
+    public static readonly string CONFIG_CATAGORY_LUA = "@LuaConfig";
 
     public static readonly string ASSETBUNDLE_AFFIX = ".ab";
     // The lua file affix.
@@ -17,7 +20,7 @@ public class LGameConfig
     // The lua files zip name.
     public static readonly string UPDATE_FILE_ZIP = "data.zip";
     // asset load base format
-    public static readonly string ASSET_BASE_FORMAT = "Assets/Game/Resources/{0}";
+	public static readonly string ASSET_BASE_FORMAT = "Assets/Game/Resources/{0}";
     // 32 bytes encrypt key
     public static string EncryptKey32 = "12345678901234567890123456789012";
     // 16 bytes encrypt key
@@ -28,10 +31,13 @@ public class LGameConfig
     public bool isHotFix = true;
     // is show frame rate
     public bool isShowFps = true;
-    // is use luajit & encode
+    // is use luajit & encode 
     public bool isEncrypt = true;
     // remote server resource url
     public string SERVER_RES_URL = "";
+
+    public string SERVER_ADDRESS_IP = "";
+    public string SERVER_ADDRESS_PORT = "";
     // game default target frame rate
     public static int DEFAULT_FRAME_RATE = 60;
 
@@ -53,6 +59,18 @@ public class LGameConfig
 
     // The global instance.
     private static LGameConfig m_cInstance = null;
+    // open debug view
+    public UnityAction openGmViewFunc;
+    public UnityAction<string , string , LogType > logCollectFunc;
+
+    [DoNotToLua]
+    public void HandleLog(string message, string stackTrace, LogType type)
+    {
+        if (logCollectFunc != null)
+        {
+            logCollectFunc.Invoke(message, string.Format(stackTrace), type);
+        }
+    }
 
     /**
      * Constructor.
@@ -168,10 +186,9 @@ public class LGameConfig
         }
     }
 
-    public static string GetABNameWithAtlasPath(string path)
-    {
-        return string.Format("{0}{1}", path.Replace('/', '-').Replace('.', '_').ToLower(), ASSETBUNDLE_AFFIX);
-    }
+	public static string GetABNameWithAtlasPath(string path){
+		return string.Format("{0}{1}", path.Replace ('/', '-').Replace ('.', '_').ToLower(),ASSETBUNDLE_AFFIX);
+	}
 
     private void LoadConfig()
     {
@@ -189,8 +206,8 @@ public class LGameConfig
             XmlNodeList resUrls = rootElem.GetElementsByTagName("ResUrl");
             SERVER_RES_URL = resUrls[0].InnerText;
 
-            XmlNodeList hotFix = rootElem.GetElementsByTagName("HotFix");
-            isHotFix = hotFix[0].InnerText == "1";
+			XmlNodeList hotFix = rootElem.GetElementsByTagName("HotFix");
+			isHotFix = hotFix[0].InnerText == "1";
 
             XmlNodeList showFps = rootElem.GetElementsByTagName("ShowFps");
             isShowFps = showFps[0].InnerText == "1";
@@ -198,6 +215,11 @@ public class LGameConfig
             XmlNodeList encrypt = rootElem.GetElementsByTagName("Encrypt");
             isEncrypt = encrypt[0].InnerText == "1";
 
+            XmlNodeList ip = rootElem.GetElementsByTagName("Ip");
+            SERVER_ADDRESS_IP = ip[0].InnerText;
+
+            XmlNodeList port = rootElem.GetElementsByTagName("Port");
+            SERVER_ADDRESS_PORT = port[0].InnerText;
         }
     }
 }

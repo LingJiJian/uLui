@@ -35,10 +35,11 @@ namespace Lui
     [CustomLuaClass]
     public class LTouchView : MonoBehaviour , IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
-        public UnityAction onMoveBeginHandler;
+        public UnityAction<Vector2> onMoveBeginHandler;
         public UnityAction<Vector2> onMoveHandler;
-        public UnityAction onMoveEndHandler;
+        public UnityAction<Vector2> onMoveEndHandler;
         public UnityAction<GameObject> onClickHandler2D;
+        public UnityAction<Vector2> onClickHandler;
         private Vector2 _lastPoint;
 		private Collider2D _lastTarget;
 		private bool _hasCancel;
@@ -54,21 +55,21 @@ namespace Lui
 			_lastTarget = null;
 			_hasCancel = false;
 
-			if (onClickHandler2D != null)
-			{
-#if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
-				RaycastHit2D hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
-#else
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(eventData.position), Vector2.zero);
-#endif
-                if (hit.collider != null) {
-					_lastTarget = hit.collider;
-				}
-			}
+// 			if (onClickHandler2D != null)
+// 			{
+// #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
+// 				RaycastHit2D hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
+// #else
+//                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(eventData.position), Vector2.zero);
+// #endif
+//                 if (hit.collider != null) {
+// 					_lastTarget = hit.collider;
+// 				}
+// 			}
 
             if(onMoveBeginHandler != null)
             {
-                onMoveBeginHandler.Invoke();
+                onMoveBeginHandler.Invoke(eventData.position);
             }
         }
         [DoNotToLua]
@@ -87,23 +88,31 @@ namespace Lui
         [DoNotToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
-			if (onClickHandler2D != null && _hasCancel == false) 
-			{
+// 			if (onClickHandler2D != null && _hasCancel == false) 
+// 			{
+            Vector3 worldPos = Vector3.zero;
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
-				RaycastHit2D hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
+            worldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+// 				RaycastHit2D hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
 #else
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(eventData.position), Vector2.zero);
+            worldPos = Camera.main.ScreenToWorldPoint (eventData.position);
+//                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(eventData.position), Vector2.zero);
 #endif
-                if (hit.collider != null) {
-					if (hit.collider == _lastTarget) {
-						onClickHandler2D.Invoke (hit.collider.gameObject);
-					}
-				}
-			}
+//                 if (hit.collider != null) {
+// 					if (hit.collider == _lastTarget) {
+// 						onClickHandler2D.Invoke (hit.collider.gameObject);
+// 					}
+// 				}
+// 			}
 
-            if (onMoveEndHandler != null)
+            if (onMoveEndHandler != null && _hasCancel)
             {
-                onMoveEndHandler.Invoke();
+                onMoveEndHandler.Invoke(worldPos);
+            }
+
+            if (onClickHandler != null && (_hasCancel == false))
+            {
+                onClickHandler.Invoke(worldPos);
             }
         }
     }

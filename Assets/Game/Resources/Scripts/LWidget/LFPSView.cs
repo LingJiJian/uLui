@@ -29,6 +29,7 @@ using System.Collections;
 
 public class LFPSView : MonoBehaviour
 {
+
     private static LFPSView _instance;
     public float updateInterval = 0.5F;
     private double lastInterval;
@@ -59,6 +60,25 @@ public class LFPSView : MonoBehaviour
         style.fontSize = 30;
         GUI.Label(new Rect(0, 0, 100, 50), " " + fps.ToString("f2"), style);
     }
+
+//     void OnEnable()
+//     {
+// #if UNITY_5
+//         Application.logMessageReceived += LGameConfig.GetInstance().HandleLog;
+// #else
+//             Application.RegisterLogCallback(LGameConfig.HandleLog);  
+// #endif
+//     }
+
+//     void OnDisable()
+//     {
+// #if UNITY_5
+//         Application.logMessageReceived -= LGameConfig.GetInstance().HandleLog;
+// #else
+//             Application.RegisterLogCallback(null);  
+// #endif
+//     }
+
     void Update()
     {
         ++frames;
@@ -68,6 +88,15 @@ public class LFPSView : MonoBehaviour
             fps = (float)(frames / (timeNow - lastInterval));
             frames = 0;
             lastInterval = timeNow;
+        }
+
+        if (Input.GetKeyDown(KeyCode.BackQuote) ||
+            Input.acceleration.sqrMagnitude > 3)  
+        {
+            if (LGameConfig.GetInstance().openGmViewFunc != null)
+            {
+                LGameConfig.GetInstance().openGmViewFunc.Invoke();
+            }
         }
     }
 }

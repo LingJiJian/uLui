@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_2;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_2;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;CROSS_PLATFORM_INPUT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -60,6 +60,7 @@
      <Compile Include="Assets\Game\Resources\Scripts\LBase\LUtil.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LButton.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LControlView.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LDragView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LExpandListView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LExpandNode.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LFPSView.cs" />
@@ -72,6 +73,7 @@
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LMacros.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LMovieClip.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LPageView.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LPickMark.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LProgress.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LRichText.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LScrollView.cs" />
@@ -81,10 +83,14 @@
      <Compile Include="Assets\Game\Resources\Scripts\LWindow\LWindowBase.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWindow\LWindowManager.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\Net\Network.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\Net\NetworkInterface.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\Net\Reactor.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\Net\ServerProxy.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\Net\TCPClientWorker.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\BindCustom.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_Deleg_GetBundleInfoDelegate.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_Deleg_SimpleDelegate.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_LResUpdate_HandleUnzipProgress.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaDelegate_System_Action.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_1_LTEvent.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_1_System_Object.cs" />
@@ -95,11 +101,11 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_1_float.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_1_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_1_string.cs" />
-     <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_2_System_UInt16_SLua_ByteArray.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_2_float_System_Object.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_2_float_float.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_2_int_Dictionary_System_Int32_object_.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_2_int_string.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Action_3_int_SLua_ByteArray_bool.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Comparison_1_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Func_1_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaSystem_Func_3_int_string_bool.cs" />
@@ -107,12 +113,14 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_EventSystems_PointerEventData.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_GameObject.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_Vector2.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_UnityEngine_Vector3.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_float.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_1_string.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_2_int_UnityEngine_GameObject.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_2_string_Dictionary_System_String_System_String_.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_3_float_float_bool.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEngine_Events_UnityAction_3_string_string_UnityEngine_LogType.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\LuaUnityEvent_int_string.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_AbsClass.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Custom.cs" />
@@ -120,10 +128,14 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_FloatEvent.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Game.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_HelloWorld.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LDragView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LGameConfig.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LHUDSort.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LHUDView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LLoadBundle.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LLuaBehaviourBase.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LNetwork.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LPickMark.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LProgress.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LResUpdate.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_LSlider.cs" />
@@ -134,6 +146,8 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_ListViewEvent.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LButton.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LControlView.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LExpandListView.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LExpandNode.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LGridPageView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LGridView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LLabelAtlas.cs" />
@@ -144,11 +158,13 @@
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LScrollView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LTableView.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Lui_LTouchView.cs" />
-     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_Network.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_ProgressLabStyle.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_SLuaTest.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_System_Collections_Generic_Dictionary_2_int_string.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_System_Collections_Generic_List_1_int.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_System_String.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_WindowDispose.cs" />
+     <Compile Include="Assets\Slua\LuaObject\Custom\Lua_WindowHierarchy.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_XXList.cs" />
      <Compile Include="Assets\Slua\LuaObject\Custom\Lua_foostruct.cs" />
      <Compile Include="Assets\Slua\LuaObject\Unity\BindUnity.cs" />
@@ -835,7 +851,6 @@
      <Compile Include="Assets\Slua\example\VarObj.cs" />
      <Compile Include="Assets\Slua\example\test\TestLua.cs" />
      <Compile Include="Assets\Slua\example\test\test.cs" />
-     <Compile Include="Assets\TestMeshAlpha.cs" />
      <None Include="Assets\Slua\Resources\module\some.txt" />
      <None Include="Assets\Slua\Resources\main.txt" />
      <None Include="Assets\Slua\Resources\circle\circle.txt" />

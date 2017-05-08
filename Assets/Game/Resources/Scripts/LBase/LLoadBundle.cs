@@ -10,6 +10,8 @@ public class LLoadBundle : MonoBehaviour
 {
     private Dictionary<string, AssetBundle> bundles;
     private static LLoadBundle _instance;
+    private Dictionary<string, Sprite[]> spritesCache;
+    private Dictionary<string, Object> tplCache;
 
     public AssetBundle GetBundleByName(string name)
     {
@@ -21,6 +23,8 @@ public class LLoadBundle : MonoBehaviour
     private LLoadBundle()
     {
         bundles = new Dictionary<string, AssetBundle>();
+        spritesCache = new Dictionary<string, Sprite[]>();
+        tplCache = new Dictionary<string , Object>();
     }
 
     public static LLoadBundle GetInstance()
@@ -35,7 +39,7 @@ public class LLoadBundle : MonoBehaviour
         return _instance;
     }
 
-    public void LoadAllBundles(string[] bundle_names, UnityAction callFunc)
+    public void LoadAllBundles(string[] bundle_names, UnityAction callFunc,UnityAction<int> progressFunc=null)
     {
         if (LGameConfig.GetInstance().isDebug)
         {
@@ -43,11 +47,11 @@ public class LLoadBundle : MonoBehaviour
         }
         else
         {
-            StartCoroutine(Load(bundle_names, callFunc));
+            StartCoroutine(Load(bundle_names, callFunc,progressFunc));
         }
     }
 
-    IEnumerator Load(string[] bundle_names, UnityAction callFunc)
+    IEnumerator Load(string[] bundle_names, UnityAction callFunc,UnityAction<int> progressFunc=null)
     {
         int len = bundle_names.Length;
 
@@ -58,10 +62,18 @@ public class LLoadBundle : MonoBehaviour
             {
                 using (WWW asset = new WWW(LResUpdate.LOCAL_RES_URL + name))
                 {
+                    Debug.Log("bundle name:"+name);
                     yield return asset;
 
-                    bundles.Add(name, asset.assetBundle);
-                    asset.Dispose();
+                    if (string.IsNullOrEmpty (asset.error)) {
+
+                        bundles.Add(name, asset.assetBundle);
+                        asset.Dispose();
+                        if(progressFunc!=null)
+                            progressFunc.Invoke(i+1);
+                    }else{
+                         Debug.Log("bundle error:"+name+" "+asset.error);
+                    }
                 }
             }
 
@@ -73,8 +85,19 @@ public class LLoadBundle : MonoBehaviour
     }
 
     public Object LoadAsset(string bundleName, string assetName)
-    {
-        return LoadAsset<Object>(bundleName, assetName);
+    {   
+        string key = string.Format("{0}_{1}",bundleName,assetName);
+        if(tplCache.ContainsKey(key)){
+            return tplCache[key];
+        }else{
+            Object tpl = LoadAsset<Object>(bundleName, assetName);
+            if( tpl == null){
+                Debug.LogWarning("asset not exist! "+bundleName+" "+assetName);
+                return null;
+            }
+            tplCache.Add(key,tpl);
+        }
+        return tplCache[key];
     }
 
     public Object[] LoadAllAsset(string bundleName, string assetName)
@@ -126,36 +149,48 @@ public class LLoadBundle : MonoBehaviour
     }
 
     public Sprite[] GetSpritesByName(string bundlePath,string atlasName)
-    {
-        List<Sprite> arr = new List<Sprite>();
-        if (LGameConfig.GetInstance().isDebug)
+    {   
+        string key = string.Format("{0}_{1}",bundlePath,atlasName);
+        if(spritesCache.ContainsKey(key))
         {
-            Sprite[] sprites = Resources.LoadAll<Sprite>(bundlePath);
-            foreach (Sprite s in sprites)
+            return spritesCache[key];
+        }else{
+
+            List<Sprite> arr = new List<Sprite>();
+            if (LGameConfig.GetInstance().isDebug)
             {
-                if (string.IsNullOrEmpty(atlasName) || s.name.StartsWith(atlasName))
+                Sprite[] sprites = Resources.LoadAll<Sprite>(bundlePath);
+    			int spritesLen = sprites.Length;
+                for (int i=0; i< spritesLen; i++)
                 {
-                    arr.Add(s);
-                }
-            }
-        }
-        else
-        {
-            string bundleName = LGameConfig.GetABNameWithAtlasPath(bundlePath.Split('.')[0] +".png");
-            AssetBundle assetBundle = this.GetBundleByName(bundleName);
-            if (assetBundle)
-            {
-                Sprite[] sprites = assetBundle.LoadAllAssets<Sprite>();
-                foreach (Sprite s in sprites)
-                {
+    				Sprite s = sprites[i];
                     if (string.IsNullOrEmpty(atlasName) || s.name.StartsWith(atlasName))
                     {
                         arr.Add(s);
                     }
                 }
             }
+            else
+            {
+                string bundleName = LGameConfig.GetABNameWithAtlasPath(bundlePath.Split('.')[0] +".png");
+                AssetBundle assetBundle = this.GetBundleByName(bundleName);
+                if (assetBundle)
+                {
+                    Sprite[] sprites = assetBundle.LoadAllAssets<Sprite>();
+                    int spritesLen = sprites.Length;
+                    for (int i=0; i< spritesLen; i++)
+    				{
+    					Sprite s = sprites[i];
+                        if (string.IsNullOrEmpty(atlasName) || s.name.StartsWith(atlasName))
+                        {
+                            arr.Add(s);
+                        }
+                    }
+                }
+            }
+            spritesCache.Add(key,arr.ToArray());
+            return spritesCache[key];
         }
-        return arr.ToArray();
     }
 
     public Sprite GetSpriteByName(string bundlePath, string assetName)

@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [CustomLuaClassAttribute]
 public class Game : MonoBehaviour
@@ -15,13 +16,8 @@ public class Game : MonoBehaviour
     {
         Application.targetFrameRate = LGameConfig.DEFAULT_FRAME_RATE;
 
-        if(_l == null)
+        if (_l == null)
         {
-#if UNITY_5
-        Application.logMessageReceived += this.log;
-#else
-		Application.RegisterLogCallback(this.log);
-#endif
 			if (LGameConfig.GetInstance().isDebug)
             {
 				LuaState.loaderDelegate = loadFileWithSuffix;
@@ -43,11 +39,6 @@ public class Game : MonoBehaviour
         return _l;
     }
 
-    void log(string cond, string trace, LogType lt)
-    {
-        Debug.Log(cond);
-    }
-
     void tick(int p)
     {
         if (onProgressHandler != null)
@@ -64,9 +55,11 @@ public class Game : MonoBehaviour
         }
 
         strFile.Replace(".", "/");
+
         strFile += LGameConfig.FILE_AFFIX_LUA;
 
-        string strLuaPath = LGameConfig.DATA_CATAGORY_LUA + Path.DirectorySeparatorChar + strFile;
+        string dir = strFile.StartsWith("Config") ? LGameConfig.CONFIG_CATAGORY_LUA : LGameConfig.DATA_CATAGORY_LUA;
+        string strLuaPath = dir + Path.DirectorySeparatorChar + strFile;
         string strFullPath = LGameConfig.GetInstance().GetLoadUrl(strLuaPath);
         // Read from file.
         LArchiveBinFile cArc = new LArchiveBinFile();
@@ -91,11 +84,19 @@ public class Game : MonoBehaviour
     protected byte[] loadLuaWithAb(string strFile)
     {
         string ext = LGameConfig.GetInstance().isEncrypt ? ".bytes" : ".txt";
-        TextAsset asset = LLoadBundle.GetInstance ().LoadAsset<TextAsset>("@lua.ab", "@Lua/" + strFile + ext);
+        TextAsset asset = null;
+        if (strFile.StartsWith("Config"))
+        {
+            asset = LLoadBundle.GetInstance().LoadAsset<TextAsset>("@luaconfig.ab", "@LuaConfig/" + strFile + ext);
+        }
+        else
+        {
+            asset = LLoadBundle.GetInstance().LoadAsset<TextAsset>("@lua.ab", "@Lua/" + strFile + ext);
+        }
         if (asset == null) return null;
         //if (LGameConfig.GetInstance().isEncrypt)
         //    return LUtil.AESDecrypt(asset.bytes, LGameConfig.EncryptKey32, LGameConfig.EncryptKey16);
-        //else
+//        else
             return asset.bytes;
     }
 
@@ -109,19 +110,32 @@ public class Game : MonoBehaviour
         if (!LGameConfig.GetInstance().isDebug) //生产环境
         {
 			if (LGameConfig.GetInstance ().isHotFix) {
+                GameObject canvas = GameObject.Find("Canvas");
+                Text lab_unzip = null;
+                if (canvas.transform.Find("prog"))
+                {
+                    canvas.transform.Find("prog").gameObject.SetActive(true);
+                    lab_unzip = canvas.transform.Find("prog/lab_unzip").GetComponent<Text>();
+                }
+                
 				GameObject obj = new GameObject ();
 				obj.name = "ResUpdate";
 				LResUpdate resUpdate = obj.AddComponent<LResUpdate> ();
+                resUpdate.onUnzipProgressHandler = (int step) =>{
+                    if(lab_unzip)
+                        lab_unzip.text = step.ToString();
+                    Debug.Log(" unzip "+step);
+                };
 				resUpdate.onCompleteHandler = () => {
 					Destroy (obj);
-                    LLoadBundle.GetInstance().LoadAllBundles(new string[] { "@lua.ab" }, () =>
+                    LLoadBundle.GetInstance().LoadAllBundles(new string[] { "@lua.ab","@luaconfig.ab" }, () =>
                     {
                         _l.start("main");
                     });
                 };
 				resUpdate.checkUpdate ();
 			} else {
-				LLoadBundle.GetInstance ().LoadAllBundles (new string[] { "@lua.ab" },()=>
+				LLoadBundle.GetInstance ().LoadAllBundles (new string[] { "@lua.ab","@luaconfig.ab" },()=>
                 {
 					_l.start ("main");
 				});

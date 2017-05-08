@@ -35,9 +35,9 @@ public class WindowGridView : LWindowBase
         gridPageView.reloadData();
     }
 
-    public override void open(ArrayList list)
+    public override void Open(object[] list)
     {
-        base.open(list);
+        base.Open(list);
         if (list!=null)
         {
             foreach (var item in list)
@@ -47,8 +47,8 @@ public class WindowGridView : LWindowBase
         }
     }
 
-    public override void close()
+    public override void Close()
     {
-        base.close();
+        base.Close();
     }
 }

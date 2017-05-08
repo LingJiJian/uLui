@@ -214,21 +214,23 @@ namespace Lui
 
         public void removeAllElements()
         {
-            foreach (LRichCacheElement lab in _cacheLabElements)
+            int len = _cacheLabElements.Count;
+            for (int i=0;i< len;i++)
             {
-                lab.isUse = false;
-                lab.node.gameObject.SetActive(false);
+                _cacheLabElements[i].isUse = false;
+                _cacheLabElements[i].node.gameObject.SetActive(false);
             }
-            foreach (LRichCacheElement img in _cacheImgElements)
+            len = _cacheImgElements.Count;
+            for (int i = 0; i < len; i++)
             {
-                img.isUse = false;
-                img.node.gameObject.SetActive(false);
+                _cacheImgElements[i].isUse = false;
+                _cacheImgElements[i].node.gameObject.SetActive(false);
             }
-
-            foreach (LRichCacheElement anim in _cacheFramAnimElements)
+            len = _cacheFramAnimElements.Count;
+            for (int i = 0; i < len; i++)
             {
-                anim.isUse = false;
-                anim.node.gameObject.SetActive(false);
+                _cacheFramAnimElements[i].isUse = false;
+                _cacheFramAnimElements[i].node.gameObject.SetActive(false);
             }
             _elemRenderArr.Clear();
             _objectDataMap.Clear();
@@ -284,8 +286,10 @@ namespace Lui
                 rtran.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
             }
 
-            foreach (LRichElement elem in _richElements)
+            int len = _richElements.Count;
+            for (int i =0;i< len;i++)
             {
+                LRichElement elem = _richElements[i];
                 if (elem.type == RichType.TEXT)
                 {
                     LRichElementText elemText = elem as LRichElementText;
@@ -473,9 +477,10 @@ namespace Lui
             }
             // all lines in arr
             List<List<LRenderElement>> rendLineArrs = new List<List<LRenderElement>>();
-            foreach (var item in rendElemLineMap)
+            var e = rendElemLineMap.GetEnumerator();
+            while (e.MoveNext())
             {
-                lineKeyList.Add(-1 * item.Key);
+                lineKeyList.Add(-1 * e.Current.Key);
             }
             lineKeyList.Sort();
             len = lineKeyList.Count;
@@ -490,8 +495,10 @@ namespace Lui
                 {
                     List<LRenderElement> lineElemArr = new List<LRenderElement>();
 
-                    foreach (LRenderElement elem in rendElemLineMap[posY])
+                    int _len2 = rendElemLineMap[posY].Count;
+                    for (int _i = 0; _i < _len2; _i++)
                     {
+                        LRenderElement elem = rendElemLineMap[posY][_i];
                         if (_lastEleme.type == RichType.TEXT && elem.type == RichType.TEXT)
                         {
 							if (_lastEleme.isSameStyle(elem))
@@ -555,16 +562,16 @@ namespace Lui
             {
                 List<LRenderElement> _lines = rendLineArrs[i];
                 int _lineHeight = 0;
-                foreach (LRenderElement elem in _lines)
+                int _len3 = _lines.Count;
+                for (int _i=0;_i< _len3; _i++)
                 {
-                    _lineHeight = Mathf.Max(_lineHeight, elem.height);
+                    _lineHeight = Mathf.Max(_lineHeight, _lines[_i].height);
                 }
 
                 realLineHeight += _lineHeight;
                 _offsetLineY += (_lineHeight - 27);
 
-                int _len = _lines.Count;
-                for (int j = 0; j < _len; j++)
+                for (int j = 0; j < _len3; j++)
                 {
                     LRenderElement elem = _lines[j];
                     elem.pos = new Vector2(elem.pos.x, elem.pos.y - _offsetLineY);
@@ -577,11 +584,14 @@ namespace Lui
             // place all position
             realLineWidth = 0;
             GameObject obj = null;
-            foreach (List<LRenderElement> _lines in rendLineArrs)
+            int _len = rendLineArrs.Count;
+            for (int i = 0; i < _len; i++)
             {
                 int _lineWidth = 0;
-                foreach (LRenderElement elem in _lines)
+                int _leng = rendLineArrs[i].Count;
+                for (int j = 0; j < _leng; j++)
                 {
+                    LRenderElement elem = rendLineArrs[i][j];
                     if (elem.type != RichType.NEWLINE)
                     {
                         if (elem.type == RichType.TEXT)

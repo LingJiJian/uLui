@@ -112,9 +112,10 @@ namespace Lui
         public void removeAllExpandNodes()
         {
             if (_expandableNodeList.Count == 0) return;
-            foreach (LExpandNode node in _expandableNodeList)
+			int len = _expandableNodeList.Count;
+            for(int i=0;i<len; i++)
             {
-                Destroy(node.gameObject);
+                Destroy(_expandableNodeList[i].gameObject);
             }
             _expandableNodeList.Clear();
         }
@@ -148,10 +149,12 @@ namespace Lui
                 if (node.isExpanded())
                 {
                     List<GameObject> nodeItems = node.getExpandableNodeItemList();
-                    if(nodeItems.Count>0)
+                    int len = nodeItems.Count;
+                    if (len > 0)
                     {
-                        foreach (GameObject obj in nodeItems)
+                        for(int _i=0;_i<len;_i++)
                         {
+							GameObject obj = nodeItems[_i];
                             obj.SetActive(true);
                             allNodesHeight += obj.GetComponent<RectTransform>().rect.height;
                         }
@@ -160,11 +163,12 @@ namespace Lui
                 else
                 {
                     List<GameObject> nodeItems = node.getExpandableNodeItemList();
-                    if (nodeItems.Count > 0)
+					int len = nodeItems.Count;
+                    if (len > 0)
                     {
-                        foreach (GameObject obj in nodeItems)
+                        for(int _i=0;_i<len;_i++)
                         {
-                            obj.SetActive(false);
+                            nodeItems[_i].SetActive(false);
                         }
                     }
                 }

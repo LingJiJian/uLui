@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using SLua;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 // The lua behavior base class.
 public class LLuaBehaviourInterface
@@ -68,12 +69,15 @@ public class LLuaBehaviourInterface
 	//private static readonly string RESET = "Reset";	// Skip.
 	private static readonly string START = "Start";
 	private static readonly string UPDATE = "Update";
+	private static readonly string ON_POINTER_CLICK = "OnPointerClick";
     //custom
     private static readonly string ON_EVENT_ANIM = "OnEventAnim";
     private static readonly string ON_EVENT_ANIM_INT = "OnEventAnimInt";
     private static readonly string ON_EVENT_ANIM_FLOAT = "OnEventAnimFloat";
     private static readonly string ON_EVENT_ANIM_STRING = "OnEventAnimString";
     private static readonly string ON_EVENT_ANIM_OBJECT = "OnEventAnimObject";
+    private static readonly string ON_WINDOW_OPEN = "Open";
+    private static readonly string ON_WINDOW_CLOSE = "Close";
 
     // The function for monobehavior callback event.
     private LuaFunction m_cAwakeFunc = null;
@@ -123,12 +127,15 @@ public class LLuaBehaviourInterface
 	private LuaFunction m_cOnWillRenderObjectFunc = null;
 	private LuaFunction m_cStartFunc = null;
 	private LuaFunction m_cUpdateFunc = null;
+	private LuaFunction m_cOnPointerClick = null;
     //custom
     private LuaFunction m_cOnEventAnim = null;
     private LuaFunction m_cOnEventAnimInt = null;
     private LuaFunction m_cOnEventAnimFloat = null;
     private LuaFunction m_cOnEventAnimString = null;
     private LuaFunction m_cOnEventAnimObject = null;
+    private LuaFunction m_cOnWindowOpen = null;
+    private LuaFunction m_cOnWindowClose = null;
 
     // The lua table operator of this behavior.
     private LLuaTable m_cLuaTableOpt = null;
@@ -651,6 +658,11 @@ public class LLuaBehaviourInterface
 		CallMethod(ref m_cOnWillRenderObjectFunc, ON_WILL_RENDER_OBJECT, m_cLuaTableOpt.GetChunk());
 	}
 
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		CallMethod (ref m_cOnPointerClick, ON_POINTER_CLICK, m_cLuaTableOpt.GetChunk (),eventData);
+	}
+
 	/**
      * Start method, this is the main entry.
      * 
@@ -696,6 +708,16 @@ public class LLuaBehaviourInterface
     public void OnEventAnimObject(object o)
     {
         CallMethod(ref m_cOnEventAnimObject, ON_EVENT_ANIM_OBJECT, m_cLuaTableOpt.GetChunk(),o);
+    }
+
+    public void OnWindowOpen(object[] objs)
+    {
+        CallMethod(ref m_cOnWindowOpen, ON_WINDOW_OPEN, m_cLuaTableOpt.GetChunk(), objs);
+    }
+
+    public void OnWindowClose()
+    {
+        CallMethod(ref m_cOnWindowClose, ON_WINDOW_CLOSE, m_cLuaTableOpt.GetChunk());
     }
 
     /**

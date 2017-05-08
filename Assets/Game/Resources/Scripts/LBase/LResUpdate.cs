@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using ICSharpCode.SharpZipLib.Zip;
 using System.Text;
 using System.IO;
+using System;
 using SLua;
 
 [CustomLuaClassAttribute]
@@ -16,8 +17,10 @@ public class LResUpdate : MonoBehaviour
     private Dictionary<string, string> ServerResVersion;
     private List<string> NeedDownFiles;
     private bool NeedUpdateLocalVersionFile = false;
+    private int doneCount;
 
     public UnityAction onCompleteHandler;
+    public HandleUnzipProgress onUnzipProgressHandler;
 
     public static string LOCAL_RES_URL
     {
@@ -28,14 +31,14 @@ public class LResUpdate : MonoBehaviour
                 return LGameConfig.LOCAL_URL_PREFIX + Application.persistentDataPath + Path.DirectorySeparatorChar;
             }
             else {
-#if UNITY_ANDROID
-                return Application.streamingAssetsPath + Path.DirectorySeparatorChar;
+#if UNITY_STANDALONE_WIN
+				return "file://" + Application.dataPath + "/StreamingAssets/";  
+#elif UNITY_ANDROID
+                    return Application.streamingAssetsPath + Path.DirectorySeparatorChar;
 #elif UNITY_IPHONE
-				return "file://"+Application.streamingAssetsPath+ Path.DirectorySeparatorChar;  
-#elif UNITY_STANDALONE_WIN || UNITY_EDITOR
-                return "file://" + Application.dataPath + "/StreamingAssets/";
+                    return "file://"+Application.streamingAssetsPath+ Path.DirectorySeparatorChar;  
 #else
-        return string.Empty;  
+                    return string.Empty;  
 #endif
             }
         }
@@ -92,12 +95,13 @@ public class LResUpdate : MonoBehaviour
         StartCoroutine(this.DownLoad(LGameConfig.GetInstance().SERVER_RES_URL + Path.DirectorySeparatorChar + file, delegate (WWW w)
         {
             //将下载的资源替换本地就的资源  
-            ReplaceLocalRes(file, w.bytes);
-            DownLoadRes();
+            ReplaceLocalRes(file, w.bytes,()=> {
+                DownLoadRes();
+            });
         }));
     }
 
-    private void ReplaceLocalRes(string fileName, byte[] data)
+    private void ReplaceLocalRes(string fileName, byte[] data,UnityAction onComplete)
     {
         string filePath = LOCAL_RES_PATH + fileName;
 
@@ -109,8 +113,67 @@ public class LResUpdate : MonoBehaviour
         //如果是更新包
         if (fileName == LGameConfig.UPDATE_FILE_ZIP)
         {
-            LUtil.UnpackFiles(filePath, LOCAL_RES_PATH);
-            File.Delete(filePath);
+            //LUtil.UnpackFiles(filePath, LOCAL_RES_PATH);
+            StartCoroutine(UnpackFiles(filePath, LOCAL_RES_PATH,() =>
+            {
+                File.Delete(filePath);
+                onComplete.Invoke();
+            }));
+        }
+        else
+            onComplete.Invoke();
+
+    }
+
+    public IEnumerator UnpackFiles(string file, string dir, UnityAction onComplete)
+    {
+        if (!Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
+        ZipInputStream s = new ZipInputStream(File.OpenRead(file));
+
+        ZipEntry theEntry;
+        while ((theEntry = s.GetNextEntry()) != null)
+        {
+            string directoryName = Path.GetDirectoryName(theEntry.Name);
+            string fileName = Path.GetFileName(theEntry.Name);
+
+            if (directoryName != string.Empty)
+                Directory.CreateDirectory(dir + directoryName);
+
+            if (fileName != string.Empty)
+            {
+                FileStream streamWriter = File.Create(dir + theEntry.Name);
+
+                int size = 2048;
+                byte[] data = new byte[2048];
+                while (true)
+                {
+                    size = s.Read(data, 0, data.Length);
+                    if (size > 0)
+                    {
+                        streamWriter.Write(data, 0, size);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                doneCount++;
+                if( onUnzipProgressHandler != null)
+                    onUnzipProgressHandler.Invoke(doneCount);
+
+                streamWriter.Close();
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        onComplete.Invoke();
+        try {
+            s.Close();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(LUtil.FormatException(e));
         }
     }
 
@@ -148,9 +211,10 @@ public class LResUpdate : MonoBehaviour
         if (NeedUpdateLocalVersionFile)
         {
             StringBuilder versions = new StringBuilder();
-            foreach (var item in ServerResVersion)
+            var e = ServerResVersion.GetEnumerator();
+            while (e.MoveNext())
             {
-                versions.Append(item.Key).Append(",").Append(item.Value).Append("\n");
+                versions.Append(e.Current.Key).Append(",").Append(e.Current.Value).Append("\n");
             }
 
             FileStream stream = new FileStream(LOCAL_RES_PATH + VERSION_FILE, FileMode.Create);
@@ -159,7 +223,7 @@ public class LResUpdate : MonoBehaviour
             stream.Flush();
             stream.Close();
 
-            Debug.Log("更新资源");
+            Debug.Log("更新版本号");
         }
         //加载显示对象  
         //StartCoroutine(Complate());
@@ -203,9 +267,10 @@ public class LResUpdate : MonoBehaviour
             return;
         }
         string[] items = content.Split(new char[] { '\n' });
-        foreach (string item in items)
+		int itemsLen = items.Length;
+        for(int i=0;i < itemsLen; i++ )
         {
-            string[] info = item.Split(new char[] { ',' });
+            string[] info = items[i].Split(new char[] { ',' });
             if (info != null && info.Length == 2)
             {
                 dict.Add(info[0], info[1]);
@@ -226,4 +291,5 @@ public class LResUpdate : MonoBehaviour
     }
 
     public delegate void HandleFinishDownload(WWW www);
+    public delegate void HandleUnzipProgress(int step); 
 }

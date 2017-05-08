@@ -60,12 +60,14 @@ namespace Lui
         public bool dragable;
         private bool _isPicking;
         public bool pickEnable;
+		public bool inertanceEnable;
         [HideInInspector]
         public GameObject curPickObj;
 
         public delegate T0 LDataSourceAdapter<T0, T1>(T0 arg0, T1 arg1);
         public UnityAction onMoveCompleteHandler;
-        public UnityAction onScrollingHandler;
+        public UnityAction<float> onScrollingHandler;
+        public UnityAction onScrollBeginHandler;
         public UnityAction onDraggingScrollEndedHandler;
         public UnityAction<GameObject> onPickBeginHandler;
         public UnityAction<Vector3> onPickIngHandler;
@@ -128,6 +130,23 @@ namespace Lui
                 minOffset.x = 0;
             }
         }
+		
+		public void Update()
+        {
+            if (inertanceEnable)
+            {
+                Vector2 offset = getContentOffset() + scrollDistance;
+                if (validateOffset(ref offset)){
+                    return;
+                }
+
+                if (Mathf.Abs(scrollDistance.x) > 0.00000001f || Mathf.Abs(scrollDistance.y) > 0.00000001f)
+                {
+                    scrollDistance *= 0.9f;
+                    setContentOffset(getContentOffset() + scrollDistance);
+                }
+            }
+        }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -136,6 +155,7 @@ namespace Lui
             {
                 lastMovePoint = point;
                 LeanTween.cancel(container);
+                onScrollBegin();
                 onScrolling();
             }
 
@@ -351,7 +371,15 @@ namespace Lui
         {
             if (onScrollingHandler!=null)
             {
-                onScrollingHandler.Invoke();
+                onScrollingHandler.Invoke(-container.transform.localPosition.x / container.GetComponent<RectTransform>().rect.width);
+            }
+        }
+
+        protected virtual void onScrollBegin()
+        {
+            if (onScrollBeginHandler !=null)
+            {
+                onScrollBeginHandler.Invoke();
             }
         }
 

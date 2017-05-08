@@ -98,9 +98,10 @@ namespace Lui {
         public void removeAllItemNodes()
         {
             if (_expandNodeItemList.Count == 0) return;
-            foreach (GameObject node in _expandNodeItemList)
+			int len = _expandNodeItemList.Count;
+            for (int i=0;i<len;i++)
             {
-                Destroy(node);
+                Destroy(_expandNodeItemList[i]);
             }
             _expandNodeItemList.Clear();
         }

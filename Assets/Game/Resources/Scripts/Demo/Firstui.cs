@@ -32,9 +32,7 @@ public class Firstui : MonoBehaviour
 
         btn_grid.onClick.AddListener(() =>
         {
-            ArrayList list = new ArrayList();
-            list.Add(123);
-            list.Add("测试内容");
+            object[] list = new object[]{ 123,"测试内容" };
             _wm.runWindow("Prefabs/WindowGridView.prefab", WindowHierarchy.Normal, list);
         });
 

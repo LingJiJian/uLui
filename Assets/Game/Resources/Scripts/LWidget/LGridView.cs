@@ -75,18 +75,20 @@ namespace Lui
 
         public void removeAllFromUsed()
         {
-            foreach (LGridViewCell cell in _cellsUsed)
+			int len = _cellsUsed.Count;
+            for (int i = 0;i<len ;i++)
             {
-                Destroy(cell.node);
+                Destroy(_cellsUsed[i].node);
             }
             _cellsUsed.Clear();
         }
 
         public void removeAllFromFreed()
         {
-            foreach (LGridViewCell cell in _cellsFreed)
+			int len = _cellsFreed.Count;
+            for (int i = 0;i<len ;i++)
             {
-                Destroy(cell.node);
+                Destroy(_cellsFreed[i].node);
             }
             _cellsFreed.Clear();
         }
@@ -137,7 +139,7 @@ namespace Lui
             cell.node.SetActive(true);
             cell.node.transform.SetParent(container.transform);
             cell.node.transform.localPosition = cellPositionFromIndex(idx);
-            cell.node.transform.localScale = new Vector2(1, 1);
+            cell.node.transform.localScale = new Vector3(1, 1, 1);
             insertSortableCell(cell, idx);
 
             _indices.Add(idx, 1);

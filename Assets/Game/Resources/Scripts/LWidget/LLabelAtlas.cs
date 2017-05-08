@@ -89,10 +89,11 @@ namespace Lui
         protected void render()
         {
             //reset
-            foreach (LCacheElement elem in _cacheImg)
+			int _len = _cacheImg.Count;
+            for (int i=0;i< _len; i++)
             {
-                elem.isUse = false;
-                elem.node.transform.SetParent(null);
+                _cacheImg[i].isUse = false;
+                _cacheImg[i].node.transform.SetParent(null);
             }
 
             char[] chars = text.ToCharArray();

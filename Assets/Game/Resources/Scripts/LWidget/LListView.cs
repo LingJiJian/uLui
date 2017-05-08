@@ -124,6 +124,7 @@ namespace Lui
             {
                 return;
             }
+            Object.Destroy(node);
             nodeList.Remove(node);
         }
 
@@ -133,6 +134,7 @@ namespace Lui
             {
                 return;
             }
+            Object.Destroy(nodeList[0]);
             nodeList.RemoveAt(0);
         }
 
@@ -142,6 +144,7 @@ namespace Lui
             {
                 return;
             }
+            Object.Destroy(nodeList[nodeList.Count - 1]);
             nodeList.RemoveAt(nodeList.Count - 1);
         }
 
@@ -150,6 +153,10 @@ namespace Lui
             if (nodeList.Count == 0)
             {
                 return;
+            }
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+               Object.Destroy(nodeList[i]);
             }
             nodeList.Clear();
         }
@@ -196,7 +203,7 @@ namespace Lui
                             allNodesSize -= obj.GetComponent<RectTransform>().rect.height;
                             obj.GetComponent<RectTransform>().pivot = VerticalNodeAnchorPoint;
                             obj.transform.SetParent(container.transform);
-                            obj.transform.localScale = new Vector2(1, 1);
+                            obj.transform.localScale = new Vector3(1, 1,1);
                             obj.transform.localPosition = new Vector2(0, allNodesSize);
                         }
                     }

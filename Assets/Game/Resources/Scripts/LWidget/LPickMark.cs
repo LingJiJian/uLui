@@ -32,10 +32,13 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using SLua;
 
+[CustomLuaClass]
 public class LPickMark : MonoBehaviour,IPointerDownHandler {
 
     public Lui.LTableView tableView;
+    public string param;
 
+    [DoNotToLua]
     public void OnPointerDown(PointerEventData eventData)
     {
         tableView.curPickObj = gameObject;

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using SLua;
 
+[CustomLuaClass]
 public enum WindowHierarchy
 {
     Normal,
@@ -13,6 +14,7 @@ public enum WindowHierarchy
     Suspend
 }
 
+[CustomLuaClass]
 public enum WindowDispose
 {
     Cache,
@@ -23,8 +25,9 @@ public enum WindowDispose
 /// <summary>
 /// 窗体管理
 /// </summary>
-[CustomLuaClassAttribute]
+[CustomLuaClass]
 public class LWindowManager : MonoBehaviour
+
 {
     protected float recycleDuration;
     protected float disposeDuration;
@@ -49,7 +52,7 @@ public class LWindowManager : MonoBehaviour
         delayWindowsTimes = new Dictionary<LWindowBase, float>();
 
         recycleDuration = 2;
-        disposeDuration = 1;
+        disposeDuration = 60;
 
         foreach (int item in Enum.GetValues(typeof(WindowHierarchy)))
         {
@@ -96,8 +99,10 @@ public class LWindowManager : MonoBehaviour
                     rtran = layer.AddComponent<RectTransform>();
                 }
                 rtran.pivot = new Vector2(0.5f, 0.5f);
-                rtran.anchorMin = new Vector2(0.5f, 0.5f);
-                rtran.anchorMax = new Vector2(0.5f, 0.5f);
+                rtran.anchorMin = new Vector2(0, 0);
+                rtran.anchorMax = new Vector2(1, 1);
+                rtran.offsetMax = new Vector2(0, 0);
+                rtran.offsetMin = new Vector2(0, 0);
 
                 hierarchys.Add((WindowHierarchy)int.Parse(eVal), layer);
             }
@@ -201,7 +206,7 @@ public class LWindowManager : MonoBehaviour
         return ret;
     }
 
-    public void runWindow(string name, WindowHierarchy e, ArrayList list = null)
+    public void runWindow(string name, WindowHierarchy e, object[] list = null)
     {
         if (isRunning(name))
         {
@@ -215,7 +220,7 @@ public class LWindowManager : MonoBehaviour
             win.gameObject.transform.SetParent(hierarchys[e].transform);
             win.gameObject.transform.localScale = new Vector3(1, 1,1);
             win.gameObject.transform.localPosition = Vector3.zero;
-            win.open(list);
+            win.Open(list);
 
             runningWindows[e].Add(win);
 
@@ -259,7 +264,7 @@ public class LWindowManager : MonoBehaviour
         if (win != null)
         {
             runningWindows[win.hierarchy].Remove(win);
-            win.close();
+            win.Close();
 
             if (win.disposeType == WindowDispose.Cache)
             {

@@ -55,8 +55,9 @@ public class LHUDSort : MonoBehaviour {
         {
             return (int)((a.position.z - b.position.z) * 1000);
         });
-
-        for (int i = 0; i < list.Count; i++)
+		
+		int len = list.Count;
+        for (int i = 0; i < len; i++)
         {
             list[i].transform.SetSiblingIndex(i);
         }

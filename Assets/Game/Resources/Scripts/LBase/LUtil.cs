@@ -337,4 +337,19 @@ public class LUtil {
 	public static int[] ints(int i){
 		return new int[] { i };
 	}
+
+    public static void removeAllChild(Transform tran)
+    {
+        int len = tran.childCount;
+        int childLen = tran.childCount;
+        for (int i = 0; i < childLen; i++)
+        {
+            Transform child = tran.GetChild(0);
+#if UNITY_EDITOR
+            UnityEngine.Object.DestroyImmediate(child.gameObject);
+#else
+            UnityEngine.Object.Destroy(child.gameObject);
+#endif
+        }
+    }
 }

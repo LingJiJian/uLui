@@ -42,6 +42,7 @@ namespace Lui
 		public string path;
 
         protected Image _comImage;
+        protected SpriteRenderer _comSprender;
         protected float _time;
         protected int _frameLenght;
         protected bool _isPlaying = false;
@@ -52,6 +53,7 @@ namespace Lui
         void Start()
         {
             _comImage = gameObject.GetComponent<Image>();
+            _comSprender = gameObject.GetComponent<SpriteRenderer>();
 
 			if (isPlayOnwake) {
 				loadTexture ();
@@ -64,11 +66,13 @@ namespace Lui
             //load textures
             string atlasPath = System.IO.Path.GetDirectoryName(path);
             string assetName = System.IO.Path.GetFileNameWithoutExtension(path);
-
+            
             Sprite[] sprites = LLoadBundle.GetInstance().GetSpritesByName(atlasPath, assetName);
             Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
-            foreach (Sprite s in sprites)
+            int len = sprites.Length;
+            for (int i=0;i< len;i++)
             {
+                Sprite s = sprites[i];
                 if (s.name.StartsWith(assetName))
                 {
                     dic.Add(s.name, s);
@@ -97,7 +101,11 @@ namespace Lui
         // Update is called once per frame
         protected void drawAnimation()
         {
-            _comImage.sprite = _spriteArr[_currentIndex];
+            if(_comImage)
+                _comImage.sprite = _spriteArr[_currentIndex];
+            else if(_comSprender)
+                _comSprender.sprite = _spriteArr[_currentIndex];
+
 
             if (_currentIndex < _frameLenght)
             {
@@ -123,7 +131,7 @@ namespace Lui
         {
             _isPlaying = false;
             _currentIndex = 0;
-            _comImage.sprite = _spriteArr[0];
+            // _comImage.sprite = _spriteArr[0];
         }
 
         public void pause()
