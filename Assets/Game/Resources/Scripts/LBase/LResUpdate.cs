@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
-using ICSharpCode.SharpZipLib.Zip;
+// using ICSharpCode.SharpZipLib.Zip;
 using System.Text;
 using System.IO;
 using System;
@@ -125,57 +125,57 @@ public class LResUpdate : MonoBehaviour
 
     }
 
-    public IEnumerator UnpackFiles(string file, string dir, UnityAction onComplete)
-    {
-        if (!Directory.Exists(dir))
-            Directory.CreateDirectory(dir);
+    // public IEnumerator UnpackFiles(string file, string dir, UnityAction onComplete)
+    // {
+    //     if (!Directory.Exists(dir))
+    //         Directory.CreateDirectory(dir);
 
-        ZipInputStream s = new ZipInputStream(File.OpenRead(file));
+    //     ZipInputStream s = new ZipInputStream(File.OpenRead(file));
 
-        ZipEntry theEntry;
-        while ((theEntry = s.GetNextEntry()) != null)
-        {
-            string directoryName = Path.GetDirectoryName(theEntry.Name);
-            string fileName = Path.GetFileName(theEntry.Name);
+    //     ZipEntry theEntry;
+    //     while ((theEntry = s.GetNextEntry()) != null)
+    //     {
+    //         string directoryName = Path.GetDirectoryName(theEntry.Name);
+    //         string fileName = Path.GetFileName(theEntry.Name);
 
-            if (directoryName != string.Empty)
-                Directory.CreateDirectory(dir + directoryName);
+    //         if (directoryName != string.Empty)
+    //             Directory.CreateDirectory(dir + directoryName);
 
-            if (fileName != string.Empty)
-            {
-                FileStream streamWriter = File.Create(dir + theEntry.Name);
+    //         if (fileName != string.Empty)
+    //         {
+    //             FileStream streamWriter = File.Create(dir + theEntry.Name);
 
-                int size = 2048;
-                byte[] data = new byte[2048];
-                while (true)
-                {
-                    size = s.Read(data, 0, data.Length);
-                    if (size > 0)
-                    {
-                        streamWriter.Write(data, 0, size);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                doneCount++;
-                if( onUnzipProgressHandler != null)
-                    onUnzipProgressHandler.Invoke(doneCount);
+    //             int size = 2048;
+    //             byte[] data = new byte[2048];
+    //             while (true)
+    //             {
+    //                 size = s.Read(data, 0, data.Length);
+    //                 if (size > 0)
+    //                 {
+    //                     streamWriter.Write(data, 0, size);
+    //                 }
+    //                 else
+    //                 {
+    //                     break;
+    //                 }
+    //             }
+    //             doneCount++;
+    //             if( onUnzipProgressHandler != null)
+    //                 onUnzipProgressHandler.Invoke(doneCount);
 
-                streamWriter.Close();
-                yield return new WaitForEndOfFrame();
-            }
-        }
-        onComplete.Invoke();
-        try {
-            s.Close();
-        }
-        catch (Exception e)
-        {
-            Debug.LogError(LUtil.FormatException(e));
-        }
-    }
+    //             streamWriter.Close();
+    //             yield return new WaitForEndOfFrame();
+    //         }
+    //     }
+    //     onComplete.Invoke();
+    //     try {
+    //         s.Close();
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Debug.LogError(LUtil.FormatException(e));
+    //     }
+    // }
 
     //显示资源
     private /*IEnumerator*/ void Complate()
