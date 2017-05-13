@@ -3,7 +3,7 @@
 	<HotFix>0</HotFix>
 	<ShowFps>1</ShowFps>
 	<Encrypt>1</Encrypt>
-	<ResUrl>http://192.168.1.106/down</ResUrl>
+	<ResUrl>http://192.168.1.100/down</ResUrl>
 	<Ip>127.0.0.1</Ip>
 	<Port>6666</Port>
 </Root>

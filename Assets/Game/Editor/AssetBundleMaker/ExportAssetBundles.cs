@@ -11,7 +11,7 @@ public class ExportAssetBundles : Editor
     {
         MakeDebugFile.CopyLuaTxt();
         CreateAssetBundles();
-        CreateZipFile();
+        // CreateZipFile();
         CreateVersionFile();
         AssetDatabase.Refresh();
     }
@@ -72,14 +72,22 @@ public class ExportAssetBundles : Editor
         string resPath = ExportConfigWindow.EXPORT_OUT_PATH + Path.DirectorySeparatorChar;
         StringBuilder versions = new StringBuilder();
 
-        string zipPath = resPath + LGameConfig.UPDATE_FILE_ZIP;
-        if (!File.Exists(zipPath))
+        // string zipPath = resPath + LGameConfig.UPDATE_FILE_ZIP;
+        // if (!File.Exists(zipPath))
+        // {
+        //     Debug.LogWarning("热更zip包不存在");
+        //     return;
+        // }
+
+        Helper.forEachHandle(Application.dataPath + "/StreamingAssets", new List<string> { "ab" }, (string filename) =>
         {
-            Debug.LogWarning("热更zip包不存在");
-            return;
-        }
-        string md5 = ExportAssetBundles.MD5File(zipPath);
-        versions.Append(LGameConfig.UPDATE_FILE_ZIP).Append(",").Append(md5);
+            string baseName = Path.GetFileName(filename);
+            string md5 = ExportAssetBundles.MD5File(filename);
+            versions.Append(baseName).Append(",").Append(md5).Append("\n");
+        });
+
+        // string md5 = ExportAssetBundles.MD5File(zipPath);
+        // versions.Append(LGameConfig.UPDATE_FILE_ZIP).Append(",").Append(md5);
 
         // 生成配置文件  
         FileStream stream = new FileStream(resPath + "version.ver", FileMode.Create);
@@ -91,24 +99,24 @@ public class ExportAssetBundles : Editor
         Debug.Log(" 版本文件： " + resPath + "version.ver");
     }
 
-    static void CreateZipFile()
-    {
-        string srcPath = Application.streamingAssetsPath;
-        string outPath = ExportConfigWindow.EXPORT_OUT_PATH + Path.DirectorySeparatorChar;
+    // static void CreateZipFile()
+    // {
+    //     string srcPath = Application.streamingAssetsPath;
+    //     string outPath = ExportConfigWindow.EXPORT_OUT_PATH + Path.DirectorySeparatorChar;
 
-        Helper.forEachHandle(srcPath, new List<string>() { "meta" }, (string filename) =>
-        {
-            File.Delete(@filename);
-        });
+    //     Helper.forEachHandle(srcPath, new List<string>() { "meta" }, (string filename) =>
+    //     {
+    //         File.Delete(@filename);
+    //     });
 
-        if (!Directory.Exists(srcPath))
-        {
-            Directory.CreateDirectory(srcPath);
-        }
-        LUtil.PackFiles(outPath + LGameConfig.UPDATE_FILE_ZIP, srcPath);
+    //     if (!Directory.Exists(srcPath))
+    //     {
+    //         Directory.CreateDirectory(srcPath);
+    //     }
+    //     LUtil.PackFiles(outPath + LGameConfig.UPDATE_FILE_ZIP, srcPath);
 
-        Debug.Log(" 热更zip包： " + outPath + LGameConfig.UPDATE_FILE_ZIP);
-    }
+    //     Debug.Log(" 热更zip包： " + outPath + LGameConfig.UPDATE_FILE_ZIP);
+    // }
 
     public static string MD5File(string file)
     {

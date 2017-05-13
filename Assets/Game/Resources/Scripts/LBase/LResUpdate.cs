@@ -111,16 +111,16 @@ public class LResUpdate : MonoBehaviour
         stream.Close();
 
         //如果是更新包
-        if (fileName == LGameConfig.UPDATE_FILE_ZIP)
-        {
-            //LUtil.UnpackFiles(filePath, LOCAL_RES_PATH);
-            StartCoroutine(UnpackFiles(filePath, LOCAL_RES_PATH,() =>
-            {
-                File.Delete(filePath);
-                onComplete.Invoke();
-            }));
-        }
-        else
+        // if (fileName == LGameConfig.UPDATE_FILE_ZIP)
+        // {
+        //     //LUtil.UnpackFiles(filePath, LOCAL_RES_PATH);
+        //     StartCoroutine(UnpackFiles(filePath, LOCAL_RES_PATH,() =>
+        //     {
+        //         File.Delete(filePath);
+        //         onComplete.Invoke();
+        //     }));
+        // }
+        // else
             onComplete.Invoke();
 
     }
