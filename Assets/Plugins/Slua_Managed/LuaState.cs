@@ -27,6 +27,7 @@ namespace SLua
 	using System;
 	using System.Collections.Generic;
 	using System.Collections;
+	using LuaInterface;
 	using System.IO;
 	using System.Text;
 	using System.Runtime.InteropServices;
@@ -262,25 +263,6 @@ namespace SLua
 			return null;
 		}
 
-		public object call(LuaTable self, params object[] args)
-		{
-			int error = LuaObject.pushTry(state.L);
-
-			LuaObject.pushVar(L, self);
-
-			for (int n = 0; args != null && n < args.Length; n++)
-			{
-				LuaObject.pushVar(L, args[n]);
-			}
-
-			if (innerCall((args != null ? args.Length : 0)+1, error))
-			{
-				return state.topObjects(error - 1);
-			}
-
-			return null;
-		}
-
 		public object call(object a1, object a2)
 		{
 			int error = LuaObject.pushTry(state.L);
@@ -308,10 +290,6 @@ namespace SLua
 			return null;
 		}
 
-		// you can add call method with specific type rather than object type to avoid gc alloc, like
-		// public object call(int a1,float a2,string a3,object a4)
-		
-		// using specific type to avoid type boxing/unboxing
 	}
 
 	public class LuaTable : LuaVar, IEnumerable<LuaTable.TablePair>
@@ -707,16 +685,13 @@ end
 			LuaDLL.lua_pushnumber(L, 2);
 			LuaDLL.lua_call(L, 2, 1);
 			LuaDLL.lua_remove(L, -2);
-            string error = LuaDLL.lua_tostring(L, -1);
+			Logger.LogError(LuaDLL.lua_tostring(L, -1));
+			if (errorDelegate != null)
+			{
+				errorDelegate(LuaDLL.lua_tostring(L, -1));
+			}
 			LuaDLL.lua_pop(L, 1);
-
-            Logger.LogError(error, true);
-            if (errorDelegate != null)
-            {
-                errorDelegate(error);
-            }
-
-            return 0;
+			return 0;
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -870,7 +845,7 @@ end
 		static public void pushcsfunction(IntPtr L, LuaCSFunction function)
 		{
 			LuaDLL.lua_getref(L, get(L).PCallCSFunctionRef);
-			LuaDLL.lua_pushcclosure(L, function, 0);
+			LuaDLL.lua_pushcclosure(L, Marshal.GetFunctionPointerForDelegate(function), 0);
 			LuaDLL.lua_call(L, 1, 1);
 		}
 
@@ -933,27 +908,9 @@ end
 			return null;
 		}
 
-	    /// <summary>
-	    /// Ensure remove BOM from bytes
-	    /// </summary>
-	    /// <param name="bytes"></param>
-	    /// <returns></returns>
-	    public static byte[] CleanUTF8Bom(byte[] bytes)
-	    {
-            if (bytes.Length > 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF)
-            {
-                var oldBytes = bytes;
-                bytes = new byte[bytes.Length - 3];
-                Array.Copy(oldBytes, 3, bytes, 0, bytes.Length);
-            }
-            return bytes;
-	    }
-
 		public bool doBuffer(byte[] bytes, string fn, out object ret)
-        {        
-            // ensure no utf-8 bom, LuaJIT can read BOM, but Lua cannot!
-		    bytes = CleanUTF8Bom(bytes);
-            ret = null;
+		{
+			ret = null;
 			int errfunc = LuaObject.pushTry(L);
 			if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fn) == 0)
 			{
@@ -975,13 +932,14 @@ end
 		{
 			try
 			{
+				// Debug.Log(fn);
 				byte[] bytes;
 				if (loaderDelegate != null)
 					bytes = loaderDelegate(fn);
 				else
 				{
-#if !SLUA_STANDALONE
 					fn = fn.Replace(".", "/");
+#if !SLUA_STANDALONE
 					TextAsset asset = (TextAsset)Resources.Load(fn);
 					if (asset == null)
 						return null;
@@ -1040,20 +998,16 @@ end
 
 		internal object getObject(int reference, int index)
 		{
-			if (index >= 1) {
-				LuaDLL.lua_getref (L, reference);
-				LuaDLL.lua_rawgeti (L, -1, index);
-				object returnValue = getObject (L, -1);
-				LuaDLL.lua_pop (L, 1);
-				return returnValue;
-			} else {
-				LuaDLL.lua_getref (L, reference);
-				LuaDLL.lua_pushinteger (L, index);
-				LuaDLL.lua_gettable (L, -2);
-				object returnValue = getObject (L, -1);
-				LuaDLL.lua_pop (L, 1);
+			if (index >= 1)
+			{
+				int oldTop = LuaDLL.lua_gettop(L);
+				LuaDLL.lua_getref(L, reference);
+				LuaDLL.lua_rawgeti(L, -1, index);
+				object returnValue = getObject(L, -1);
+				LuaDLL.lua_settop(L, oldTop);
 				return returnValue;
 			}
+			throw new IndexOutOfRangeException();
 		}
 
 		internal object getObject(int reference, object field)
@@ -1092,18 +1046,16 @@ end
 
 		internal void setObject(int reference, int index, object o)
 		{
-			if (index >= 1) {
-				LuaDLL.lua_getref (L, reference);
-				LuaObject.pushVar (L, o);
-				LuaDLL.lua_rawseti (L, -2, index);
-				LuaDLL.lua_pop (L, 1);
-			} else {
-				LuaDLL.lua_getref (L, reference);
-				LuaDLL.lua_pushinteger (L, index);
-				LuaObject.pushVar (L, o);
-				LuaDLL.lua_settable (L, -3);
-				LuaDLL.lua_pop (L, 1);
+			if (index >= 1)
+			{
+				int oldTop = LuaDLL.lua_gettop(L);
+				LuaDLL.lua_getref(L, reference);
+				LuaObject.pushVar(L, o);
+				LuaDLL.lua_rawseti(L, -2, index);
+				LuaDLL.lua_settop(L, oldTop);
+				return;
 			}
+			throw new IndexOutOfRangeException();
 		}
 
 		internal void setObject(int reference, object field, object o)
@@ -1190,7 +1142,6 @@ end
 				cnt = refQueue.Count;
 			}
 
-			var l = L;
 			for (int n = 0; n < cnt; n++)
 			{
 				UnrefPair u;
@@ -1198,7 +1149,7 @@ end
 				{
 					u = refQueue.Dequeue();
 				}
-				u.act(l, u.r);
+				u.act(L, u.r);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-﻿namespace SLua
+﻿namespace LuaInterface
 {
     using System;
     using System.Runtime.InteropServices;

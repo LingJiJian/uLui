@@ -1,11 +1,11 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uLui", "Assembly-CSharp-firstpass.csproj", "{E1D36826-B1F4-0A49-5C98-A82920DD91E8}"
+# Visual Studio 2008
+
+Project("{6C6D0CE5-A502-1096-BF01-06A25591D06E}") = "uLui", "Assembly-CSharp-firstpass.csproj", "{E1D36826-B1F4-0A49-5C98-A82920DD91E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uLui", "Assembly-CSharp.csproj", "{637C5E20-0C4C-D436-F010-B1A7A7E1ED5A}"
+Project("{6C6D0CE5-A502-1096-BF01-06A25591D06E}") = "uLui", "Assembly-CSharp.csproj", "{637C5E20-0C4C-D436-F010-B1A7A7E1ED5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uLui", "Assembly-CSharp-Editor.csproj", "{491050FB-DB9F-41A2-4FA7-0F02E64E726C}"
+Project("{6C6D0CE5-A502-1096-BF01-06A25591D06E}") = "uLui", "Assembly-CSharp-Editor.csproj", "{491050FB-DB9F-41A2-4FA7-0F02E64E726C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

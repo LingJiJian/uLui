@@ -97,7 +97,7 @@ public class LNetwork : MonoBehaviour
 
 	public void send(int msgid, ByteArray content,bool isEncrypt)
     {
-		byte[] data = content.GetData();
+		byte[] data = content.data;
         byte[] packet = new byte[data.Length + 1 + 4 + 4];
 
         packet[0] = isEncrypt ? (byte)1 : (byte)0;
