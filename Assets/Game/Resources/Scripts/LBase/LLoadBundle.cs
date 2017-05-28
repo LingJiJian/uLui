@@ -148,27 +148,18 @@ public class LLoadBundle : MonoBehaviour
         return prefabs;
     }
 
-    public Sprite[] GetSpritesByName(string bundlePath,string atlasName)
+    public Sprite[] GetSpritesByName(string bundlePath,string assetName)
     {   
-        string key = string.Format("{0}_{1}",bundlePath,atlasName);
+		string key = bundlePath;
         if(spritesCache.ContainsKey(key))
         {
             return spritesCache[key];
         }else{
 
-            List<Sprite> arr = new List<Sprite>();
             if (LGameConfig.GetInstance().isDebug)
             {
                 Sprite[] sprites = Resources.LoadAll<Sprite>(bundlePath);
-    			int spritesLen = sprites.Length;
-                for (int i=0; i< spritesLen; i++)
-                {
-    				Sprite s = sprites[i];
-                    if (string.IsNullOrEmpty(atlasName) || s.name.StartsWith(atlasName))
-                    {
-                        arr.Add(s);
-                    }
-                }
+				spritesCache.Add(key,sprites);
             }
             else
             {
@@ -177,19 +168,20 @@ public class LLoadBundle : MonoBehaviour
                 if (assetBundle)
                 {
                     Sprite[] sprites = assetBundle.LoadAllAssets<Sprite>();
-                    int spritesLen = sprites.Length;
-                    for (int i=0; i< spritesLen; i++)
-    				{
-    					Sprite s = sprites[i];
-                        if (string.IsNullOrEmpty(atlasName) || s.name.StartsWith(atlasName))
-                        {
-                            arr.Add(s);
-                        }
-                    }
+					spritesCache.Add(key,sprites);
                 }
             }
-            spritesCache.Add(key,arr.ToArray());
-            return spritesCache[key];
+
+			List<Sprite> _arr = new List<Sprite>();
+			Sprite[] _sprites = spritesCache[key];
+			foreach (Sprite s in _sprites) {
+				if (s.name.StartsWith(assetName))
+				{
+					_arr.Add(s);
+				}
+			}
+
+			return _arr.ToArray();
         }
     }
 
