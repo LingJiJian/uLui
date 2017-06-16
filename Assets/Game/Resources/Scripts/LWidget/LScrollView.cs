@@ -193,13 +193,6 @@ namespace Lui
                     }
                     return;
                 }
-				/*
-				if (_scrollPerc < 0) {
-					scrollDistance *= Mathf.Abs (_scrollPerc) * 20;
-				} 
-				if (_scrollPerc > 1) {
-					scrollDistance *= (_scrollPerc - 1) * 20;
-				}*/
 
                 switch (direction)
                 {
@@ -213,6 +206,14 @@ namespace Lui
                         break;
                 }
 
+				Vector2 vec = getContentOffset () + scrollDistance;
+				if (validateOffset (ref vec)) {
+					if (direction == ScrollDirection.VERTICAL) {
+						scrollDistance.y *= 0.2f;
+					} else if (direction == ScrollDirection.HORIZONTAL) {
+						scrollDistance.x *= 0.2f;
+					}
+				}
                 setContentOffset(getContentOffset() + scrollDistance);
             }
         }
@@ -283,8 +284,6 @@ namespace Lui
         {
 			if (!bounceable) {
 				validateOffset (ref offset);
-			} else {
-				validateOffsetBounce(ref offset);
 			}
             //LeanTween.cancel(container);
 			onScrolling();
@@ -370,7 +369,7 @@ namespace Lui
             return false;
         }
 
-		protected bool validateOffsetBounce(ref Vector2 point)
+		protected bool validateOffsetBounce(Vector2 point)
 		{
 			float ratio = Screen.height / 720.0f;
 			float x = point.x, y = point.y;
@@ -381,13 +380,13 @@ namespace Lui
 
 			if (point.x != x || point.y != y)
 			{
-				point.x = x;
-				point.y = y;
+				//point.x = x;
+				//point.y = y;
 				return true;
 			}
 
-			point.x = x;
-			point.y = y;
+			//point.x = x;
+			//point.y = y;
 			return false;
 		}
 
@@ -410,13 +409,13 @@ namespace Lui
 			if (direction == ScrollDirection.HORIZONTAL) {
 				float width = this.GetComponent<RectTransform>().rect.width;
                 float containerWidth = container.GetComponent<RectTransform> ().rect.width;
-				this._scrollPerc = -container.transform.localPosition.y / (containerWidth - width);
+				this._scrollPerc = containerWidth - width == 0 ? 1 : -container.transform.localPosition.y / (containerWidth - width);
 
 			} else if(direction == ScrollDirection.VERTICAL) {
 				
                 float height = this.GetComponent<RectTransform>().rect.height;
                 float containerHeight = container.GetComponent<RectTransform> ().rect.height;
-				this._scrollPerc = -container.transform.localPosition.y / (containerHeight - height);
+				this._scrollPerc = containerHeight - height == 0 ? 1 : -container.transform.localPosition.y / (containerHeight - height);
 			}
 			if (onScrollingHandler!=null)
 				onScrollingHandler.Invoke (this._scrollPerc);
