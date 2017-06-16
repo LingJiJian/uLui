@@ -30,17 +30,17 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
 
-[CustomLuaClass]
-public class LPickMark : MonoBehaviour,IPointerDownHandler {
+namespace Lui
+{
+	public class LPickMark : MonoBehaviour,IPointerDownHandler {
 
-    public Lui.LTableView tableView;
-    public string param;
+	    public Lui.LTableView tableView;
+	    public string param;
 
-    [DoNotToLua]
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        tableView.curPickObj = gameObject;
-    }
+	    public void OnPointerDown(PointerEventData eventData)
+	    {
+	        tableView.curPickObj = gameObject;
+	    }
+	}
 }

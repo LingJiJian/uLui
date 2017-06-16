@@ -28,11 +28,9 @@ using System.Collections;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using SLua;
 
 namespace Lui
 {
-    [CustomLuaClass]
     public class LTouchView : MonoBehaviour , IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         public UnityAction<Vector2> onMoveBeginHandler;
@@ -48,31 +46,21 @@ namespace Lui
         {
         }
 
-        [DoNotToLua]
+        [LuaInterface.NoToLua]
         public void OnPointerDown(PointerEventData eventData)
         {
             _lastPoint = eventData.position;
 			_lastTarget = null;
 			_hasCancel = false;
 
-// 			if (onClickHandler2D != null)
-// 			{
-// #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
-// 				RaycastHit2D hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
-// #else
-//                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(eventData.position), Vector2.zero);
-// #endif
-//                 if (hit.collider != null) {
-// 					_lastTarget = hit.collider;
-// 				}
-// 			}
 
             if(onMoveBeginHandler != null)
             {
                 onMoveBeginHandler.Invoke(eventData.position);
             }
         }
-        [DoNotToLua]
+
+        [LuaInterface.NoToLua]
         public void OnDrag(PointerEventData eventData)
         {
             Vector2 offset = eventData.position - _lastPoint;
@@ -84,27 +72,16 @@ namespace Lui
 				onMoveHandler.Invoke(offset);
             }
         }
-        
-        [DoNotToLua]
+
+        [LuaInterface.NoToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
-// 			if (onClickHandler2D != null && _hasCancel == false) 
-// 			{
             Vector3 worldPos = Vector3.zero;
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
             worldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-// 				RaycastHit2D hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint (Input.mousePosition), Vector2.zero);
 #else
             worldPos = Camera.main.ScreenToWorldPoint (eventData.position);
-//                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(eventData.position), Vector2.zero);
 #endif
-//                 if (hit.collider != null) {
-// 					if (hit.collider == _lastTarget) {
-// 						onClickHandler2D.Invoke (hit.collider.gameObject);
-// 					}
-// 				}
-// 			}
-
             if (onMoveEndHandler != null && _hasCancel)
             {
                 onMoveEndHandler.Invoke(worldPos);

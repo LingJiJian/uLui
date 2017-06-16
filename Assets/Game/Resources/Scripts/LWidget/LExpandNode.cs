@@ -31,7 +31,6 @@ using UnityEngine.Events;
 
 namespace Lui { 
 
-    [SLua.CustomLuaClass]
     public class LExpandNode : MonoBehaviour
     {
         protected bool _expanded;

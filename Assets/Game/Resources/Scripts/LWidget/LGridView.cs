@@ -29,7 +29,8 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
+using System;
+using System.Collections;
 
 namespace Lui
 {
@@ -41,13 +42,14 @@ namespace Lui
     /// <summary>
     /// 网格
     /// </summary>
-    [CustomLuaClassAttribute]
     public class LGridView : LScrollView
     {
         public Vector2 cellsSize;
         public int cellsCount;
         public int cols;
         public bool autoRelocate;
+		public bool isAsyncOnce;
+        public GameObject cell_tpl;
 
         protected int _rows;
         protected List<LGridViewCell> _cellsUsed;
@@ -260,13 +262,19 @@ namespace Lui
             if(tran!=null){
                 tran.gameObject.SetActive(false);
             }
+            try
+            {
+                _indices.Clear();
+                _positions.Clear();
+                updatePositions();
+                setContentOffsetToTop();
+                onScrolling();
+            }
+            catch(Exception e)
+            {
+                Debug.Log(e);
+            }
             
-            _indices.Clear();
-            _positions.Clear();
-            updatePositions();
-            setContentOffsetToTop();
-            onScrolling();
-
             relocateContainer();
         }
 
@@ -320,21 +328,44 @@ namespace Lui
                 }
             }
 
-            for (int row = beginRow; row <= endRow && row < _rows; ++row)
-            {
-                int cellBeginIndex = cellFirstIndexFromRow(row);
-                int cellEndIndex = cellBeginIndex + cols;
+			if (isAsyncOnce) {
+				StopAllCoroutines ();
+				StartCoroutine (_onScrollingAsync (beginRow, endRow));
+			} else {
 
-                for (int idx = cellBeginIndex; idx < cellEndIndex && idx < cellsCount; ++idx)
-                {
-                    if (_indices.ContainsKey(idx))
-                    {
-                        continue;
-                    }
-                    updateCellAtIndex(idx, row);
-                }
-            }
+				for (int row = beginRow; row <= endRow && row < _rows; ++row) {
+					int cellBeginIndex = cellFirstIndexFromRow (row);
+					int cellEndIndex = cellBeginIndex + cols;
+
+					for (int idx = cellBeginIndex; idx < cellEndIndex && idx < cellsCount; ++idx) {
+						if (_indices.ContainsKey (idx)) {
+							continue;
+						}
+						updateCellAtIndex (idx, row);
+					}
+				}
+			}
         }
+			
+		IEnumerator _onScrollingAsync(int beginRow,int endRow){
+
+			for (int row = beginRow; row <= endRow && row < _rows; ++row)
+			{
+				int cellBeginIndex = cellFirstIndexFromRow(row);
+				int cellEndIndex = cellBeginIndex + cols;
+
+				for (int idx = cellBeginIndex; idx < cellEndIndex && idx < cellsCount; ++idx)
+				{
+					if (_indices.ContainsKey(idx))
+					{
+						continue;
+					}
+					updateCellAtIndex(idx, row);
+					yield return new WaitForEndOfFrame();
+				}
+			}
+			isAsyncOnce = false;
+		}
 
         protected override void onDraggingScrollEnded()
         {
@@ -376,7 +407,16 @@ namespace Lui
             if (cell == null)
             {
                 cell = new LGridViewCell();
-                cell.node = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
+				if (cell_tpl != null)
+					cell.node = (GameObject)Instantiate (cell_tpl);
+				else {
+					Transform tpl = transform.Find ("container/cell_tpl");
+					if (tpl) {
+						cell.node = (GameObject)Instantiate (tpl.gameObject);
+					} else {
+						Debug.LogWarning("模板为空");
+					}
+				}
             }
             if(onCellHandle != null)
             {

@@ -30,7 +30,6 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
 
 namespace Lui
 {
@@ -62,13 +61,13 @@ namespace Lui
     /// <summary>
     /// 复用列表
     /// </summary>
-    [CustomLuaClassAttribute]
     public class LTableView : LScrollView
     {
         public int cellsCount;
         public Vector2 cellsSize;
         public bool autoRelocate;
-        
+        public GameObject cell_tpl;
+
         protected List<LTableViewCell> cellsUsed;
         protected List<LTableViewCell> cellsFreed;
         protected List<float> positions;
@@ -193,7 +192,7 @@ namespace Lui
                 {
                     continue;
                 }
-                updateCellAtIndex(idx);
+                updateCellByAdapter(idx);
             }
 
             base.onScrolling();
@@ -354,7 +353,7 @@ namespace Lui
             }
         }
 
-        protected Vector2 cellPositionFromIndex(int idx)
+		public Vector2 cellPositionFromIndex(int idx)
         {
             if (idx == LScrollView.INVALID_INDEX)
             {
@@ -393,6 +392,18 @@ namespace Lui
             }
         }
 
+		public void scrollToIdx(int idx,float duration){
+
+			Vector2 cellPos = cellPositionFromIndex (idx);
+			if (direction == ScrollDirection.HORIZONTAL) {
+				cellPos = new Vector2 (cellPos.x * -1, 0); 
+			} else if (direction == ScrollDirection.VERTICAL) {
+				float totalHeight = cellsSize.y * cellsCount;
+				cellPos = new Vector2 (0,  (idx + 1) * cellsSize.y - totalHeight ); 
+			}
+			setContentOffsetInDuration(cellPos,duration);
+		}
+
         public LTableViewCell cellAtIndex(int idx)
         {
             if (!indices.ContainsKey(idx))
@@ -409,7 +420,7 @@ namespace Lui
             return null;
         }
 
-        public virtual void updateCellAtIndex(int idx)
+        protected virtual void updateCellByAdapter(int idx )
         {
             LTableViewCell cell = _onDataSourceAdapterHandler(dequeueCell(), idx);
             if (cell == null)
@@ -435,7 +446,19 @@ namespace Lui
             cell.node.transform.localPosition = cellPositionFromIndex(idx);
 
             insertSortableCell(cell, idx);
-            indices.Add(idx, 1);
+            if(!indices.ContainsKey(idx))
+                indices.Add(idx, 1);
+        }
+
+        public virtual void updateCellAtIndex(int idx)
+        {
+            foreach(LTableViewCell cell in cellsUsed)
+            {
+                if(cell.idx == idx){
+                    onCellHandle.Invoke(idx, cell.node);
+                    break;
+                }
+            }
         }
 
         protected LTableViewCell _onDataSourceAdapterHandler(LTableViewCell cell, int idx)
@@ -443,7 +466,10 @@ namespace Lui
             if (cell == null)
             {
                 cell = new LTableViewCell();
-                cell.node = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
+                if (cell_tpl != null)
+                    cell.node = (GameObject)Instantiate(cell_tpl);
+                else
+                    cell.node = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
             }
             if(onCellHandle != null)
             {

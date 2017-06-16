@@ -25,78 +25,102 @@ THE SOFTWARE.
 ****************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Profiling;
 using System.Collections;
 
 public class LFPSView : MonoBehaviour
 {
+	private static LFPSView _instance;
 
-    private static LFPSView _instance;
-    public float updateInterval = 0.5F;
-    private double lastInterval;
-    private int frames = 0;
-    private float fps;
+	public static LFPSView Show()
+	{
+		if (_instance == null)
+		{
+			GameObject obj = new GameObject();
+			obj.name = "LFPSView";
+			_instance = obj.AddComponent<LFPSView>();
+			DontDestroyOnLoad(obj);
+		}
+		return _instance;
+	}
 
-    public static LFPSView Show()
-    {
-        if (_instance == null)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "LFPSView";
-            _instance = obj.AddComponent<LFPSView>();
-            DontDestroyOnLoad(obj);
-        }
-        return _instance;
-    }
+	void Start()
+	{
+		timeleft = updateInterval;
+        OnMemoryGUI = true;
+	}
+	void Update()
+	{
+		UpdateUsed();
+		UpdateFPS();
+	}
+	//Memory
+	private string sUserMemory;
+	private string s;
+	public bool OnMemoryGUI;
+	private uint MonoUsedM;
+	private uint AllMemory;
+	[Range(0, 100)]
+	public int MaxMonoUsedM = 50;
+	[Range(0, 400)]
+	public int MaxAllMemory = 200;
+	void UpdateUsed()
+	{
+		sUserMemory = "";
+		MonoUsedM = Profiler.GetMonoUsedSize() / 1000000;
+		AllMemory = Profiler.GetTotalAllocatedMemory() / 1000000;
 
-    void Start()
-    {
-        lastInterval = Time.realtimeSinceStartup;
-        frames = 0;
-    }
-    void OnGUI()
-    {
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = Color.white;
-        style.fontSize = 30;
-        GUI.Label(new Rect(0, 0, 100, 50), " " + fps.ToString("f2"), style);
-    }
 
-//     void OnEnable()
-//     {
-// #if UNITY_5
-//         Application.logMessageReceived += LGameConfig.GetInstance().HandleLog;
-// #else
-//             Application.RegisterLogCallback(LGameConfig.HandleLog);  
-// #endif
-//     }
+		sUserMemory += "used: " + MonoUsedM + "M ";
+		sUserMemory += "all: " + AllMemory + "M ";
+		sUserMemory += "left: " + Profiler.GetTotalUnusedReservedMemory() / 1000000 + "M ";
 
-//     void OnDisable()
-//     {
-// #if UNITY_5
-//         Application.logMessageReceived -= LGameConfig.GetInstance().HandleLog;
-// #else
-//             Application.RegisterLogCallback(null);  
-// #endif
-//     }
 
-    void Update()
-    {
-        ++frames;
-        float timeNow = Time.realtimeSinceStartup;
-        if (timeNow > lastInterval + updateInterval)
-        {
-            fps = (float)(frames / (timeNow - lastInterval));
-            frames = 0;
-            lastInterval = timeNow;
-        }
+		// s = "";
+		// s += " MonoHeap:" + Profiler.GetMonoHeapSize() / 1000 + "k";
+		// s += " MonoUsed:" + Profiler.GetMonoUsedSize() / 1000 + "k";
+		// s += " Allocated:" + Profiler.GetTotalAllocatedMemory() / 1000 + "k";
+		// s += " Reserved:" + Profiler.GetTotalReservedMemory() / 1000 + "k";
+		// s += " UnusedReserved:" + Profiler.GetTotalUnusedReservedMemory() / 1000 + "k";
+		// s += " UsedHeap:" + Profiler.usedHeapSize / 1000 + "k";
+	}
 
-        if (Input.GetKeyDown(KeyCode.BackQuote) ||
-            Input.acceleration.sqrMagnitude > 3)  
-        {
-            if (LGameConfig.GetInstance().openGmViewFunc != null)
-            {
-                LGameConfig.GetInstance().openGmViewFunc.Invoke();
-            }
-        }
-    }
+
+	//FPS
+	float updateInterval = 0.5f;
+	private float accum = 0.0f;
+	private float frames = 0;
+	private float timeleft;
+	private float fps;
+	private string FPSAAA;
+	[Range(0, 150)]
+	public int MaxFPS;
+	void UpdateFPS()
+	{
+		timeleft -= Time.deltaTime;
+		accum += Time.timeScale / Time.deltaTime;
+		++frames;
+
+
+		if (timeleft <= 0.0)
+		{
+			fps = accum / frames;
+			FPSAAA = "fps: " + fps.ToString("f2") + " ";
+			timeleft = updateInterval;
+			accum = 0.0f;
+			frames = 0;
+		}
+	}
+	void OnGUI()
+	{
+		if (OnMemoryGUI) {
+
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.white;
+            style.fontSize = 30;
+
+			GUI.color = new Color (1, 1, 1);
+			GUI.Label (new Rect (0, 0, 200, 60), FPSAAA + sUserMemory,style);
+		}
+	}
 }

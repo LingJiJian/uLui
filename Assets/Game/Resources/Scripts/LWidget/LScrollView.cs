@@ -29,7 +29,6 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
 
 namespace Lui
 {
@@ -42,12 +41,12 @@ namespace Lui
     /// <summary>
     /// 滑块
     /// </summary>
-    [CustomLuaClass]
     public class LScrollView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public static int INVALID_INDEX = -1;
         public static float RELOCATE_DURATION = 0.2f;
         public static float AUTO_RELOCATE_SPPED = 600.0f;
+        public static float INERTANCE_SPEED = 0.8f;
         protected float autoRelocateSpeed;
         
         public bool bounceable;
@@ -61,6 +60,7 @@ namespace Lui
         private bool _isPicking;
         public bool pickEnable;
 		public bool inertanceEnable;
+		private float _scrollPerc;
         [HideInInspector]
         public GameObject curPickObj;
 
@@ -140,21 +140,24 @@ namespace Lui
                     return;
                 }
 
-                if (Mathf.Abs(scrollDistance.x) > 0.00000001f || Mathf.Abs(scrollDistance.y) > 0.00000001f)
+                if (Mathf.Abs(scrollDistance.x) > 0.1f || Mathf.Abs(scrollDistance.y) > 0.1f)
                 {
-                    scrollDistance *= 0.9f;
+                    scrollDistance *= INERTANCE_SPEED;
                     setContentOffset(getContentOffset() + scrollDistance);
                 }
             }
         }
 
+        [LuaInterface.NoToLua]
         public void OnBeginDrag(PointerEventData eventData)
         {
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {
                 lastMovePoint = point;
+                
                 LeanTween.cancel(container);
+                
                 onScrollBegin();
                 onScrolling();
             }
@@ -165,6 +168,7 @@ namespace Lui
             }
         }
 
+        [LuaInterface.NoToLua]
         public void OnDrag(PointerEventData eventData)
         {
             if (pickEnable && _isPicking)
@@ -174,7 +178,6 @@ namespace Lui
                 return;
             }
                 
-
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {
@@ -190,6 +193,13 @@ namespace Lui
                     }
                     return;
                 }
+				/*
+				if (_scrollPerc < 0) {
+					scrollDistance *= Mathf.Abs (_scrollPerc) * 20;
+				} 
+				if (_scrollPerc > 1) {
+					scrollDistance *= (_scrollPerc - 1) * 20;
+				}*/
 
                 switch (direction)
                 {
@@ -207,6 +217,7 @@ namespace Lui
             }
         }
 
+        [LuaInterface.NoToLua]
         public void OnEndDrag(PointerEventData eventData)
         {
             if (dragable)
@@ -249,12 +260,13 @@ namespace Lui
 
         protected void setContentOffsetEaseInWithoutCheck(Vector2 offset, float duration)
         {
+            
             LeanTween.cancel(container);
             LeanTween.moveLocal(container, offset, duration)
                 .setEase(LeanTweenType.easeInQuad)
                 .setOnUpdate((float val) => { onScrolling(); })
                 .setOnComplete(onMoveComplete);
-
+                
             onScrolling();
         }
 
@@ -269,19 +281,21 @@ namespace Lui
 
         public void setContentOffset(Vector2 offset)
         {
-            if (!bounceable)
-            {
-                validateOffset(ref offset);
-            }
-            LeanTween.cancel(container);
-            container.transform.localPosition = offset;
-            onScrolling();
+			if (!bounceable) {
+				validateOffset (ref offset);
+			} else {
+				validateOffsetBounce(ref offset);
+			}
+            //LeanTween.cancel(container);
+			onScrolling();
+			container.transform.localPosition = offset;
         }
 
         public void setContentOffsetWithoutCheck(Vector2 offset)
         {
+			onScrolling();
             container.transform.localPosition = offset;
-            onScrolling();
+            
         }
 
         public void setContentOffsetToTop()
@@ -328,9 +342,11 @@ namespace Lui
 
         public void setContentOffsetInDurationWithoutCheck(Vector2 offset, float duration)
         {
+			LeanTween.cancel (container);
             LeanTween.moveLocal(container, offset, duration)
                 .setOnUpdate((float val) => { onScrolling(); })
                 .setOnComplete(onMoveComplete);
+            
             onScrolling();
         }
 
@@ -354,6 +370,27 @@ namespace Lui
             return false;
         }
 
+		protected bool validateOffsetBounce(ref Vector2 point)
+		{
+			float ratio = Screen.height / 720.0f;
+			float x = point.x, y = point.y;
+			x = Mathf.Max(x, minOffset.x - 100 * ratio);
+			x = Mathf.Min(x, maxOffset.x + 100 * ratio);
+			y = Mathf.Max(y, minOffset.y - 100 * ratio);
+			y = Mathf.Min(y, maxOffset.y + 100 * ratio);
+
+			if (point.x != x || point.y != y)
+			{
+				point.x = x;
+				point.y = y;
+				return true;
+			}
+
+			point.x = x;
+			point.y = y;
+			return false;
+		}
+
         public Vector2 getContentOffset()
         {
             return container.transform.localPosition;
@@ -368,11 +405,21 @@ namespace Lui
         }
 
         protected virtual void onScrolling()
-        {
-            if (onScrollingHandler!=null)
-            {
-                onScrollingHandler.Invoke(-container.transform.localPosition.x / container.GetComponent<RectTransform>().rect.width);
-            }
+		{
+			this._scrollPerc = 0.0f;
+			if (direction == ScrollDirection.HORIZONTAL) {
+				float width = this.GetComponent<RectTransform>().rect.width;
+                float containerWidth = container.GetComponent<RectTransform> ().rect.width;
+				this._scrollPerc = -container.transform.localPosition.y / (containerWidth - width);
+
+			} else if(direction == ScrollDirection.VERTICAL) {
+				
+                float height = this.GetComponent<RectTransform>().rect.height;
+                float containerHeight = container.GetComponent<RectTransform> ().rect.height;
+				this._scrollPerc = -container.transform.localPosition.y / (containerHeight - height);
+			}
+			if (onScrollingHandler!=null)
+				onScrollingHandler.Invoke (this._scrollPerc);
         }
 
         protected virtual void onScrollBegin()

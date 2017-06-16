@@ -29,33 +29,35 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
 
-[CustomLuaClass]
-public class LDragView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+namespace Lui
 {
-    public UnityAction<Vector2> onBeginDrag;
-    public UnityAction<Vector2> onDrag;
-    public UnityAction<Vector2> onEndDrag;
+    public class LDragView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+    {
+        public UnityAction<Vector2> onBeginDrag;
+        public UnityAction<Vector2> onDrag;
+        public UnityAction<Vector2> onEndDrag;
 
-    [DoNotToLua]
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        if(onBeginDrag!=null)
-            onBeginDrag.Invoke(eventData.position);
+        [LuaInterface.NoToLuaAttribute]
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if(onBeginDrag!=null)
+                onBeginDrag.Invoke(eventData.position);
+        }
+
+        [LuaInterface.NoToLuaAttribute]
+        public void OnDrag(PointerEventData eventData)
+        {
+            if(onDrag!=null)
+                onDrag.Invoke(eventData.position);
+        }
+
+        [LuaInterface.NoToLuaAttribute]
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            if(onEndDrag!=null)
+                onEndDrag.Invoke(eventData.position);
+        }
     }
-    [DoNotToLua]
-    public void OnDrag(PointerEventData eventData)
-    {
-        if(onDrag!=null)
-            onDrag.Invoke(eventData.position);
-    }
-    [DoNotToLua]
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if(onEndDrag!=null)
-            onEndDrag.Invoke(eventData.position);
-    }
+
 }
-
-

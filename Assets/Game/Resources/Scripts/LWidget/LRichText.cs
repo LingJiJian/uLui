@@ -28,7 +28,6 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
 
 namespace Lui
 {
@@ -190,7 +189,6 @@ namespace Lui
     /// <summary>
     /// 富文本
     /// </summary>
-    [CustomLuaClassAttribute]
     public class LRichText : MonoBehaviour, IPointerClickHandler
     {
         public RichAlignType alignType;
@@ -312,7 +310,7 @@ namespace Lui
                         TextGenerationSettings setting = new TextGenerationSettings();
                         setting.font = this.font;
                         setting.fontSize = elemText.fontSize;
-                        setting.lineSpacing = 1;
+                        setting.lineSpacing = 0;
                         setting.scaleFactor = 1;
                         setting.verticalOverflow = VerticalWrapMode.Overflow;
                         setting.horizontalOverflow = HorizontalWrapMode.Overflow;
@@ -333,7 +331,7 @@ namespace Lui
 					string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
 					string spname = System.IO.Path.GetFileName(rendElem.path);
 
-                    Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
+                    Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -350,7 +348,7 @@ namespace Lui
                     string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
                     string spname = System.IO.Path.GetFileName(rendElem.path);
 
-                    Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
+                    Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -359,6 +357,7 @@ namespace Lui
                 {
                     LRenderElement rendElem = new LRenderElement();
                     rendElem.isNewLine = true;
+                    rendElem.type = RichType.NEWLINE;
                     _elemRenderArr.Add(rendElem);
                 }
             }
@@ -615,7 +614,7 @@ namespace Lui
                         obj.SetActive(true);
                         obj.transform.SetParent(transform);
                         obj.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y /*+ realLineHeight*/);
-                        obj.transform.localScale = new Vector2(1, 1);
+                        obj.transform.localScale = new Vector3(1, 1,1);
                         _objectDataMap[obj] = elem.data;
                     }
                 }
@@ -645,6 +644,7 @@ namespace Lui
                 comText.fontSize = elem.fontSize;
                 comText.fontStyle = FontStyle.Normal;
                 comText.color = elem.color;
+                comText.lineSpacing = 0;
             }
 
             Outline outline = lab.GetComponent<Outline>();
@@ -671,7 +671,7 @@ namespace Lui
                 underImg.GetComponent<RectTransform>().sizeDelta = new Vector2(comText.preferredWidth, 1);
                 underLine.SetActive(true);
                 underLine.transform.SetParent(transform);
-                underLine.transform.localScale = new Vector2(1, 1);
+                underLine.transform.localScale = new Vector3(1, 1,1);
                 underLine.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y);
             }
         }
@@ -683,7 +683,7 @@ namespace Lui
             {
 				string atlas = System.IO.Path.GetDirectoryName(elem.path);
 				string spname = System.IO.Path.GetFileName(elem.path);
-                Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
+                Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
                 comImage.sprite = sp;
             }
         }
@@ -941,11 +941,11 @@ namespace Lui
                 {
                     this.insertElement(
                         param.ContainsKey("txt") ? param["txt"] : "",
-                        LUtil.StringToColor(param.ContainsKey("color") ? param["color"] : defaultLabColor),
+                        FXGame.Util.StringToColor(param.ContainsKey("color") ? param["color"] : defaultLabColor),
                         param.ContainsKey("size") ? System.Convert.ToInt32(param["size"]) : defaultLabSize,
                         param.ContainsKey("isUnderLine") ? System.Convert.ToBoolean(param["isUnderLine"]) : false,
                         param.ContainsKey("isOutLine") ? System.Convert.ToBoolean(param["isOutLine"]) : false,
-                        LUtil.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : "#000000"),
+                        FXGame.Util.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : "#000000"),
                         param.ContainsKey("data") ? param["data"] : ""
                         );
                 }else if(flag == "img")

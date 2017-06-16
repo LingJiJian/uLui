@@ -27,7 +27,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using SLua;
 
 namespace Lui
 {
@@ -47,17 +46,21 @@ namespace Lui
     /// <summary>
     /// 图集字
     /// </summary>
-    [CustomLuaClassAttribute]
     public class LLabelAtlas : MonoBehaviour
     {
         public string text;
         public string atlas;
+        public string prefix;
         private Sprite[] sprites;
         Dictionary<string, Sprite> _spriteMap;
         List<LCacheElement> _cacheImg;
+        public float lineSpacing;
+
+		public TextAlignment align;
 
         public LLabelAtlas()
         {
+			align = TextAlignment.Left;
             _cacheImg = new List<LCacheElement>();
             _spriteMap = new Dictionary<string, Sprite>();
         }
@@ -71,7 +74,7 @@ namespace Lui
         {
             if (text != "")
             {
-                sprites = LLoadBundle.GetInstance().GetSpritesByName(atlas,"");
+                sprites = FXGame.Managers.ResourceManager.Instance.GetSpritesByName(atlas,prefix);
                 loadTexture();
                 render();
             }
@@ -93,31 +96,64 @@ namespace Lui
             for (int i=0;i< _len; i++)
             {
                 _cacheImg[i].isUse = false;
-                _cacheImg[i].node.transform.SetParent(null);
+				_cacheImg [i].node.SetActive (false);
             }
 
             char[] chars = text.ToCharArray();
             int len = chars.Length;
-            float offsetX = 0.0f;
-            float offsetY = 0.0f;
+
+			float preWidth = 0;
+			float preHeight = 0;
+			List<Image> imgs = new List<Image> ();
             for (int i = 0; i < len; i++ )
             {
                 string key = chars[i].ToString();
-                if (_spriteMap.ContainsKey(key))
+				if (_spriteMap.ContainsKey(prefix+key))
                 {
                     GameObject img = getCacheImage();
                     Image imgCom = img.GetComponent<Image>();
-                    imgCom.sprite = _spriteMap[key];
+					imgCom.sprite = _spriteMap[prefix+key];
                     img.transform.SetParent(this.transform);
+					img.SetActive (true);
                     img.transform.localScale = new Vector3(1, 1, 1);
-                    img.transform.localPosition = new Vector2(offsetX, 0);
-                    offsetX += imgCom.sprite.textureRect.width;
-                    offsetY = Mathf.Max(imgCom.sprite.textureRect.height, offsetY);
+					float space = i == len - 1 ? 0 : lineSpacing;
+					preWidth += imgCom.sprite.textureRect.width + space;
+					imgs.Add (imgCom);
                 }
             }
-            RectTransform rtran = gameObject.GetComponent<RectTransform>();
-            rtran.pivot = Vector2.zero;
-            rtran.sizeDelta = new Vector2(offsetX, offsetY);
+           
+			float offsetX = 0;
+			RectTransform rtran = gameObject.GetComponent<RectTransform>();
+
+			if (align == TextAlignment.Left) {
+				for(int i =0;i<imgs.Count;i++){
+					Image img = imgs[i];
+					float space = i == imgs.Count - 1 ? 0 : lineSpacing;
+					img.transform.localPosition = new Vector2 (offsetX,0);
+					offsetX += img.sprite.textureRect.width + space; 
+					preHeight = Mathf.Max (img.sprite.textureRect.height, preHeight);
+				}
+				rtran.pivot = Vector2.zero;
+			} else if (align == TextAlignment.Center) {
+				for(int i =0;i<imgs.Count;i++){
+					Image img = imgs[i];
+					float space = i == imgs.Count - 1 ? 0 : lineSpacing;
+					img.transform.localPosition = new Vector2 (-preWidth / 2 + offsetX, 0);
+					offsetX += img.sprite.textureRect.width + space;
+					preHeight = Mathf.Max (img.sprite.textureRect.height, preHeight);
+				}
+				rtran.pivot = new Vector2(0.5f,0f);
+			} else if (align == TextAlignment.Right) {
+				for(int i =0;i<imgs.Count;i++){
+					Image img = imgs[i];
+					float space = i == imgs.Count - 1 ? 0 : lineSpacing;
+					img.transform.localPosition = new Vector2 (-preWidth + offsetX, 0);
+					offsetX += img.sprite.textureRect.width + space;
+					preHeight = Mathf.Max (img.sprite.textureRect.height, preHeight);
+				}
+				rtran.pivot = new Vector2(1f,0f);
+			}
+			rtran.sizeDelta = new Vector2(preWidth, preHeight);
         }
 
         protected GameObject getCacheImage()

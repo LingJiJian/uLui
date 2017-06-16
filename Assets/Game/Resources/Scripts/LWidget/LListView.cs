@@ -29,14 +29,27 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
 
 namespace Lui
 {
     /// <summary>
+    /// 列表项
+    /// </summary>
+    public class LListNode
+    {
+        public GameObject obj;
+        public int tpl_id;
+        public LListNode(GameObject obj, int tpl_id)
+        {
+            this.obj = obj;
+            this.tpl_id = tpl_id;
+        }
+    }
+
+
+    /// <summary>
     /// 列表
     /// </summary>
-    [CustomLuaClassAttribute]
     public class LListView : LScrollView
     {
         public static Vector2 HorizontalNodeAnchorPoint = Vector2.zero;
@@ -44,28 +57,43 @@ namespace Lui
 
         public int limitNum;
         protected float _layoutIndexSize;
-        public List<GameObject> nodeList { get; protected set; }
-        public List<GameObject> freeList { get; protected set; }
+        public List<LListNode> nodeList { get; protected set; }
+        public Dictionary<int, List<LListNode>> freeDic { get; protected set; }
 
         public LListView()
         {
             this.limitNum = 0;
             this._layoutIndexSize = 0;
             this.direction = ScrollDirection.VERTICAL;
-            this.nodeList = new List<GameObject>();
-            this.freeList = new List<GameObject>();
+            this.nodeList = new List<LListNode>();
+            this.freeDic = new Dictionary<int, List<LListNode>>();
         }
 
         public GameObject getNodeAtIndex(int idx)
         {
-            return nodeList[idx];
+			for (int i = 0; i < nodeList.Count; i++) {
+				if (i == idx) {
+					return nodeList [i].obj;
+				}
+			}
+            return null;
         }
 
-        public void insertNodeAtLast(GameObject node)
+        public int getIndexByObject(GameObject obj)
+        {
+            for (int i = 0; i < nodeList.Count; i++) {
+                if (obj == nodeList [i].obj) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public void insertNodeAtLast(GameObject node, int tpl_id)
         {
             if (node != null)
             {
-                nodeList.Add(node);
+                nodeList.Add(new LListNode(node,tpl_id));
             }
             else
             {
@@ -74,15 +102,14 @@ namespace Lui
             if (limitNum > 0)
             {
                 checkRecycleItem();
-                reloadData();
             }
         }
 
-        public void insertNodeAtFront(GameObject node)
+        public void insertNodeAtFront(GameObject node, int tpl_id)
         {
             if (node != null)
             {
-                nodeList.Insert(0,node);
+                nodeList.Insert(0, new LListNode(node, tpl_id));
             }
             else
             {
@@ -94,18 +121,17 @@ namespace Lui
             }
         }
 
-        public void insertNode(GameObject node,int idx)
+        public void insertNode(GameObject node, int tpl_id,int idx)
         {
             if (idx >= nodeList.Count)
             {
-                insertNodeAtLast(node);
+                insertNodeAtLast(node, tpl_id);
                 return;
             }
-            nodeList.Insert(idx, node);
+            nodeList.Insert(idx, new LListNode(node, tpl_id));
             if (limitNum > 0)
             {
                 checkRecycleItem();
-                reloadData();
             }
         }
 
@@ -114,6 +140,14 @@ namespace Lui
             if (nodeList.Count == 0)
             {
                 return;
+            }
+            if(limitNum > 0)
+            {
+                LListNode node = nodeList[idx];
+                pushFreePool(node);
+            }else
+            {
+                Object.Destroy(nodeList[idx].obj);
             }
             nodeList.RemoveAt(idx);
         }
@@ -124,8 +158,25 @@ namespace Lui
             {
                 return;
             }
-            Object.Destroy(node);
-            nodeList.Remove(node);
+
+            LListNode del = null;
+            foreach(LListNode elem in nodeList)
+            {
+                if(elem.obj == node)
+                {
+                    del = elem;
+                    nodeList.Remove(elem);
+                    break;
+                }
+            }
+            if(limitNum > 0)
+            {
+                pushFreePool(del);
+            }
+            else
+            {
+                Object.Destroy(node);
+            }
         }
 
         public void removeFrontNode()
@@ -134,7 +185,14 @@ namespace Lui
             {
                 return;
             }
-            Object.Destroy(nodeList[0]);
+
+            if (limitNum > 0)
+            {
+                pushFreePool(nodeList[0]);
+            }else
+            {
+                Object.Destroy(nodeList[0].obj);
+            }
             nodeList.RemoveAt(0);
         }
 
@@ -144,7 +202,14 @@ namespace Lui
             {
                 return;
             }
-            Object.Destroy(nodeList[nodeList.Count - 1]);
+            if (limitNum > 0)
+            {
+                pushFreePool(nodeList[nodeList.Count - 1]);
+            }
+            else
+            {
+                Object.Destroy(nodeList[nodeList.Count - 1].obj);
+            }    
             nodeList.RemoveAt(nodeList.Count - 1);
         }
 
@@ -156,7 +221,13 @@ namespace Lui
             }
             for (int i = 0; i < nodeList.Count; i++)
             {
-               Object.Destroy(nodeList[i]);
+                if(limitNum > 0)
+                {
+                    pushFreePool(nodeList[i]);
+                }else
+                {
+                    Object.Destroy(nodeList[i].obj);
+                }
             }
             nodeList.Clear();
         }
@@ -175,8 +246,10 @@ namespace Lui
                         GameObject obj = null;
                         for (int i = 0; i < nodeList.Count;i++ )
                         {
-                            obj = nodeList[i];
+                            obj = nodeList[i].obj;
                             obj.GetComponent<RectTransform>().pivot = HorizontalNodeAnchorPoint;
+                            obj.transform.SetParent(container.transform);
+                            obj.transform.localScale = new Vector3(1, 1,1);
                             obj.transform.localPosition = new Vector2(_layoutIndexSize, 0);
                             _layoutIndexSize += obj.GetComponent<RectTransform>().rect.width;
                         }
@@ -188,7 +261,7 @@ namespace Lui
                         GameObject obj = null;
                         for (int i = 0; i < nodeList.Count; i++)
                         {
-                            obj = nodeList[i];
+                            obj = nodeList[i].obj;
                             allNodesSize += obj.GetComponent<RectTransform>().rect.height;
                         }
 
@@ -199,7 +272,7 @@ namespace Lui
 
                         for (int i = 0; i < nodeList.Count; i++)
                         {
-                            obj = nodeList[i];
+                            obj = nodeList[i].obj;
                             allNodesSize -= obj.GetComponent<RectTransform>().rect.height;
                             obj.GetComponent<RectTransform>().pivot = VerticalNodeAnchorPoint;
                             obj.transform.SetParent(container.transform);
@@ -240,36 +313,84 @@ namespace Lui
             relocateContainer();
         }
 
+        protected override void onScrolling()
+        {
+            base.onScrolling();
+
+            Vector2 worldPos = transform.position;
+            Rect rect = transform.GetComponent<RectTransform>().rect;
+            float resolution = Screen.height / 720.0f;
+
+            foreach(LListNode node in nodeList)
+            {
+                if(node.obj.transform.position.y < worldPos.y - 300 * resolution ||
+                    node.obj.transform.position.y > worldPos.y + rect.height + 300 * resolution)
+                {
+                    node.obj.SetActive(false);
+                }else
+                {
+                    node.obj.SetActive(true);
+                }
+            }
+        }
+
+		public void scrollToCell (GameObject cell,float duration)
+		{
+			Vector2 cellPos = cell.transform.localPosition;
+			if (direction == ScrollDirection.HORIZONTAL) {
+				cellPos = new Vector2 (cellPos.x * -1, 0); 
+			} else if (direction == ScrollDirection.VERTICAL) {
+				cellPos = new Vector2 (0, cellPos.y * -1); 
+			}
+			setContentOffsetInDuration(cellPos,duration);
+		}
+
         protected void checkRecycleItem()
         {
             if (limitNum > 0)
             {
-                if (nodeList.Count >= limitNum)
+                if (nodeList.Count > limitNum)
                 {
+                    int count = nodeList.Count - limitNum;
                     GameObject obj = null;
-                    for (int i = 0; i < nodeList.Count - limitNum; i++)
-                    {
-                        obj = nodeList[i];
-                        nodeList.Remove(obj);
-                        freeList.Add(obj);
-                        obj.SetActive(false);
+                    for(int i=0;i<count;i++){
+                        removeFrontNode();
                     }
                 }
             }
         }
 
+        private void pushFreePool(LListNode node)
+        {
+            if (!freeDic.ContainsKey(node.tpl_id))
+                freeDic.Add(node.tpl_id, new List<LListNode>());
+
+            freeDic[node.tpl_id].Add(node);
+            node.obj.SetActive(false);
+        }
+
+        private LListNode popFreePool(int id)
+        {
+            if (!freeDic.ContainsKey(id))
+                freeDic.Add(id, new List<LListNode>());
+            LListNode node = null;
+
+            if (freeDic[id].Count > 0) {
+                node = freeDic[id][0];
+                freeDic[id].RemoveAt(0);
+                node.obj.SetActive(true);
+            }
+            return node;
+        }
+
         public GameObject dequeueItem(int id)
         {
             GameObject ret = null;
-            if (limitNum > 0)
-            {
-                if (freeList.Count > 0)
-                {
-                    ret = freeList[0];
-                    ret.SetActive(true);
-                    freeList.RemoveAt(0);
-                }
+            if(limitNum > 0){
+                LListNode node = popFreePool(id);
+                if (node != null) ret = node.obj;
             }
+
             if (ret == null)
             {
                 ret = Instantiate(transform.Find("container/cell_tpl"+id).gameObject);

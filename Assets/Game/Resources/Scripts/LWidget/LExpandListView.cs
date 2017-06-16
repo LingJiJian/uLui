@@ -29,12 +29,14 @@ using System.Collections.Generic;
 
 namespace Lui
 {
-    [SLua.CustomLuaClass]
     public class LExpandListView : LScrollView
     {
         protected List<LExpandNode> _expandableNodeList;
         public int nodeNum;
         public int nodeItemNum;
+
+        public GameObject cell_tpl;
+        public GameObject cell_sub_tpl;
 
         public LExpandListView()
         {
@@ -214,9 +216,13 @@ namespace Lui
         {
             if (nodeNum > 0)
             {
-                GameObject cell_tpl = transform.Find("container/cell_tpl").gameObject;
+                if (cell_tpl == null) { 
+                    cell_tpl = transform.Find("container/cell_tpl").gameObject;
+                }
+                if (cell_sub_tpl == null){
+                    cell_sub_tpl = transform.Find("container/cell_sub_tpl").gameObject;
+                }
                 cell_tpl.SetActive(false);
-                GameObject cell_sub_tpl = transform.Find("container/cell_sub_tpl").gameObject;
                 cell_sub_tpl.SetActive(false);
                 
                 for (int i = 0; i < nodeNum; i++)

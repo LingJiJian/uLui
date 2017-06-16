@@ -30,7 +30,6 @@ using System.Security;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using SLua;
 
 namespace Lui
 {
@@ -52,7 +51,6 @@ namespace Lui
     /// <summary>
     /// 网格翻页
     /// </summary>
-    [CustomLuaClassAttribute]
     public class LGridPageView : LTableView
     {
         public int gridCellsCount;
@@ -243,7 +241,10 @@ namespace Lui
             if (cell == null)
             {
                 cell = new LGridPageViewCell();
-                cell.node = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
+                if (cell_tpl != null)
+                    cell.node = (GameObject)Instantiate(cell_tpl);
+                else
+                    cell.node = (GameObject)Instantiate(transform.Find("container/cell_tpl").gameObject);
             }
             cell.node.SetActive(idx != LScrollView.INVALID_INDEX);
 

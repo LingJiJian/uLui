@@ -28,14 +28,12 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Collections;
-using SLua;
 
 namespace Lui
 {
     /// <summary>
     /// 按钮
     /// </summary>
-    [CustomLuaClassAttribute]
     public class LButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,IPointerExitHandler
     {
         public const float LONGPRESS_TIME = 0.5f;
@@ -51,9 +49,10 @@ namespace Lui
             _isRunning = false;
         }
 
+        [LuaInterface.NoToLua]
         public void OnPointerDown(PointerEventData eventData)
         {
-            _isRunning = true;
+            
             Invoke("executeLongClickHandler", LONGPRESS_TIME);
             if (onPointerDown != null)
             {
@@ -61,6 +60,7 @@ namespace Lui
             }
         }
 
+        [LuaInterface.NoToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
             _isRunning = false;
@@ -71,6 +71,7 @@ namespace Lui
             }
         }
 
+        [LuaInterface.NoToLua]
         public void OnPointerExit(PointerEventData eventData)
         {
             _isRunning = false;
@@ -83,12 +84,13 @@ namespace Lui
 
         protected void executeLongClickHandler()
         {
+            _isRunning = true;
             if (onLongClickHandler != null)
             {
                 onLongClickHandler.Invoke();
             }
         }
-
+        
         void Update()
         {
             if (_isRunning && onLongClickUpdate != null)

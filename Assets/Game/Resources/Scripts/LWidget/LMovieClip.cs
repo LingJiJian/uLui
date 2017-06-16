@@ -27,14 +27,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using SLua;
 
 namespace Lui
 {
     /// <summary>
     /// 序列帧动画
     /// </summary>
-    [CustomLuaClassAttribute]
 	public class LMovieClip : MonoBehaviour
     {
         public float fps = 15f;
@@ -63,31 +61,32 @@ namespace Lui
 
 		public void loadTexture()
 		{
-            //load textures
-            string atlasPath = System.IO.Path.GetDirectoryName(path);
-            string assetName = System.IO.Path.GetFileNameWithoutExtension(path);
-            
-            Sprite[] sprites = LLoadBundle.GetInstance().GetSpritesByName(atlasPath, assetName);
-            Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
-            int len = sprites.Length;
-            for (int i=0;i< len;i++)
-            {
-                Sprite s = sprites[i];
-                if (s.name.StartsWith(assetName))
-                {
-                    dic.Add(s.name, s);
-                }
-            }
-            int idx = 1;
-            List<Sprite> list = new List<Sprite>();
-            while (dic.ContainsKey(assetName + idx.ToString("D2")))
-            {
-                list.Add(dic[assetName + idx.ToString("D2")]);
-                idx++;
-            }
-            _frameLenght = list.Count;
-            _spriteArr = list.ToArray();
-
+			//if (_spriteArr == null) {
+	            //load textures
+	            string atlasPath = System.IO.Path.GetDirectoryName(path);
+	            string assetName = System.IO.Path.GetFileNameWithoutExtension(path);
+	            Sprite[] sprites = FXGame.Managers.ResourceManager.Instance.GetSpritesByName(atlasPath, assetName);
+	            Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
+	            int len = sprites.Length;
+	            for (int i=0;i< len;i++)
+	            {
+	                Sprite s = sprites[i];
+	                if (s.name.StartsWith(assetName))
+	                {
+	                    dic.Add(s.name, s);
+	                }
+	            }
+	            int idx = 1;
+	            List<Sprite> list = new List<Sprite>();
+	            while (dic.ContainsKey(assetName + idx.ToString("D2")))
+	            {
+	                list.Add(dic[assetName + idx.ToString("D2")]);
+	                idx++;
+	            }
+	            _frameLenght = list.Count;
+	            _spriteArr = list.ToArray();
+				_currentIndex = 0;
+			//}
         }
 
         void Update()

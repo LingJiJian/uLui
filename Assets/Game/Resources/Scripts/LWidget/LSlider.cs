@@ -24,57 +24,61 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-[SLua.CustomLuaClass]
-public class LSlider : LProgress, IDragHandler,IPointerDownHandler,IPointerUpHandler
+namespace Lui
 {
-
-    public Image block;
-    
-    public UnityAction<PointerEventData> onPointerDownHandle;
-    public UnityAction<PointerEventData> onPointerUpHandle;
-
-    void Start()
+    public class LSlider : LProgress, IDragHandler,IPointerDownHandler,IPointerUpHandler
     {
-        _width = GetComponent<RectTransform>().rect.width;
-        _height = GetComponent<RectTransform>().rect.height;
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        Vector3 point = validSlidePoint(transform.InverseTransformPoint(eventData.position));
+        public Image block;
+        
+        public UnityAction<PointerEventData> onPointerDownHandle;
+        public UnityAction<PointerEventData> onPointerUpHandle;
+        public UnityAction onValueChangeHandle;
 
-        if (onProgress != null)
-            onProgress.Invoke();
-
-        setValue((point.x + _width / 2) / _width * maxValue);
-    }
-
-    [SLua.DoNotToLua]
-    public void OnPointerDown(PointerEventData data)
-    {
-        if (onPointerDownHandle != null)
+        void Start()
         {
-            onPointerDownHandle.Invoke(data);
+            _width = GetComponent<RectTransform>().rect.width;
+            _height = GetComponent<RectTransform>().rect.height;
         }
-    }
 
-    [SLua.DoNotToLua]
-    public void OnPointerUp(PointerEventData data)
-    {
-        if (onPointerUpHandle != null)
+        public void OnDrag(PointerEventData eventData)
         {
-            onPointerUpHandle.Invoke(data);
+            Vector3 point = validSlidePoint(transform.InverseTransformPoint(eventData.position));
+
+            if (onProgress != null)
+                onProgress.Invoke();
+
+            setValue((point.x + _width / 2) / _width * maxValue);
         }
-    }
 
-    private Vector3 validSlidePoint(Vector2 point)
-    {
-        return new Vector3(Mathf.Max(-_width / 2, Mathf.Min(_width / 2, point.x)), 0.0f, 0.0f);
-    }
+        public void OnPointerDown(PointerEventData data)
+        {
+            if (onPointerDownHandle != null)
+            {
+                onPointerDownHandle.Invoke(data);
+            }
+        }
 
-    public void setValue(float value)
-    {
-        base.setValue(value);
-        block.transform.localPosition = validSlidePoint(new Vector2(-_width/2 + _width * getPercentage(),0));
+        public void OnPointerUp(PointerEventData data)
+        {
+            if (onPointerUpHandle != null)
+            {
+                onPointerUpHandle.Invoke(data);
+            }
+        }
+
+        private Vector3 validSlidePoint(Vector2 point)
+        {
+            return new Vector3(Mathf.Max(-_width / 2, Mathf.Min(_width / 2, point.x)), 0.0f, 0.0f);
+        }
+
+        public void setValue(float value)
+        {
+            base.setValue(value);
+            block.transform.localPosition = validSlidePoint(new Vector2(-_width/2 + _width * getPercentage(),0));
+
+            if(onValueChangeHandle!=null)
+                onValueChangeHandle.Invoke();
+        }
     }
 }
