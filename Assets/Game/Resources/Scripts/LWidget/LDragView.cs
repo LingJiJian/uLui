@@ -38,21 +38,21 @@ namespace Lui
         public UnityAction<Vector2> onDrag;
         public UnityAction<Vector2> onEndDrag;
 
-        [LuaInterface.NoToLuaAttribute]
+        [SLua.DoNotToLua]
         public void OnBeginDrag(PointerEventData eventData)
         {
             if(onBeginDrag!=null)
                 onBeginDrag.Invoke(eventData.position);
         }
 
-        [LuaInterface.NoToLuaAttribute]
+        [SLua.DoNotToLua]
         public void OnDrag(PointerEventData eventData)
         {
             if(onDrag!=null)
                 onDrag.Invoke(eventData.position);
         }
 
-        [LuaInterface.NoToLuaAttribute]
+        [SLua.DoNotToLua]
         public void OnEndDrag(PointerEventData eventData)
         {
             if(onEndDrag!=null)

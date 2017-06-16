@@ -148,7 +148,7 @@ namespace Lui
             }
         }
 
-        [LuaInterface.NoToLua]
+        [SLua.DoNotToLua]
         public void OnBeginDrag(PointerEventData eventData)
         {
             Vector2 point = transform.InverseTransformPoint(eventData.position);
@@ -168,7 +168,7 @@ namespace Lui
             }
         }
 
-        [LuaInterface.NoToLua]
+        [SLua.DoNotToLua]
         public void OnDrag(PointerEventData eventData)
         {
             if (pickEnable && _isPicking)
@@ -217,7 +217,7 @@ namespace Lui
             }
         }
 
-        [LuaInterface.NoToLua]
+        [SLua.DoNotToLua]
         public void OnEndDrag(PointerEventData eventData)
         {
             if (dragable)

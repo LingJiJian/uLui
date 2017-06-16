@@ -108,7 +108,7 @@ public class Firstui : MonoBehaviour
             GameObject item = listView.dequeueItem(1);
             item.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 40 + Random.Range(0, 40));
             item.GetComponent<Text>().text = i.ToString();
-            listView.insertNodeAtLast(item);
+            listView.insertNodeAtLast(item,1);
         }
         listView.reloadData();
 

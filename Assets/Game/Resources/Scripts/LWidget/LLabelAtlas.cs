@@ -74,7 +74,7 @@ namespace Lui
         {
             if (text != "")
             {
-                sprites = FXGame.Managers.ResourceManager.Instance.GetSpritesByName(atlas,prefix);
+				sprites = LLoadBundle.GetInstance().GetSpritesByName(atlas,prefix);
                 loadTexture();
                 render();
             }

@@ -65,7 +65,7 @@ namespace Lui
 	            //load textures
 	            string atlasPath = System.IO.Path.GetDirectoryName(path);
 	            string assetName = System.IO.Path.GetFileNameWithoutExtension(path);
-	            Sprite[] sprites = FXGame.Managers.ResourceManager.Instance.GetSpritesByName(atlasPath, assetName);
+			Sprite[] sprites = LLoadBundle.GetInstance().GetSpritesByName(atlasPath, assetName);
 	            Dictionary<string, Sprite> dic = new Dictionary<string, Sprite>();
 	            int len = sprites.Length;
 	            for (int i=0;i< len;i++)

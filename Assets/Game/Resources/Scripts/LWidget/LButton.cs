@@ -49,7 +49,7 @@ namespace Lui
             _isRunning = false;
         }
 
-        [LuaInterface.NoToLua]
+		[SLua.DoNotToLua]
         public void OnPointerDown(PointerEventData eventData)
         {
             
@@ -60,7 +60,7 @@ namespace Lui
             }
         }
 
-        [LuaInterface.NoToLua]
+		[SLua.DoNotToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
             _isRunning = false;
@@ -71,7 +71,7 @@ namespace Lui
             }
         }
 
-        [LuaInterface.NoToLua]
+		[SLua.DoNotToLua]
         public void OnPointerExit(PointerEventData eventData)
         {
             _isRunning = false;

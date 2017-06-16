@@ -63,7 +63,7 @@ namespace Lui
             this.relocateWithAnimation = true;
         }
 
-        [LuaInterface.NoToLua]
+		[SLua.DoNotToLua]
         public void OnPointerDown(PointerEventData eventData)
         {
             stopAnimateUpdate();
@@ -85,7 +85,7 @@ namespace Lui
 			}
         }
 
-        [LuaInterface.NoToLua]
+        [SLua.DoNotToLua]
         public void OnDrag(PointerEventData eventData)
         {
             if (joyStick)
@@ -126,7 +126,7 @@ namespace Lui
             onExecuteEventHandle(false);
         }
 
-        [LuaInterface.NoToLua]
+        [SLua.DoNotToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
 			_isDraging = false;

@@ -46,7 +46,7 @@ namespace Lui
         {
         }
 
-        [LuaInterface.NoToLua]
+        [SLua.DoNotToLua]
         public void OnPointerDown(PointerEventData eventData)
         {
             _lastPoint = eventData.position;
@@ -60,7 +60,7 @@ namespace Lui
             }
         }
 
-        [LuaInterface.NoToLua]
+        [SLua.DoNotToLua]
         public void OnDrag(PointerEventData eventData)
         {
             Vector2 offset = eventData.position - _lastPoint;
@@ -73,7 +73,7 @@ namespace Lui
             }
         }
 
-        [LuaInterface.NoToLua]
+        [SLua.DoNotToLua]
         public void OnPointerUp(PointerEventData eventData)
         {
             Vector3 worldPos = Vector3.zero;
