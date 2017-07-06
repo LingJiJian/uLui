@@ -41,6 +41,7 @@ namespace Lui
     /// <summary>
     /// 滑块
     /// </summary>
+    [SLua.CustomLuaClass]
     public class LScrollView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public static int INVALID_INDEX = -1;

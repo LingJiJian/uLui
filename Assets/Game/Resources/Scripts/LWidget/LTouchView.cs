@@ -31,6 +31,7 @@ using UnityEngine.UI;
 
 namespace Lui
 {
+    [SLua.CustomLuaClass]
     public class LTouchView : MonoBehaviour , IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         public UnityAction<Vector2> onMoveBeginHandler;

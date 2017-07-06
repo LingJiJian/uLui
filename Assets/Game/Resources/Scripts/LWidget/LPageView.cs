@@ -35,6 +35,7 @@ namespace Lui
     /// <summary>
     /// 翻页
     /// </summary>
+    [SLua.CustomLuaClass]
     public class LPageView : LTableView
     {
         public int pageIndex { get; protected set; }

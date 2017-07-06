@@ -31,7 +31,8 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Lui
-{
+{   
+    [SLua.CustomLuaClass]
     public class LDragView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public UnityAction<Vector2> onBeginDrag;

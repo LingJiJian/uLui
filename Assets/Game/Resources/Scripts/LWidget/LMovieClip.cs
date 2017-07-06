@@ -33,6 +33,7 @@ namespace Lui
     /// <summary>
     /// 序列帧动画
     /// </summary>
+    [SLua.CustomLuaClass]
 	public class LMovieClip : MonoBehaviour
     {
         public float fps = 15f;

@@ -46,6 +46,7 @@ namespace Lui
     /// <summary>
     /// 图集字
     /// </summary>
+    [SLua.CustomLuaClass]
     public class LLabelAtlas : MonoBehaviour
     {
         public string text;

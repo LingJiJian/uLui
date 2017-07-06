@@ -61,6 +61,7 @@ namespace Lui
     /// <summary>
     /// 复用列表
     /// </summary>
+    [SLua.CustomLuaClass]
     public class LTableView : LScrollView
     {
         public int cellsCount;

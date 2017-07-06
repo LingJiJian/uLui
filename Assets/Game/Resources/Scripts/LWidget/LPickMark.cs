@@ -33,6 +33,7 @@ using UnityEngine.EventSystems;
 
 namespace Lui
 {
+	[SLua.CustomLuaClass]
 	public class LPickMark : MonoBehaviour,IPointerDownHandler {
 
 	    public Lui.LTableView tableView;

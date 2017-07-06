@@ -33,6 +33,7 @@ namespace Lui
     /// <summary>
     /// 摇杆
     /// </summary>
+    [SLua.CustomLuaClass]
     public class LControlView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         public float MOVE_TIME = 0.5f;

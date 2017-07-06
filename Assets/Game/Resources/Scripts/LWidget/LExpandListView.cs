@@ -29,6 +29,7 @@ using System.Collections.Generic;
 
 namespace Lui
 {
+    [SLua.CustomLuaClass]
     public class LExpandListView : LScrollView
     {
         protected List<LExpandNode> _expandableNodeList;

@@ -51,6 +51,7 @@ namespace Lui
     /// <summary>
     /// 网格翻页
     /// </summary>
+    [SLua.CustomLuaClass]
     public class LGridPageView : LTableView
     {
         public int gridCellsCount;

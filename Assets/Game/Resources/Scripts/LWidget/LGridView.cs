@@ -42,6 +42,7 @@ namespace Lui
     /// <summary>
     /// 网格
     /// </summary>
+    [SLua.CustomLuaClass]
     public class LGridView : LScrollView
     {
         public Vector2 cellsSize;

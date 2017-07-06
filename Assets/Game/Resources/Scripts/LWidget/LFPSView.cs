@@ -28,6 +28,7 @@ using UnityEngine.UI;
 using UnityEngine.Profiling;
 using System.Collections;
 
+[SLua.CustomLuaClass]
 public class LFPSView : MonoBehaviour
 {
 	private static LFPSView _instance;
