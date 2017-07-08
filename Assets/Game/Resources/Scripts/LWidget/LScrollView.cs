@@ -42,12 +42,13 @@ namespace Lui
     /// 滑块
     /// </summary>
     [SLua.CustomLuaClass]
-    public class LScrollView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+	public class LScrollView : MonoBehaviour, IPointerUpHandler, IDragHandler , IPointerDownHandler
     {
         public static int INVALID_INDEX = -1;
         public static float RELOCATE_DURATION = 0.2f;
-        public static float AUTO_RELOCATE_SPPED = 600.0f;
-        public static float INERTANCE_SPEED = 0.8f;
+        public static float AUTO_RELOCATE_SPPED = 100.0f;
+        public static float INERTANCE_SPEED = 0.96f;
+		public static float RESISTANCE_SPEED = 0.6f;
         protected float autoRelocateSpeed;
         
         public bool bounceable;
@@ -62,6 +63,8 @@ namespace Lui
         public bool pickEnable;
 		public bool inertanceEnable;
 		private float _scrollPerc;
+		private bool _isInertanceFinish;
+		private bool _isDraging;
         [HideInInspector]
         public GameObject curPickObj;
 
@@ -134,29 +137,52 @@ namespace Lui
 		
 		public void Update()
         {
+			if (_isDraging) return;
             if (inertanceEnable)
             {
                 Vector2 offset = getContentOffset() + scrollDistance;
                 if (validateOffset(ref offset)){
-                    return;
-                }
+					if (Mathf.Abs (scrollDistance.x) >= 1f || Mathf.Abs (scrollDistance.y) >= 1f) {
+						scrollDistance *= RESISTANCE_SPEED;
+						setContentOffset (getContentOffset () + scrollDistance);
 
-                if (Mathf.Abs(scrollDistance.x) > 0.1f || Mathf.Abs(scrollDistance.y) > 0.1f)
-                {
-                    scrollDistance *= INERTANCE_SPEED;
-                    setContentOffset(getContentOffset() + scrollDistance);
-                }
+						_isInertanceFinish = false;
+
+					} else {
+						if (!_isInertanceFinish) {
+							_isInertanceFinish = true;
+
+							relocateContainerWithoutCheck(offset);
+						}
+					}
+				}else{
+					if (Mathf.Abs (scrollDistance.x) >= 1f || Mathf.Abs (scrollDistance.y) >= 1f) {
+						scrollDistance *= INERTANCE_SPEED;
+						setContentOffset (getContentOffset () + scrollDistance);
+
+						_isInertanceFinish = false;
+
+					} else {
+						if (!_isInertanceFinish) {
+							_isInertanceFinish = true;
+
+							onDraggingScrollEnded ();
+						}
+					}
+				}
             }
         }
-
-        [SLua.DoNotToLua]
-        public void OnBeginDrag(PointerEventData eventData)
+			
+		[SLua.DoNotToLua] 
+		public void OnPointerDown(PointerEventData eventData)
         {
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {
                 lastMovePoint = point;
-                
+
+				scrollDistance = Vector2.zero;
+				_isDraging = true;
                 LeanTween.cancel(container);
                 
                 onScrollBegin();
@@ -220,10 +246,12 @@ namespace Lui
         }
 
         [SLua.DoNotToLua]
-        public void OnEndDrag(PointerEventData eventData)
+		public void OnPointerUp(PointerEventData eventData)
         {
             if (dragable)
             {
+				_isDraging = false;
+
                 Vector2 offset = getContentOffset();
                 if (validateOffset(ref offset))
                 {
@@ -231,7 +259,8 @@ namespace Lui
                 }
                 else
                 {
-                    onDraggingScrollEnded();
+					if(!inertanceEnable)
+                    	onDraggingScrollEnded();
                 }
             }
 
@@ -262,7 +291,6 @@ namespace Lui
 
         protected void setContentOffsetEaseInWithoutCheck(Vector2 offset, float duration)
         {
-            
             LeanTween.cancel(container);
             LeanTween.moveLocal(container, offset, duration)
                 .setEase(LeanTweenType.easeInQuad)
