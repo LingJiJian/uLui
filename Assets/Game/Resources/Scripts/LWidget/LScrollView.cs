@@ -42,13 +42,13 @@ namespace Lui
     /// 滑块
     /// </summary>
     [SLua.CustomLuaClass]
-	public class LScrollView : MonoBehaviour, IPointerUpHandler, IDragHandler , IPointerDownHandler
+	public class LScrollView : MonoBehaviour, IBeginDragHandler, IDragHandler , IEndDragHandler
     {
         public static int INVALID_INDEX = -1;
         public static float RELOCATE_DURATION = 0.2f;
         public static float AUTO_RELOCATE_SPPED = 100.0f;
         public static float INERTANCE_SPEED = 0.96f;
-		public static float RESISTANCE_SPEED = 0.6f;
+		public static float RESISTANCE_SPEED = 0.8f;
         protected float autoRelocateSpeed;
         
         public bool bounceable;
@@ -65,6 +65,7 @@ namespace Lui
 		private float _scrollPerc;
 		private bool _isInertanceFinish;
 		private bool _isDraging;
+		private bool _hasDragBegin;
         [HideInInspector]
         public GameObject curPickObj;
 
@@ -135,8 +136,11 @@ namespace Lui
             }
         }
 		
+        [SLua.DoNotToLua]
 		public void Update()
         {
+			if (_hasDragBegin == false)
+				return;
 			if (_isDraging) return;
             if (inertanceEnable)
             {
@@ -173,9 +177,12 @@ namespace Lui
             }
         }
 			
-		[SLua.DoNotToLua] 
-		public void OnPointerDown(PointerEventData eventData)
+		[SLua.DoNotToLua]
+		public void OnBeginDrag(PointerEventData eventData)
         {
+            if(_isDraging) return;
+			_hasDragBegin = true;
+
             Vector2 point = transform.InverseTransformPoint(eventData.position);
             if (dragable)
             {
@@ -246,7 +253,7 @@ namespace Lui
         }
 
         [SLua.DoNotToLua]
-		public void OnPointerUp(PointerEventData eventData)
+		public void OnEndDrag(PointerEventData eventData)
         {
             if (dragable)
             {
