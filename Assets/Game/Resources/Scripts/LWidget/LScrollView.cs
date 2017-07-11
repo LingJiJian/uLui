@@ -322,15 +322,15 @@ namespace Lui
 				validateOffset (ref offset);
 			}
             //LeanTween.cancel(container);
-			onScrolling();
+			
 			container.transform.localPosition = offset;
+            onScrolling();
         }
 
         public void setContentOffsetWithoutCheck(Vector2 offset)
         {
-			onScrolling();
             container.transform.localPosition = offset;
-            
+            onScrolling();
         }
 
         public void setContentOffsetToTop()
