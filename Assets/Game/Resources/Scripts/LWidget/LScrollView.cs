@@ -41,7 +41,6 @@ namespace Lui
     /// <summary>
     /// 滑块
     /// </summary>
-    [SLua.CustomLuaClass]
 	public class LScrollView : MonoBehaviour, IBeginDragHandler, IDragHandler , IEndDragHandler
     {
         public static int INVALID_INDEX = -1;
@@ -136,7 +135,6 @@ namespace Lui
             }
         }
 		
-        [SLua.DoNotToLua]
 		public void Update()
         {
 			if (_hasDragBegin == false)
@@ -148,7 +146,7 @@ namespace Lui
                 if (validateOffset(ref offset)){
 					if (Mathf.Abs (scrollDistance.x) >= 1f || Mathf.Abs (scrollDistance.y) >= 1f) {
 						scrollDistance *= RESISTANCE_SPEED;
-						setContentOffset (getContentOffset () + scrollDistance);
+						setContentOffsetWithoutCheck (getContentOffset () + scrollDistance);
 
 						_isInertanceFinish = false;
 
@@ -162,7 +160,7 @@ namespace Lui
 				}else{
 					if (Mathf.Abs (scrollDistance.x) >= 1f || Mathf.Abs (scrollDistance.y) >= 1f) {
 						scrollDistance *= INERTANCE_SPEED;
-						setContentOffset (getContentOffset () + scrollDistance);
+						setContentOffsetWithoutCheck (getContentOffset () + scrollDistance);
 
 						_isInertanceFinish = false;
 
@@ -177,7 +175,7 @@ namespace Lui
             }
         }
 			
-		[SLua.DoNotToLua]
+		
 		public void OnBeginDrag(PointerEventData eventData)
         {
             if(_isDraging) return;
@@ -202,7 +200,7 @@ namespace Lui
             }
         }
 
-        [SLua.DoNotToLua]
+        
         public void OnDrag(PointerEventData eventData)
         {
             if (pickEnable && _isPicking)
@@ -248,11 +246,11 @@ namespace Lui
 						scrollDistance.x *= 0.2f;
 					}
 				}
-                setContentOffset(getContentOffset() + scrollDistance);
+                setContentOffsetWithoutCheck(getContentOffset() + scrollDistance);
             }
         }
 
-        [SLua.DoNotToLua]
+        
 		public void OnEndDrag(PointerEventData eventData)
         {
             if (dragable)
@@ -309,22 +307,17 @@ namespace Lui
 
         protected void setContentOffsetEaseIn(Vector2 offset, float duration, float rate)
         {
-            if (!bounceable)
-            {
-                validateOffset(ref offset);
-            }
+            validateOffset(ref offset);
+            
             setContentOffsetEaseInWithoutCheck(offset, duration);
         }
 
         public void setContentOffset(Vector2 offset)
         {
-			if (!bounceable) {
-				validateOffset (ref offset);
-			}
-            //LeanTween.cancel(container);
-			
-			container.transform.localPosition = offset;
-            onScrolling();
+			validateOffset (ref offset);
+
+            container.transform.localPosition = offset;
+			onScrolling();
         }
 
         public void setContentOffsetWithoutCheck(Vector2 offset)
@@ -445,13 +438,13 @@ namespace Lui
 			if (direction == ScrollDirection.HORIZONTAL) {
 				float width = this.GetComponent<RectTransform>().rect.width;
                 float containerWidth = container.GetComponent<RectTransform> ().rect.width;
-				this._scrollPerc = containerWidth - width == 0 ? 1 : -container.transform.localPosition.y / (containerWidth - width);
+				this._scrollPerc = containerWidth - width == 0 ? 0 : -container.transform.localPosition.y / (containerWidth - width);
 
 			} else if(direction == ScrollDirection.VERTICAL) {
 				
                 float height = this.GetComponent<RectTransform>().rect.height;
                 float containerHeight = container.GetComponent<RectTransform> ().rect.height;
-				this._scrollPerc = containerHeight - height == 0 ? 1 : -container.transform.localPosition.y / (containerHeight - height);
+				this._scrollPerc = containerHeight - height == 0 ? 0 : -container.transform.localPosition.y / (containerHeight - height);
 			}
 			if (onScrollingHandler!=null)
 				onScrollingHandler.Invoke (this._scrollPerc);
