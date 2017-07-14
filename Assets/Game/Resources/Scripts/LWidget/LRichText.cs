@@ -210,6 +210,7 @@ namespace Lui
         //custom content parser setting
         public int defaultLabSize = 20;
         public string defaultLabColor = "#ff00ff";
+        public bool raycastTarget = false;
 
         public void removeAllElements()
         {
@@ -332,7 +333,7 @@ namespace Lui
 					string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
 					string spname = System.IO.Path.GetFileName(rendElem.path);
 
-					Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
+                    Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -349,7 +350,7 @@ namespace Lui
                     string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
                     string spname = System.IO.Path.GetFileName(rendElem.path);
 
-					Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
+                    Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -565,7 +566,7 @@ namespace Lui
                 int _len3 = _lines.Count;
                 for (int _i=0;_i< _len3; _i++)
                 {
-                    _lineHeight = Mathf.Max(_lineHeight, _lines[_i].height);
+                    _lineHeight = Mathf.Max(this.verticalSpace,Mathf.Max(_lineHeight, _lines[_i].height));
                 }
 
                 realLineHeight += _lineHeight;
@@ -646,6 +647,7 @@ namespace Lui
                 comText.fontStyle = FontStyle.Normal;
                 comText.color = elem.color;
                 comText.lineSpacing = 0;
+                comText.raycastTarget = this.raycastTarget;
             }
 
             Outline outline = lab.GetComponent<Outline>();
@@ -674,6 +676,7 @@ namespace Lui
                 underLine.transform.SetParent(transform);
                 underLine.transform.localScale = new Vector3(1, 1,1);
                 underLine.transform.localPosition = new Vector2(elem.pos.x, elem.pos.y);
+                comText.raycastTarget = true;
             }
         }
 
@@ -684,8 +687,9 @@ namespace Lui
             {
 				string atlas = System.IO.Path.GetDirectoryName(elem.path);
 				string spname = System.IO.Path.GetFileName(elem.path);
-				Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
+                Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
                 comImage.sprite = sp;
+                comImage.raycastTarget = this.raycastTarget;
             }
         }
 
@@ -698,6 +702,7 @@ namespace Lui
                 comFram.fps = elem.fs;
                 comFram.loadTexture();
                 comFram.play();
+                comFram.GetComponent<Image>().raycastTarget = this.raycastTarget;
             }
         }
 
@@ -810,15 +815,20 @@ namespace Lui
         protected bool isChinese(string text)
         {
             bool hasChinese = false;
-            char[] c = text.ToCharArray();
-            int len = c.Length;
-            for (int i = 0; i < len; i++)
+            // char[] c = text.ToCharArray();
+            // int len = c.Length;
+            // for (int i = 0; i < len; i++)
+            // {
+            //     if (c[i] >= 0x4e00 && c[i] <= 0x9fbb)
+            //     {
+            //         hasChinese = true;
+            //         break;
+            //     }
+            // }
+            for(int i=0;i<text.Length;i++)
             {
-                if (c[i] >= 0x4e00 && c[i] <= 0x9fbb)
-                {
+                if((int)text[i] > 127)
                     hasChinese = true;
-                    break;
-                }
             }
             return hasChinese;
         }
@@ -942,11 +952,11 @@ namespace Lui
                 {
                     this.insertElement(
                         param.ContainsKey("txt") ? param["txt"] : "",
-                        LUtil.StringToColor(param.ContainsKey("color") ? param["color"] : defaultLabColor),
+                        FXGame.Util.StringToColor(param.ContainsKey("color") ? param["color"] : defaultLabColor),
                         param.ContainsKey("size") ? System.Convert.ToInt32(param["size"]) : defaultLabSize,
                         param.ContainsKey("isUnderLine") ? System.Convert.ToBoolean(param["isUnderLine"]) : false,
                         param.ContainsKey("isOutLine") ? System.Convert.ToBoolean(param["isOutLine"]) : false,
-						LUtil.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : "#000000"),
+                        FXGame.Util.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : "#000000"),
                         param.ContainsKey("data") ? param["data"] : ""
                         );
                 }else if(flag == "img")
