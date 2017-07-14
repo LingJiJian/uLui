@@ -26,9 +26,7 @@ THE SOFTWARE.
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using SLua;
 
-[CustomLuaClass]
 public class LHUDSort : MonoBehaviour {
 
     private List<Transform> list;

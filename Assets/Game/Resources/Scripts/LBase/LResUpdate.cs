@@ -2,13 +2,10 @@
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
-// using ICSharpCode.SharpZipLib.Zip;
 using System.Text;
 using System.IO;
 using System;
-using SLua;
 
-[CustomLuaClassAttribute]
 public class LResUpdate : MonoBehaviour
 {
     public static readonly string VERSION_FILE = "version.ver";

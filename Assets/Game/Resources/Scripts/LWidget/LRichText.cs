@@ -189,7 +189,7 @@ namespace Lui
     /// <summary>
     /// 富文本
     /// </summary>
-    [SLua.CustomLuaClass]
+    
     public class LRichText : MonoBehaviour, IPointerClickHandler
     {
         public RichAlignType alignType;

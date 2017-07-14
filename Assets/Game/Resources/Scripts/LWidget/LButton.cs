@@ -34,7 +34,7 @@ namespace Lui
     /// <summary>
     /// 按钮
     /// </summary>
-    [SLua.CustomLuaClass]
+    
     public class LButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,IPointerExitHandler
     {
         public const float LONGPRESS_TIME = 0.5f;
@@ -50,7 +50,7 @@ namespace Lui
             _isRunning = false;
         }
 
-		[SLua.DoNotToLua]
+		
         public void OnPointerDown(PointerEventData eventData)
         {
             
@@ -61,7 +61,7 @@ namespace Lui
             }
         }
 
-		[SLua.DoNotToLua]
+		
         public void OnPointerUp(PointerEventData eventData)
         {
             _isRunning = false;
@@ -72,7 +72,7 @@ namespace Lui
             }
         }
 
-		[SLua.DoNotToLua]
+		
         public void OnPointerExit(PointerEventData eventData)
         {
             _isRunning = false;

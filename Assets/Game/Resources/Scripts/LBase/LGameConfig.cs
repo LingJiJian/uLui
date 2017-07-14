@@ -2,9 +2,7 @@
 using UnityEngine.Events;
 using System.IO;
 using System.Xml;
-using SLua;
 
-[CustomLuaClass]
 public class LGameConfig
 {
     // The config file path.
@@ -63,7 +61,6 @@ public class LGameConfig
     public UnityAction openGmViewFunc;
     public UnityAction<string , string , LogType > logCollectFunc;
 
-    [DoNotToLua]
     public void HandleLog(string message, string stackTrace, LogType type)
     {
         if (logCollectFunc != null)

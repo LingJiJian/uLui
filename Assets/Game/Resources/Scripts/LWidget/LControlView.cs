@@ -33,7 +33,7 @@ namespace Lui
     /// <summary>
     /// 摇杆
     /// </summary>
-    [SLua.CustomLuaClass]
+    
     public class LControlView : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
     {
         public float MOVE_TIME = 0.5f;
@@ -64,7 +64,7 @@ namespace Lui
             this.relocateWithAnimation = true;
         }
 
-		[SLua.DoNotToLua]
+		
         public void OnPointerDown(PointerEventData eventData)
         {
             stopAnimateUpdate();
@@ -86,7 +86,7 @@ namespace Lui
 			}
         }
 
-        [SLua.DoNotToLua]
+        
         public void OnDrag(PointerEventData eventData)
         {
             if (joyStick)
@@ -127,7 +127,7 @@ namespace Lui
             onExecuteEventHandle(false);
         }
 
-        [SLua.DoNotToLua]
+        
         public void OnPointerUp(PointerEventData eventData)
         {
 			_isDraging = false;

@@ -5,9 +5,7 @@ using System.IO;
 using UnityEngine;
 using System.Security.Cryptography;
 using System.Text;
-using SLua;
 
-[CustomLuaClassAttribute]
 public class LUtil {
 
     /**
@@ -16,7 +14,6 @@ public class LUtil {
      * @param System.Exception e - The exception object.
      * @return string - The result.
      */
-	[DoNotToLua]
     public static string FormatException(System.Exception e)
     {
         string strSource = string.IsNullOrEmpty(e.Source) ? "<no source>" : e.Source.Substring(0, e.Source.Length - 2);
@@ -24,7 +21,7 @@ public class LUtil {
     }
 
  //    //zip压缩
-	// [DoNotToLua]
+	// 
  //    public static void PackFiles(string filename, string directory)
  //    {
  //        try
@@ -41,7 +38,7 @@ public class LUtil {
  //    }
 
  //    //zip解压
-	// [DoNotToLua]
+	// 
  //    public static bool UnpackFiles(string file, string dir)
  //    {
  //        try

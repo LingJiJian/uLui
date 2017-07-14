@@ -32,28 +32,28 @@ using UnityEngine.EventSystems;
 
 namespace Lui
 {   
-    [SLua.CustomLuaClass]
+    
     public class LDragView : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public UnityAction<Vector2> onBeginDrag;
         public UnityAction<Vector2> onDrag;
         public UnityAction<Vector2> onEndDrag;
 
-        [SLua.DoNotToLua]
+        
         public void OnBeginDrag(PointerEventData eventData)
         {
             if(onBeginDrag!=null)
                 onBeginDrag.Invoke(eventData.position);
         }
 
-        [SLua.DoNotToLua]
+        
         public void OnDrag(PointerEventData eventData)
         {
             if(onDrag!=null)
                 onDrag.Invoke(eventData.position);
         }
 
-        [SLua.DoNotToLua]
+        
         public void OnEndDrag(PointerEventData eventData)
         {
             if(onEndDrag!=null)

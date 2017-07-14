@@ -50,7 +50,7 @@ namespace Lui
     /// <summary>
     /// 列表
     /// </summary>
-    [SLua.CustomLuaClass]
+    
     public class LListView : LScrollView
     {
         public static Vector2 HorizontalNodeAnchorPoint = Vector2.zero;

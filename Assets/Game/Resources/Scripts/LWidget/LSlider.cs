@@ -26,7 +26,7 @@ using UnityEngine.EventSystems;
 
 namespace Lui
 {
-    [SLua.CustomLuaClass]
+    
     public class LSlider : LProgress, IDragHandler,IPointerDownHandler,IPointerUpHandler
     {
 

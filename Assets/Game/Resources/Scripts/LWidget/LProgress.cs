@@ -37,7 +37,7 @@ namespace Lui
 	    Value
 	}
 
-	[SLua.CustomLuaClass]
+	
 	public class LProgress : MonoBehaviour {
 
 		public float maxValue;

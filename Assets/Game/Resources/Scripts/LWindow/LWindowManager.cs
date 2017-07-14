@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using SLua;
 
-[CustomLuaClass]
+
+
 public enum WindowHierarchy
 {
     Normal,
@@ -14,7 +14,7 @@ public enum WindowHierarchy
     Suspend
 }
 
-[CustomLuaClass]
+
 public enum WindowDispose
 {
     Cache,
@@ -25,7 +25,7 @@ public enum WindowDispose
 /// <summary>
 /// 窗体管理
 /// </summary>
-[CustomLuaClass]
+
 public class LWindowManager : MonoBehaviour
 
 {
