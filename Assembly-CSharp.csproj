@@ -69,6 +69,7 @@
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LGridView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LHUDSort.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LHUDView.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LInputfield.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LLabelAtlas.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LListView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LMacros.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LRichText.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LScrollView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LSlider.cs" />
+     <Compile Include="Assets\Game\Resources\Scripts\LWidget\LSwitch.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LTableView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LTouchView.cs" />
      <Compile Include="Assets\Game\Resources\Scripts\LWidget\LogCollect.cs" />

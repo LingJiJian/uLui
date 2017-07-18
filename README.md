@@ -21,6 +21,8 @@
 14.LProgress 进度条<br>
 15.LExpandListView 可折叠列表<br>
 16.LDragView 拖拽控件<br>
+17.LSwitch 切换条<br>
+18.LInputField 抬起输入框<br>
 
 ### 窗体LWindow
 1.自动管理窗体层次<br>
