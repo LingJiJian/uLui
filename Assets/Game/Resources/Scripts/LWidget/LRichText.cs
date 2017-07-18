@@ -333,7 +333,7 @@ namespace Lui
 					string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
 					string spname = System.IO.Path.GetFileName(rendElem.path);
 
-                    Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
+                    Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -350,7 +350,7 @@ namespace Lui
                     string atlas = System.IO.Path.GetDirectoryName(rendElem.path);
                     string spname = System.IO.Path.GetFileName(rendElem.path);
 
-                    Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
+                    Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
                     rendElem.width = (int)sp.rect.size.x;
                     rendElem.height = (int)sp.rect.size.y;
                     _elemRenderArr.Add(rendElem);
@@ -687,7 +687,7 @@ namespace Lui
             {
 				string atlas = System.IO.Path.GetDirectoryName(elem.path);
 				string spname = System.IO.Path.GetFileName(elem.path);
-                Sprite sp = FXGame.Managers.ResourceManager.Instance.GetSpriteByName(atlas, spname);
+                Sprite sp = LLoadBundle.GetInstance().GetSpriteByName(atlas, spname);
                 comImage.sprite = sp;
                 comImage.raycastTarget = this.raycastTarget;
             }
@@ -952,11 +952,11 @@ namespace Lui
                 {
                     this.insertElement(
                         param.ContainsKey("txt") ? param["txt"] : "",
-                        FXGame.Util.StringToColor(param.ContainsKey("color") ? param["color"] : defaultLabColor),
+                        LUtil.StringToColor(param.ContainsKey("color") ? param["color"] : defaultLabColor),
                         param.ContainsKey("size") ? System.Convert.ToInt32(param["size"]) : defaultLabSize,
                         param.ContainsKey("isUnderLine") ? System.Convert.ToBoolean(param["isUnderLine"]) : false,
                         param.ContainsKey("isOutLine") ? System.Convert.ToBoolean(param["isOutLine"]) : false,
-                        FXGame.Util.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : "#000000"),
+                        LUtil.StringToColor(param.ContainsKey("outLineColor") ? param["outLineColor"] : "#000000"),
                         param.ContainsKey("data") ? param["data"] : ""
                         );
                 }else if(flag == "img")
