@@ -150,8 +150,9 @@ namespace Lui
             }
         }
 
-        public override void updateCellAtIndex(int page)
+        protected override void updateCellByAdapter(int page)
         {
+
             LGridPageViewPage pageCell = (LGridPageViewPage)dequeueCell();
             if (pageCell == null)
             {
@@ -242,6 +243,8 @@ namespace Lui
             if (cell == null)
             {
                 cell = new LGridPageViewCell();
+
+
                 if (cell_tpl != null)
                     cell.node = (GameObject)Instantiate(cell_tpl);
                 else
